@@ -1,4 +1,5 @@
 Vagrant.configure("2") do |config|
+  config.vm.define vm_name = "dev-env"
   config.vm.provider :docker do |d|
      d.build_dir = "."
      d.remains_running = true
@@ -6,4 +7,13 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.synced_folder ".", "/home/vagrant/project_files"
+
+  config.vm.provision "shell", inline: $install_tools
 end
+
+$install_tools = <<SCRIPT
+sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+sudo apt-get update && sudo apt-get install terraform
+SCRIPT
