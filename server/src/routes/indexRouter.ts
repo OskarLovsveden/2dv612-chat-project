@@ -1,9 +1,9 @@
 import Router, { IMiddleware } from 'koa-router';
-import LarsRouter from './lars-router';
+import TestRouter from './test-router';
 
 export default class IndexRouter {
     private _router: Router = new Router();
-    private larsRouter: LarsRouter = new LarsRouter();
+    private testRouter: TestRouter = new TestRouter();
 
     constructor() {
         this.initializeRoutes();
@@ -14,7 +14,7 @@ export default class IndexRouter {
     }
     
     private initializeRoutes(): void {
-        this._router.use('/api/lars', this.larsRouter.router);
+        this._router.use('/api/lars', this.testRouter.router);
     }
 
 }
