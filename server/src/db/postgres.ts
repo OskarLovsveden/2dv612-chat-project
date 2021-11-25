@@ -5,8 +5,7 @@ interface User {
   name: string
 }
 
-export const connectDB = async () => {
-  const config: Knex.Config = {
+const config: Knex.Config = {
     client: 'pg',
     connection: {
       host: process.env.POSTGRES_HOST,
@@ -16,6 +15,6 @@ export const connectDB = async () => {
     }
   }
 
-  return knex(config)
-}
+export const db = knex(config)
+
 

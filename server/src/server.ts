@@ -1,14 +1,11 @@
 import Koa, {BaseContext} from 'koa';
-import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 import cors from 'koa2-cors';
 import logger from 'koa-logger';
 import { config } from './config';
-import { connectDB } from './db/postgres';
 import { router } from './api/router';
 
 const app = new Koa();
-const db = connectDB();
 
 // Middleware
 app.use(bodyParser());
