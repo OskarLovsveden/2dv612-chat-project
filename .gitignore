@@ -242,5 +242,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# package-lock
+package-lock.json
+
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,macos,node,vagrant,visualstudiocode,dotenv,ansible,pulumi
 
