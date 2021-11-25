@@ -9,6 +9,8 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/home/vagrant/project_files"
 
   config.vm.provision "shell", inline: $install_tools
+
+  config.vm.network :forwarded_port, guest: 5000, host: 5000 # Open port to access server
 end
 
 $install_tools = <<SCRIPT
@@ -20,4 +22,5 @@ sudo apt-get install software-properties-common -y
 sudo apt-add-repository ppa:ansible/ansible
 sudo apt-get update
 sudo apt-get install ansible -y
+sudo apt install nodejs npm -y
 SCRIPT

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev -r dotenv/config src/server.ts"
+    "dev": "ts-node-dev src/server.ts",
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+    "lint-fix": "eslint --fix --ignore-path .eslintignore --ext .js,.ts ."
   },
   "keywords": [],
   "author": "",
@@ -28,6 +30,9 @@
     "@types/koa-router": "^7.4.4",
     "@types/koa2-cors": "^2.0.2",
     "@types/node": "^16.11.10",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^8.3.0",
     "ts-node-dev": "^1.1.8"
   }
 }
