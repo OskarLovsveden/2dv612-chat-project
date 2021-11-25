@@ -4,8 +4,11 @@ import bodyParser from 'koa-bodyparser';
 import cors from 'koa2-cors';
 import logger from 'koa-logger';
 import { config } from './config';
+import { connectDB } from './db/postgres';
+import { router } from './api/router';
 
 const app = new Koa();
+const db = connectDB();
 
 // Middleware
 app.use(bodyParser());
@@ -15,20 +18,6 @@ app.use(
     })
 );
 app.use(logger());
-
-// Routes
-const router: Router = new Router();
-
-router.get('/', async ctx => {
-    try {
-        ctx.body = {
-            message: 'Hello Lars'
-        };
-    } catch (e) {
-        console.error(e);
-    }
-});
-
 app.use(router.routes());
 
 // Connect
