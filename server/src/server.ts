@@ -19,6 +19,7 @@ app.use(
 );
 app.use(logger());
 app.use(router.routes());
+app.use(router.allowedMethods())
 
 // Connect
 const PORT = config.port;

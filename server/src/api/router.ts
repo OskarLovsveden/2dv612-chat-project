@@ -11,3 +11,12 @@ router.get('/', async ctx => {
         console.error(e);
     }
 });
+
+router.post('/create', async ctx => {
+  try {
+    console.log(ctx.request.body)
+    ctx.body = ctx.request.body;
+  } catch (e) {
+    console.error(e);
+  } 
+})
