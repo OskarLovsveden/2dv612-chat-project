@@ -1,28 +1,39 @@
-import Koa, {BaseContext} from 'koa';
-import bodyParser from 'koa-bodyparser';
+import Koa from 'koa';
 import cors from 'koa2-cors';
+import bodyParser from 'koa-bodyparser';
 import logger from 'koa-logger';
-import { config } from './config';
-import { router } from './api/router';
+import IndexRouter from './routes/indexRouter';
 
-const app = new Koa();
+export default class Server {
+    private app: Koa = new Koa();
+    private indexRouter: IndexRouter = new IndexRouter();
+    private port: number | string;
 
-// Middleware
-app.use(bodyParser());
-app.use(
-    cors({
-        origin: '*'
-    })
-);
-app.use(logger());
-app.use(router.routes());
-app.use(router.allowedMethods())
+    constructor(port: number | string) {
+        this.port = port;
+    }
 
-// Connect
-const PORT = config.port;
+    public run (): void {
+        this.setUp();
+        this.app.use(this.indexRouter.router);
+        this.listen();
+    }
 
-app.listen(PORT, async () => {
-    console.log(`Server listening on port: ${PORT}`);
-}).on('error', err => {
-    console.error(err);
-});
+    private setUp(): void {
+        this.app.use(bodyParser());
+        this.app.use(
+            cors({
+                origin: '*'
+            })
+        );
+        this.app.use(logger());
+    }
+
+    private listen(): void {
+        this.app.listen(this.port, async () => {
+            console.log(`Server listening on port: ${this.port}`);
+        }).on('error', (err: Error) => {
+            console.error(err);
+        });
+    }
+}
