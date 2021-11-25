@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import grpPic from './grppic.png'
 import './App.css';
+import {getHello} from './apiCalls'
+
 
 function App() {
+  const [state, setstate] = useState<any>('')
+
+  useEffect(() => {
+    async function sayHello() {
+      const hej = await getHello()
+      console.log(hej);
+      
+      setstate(hej?.message)
+    }
+    sayHello()
+    console.log(state);
+    
+    
+  }, [state])
+
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -11,6 +29,9 @@ function App() {
         <img src={grpPic} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
+        </p>
+        <p>
+          {state}
         </p>
         <a
           className="App-link"
