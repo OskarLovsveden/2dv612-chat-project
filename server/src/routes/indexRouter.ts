@@ -1,5 +1,5 @@
 import Router, { IMiddleware } from 'koa-router';
-import TestRouter from './test-router';
+import TestRouter from './router';
 
 export default class IndexRouter {
     private _router: Router = new Router();
@@ -14,7 +14,7 @@ export default class IndexRouter {
     }
     
     private initializeRoutes(): void {
-        this._router.use('/api/lars', this.testRouter.router);
+        this._router.use('/api', this.testRouter.router);
     }
 
 }

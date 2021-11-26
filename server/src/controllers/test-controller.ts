@@ -1,5 +1,6 @@
 import { BaseContext } from 'koa';
 import TestService from '../services/test-service';
+import { db } from '../db/postgres';
 
 export default class TestController {
     private testService: TestService = new TestService();
@@ -14,5 +15,14 @@ export default class TestController {
         } catch (e) {
             console.error(e);
         }
+    }
+
+    public async getUsers(ctx): Promise<void> {
+        try {
+            const users = (await db.from('users').select('*'))
+            ctx.body = users
+          } catch(e) {
+            console.error(e)
+          }
     }
 }
