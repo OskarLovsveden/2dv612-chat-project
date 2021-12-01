@@ -1,9 +1,11 @@
 import Router, { IMiddleware } from 'koa-router';
 import UserRouter from './userRouter';
+import ChatroomRouter from './chatroom';
 
 export default class IndexRouter {
     private _router: Router = new Router();
-    private UserRouter: UserRouter = new UserRouter();
+    private userRouter: UserRouter = new UserRouter();
+    private chatroomRouter: ChatroomRouter = new ChatroomRouter();
 
     constructor() {
         this.initializeRoutes();
@@ -14,8 +16,10 @@ export default class IndexRouter {
     }
     
     private initializeRoutes(): void {
-        this._router.use('/api/users', this.UserRouter.router);
-
+        this._router.use('/api/users', this.userRouter.router);
+        this._router.use('/api/rooms', this.chatroomRouter.router);
     }
+
+
 
 }
