@@ -1,0 +1,22 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+build:
+  artifacts:
+  - image: node-img
+    context: server
+
+profiles:
+  - name: dev
+    activation:
+      - command: dev
+    build:
+      artifacts:
+      - image: node-img
+        context: server
+        docker:
+          buildArgs:
+            ENV: dev
+        sync:
+          manual:
+          - src: 'src/*'
+            dest: .
