@@ -1,14 +1,19 @@
-type User = {
-  id: Number;
-  name: String;
-  role: String;
-};
+import { MouseEvent } from "react";
+import User from "../types/user";
+import userService from "../utils/http/userService";
 
 type AdminPanelProps = {
   users: User[];
 };
 
 const AdminPanel = ({ users }: AdminPanelProps) => {
+  const removeUser = (event: MouseEvent<HTMLButtonElement>, id: Number) => {
+    event.preventDefault();
+
+    const res = userService.delete(id);
+    console.log(res);
+  };
+
   return (
     <div className="flex">
       <div className="flex-1">
@@ -19,7 +24,14 @@ const AdminPanel = ({ users }: AdminPanelProps) => {
               u.role === "administrator" && (
                 <li key={i}>
                   {u.name}
-                  <button className="btn btn-red btn-red:hover">REMOVE</button>
+                  <button
+                    onClick={(e) => {
+                      removeUser(e, u.id);
+                    }}
+                    className="btn btn-red btn-red:hover"
+                  >
+                    REMOVE
+                  </button>
                 </li>
               )
           )}
@@ -33,7 +45,14 @@ const AdminPanel = ({ users }: AdminPanelProps) => {
               u.role === "moderator" && (
                 <li key={i}>
                   {u.name}
-                  <button className="btn btn-red btn-red:hover">REMOVE</button>
+                  <button
+                    onClick={(e) => {
+                      removeUser(e, u.id);
+                    }}
+                    className="btn btn-red btn-red:hover"
+                  >
+                    REMOVE
+                  </button>
                 </li>
               )
           )}
@@ -47,7 +66,14 @@ const AdminPanel = ({ users }: AdminPanelProps) => {
               u.role === "chatter" && (
                 <li key={i}>
                   {u.name}
-                  <button className="btn btn-red btn-red:hover">REMOVE</button>
+                  <button
+                    onClick={(e) => {
+                      removeUser(e, u.id);
+                    }}
+                    className="btn btn-red btn-red:hover"
+                  >
+                    REMOVE
+                  </button>
                 </li>
               )
           )}
