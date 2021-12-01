@@ -1,6 +1,6 @@
-import {knex, Knex} from 'knex'
+import {knex, Knex} from 'knex';
 
-interface User {
+type User = {
   id: number,
   name: string
 }
@@ -8,13 +8,13 @@ interface User {
 const config: Knex.Config = {
     client: 'pg',
     connection: {
-      host: process.env.POSTGRES_HOST,
-      user: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD,
-      database: process.env.POSTGRES_DB
+        host: process.env.POSTGRES_HOST,
+        user: process.env.POSTGRES_USER,
+        password: process.env.POSTGRES_PASSWORD,
+        database: process.env.POSTGRES_DB
     }
-  }
+};
 
-export const db = knex(config)
+export const db = knex(config);
 
 
