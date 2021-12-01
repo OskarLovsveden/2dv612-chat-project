@@ -21,6 +21,42 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: chatroom; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.chatroom (
+    id integer NOT NULL,
+    name character varying(255),
+    public boolean,
+    tag character varying(255)
+);
+
+
+ALTER TABLE public.chatroom OWNER TO postgres;
+
+--
+-- Name: chatroom_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.chatroom_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.chatroom_id_seq OWNER TO postgres;
+
+--
+-- Name: chatroom_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.chatroom_id_seq OWNED BY public.chatroom.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -58,6 +94,13 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: chatroom id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.chatroom ALTER COLUMN id SET DEFAULT nextval('public.chatroom_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -65,24 +108,33 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
+-- Data for Name: chatroom; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.chatroom (id, name, public, tag) FROM stdin;
+\.
+
+
+--
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.users (id, username, password, active, role) FROM stdin;
-1	victor	\N	\N	\N
-2	steffe	\N	\N	\N
-3	viktor	\N	\N	\N
-4	sebbe	\N	\N	\N
-5	anton	\N	\N	\N
-6	STEFFE	\N	\N	\N
 \.
+
+
+--
+-- Name: chatroom_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.chatroom_id_seq', 1, false);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 6, true);
+SELECT pg_catalog.setval('public.users_id_seq', 9, true);
 
 
 --
