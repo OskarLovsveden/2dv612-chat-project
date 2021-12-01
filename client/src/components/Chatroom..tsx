@@ -1,5 +1,6 @@
 import {SetStateAction, useState} from "react"
 import '../App.css'
+import axios from "axios"
 import chatImg from '../images/chat.png'
 
 
@@ -20,6 +21,12 @@ const Chatroom = () => {
     }
 
     const handleOnSubmit = (Event: { preventDefault: () => void }) =>  {
+        const chatroomJSON = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            data: { chatroomName: chatroomName, chatroomTag: chatroomTag }
+        }
+        axios.post('http://localhost:5000/api/rooms', chatroomJSON)
         Event.preventDefault()
    }
 
