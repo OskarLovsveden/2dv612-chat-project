@@ -27,7 +27,7 @@ export default class TestRouter {
       this.controller.getUsers(ctx)
     );
     this._router
-      .get("/user/add", (ctx: BaseContext) => this.controller.addUser(ctx))
+      .post("/user/add", (ctx: BaseContext) => this.controller.addUser(ctx))
       .allowedMethods();
   }
 }

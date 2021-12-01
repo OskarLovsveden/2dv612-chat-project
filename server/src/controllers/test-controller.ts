@@ -30,7 +30,12 @@ export default class TestController {
   public async addUser(ctx): Promise<void> {
     try {
       const user = ctx.request.body;
-      await db.insert({});
+
+      await db("users").insert(user);
+
+      ctx.body = {
+        message: "Success",
+      };
     } catch (e) {
       console.error(e);
     }
