@@ -1,9 +1,9 @@
 import Router, { IMiddleware } from 'koa-router';
-import TestRouter from './router';
+import UserRouter from './userRouter';
 
 export default class IndexRouter {
     private _router: Router = new Router();
-    private testRouter: TestRouter = new TestRouter();
+    private UserRouter: UserRouter = new UserRouter();
 
     constructor() {
         this.initializeRoutes();
@@ -14,7 +14,8 @@ export default class IndexRouter {
     }
     
     private initializeRoutes(): void {
-        this._router.use('/api', this.testRouter.router);
+        this._router.use('/api/users', this.UserRouter.router);
+
     }
 
 }
