@@ -43,6 +43,19 @@
         // we want to avoid useless spaces
         "no-multi-spaces": [
             "error"
+        ],
+        // space on left and right in paranteses
+        "space-in-parens": [
+            "error"
+        ],
+        // no dangling commas
+        "comma-dangle": [
+            "error"
+        ],
+        // all bocks starts and end with a space
+        "object-curly-spacing": [
+            "error",
+            "always"
         ]
     },
     "env": {
