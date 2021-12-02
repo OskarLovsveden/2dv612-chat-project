@@ -1,12 +1,16 @@
-import { MouseEvent } from "react";
+import { MouseEvent, useState } from "react";
 import User from "../types/user";
 import userService from "../utils/http/userService";
 
-type AdminPanelProps = {
-  users: User[];
-};
+const AdminPanel = () => {
+  const [users, setUsers] = useState<User[]>([
+    { id: 1, name: "chatter1", role: "chatter", status: "" },
+    { id: 2, name: "chatter2", role: "chatter", status: "" },
+    { id: 3, name: "admin1", role: "administrator", status: "" },
+    { id: 4, name: "admin2", role: "administrator", status: "" },
+    { id: 5, name: "mod1", role: "moderator", status: "" },
+  ]);
 
-const AdminPanel = ({ users }: AdminPanelProps) => {
   const removeUser = (event: MouseEvent<HTMLButtonElement>, id: Number) => {
     event.preventDefault();
 
