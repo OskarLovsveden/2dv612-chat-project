@@ -21,7 +21,7 @@ class UserService {
     }
   
     delete(id: Number) {
-      return http.delete<any>(`/user/${id}`);
+      return http.delete<any>(`/user/${id}?role=admin`);
     }
   }
   
