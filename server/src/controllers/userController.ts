@@ -39,9 +39,22 @@ export default class UserController {
     
     public async remove(ctx: Context): Promise<void> {
         try {
-            console.log('IN REMOVE');
             const id = ctx.params.id;
             await db.from(this.table).select('*').where({ id: id }).del();
+            ctx.body = { message: 'Success' };
+        } catch (e) {
+            // TODO proper error response, and handling
+            const id = ctx.params.id;
+            ctx.status = 404;
+            ctx.body = { message: 'No user with id ' + id + ' found' };
+        }
+    }
+
+    public async update(ctx: Context): Promise<void> {
+        try {
+            const id = ctx.params.id;
+            const active = ctx.request.body.active;
+            await db.from(this.table).select('*').where({ id: id }).update({ active: active });
             ctx.body = { message: 'Success' };
         } catch (e) {
             // TODO proper error response, and handling
