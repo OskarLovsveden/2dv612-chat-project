@@ -5,11 +5,10 @@ export default class UserMiddleware {
         ctx: Context,
         next: () => Promise<void>
     ): Promise<void> {
-        console.log(ctx.state.user);
-        if (ctx.state.user.role !== 'admin') {
+        if (ctx.query.role !== 'admin') {
             ctx.status = 500;
             ctx.body = {
-                error: 'You are not admin!',
+                error: 'You are not admin!'
             };
         } else {
             await next();
@@ -23,7 +22,7 @@ export default class UserMiddleware {
         if (ctx.query.role !== 'moderator') {
             ctx.status = 500;
             ctx.body = {
-                error: 'You are not moderator!',
+                error: 'You are not moderator!'
             };
         } else {
             await next();
@@ -37,7 +36,7 @@ export default class UserMiddleware {
         if (ctx.query.role !== 'user') {
             ctx.status = 500;
             ctx.body = {
-                error: 'You are not user!',
+                error: 'You are not user!'
             };
         } else {
             await next();
