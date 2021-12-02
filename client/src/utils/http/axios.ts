@@ -6,6 +6,8 @@ axios.interceptors.response.use(
     return response;
   },
   (error) => {
+    // Catch any erronous status codes
+    // redirect on un-authed?
     switch (error.response.status) {
       case 404:
           break;
