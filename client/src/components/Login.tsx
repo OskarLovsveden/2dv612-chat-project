@@ -48,7 +48,7 @@ const Login = () => {
             </input>
         </div>
         <div>          
-         <input onClick={handleOnSubmit} className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded" type="submit"/>
+         <input onClick={handleOnSubmit} className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded" type="submit" value="Submit"/>
         </div>       
      </form>
      </div>
