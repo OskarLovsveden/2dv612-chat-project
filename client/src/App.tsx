@@ -1,12 +1,22 @@
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import AdminPanel from "./pages/AdminPanel";
 import Home from "./pages/Home";
 import Login from "./components/Login";
 import Chatroom from "./components/Chatroom";
 import UserCreation from "./components/UserCreation";
+import { useState } from "react";
 
 function App() {
+  const [loggedInUser, setLoggedInUser] = useState<string>("");
+  const navigate = useNavigate();
+
+  const onLogin = (username: string) => {
+    console.log(username);
+    setLoggedInUser(username);
+    navigate("/home");
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -29,15 +39,17 @@ function App() {
           <Link className="no-underline hover:underline" to="/create-user">
             Create user
           </Link>
-
         </nav>
       </header>
 
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={<Login login={(username: string) => onLogin(username)} />}
+          />
           <Route path="admin" element={<AdminPanel />} />
-          <Route path="login" element={<Login />} />
+          <Route path="home" element={<Home user={loggedInUser} />} />
           <Route path="create-chatroom" element={<Chatroom />} />
           <Route path="create-user" element={<UserCreation />} />
         </Routes>

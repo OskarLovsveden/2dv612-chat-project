@@ -21,7 +21,7 @@ export default class SocketEvents {
         });
 
         this.io.attach(this.createServer);
-        this.io.on('connect', (socket: Socket) => this.initializeEvents(socket));
+        this.io.on('connection', (socket: Socket) => this.initializeEvents(socket));
     }
 
     private initializeEvents(socket: Socket) {
@@ -31,6 +31,7 @@ export default class SocketEvents {
         socket.on('user-connect', (data: EventLogin) => this.socketServices.handleUserConnect(data, socket));
         socket.on('disconnect', () => this.socketServices.handleUserDisconnect(socket));
         socket.on('join-room', (data: EventJoinRoom) => this.socketServices.handleJoinRoom(data, socket));
-        socket.on('chat-message', (data: EventChatMessage) => this.socketServices.handleChatMessage(data, socket));
+        socket.on('chat-message', (data: EventChatMessage) => this.socketServices.handleChatMessage(data, socket, this.io));
+        socket.on('room-message', () => console.log('rooom'));
     }
 }

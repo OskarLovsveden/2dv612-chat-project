@@ -3,12 +3,15 @@ import '../App.css'
 import axios from "axios"
 import chatImg from '../images/chat.png'
 
+type LoginProps = {
+    login: (username: string) => void;
+}
 
 /**
  * Login form for users.
  * @returns HTML for login form.
  */
-const Login = () => {
+const Login = ({login}: LoginProps) => {
     const [username, setUsername] = useState<string>('')
     const [userPassword, setUserPassword] = useState<string>('') 
 
@@ -21,13 +24,15 @@ const Login = () => {
     }
 
     const handleOnSubmit = (Event: { preventDefault: () => void }) =>  {
-        const loginUserJSON = {
+        /* const loginUserJSON = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             data: { Username: username, Password: userPassword }
         }
-        axios.post('http://localhost:5000/api/login', loginUserJSON)
+        axios.post('http://localhost:5000/api/login', loginUserJSON) */
         Event.preventDefault()
+
+        login(username)
    }
 
     return(
