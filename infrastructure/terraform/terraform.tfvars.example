@@ -1,0 +1,11 @@
+# Configure the OpenStack Provider
+user_name   = 
+tenant_name = 
+tenant_id   = 
+password    = 
+external_gateway = 
+region      = 
+key_pair    =
+auth_url    = 
+key_name    = 
+key_path    = 

@@ -1,45 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
-import grpPic from './grppic.png'
-import './App.css';
-import {getHello} from './apiCalls'
-
-import Chat from './components/Chatroom/Chat'
-
+import { Link, Route, Routes } from "react-router-dom";
+import "./App.css";
+import AdminPanel from "./pages/AdminPanel";
+import Home from "./pages/Home";
 
 function App() {
-  const [state, setstate] = useState<string>('')
-  const [chatOpen, setChatOpen] = useState<boolean>(false)
-
-
-  // useEffect(() => {
-  //   async function sayHello() {
-  //     const hej = await getHello()
-  //     console.log(hej);
-      
-  //     setstate(hej?.message)
-  //   }
-  //   sayHello()
-  //   console.log(state);
-    
-    
-  // }, [state])
-
-  const onChat = () => {
-    setChatOpen((chatOpen: any) => !chatOpen);
-  }
-  
   return (
     <div className="App">
       <header className="App-header">
-       
+        <nav className="pb-4 border-b-2 border-fuchsia-600">
+          <Link className="no-underline hover:underline" to="/">
+            Home
+          </Link>
+          <Link className="no-underline hover:underline" to="/admin">
+            Admin
+          </Link>
+        </nav>
       </header>
-        {/* <button onClick={onChat}>open chat</button>
-        {chatOpen
-        ? <Chat Toggle={ onChat } />
-        : null
-        } */}
-        {<Chat Toggle={onChat}/>}
+
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="admin" element={<AdminPanel />} />
+        </Routes>
+      </main>
     </div>
   );
 }
