@@ -11,10 +11,10 @@ const AdminPanel = () => {
     { id: 5, name: "mod1", role: "moderator", status: "" },
   ]);
 
-  const removeUser = (event: MouseEvent<HTMLButtonElement>, id: Number) => {
+  const removeUser = async (event: MouseEvent<HTMLButtonElement>, id: Number) => {
     event.preventDefault();
 
-    const res = userService.delete(id);
+    const res = await userService.delete(id);
     console.log(res);
   };
 
