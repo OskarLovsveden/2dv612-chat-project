@@ -8,6 +8,7 @@ expand_hostvars: yes
 groups:
   nodes: inventory_hostname.startswith('kube-node')
   master: inventory_hostname.startswith('kube-master')
+  registry: inventory_hostname.startswith('registry-server')
 
 legacy_groups: no
 # cache: yes
