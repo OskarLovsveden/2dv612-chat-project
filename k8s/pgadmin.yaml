@@ -35,6 +35,7 @@ spec:
  - protocol: TCP
    port: 80
    targetPort: http
+   nodePort: 30790
  selector:
    app: pgadmin
  type: NodePort
