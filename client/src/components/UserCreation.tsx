@@ -44,7 +44,7 @@ const UserCreation = () => {
         const userJSON = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            data: { username: username, password: userPassword, role: userRole }
+            data: { username: username, password: userPassword, role: userRole, active: true}
         }
         axios.post('http://localhost:5000/api/user?role=admin', userJSON)
         Event.preventDefault()
