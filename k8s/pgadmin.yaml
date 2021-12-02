@@ -2,95 +2,95 @@ apiVersion: v1
 kind: Secret
 type: Opaque
 metadata:
- name: pgadmin
+  name: pgadmin
 data:
- pgadmin-password: U3VwZXJTZWNyZXQ=
+  pgadmin-password: U3VwZXJTZWNyZXQ=
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
- name: pgadmin-config
+  name: pgadmin-config
 data:
- servers.json: |
-   {
-       "Servers": {
-         "1": {
-           "Name": "PostgreSQL DB",
-           "Group": "Servers",
-           "Port": 5432,
-           "Username": "testdbuser",
-           "Host": "pg-svc",
-           "SSLMode": "prefer",
-           "MaintenanceDB": "postgres"
-         }
-       }
-   }
+  servers.json: |
+    {
+        "Servers": {
+          "1": {
+            "Name": "PostgreSQL DB",
+            "Group": "Servers",
+            "Port": 30807,
+            "Username": "postgres",
+            "Host": "192.168.49.2",
+            "Password": "testdbuserpassword",
+            "MaintenanceDB": "chatapp"
+          }
+        }
+    }
 ---
 apiVersion: v1
 kind: Service
 metadata:
- name: pgadmin-svc
+  name: pgadmin-svc
 spec:
- ports:
- - protocol: TCP
-   port: 80
-   targetPort: http
-   nodePort: 30790
- selector:
-   app: pgadmin
- type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: http
+      nodePort: 30790
+  selector:
+    app: pgadmin
+  type: NodePort
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
- name: pgadmin
+  name: pgadmin
 spec:
- serviceName: pgadmin-service
- podManagementPolicy: Parallel
- replicas: 1
- updateStrategy:
-   type: RollingUpdate
- selector:
-   matchLabels:
-     app: pgadmin
- template:
-   metadata:
-     labels:
-       app: pgadmin
-   spec:
-     terminationGracePeriodSeconds: 10
-     containers:
-       - name: pgadmin
-         image: dpage/pgadmin4:5.4
-         imagePullPolicy: IfNotPresent
-         env:
-         - name: PGADMIN_DEFAULT_EMAIL
-           value: user@domain.com
-         - name: PGADMIN_DEFAULT_PASSWORD
-           valueFrom:
-             secretKeyRef:
-               name: pgadmin
-               key: pgadmin-password
-         ports:
-         - name: http
-           containerPort: 80
-           protocol: TCP
-         volumeMounts:
-         - name: pgadmin-config
-           mountPath: /pgadmin4/servers.json
-           subPath: servers.json
-           readOnly: true
-         - name: pgadmin-data
-           mountPath: /var/lib/pgadmin
-     volumes:
-     - name: pgadmin-config
-       configMap:
-         name: pgadmin-config
- volumeClaimTemplates:
- - metadata:
-     name: pgadmin-data
-   spec:
-     accessModes: [ "ReadWriteOnce" ]
-     resources:
-       requests:
-         storage: 3Gi
+  serviceName: pgadmin-service
+  podManagementPolicy: Parallel
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: pgadmin
+  template:
+    metadata:
+      labels:
+        app: pgadmin
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: pgadmin
+          image: dpage/pgadmin4:5.4
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PGADMIN_DEFAULT_EMAIL
+              value: user@domain.com
+            - name: PGADMIN_DEFAULT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgadmin
+                  key: pgadmin-password
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: pgadmin-config
+              mountPath: /pgadmin4/servers.json
+              subPath: servers.json
+              readOnly: true
+            - name: pgadmin-data
+              mountPath: /var/lib/pgadmin
+      volumes:
+        - name: pgadmin-config
+          configMap:
+            name: pgadmin-config
+  volumeClaimTemplates:
+    - metadata:
+        name: pgadmin-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 3Gi

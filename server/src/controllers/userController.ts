@@ -6,6 +6,7 @@ export default class UserController {
 
     public async getUsers(ctx: Context): Promise<void> {
         try {
+            console.log(ctx.state.user);
             const users = await db.from('users').select('*');
             ctx.body = users;
         } catch (e) {
@@ -16,7 +17,7 @@ export default class UserController {
     // Work in progress
     public async addUser(ctx: Context): Promise<void> {
         try {
-            const user = ctx.request.body;
+            const user = ctx.request.body.data;
 
             await db('users').insert(user);
 
@@ -35,7 +36,7 @@ export default class UserController {
 
             ctx.body = user;
             ctx.state.user = user;
-            console.log(ctx.state);
+            console.log(user);
         } catch (e) {
             console.error(e);
         }

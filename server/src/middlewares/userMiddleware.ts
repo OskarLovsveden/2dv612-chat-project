@@ -5,6 +5,7 @@ export default class UserMiddleware {
         ctx: Context,
         next: () => Promise<void>
     ): Promise<void> {
+        console.log(ctx.state.user);
         if (ctx.state.user.role !== 'admin') {
             ctx.status = 500;
             ctx.body = {
