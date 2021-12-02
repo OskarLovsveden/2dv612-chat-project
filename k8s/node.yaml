@@ -29,3 +29,6 @@ spec:
         image: node-img
         ports:
         - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: all-vars

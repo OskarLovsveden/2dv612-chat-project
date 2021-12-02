@@ -5,6 +5,9 @@ build:
   - image: node-img
     context: server
 
+  - image: pg-img
+    context: postgres
+
 profiles:
   - name: dev
     activation:
@@ -20,3 +23,8 @@ profiles:
           manual:
           - src: 'src/*'
             dest: .
+      - image: pg-img
+        context: postgres
+        docker:
+          buildArgs:
+            ENV: dev
