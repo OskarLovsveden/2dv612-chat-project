@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import grpPic from './grppic.png'
 import './App.css';
 import {getHello} from './apiCalls'
+import UserCreation from './components/UserCreation'
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
   
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
         <h1> Welcome to Shaddapp </h1>
         <img src={grpPic} className="App-logo" alt="logo" />
         <p>
@@ -41,7 +42,8 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+      </header> */}
+      <UserCreation />
     </div>
   );
 }

@@ -16,7 +16,8 @@ export default class UserController {
     // Work in progress
     public async addUser(ctx: Context): Promise<void> {
         try {
-            const user = ctx.request.body;
+            const user = ctx.request.body.data;
+            console.log(user);
 
             await db('users').insert(user);
 
