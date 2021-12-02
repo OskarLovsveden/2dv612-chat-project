@@ -1,49 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
-import grpPic from './grppic.png'
-import './App.css';
-import {getHello} from './apiCalls'
-import UserCreation from './components/UserCreation'
-
+import { Link, Route, Routes } from "react-router-dom";
+import "./App.css";
+import AdminPanel from "./pages/AdminPanel";
+import Home from "./pages/Home";
 
 function App() {
-  const [state, setstate] = useState<any>('')
-
-  useEffect(() => {
-    async function sayHello() {
-      const hej = await getHello()
-      console.log(hej);
-      
-      setstate(hej?.message)
-    }
-    sayHello()
-    console.log(state);
-    
-    
-  }, [state])
-
-  
   return (
     <div className="App">
-      {/* <header className="App-header">
-        <h1> Welcome to Shaddapp </h1>
-        <img src={grpPic} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <p>
-          {state}
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-      <UserCreation />
+      <header className="App-header">
+        <nav className="pb-4 border-b-2 border-fuchsia-600">
+          <Link className="no-underline hover:underline" to="/">
+            Home
+          </Link>
+          <Link className="no-underline hover:underline" to="/admin">
+            Admin
+          </Link>
+        </nav>
+      </header>
+
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="admin" element={<AdminPanel />} />
+        </Routes>
+      </main>
     </div>
   );
 }

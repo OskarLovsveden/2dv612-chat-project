@@ -1,0 +1,21 @@
+[master] 
+<master_floating_ip>
+
+[nfs]
+<nfs_private_ip>
+
+[nfs:vars] 
+ansible_connection=ssh
+ansible_user=ubuntu
+ansible_port=22
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="ssh -W %h:%p -q -i <ssh_key_path_on_master> ubuntu@<mater_ip>"'
+
+[nodes]
+<node_private_ips>
+...
+
+[nodes:vars] 
+ansible_connection=ssh
+ansible_user=ubuntu
+ansible_port=22
+ansible_ssh_common_args='-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ProxyCommand="ssh -W %h:%p -q -i <ssh_key_path_on_master> ubuntu@<master_ip>"'
