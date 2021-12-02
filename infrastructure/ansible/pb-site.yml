@@ -1,0 +1,4 @@
+---
+# Create infrastructure
+- name: infrastructure
+  import_playbook: pb-infrastructure.yml
