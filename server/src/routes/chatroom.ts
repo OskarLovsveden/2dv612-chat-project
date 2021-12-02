@@ -8,7 +8,7 @@ export default class ChatroomRouter {
     private controller: ChatroomController = new ChatroomController();
 
     constructor() {
-        this.initializeRoutes()
+        this.initializeRoutes();
     }
 
     public get router(): IMiddleware<any, unknown> {
@@ -16,8 +16,8 @@ export default class ChatroomRouter {
     }
 
     private initializeRoutes(): void {
-        this._router.post("/", 
-        (ctx: Context) => this.controller.chatroomInfo(ctx))
-        .allowedMethods();
+        this._router.post('/', 
+            (ctx: Context) => this.controller.chatroomInfo(ctx))
+            .allowedMethods();
     }
 }

@@ -32,6 +32,8 @@ export default class UserController {
             const user = await db.from(this.table).select('*').where({ id: id });
             
             ctx.body = user;
+            ctx.state.user = user;
+            console.log(user);
         } catch (e) {
             console.error(e);
         }

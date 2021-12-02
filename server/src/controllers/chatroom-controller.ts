@@ -1,5 +1,5 @@
-import { BaseContext, Context } from "koa";
-import { db } from "../db/postgres";
+import { BaseContext, Context } from 'koa';
+import { db } from '../db/postgres';
 
 export default class ChatroomController {
     public async chatroomInfo(ctx: Context): Promise<void> {
@@ -8,7 +8,7 @@ export default class ChatroomController {
             console.log(chatroomName);
             console.log(chatroomTag);
         } catch (e) {
-            console.log(e)
+            console.log(e);
         }
     }
 }

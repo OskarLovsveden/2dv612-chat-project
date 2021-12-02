@@ -5,8 +5,8 @@ metadata:
 data:
   POSTGRES_HOST: pg-svc
   POSTGRES_PORT: "5432"
-  POSTGRES_DB: testdb
-  POSTGRES_USER: testdbuser
+  POSTGRES_DB: chatapp
+  POSTGRES_USER: postgres
   POSTGRES_PASSWORD: testdbuserpassword
   PGDATA: /data/pgdata
   NODE_PORT: "5000"

@@ -20,10 +20,22 @@ spec:
           volumeMounts:
             - name: postgresql-db-disk
               mountPath: /data
-          # Config from ConfigMap
-          envFrom:
-          - configMapRef:
-              name: all-vars
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: all-vars
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: all-vars
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: all-vars
+                  key: POSTGRES_PASSWORD
   # Volume Claim
   volumeClaimTemplates:
     - metadata:
