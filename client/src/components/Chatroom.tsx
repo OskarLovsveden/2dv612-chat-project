@@ -26,7 +26,7 @@ const Chatroom = () => {
             headers: { 'Content-Type': 'application/json' },
             data: { chatroomName: chatroomName, chatroomTag: chatroomTag }
         }
-        axios.post('http://localhost:5000/api/rooms', chatroomJSON)
+        axios.post('http://localhost:5000/api/room', chatroomJSON)
         Event.preventDefault()
    }
 
