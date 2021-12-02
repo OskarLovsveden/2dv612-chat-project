@@ -35,6 +35,10 @@ export default class UserRouter {
             (ctx: Context, next: () => Promise<void>) => this.middleware.adminRightsCheck(ctx, next),
             (ctx: Context) => this.controller.remove(ctx)
         );
+        this._router.put('/:id',
+            (ctx: Context, next: () => Promise<void>) => this.middleware.adminRightsCheck(ctx, next),
+            (ctx: Context) => this.controller.update(ctx)
+        );
         
         this._router.allowedMethods();
     }
