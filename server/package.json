@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev -r dotenv/config src/app.ts",
+    "dev": "ts-node-dev --poll -r dotenv/config src/app.ts",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "lint-fix": "eslint --fix --ignore-path .eslintignore --ext .js,.ts ."
   },
