@@ -33,7 +33,7 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
         room_id: CHAT_ROOM,
         user_id: username,
       });
-    });
+    }); //test
 
     socket.on("room-message", (data) => {
       console.log("MEssage:  as" + data.message);
