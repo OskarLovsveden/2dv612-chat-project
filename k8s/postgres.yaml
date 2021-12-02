@@ -17,6 +17,7 @@ spec:
       containers:
         - name: postgresql-db
           image: pg-img
+          imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: postgresql-db-disk
               mountPath: /data

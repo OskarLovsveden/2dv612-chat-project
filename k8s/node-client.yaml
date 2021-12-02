@@ -27,6 +27,7 @@ spec:
       containers:
       - name: node-client
         image: node-client-img
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
         # envFrom:

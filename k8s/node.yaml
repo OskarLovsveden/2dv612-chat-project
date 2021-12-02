@@ -27,6 +27,7 @@ spec:
       containers:
       - name: node
         image: node-img
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000
         envFrom:
