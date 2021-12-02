@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "shell", inline: $install_tools
 
-  config.vm.network :forwarded_port, guest: 5000, host: 5000 # Open port to access server
+  config.vm.network :forwarded_port, guest: 5001, host: 5001 # Open port to access server
 end
 
 $install_tools = <<SCRIPT
