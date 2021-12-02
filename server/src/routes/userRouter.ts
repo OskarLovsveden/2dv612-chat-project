@@ -17,13 +17,25 @@ export default class UserRouter {
     }
 
     private initializeRoutes(): void {
-        this._router
-            .get('/', 
-                (ctx: Context, next: () => Promise<void>) => this.middleware.adminRightsCheck(ctx, next), (ctx: Context) => this.controller.getUsers(ctx))
-            .post('/', (ctx: Context, next: () => Promise<void>) => this.middleware.adminRightsCheck(ctx, next), (ctx: Context) => this.controller.addUser(ctx))
-            .allowedMethods();
         this._router.get('/:id', (ctx: Context) =>
-            this.controller.getSingleUser(ctx)
+            this.controller.get(ctx)
         );
+        
+        this._router.get('/',
+            (ctx: Context, next: () => Promise<void>) => this.middleware.adminRightsCheck(ctx, next), 
+            (ctx: Context) => this.controller.getAll(ctx)
+        );
+        
+        this._router.post('/',
+            (ctx: Context, next: () => Promise<void>) => this.middleware.adminRightsCheck(ctx, next), 
+            (ctx: Context) => this.controller.add(ctx)
+        );
+        
+        this._router.delete('/:id',
+            (ctx: Context, next: () => Promise<void>) => this.middleware.adminRightsCheck(ctx, next),
+            (ctx: Context) => this.controller.remove(ctx)
+        );
+        
+        this._router.allowedMethods();
     }
 }
