@@ -2,12 +2,12 @@ import { Context } from 'koa';
 import { db } from '../db/postgres';
 
 export default class UserController {
+    readonly table = 'users'; 
     // private testService: TestService = new TestService();
 
-    public async getUsers(ctx: Context): Promise<void> {
+    public async getAll(ctx: Context): Promise<void> {
         try {
-            console.log(ctx.state.user);
-            const users = await db.from('users').select('*');
+            const users = await db.from(this.table).select('*');
             ctx.body = users;
         } catch (e) {
             console.error(e);
@@ -15,30 +15,54 @@ export default class UserController {
     }
 
     // Work in progress
-    public async addUser(ctx: Context): Promise<void> {
+    public async add(ctx: Context): Promise<void> {
         try {
             const user = ctx.request.body.data;
+            await db(this.table).insert(user);
 
-            await db('users').insert(user);
-
-            ctx.body = {
-                message: 'Success',
-            };
+            ctx.body = { message: 'Success' };
         } catch (e) {
             console.error(e);
         }
     }
 
-    public async getSingleUser(ctx: Context): Promise<void> {
+    public async get(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
-            const user = await db.from('users').select('*').where({ id: id });
-
+            const user = await db.from(this.table).select('*').where({ id: id });
+            
             ctx.body = user;
             ctx.state.user = user;
             console.log(user);
         } catch (e) {
             console.error(e);
+        }
+    }
+    
+    public async remove(ctx: Context): Promise<void> {
+        try {
+            const id = ctx.params.id;
+            await db.from(this.table).select('*').where({ id: id }).del();
+            ctx.body = { message: 'Success' };
+        } catch (e) {
+            // TODO proper error response, and handling
+            const id = ctx.params.id;
+            ctx.status = 404;
+            ctx.body = { message: 'No user with id ' + id + ' found' };
+        }
+    }
+
+    public async update(ctx: Context): Promise<void> {
+        try {
+            const id = ctx.params.id;
+            const active = ctx.request.body.active;
+            await db.from(this.table).select('*').where({ id: id }).update({ active: active });
+            ctx.body = { message: 'Success' };
+        } catch (e) {
+            // TODO proper error response, and handling
+            const id = ctx.params.id;
+            ctx.status = 404;
+            ctx.body = { message: 'No user with id ' + id + ' found' };
         }
     }
 }

@@ -16,8 +16,8 @@ export default class IndexRouter {
     }
     
     private initializeRoutes(): void {
-        this._router.use('/api/users', this.userRouter.router);
-        this._router.use('/api/rooms', this.chatroomRouter.router);
+        this._router.use('/api/user', this.userRouter.router);
+        this._router.use('/api/room', this.chatroomRouter.router);
     }
 
 

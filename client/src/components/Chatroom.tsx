@@ -26,7 +26,7 @@ const Chatroom = () => {
             headers: { 'Content-Type': 'application/json' },
             data: { chatroomName: chatroomName, chatroomTag: chatroomTag }
         }
-        axios.post('http://localhost:5000/api/rooms', chatroomJSON)
+        axios.post('http://localhost:5000/api/room', chatroomJSON)
         Event.preventDefault()
    }
 
@@ -47,7 +47,7 @@ const Chatroom = () => {
             </input>
         </div>
         <div>          
-         <input className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded" type="submit"/>
+         <input className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded" type="submit" value="Submit"/>
         </div>       
      </form>
      </div>
