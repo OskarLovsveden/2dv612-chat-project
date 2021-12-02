@@ -1,6 +1,6 @@
 import { Server as ServerCreate } from 'http'; // ServerCreate är hittepå bara för att inte krocka med server
 import { Server as SocketServer, Socket } from 'socket.io';
-import { EventLogin } from '../types/eventDataTypes';
+import { EventChatMessage, EventJoinRoom, EventLogin } from '../types/eventDataTypes';
 import SocketServices from './socketServices';
 
 export default class SocketEvents {
@@ -30,5 +30,7 @@ export default class SocketEvents {
 
         socket.on('user-connect', (data: EventLogin) => this.socketServices.handleUserConnect(data, socket));
         socket.on('disconnect', () => this.socketServices.handleUserDisconnect(socket));
+        socket.on('join-room', (data: EventJoinRoom) => this.socketServices.handleJoinRoom(data, socket));
+        socket.on('chat-message', (data: EventChatMessage) => this.socketServices.handleChatMessage(data, socket));
     }
 }
