@@ -1,6 +1,6 @@
 # Generated from terraform template, do not edit directly.
 # Any change to this file be overwritten on next "terraform apply"
-Host 194.47.177.238
+Host 194.47.176.94
   User ubuntu
   Port 22
   StrictHostKeyChecking no
@@ -13,4 +13,4 @@ Host 172.168.*
   Port 22
   StrictHostKeyChecking no
   UserKnownHostsFile=/dev/null
-  ProxyJump 194.47.177.238
+  ProxyJump 194.47.176.94
