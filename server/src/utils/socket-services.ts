@@ -1,5 +1,5 @@
 import { Server as SocketServer, Socket } from 'socket.io';
-import { EventChatMessage, EventJoinRoom, EventLogin } from '../types/eventDataTypes';
+import { EventChatMessage, EventJoinRoom, EventLogin } from '../types/event-data-types';
 
 export default class SocketServices {
     private onlineUsers = {};
