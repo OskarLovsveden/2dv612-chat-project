@@ -13,7 +13,7 @@ function App() {
 
   const onLogin = (username: string) => {
     console.log(username);
-    setLoggedInUser(username);
+    setLoggedInUser("Bob");
     navigate("/home");
   };
 
