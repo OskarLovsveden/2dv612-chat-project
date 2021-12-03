@@ -1,7 +1,7 @@
 import { Context } from 'koa';
 import Router, { IMiddleware } from 'koa-router';
-import UserController from '../controllers/userController';
-import UserMiddleware from '../middlewares/userMiddleware';
+import UserController from '../controllers/user-controller';
+import UserMiddleware from '../middlewares/user-middleware';
 
 export default class UserRouter {
     private _router: Router = new Router();

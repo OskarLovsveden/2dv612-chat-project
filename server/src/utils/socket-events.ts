@@ -1,7 +1,7 @@
 import { Server as ServerCreate } from 'http'; // ServerCreate är hittepå bara för att inte krocka med server
 import { Server as SocketServer, Socket } from 'socket.io';
-import { EventChatMessage, EventJoinRoom, EventLogin } from '../types/eventDataTypes';
-import SocketServices from './socketServices';
+import { EventChatMessage, EventJoinRoom, EventLogin } from '../types/event-data-types';
+import SocketServices from './socket-services';
 
 export default class SocketEvents {
     private socketServices = new SocketServices();
