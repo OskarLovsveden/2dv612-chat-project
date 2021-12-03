@@ -1,5 +1,5 @@
 import { MouseEvent, useState } from "react";
-import User from "../types/user";
+import User from "../types/User";
 import userService from "../utils/http/userService";
 
 const AdminPanel = () => {
@@ -11,7 +11,10 @@ const AdminPanel = () => {
     { id: 5, name: "mod1", role: "moderator", status: "" },
   ]);
 
-  const removeUser = async (event: MouseEvent<HTMLButtonElement>, id: Number) => {
+  const removeUser = async (
+    event: MouseEvent<HTMLButtonElement>,
+    id: Number
+  ) => {
     event.preventDefault();
 
     const res = await userService.delete(id);

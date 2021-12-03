@@ -5,7 +5,8 @@ import Home from "./pages/Home";
 import Login from "./components/Login";
 import Chatroom from "./components/Chatroom";
 import UserCreation from "./components/UserCreation";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "./context/AuthProvider";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState<string>("");
@@ -16,6 +17,10 @@ function App() {
     setLoggedInUser(username);
     navigate("/home");
   };
+
+  // How to use context!
+  const { user, login } = useContext(AuthContext);
+  console.log(user);
 
   return (
     <div className="App">
