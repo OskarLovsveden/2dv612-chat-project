@@ -33,7 +33,6 @@ export default class UserController {
             
             ctx.body = user;
             ctx.state.user = user;
-            console.log(user);
         } catch (e) {
             console.error(e);
         }

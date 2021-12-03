@@ -1,4 +1,4 @@
-import { Socket } from 'socket.io';
+import { Server as SocketServer, Socket } from 'socket.io';
 import { EventChatMessage, EventJoinRoom, EventLogin } from '../types/eventDataTypes';
 
 export default class SocketServices {
@@ -21,15 +21,15 @@ export default class SocketServices {
         }
     }
 
-    public handleChatMessage(data: EventChatMessage, socket: Socket): void {
+    public handleChatMessage(data: EventChatMessage, socket: Socket, io: SocketServer): void {
         const room = this.rooms.find((r: any) => r.room_id === data.room_id);
         console.log('before sending message', data.message);
         if (room) {
             console.log(`Sending message: ${data.message} to room: ${data.room_id}`);
-            socket.to(room.room_id).emit('room-message', data.message);
+            io.in(room.room_id).emit('room-message', { username: data.user_id, message: data.message });
         }
     }
-
+ 
     public handleUserDisconnect(socket: Socket) {
         console.log(`user: ${this.onlineUsers[socket.id]} disconnected`);
 
@@ -46,6 +46,7 @@ export default class SocketServices {
         if (room) {
             console.log(`User: ${data.user_id} joined room: ${data.room_id}`);
             socket.join(room.room_id);
+            socket.to(room.room_id).emit('room-message', { username: data.user_id, message: 'Welcome' });
         }
     }
 }

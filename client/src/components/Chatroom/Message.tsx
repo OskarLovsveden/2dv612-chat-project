@@ -1,21 +1,15 @@
 type MessageProps = {
-    message: {
-        name: string,
-        message: string
-    }
-}
+  name: string;
+  message: string;
+};
 
-export default function Message (props : MessageProps) {
-    const {name, message} = props.message
-
-    return (
+export default function Message(props: MessageProps) {
+  return (
     <div className="px-4 py-4 rounded-md hover:bg-gray-50 dark:hover:bg-coolDark-600 overflow-hidden flex items-start">
-        <div className=" items-center mb-1">
-            <h3>{name}</h3>
-            <p>
-            {message}
-            </p>
-        </div>
+      <div className=" items-center mb-1">
+        <h3>{props.name}</h3>
+        <p>{props.message}</p>
+      </div>
     </div>
-    )
+  );
 }
