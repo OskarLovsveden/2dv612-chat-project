@@ -3,6 +3,11 @@ output "master_ip" {
   description = ""
 }
 
+output "lb_ip" {
+  value       = openstack_networking_floatingip_v2.lb-fip.address
+  description = ""
+}
+
 output "nodes_ip" {
   value = {
     for instance in openstack_compute_instance_v2.kube-node-server :
