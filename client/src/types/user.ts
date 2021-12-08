@@ -1,8 +1,10 @@
+import ROLE from "./Role";
+
 type User = {
     // TODO: ID as number or string?
     id: Number;
     name: String;
-    role: String;
+    role: ROLE;
     status: String;
 };
 

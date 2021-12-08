@@ -1,27 +1,15 @@
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import "./App.css";
 import AdminPanel from "./pages/AdminPanel";
 import Home from "./pages/Home";
 import Login from "./components/Login";
 import Chatroom from "./components/Chatroom";
 import UserCreation from "./components/UserCreation";
-import { useContext, useState } from "react";
-import { AuthContext } from "./context/AuthProvider";
+import Private from "./components/routes/Private";
+import Public from "./components/routes/Public";
+import ROLE from "./types/Role";
 
 function App() {
-  const [loggedInUser, setLoggedInUser] = useState<string>("");
-  const navigate = useNavigate();
-
-  const onLogin = (username: string) => {
-    console.log(username);
-    setLoggedInUser(username);
-    navigate("/home");
-  };
-
-  // How to use context!
-  const { user, login } = useContext(AuthContext);
-  console.log(user);
-
   return (
     <div className="App">
       <header className="App-header">
@@ -49,14 +37,23 @@ function App() {
 
       <main>
         <Routes>
+          <Route path="/" element={<Public component={Login} />} />
           <Route
-            path="/"
-            element={<Login login={(username: string) => onLogin(username)} />}
+            path="create-chatroom"
+            element={<Private roles={[ROLE.ADMIN]} component={Chatroom} />}
           />
-          <Route path="admin" element={<AdminPanel />} />
-          <Route path="home" element={<Home user={loggedInUser} />} />
-          <Route path="create-chatroom" element={<Chatroom />} />
-          <Route path="create-user" element={<UserCreation />} />
+          <Route
+            path="create-user"
+            element={<Private roles={[ROLE.ADMIN]} component={UserCreation} />}
+          />
+          <Route
+            path="admin"
+            element={<Private roles={[ROLE.ADMIN]} component={AdminPanel} />}
+          />
+          <Route
+            path="home"
+            element={<Private roles={[ROLE.ADMIN]} component={Home} />}
+          />
         </Routes>
       </main>
     </div>

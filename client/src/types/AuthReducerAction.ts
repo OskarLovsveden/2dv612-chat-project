@@ -1,9 +1,9 @@
 import User from "./User";
 
 export enum ActionType {
-    USER_LOGIN = "USER_LOGIN"
+  USER_LOGIN = "USER_LOGIN",
 }
 
-type Action = { type: ActionType, payload: User };
+type Action = { type: ActionType; payload: User}
 
-export default Action
+export default Action;

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Chat from "../components/Chatroom/Chat";
 import chatImg from "../images/chat.png";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthProvider";
 
-type LoggedInUser = {
-  user: string;
-};
-
-const Home = ({ user }: LoggedInUser) => {
+const Home = () => {
+  const { user } = useContext(AuthContext);
   const [chatOpen, setChatOpen] = useState<boolean>(false);
 
   const onChat = () => {
@@ -147,7 +146,7 @@ const Home = ({ user }: LoggedInUser) => {
                       </svg>
                     </span>
                   </span>
-                  {user && <Chat Toggle={onChat} username={user} />}
+                  {user && <Chat Toggle={onChat} username={user.name} />}
                 </div>
               </div>
             </div>
