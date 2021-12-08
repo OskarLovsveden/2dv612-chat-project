@@ -1,6 +1,6 @@
 import {SetStateAction, useState} from "react"
 import '../App.css'
-import axios from "axios"
+import userService from "../utils/http/user-service";
 import userImg from '../images/user.png'
 
 
@@ -11,7 +11,7 @@ import userImg from '../images/user.png'
 const UserCreation = () => {
     const [username, setUserName] = useState<string>('')
     const [userPassword, setUserPassword] = useState<string>('') 
-    const [userRole, setUserRole] = useState<string>('') 
+    const [userRole, setUserRole] = useState<string>('chattare') 
 
     const options = [
         {
@@ -40,13 +40,10 @@ const UserCreation = () => {
         setUserRole(Event.target.value)
     }
 
-    const handleOnSubmit = (Event: { preventDefault: () => void }) =>  {
-        const userJSON = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            data: { username: username, password: userPassword, role: userRole, active: true}
-        }
-        axios.post('http://localhost:5000/api/user?role=admin', userJSON)
+    const handleOnSubmit = async (Event: { preventDefault: () => void }) =>  {
+        const data = { name: username, password: userPassword, role: userRole, status: 'active' }
+        const res = await userService.create(data);
+        console.log(res)
         Event.preventDefault()
    }
 
