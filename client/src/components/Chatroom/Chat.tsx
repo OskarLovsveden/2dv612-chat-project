@@ -58,33 +58,6 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
 
   return (
     <div className="max-w-auto h-screen w-full m-auto bg-indigo-300 rounded p-5">
-      <header>
-        <div className="relative left-5 top-5">
-          <button
-            onClick={Toggle}
-            type="button"
-            className="absolute bottom-0 right-0 bg-white rounded-md p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-          >
-            <span className="sr-only">Close menu</span>
-            <svg
-              className="h-6 w-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-      </header>
-
       <div className="h-3/4 overflow-y-scroll">
         <ul>
           {messages &&

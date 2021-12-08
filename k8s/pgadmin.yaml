@@ -60,8 +60,6 @@ spec:
         app: pgadmin
     spec:
       terminationGracePeriodSeconds: 10
-      securityContext:
-        runAsUser: 1001
       containers:
         - name: pgadmin
           image: dpage/pgadmin4:5.4
