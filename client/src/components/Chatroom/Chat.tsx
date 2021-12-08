@@ -42,7 +42,7 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
     });
 
     return () => {
-      socket.emit("disconnect");
+      socket.emit("user-disconnect");
     };
   }, [socket, username]);
 
