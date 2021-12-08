@@ -16,6 +16,25 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: chatapp; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+ALTER DATABASE chatapp OWNER TO postgres;
+
+\connect chatapp
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -120,6 +139,8 @@ COPY public.chatroom (id, name, public, tag) FROM stdin;
 --
 
 COPY public.users (id, username, password, active, role) FROM stdin;
+12	useradmin	$2a$10$g9MB3Phm0NtPDkRIiUGNHuX6xxuiK3Cq.IraE4K9.XJ3CcLVEwTKi	t	admin
+13	user	$2a$10$1u6KQFt0POPwclrIY90u0.yIKTtahVJHpANmDSfw0NtFyuO0id2.a	t	user
 \.
 
 
@@ -134,7 +155,7 @@ SELECT pg_catalog.setval('public.chatroom_id_seq', 1, false);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 9, true);
+SELECT pg_catalog.setval('public.users_id_seq', 13, true);
 
 
 --
