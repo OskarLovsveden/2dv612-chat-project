@@ -14,10 +14,10 @@ export default class UserController {
         }
     }
 
-    // Work in progress
+    // TODO Knex implementation?
     public async add(ctx: Context): Promise<void> {
         try {
-            const user = ctx.request.body.data;
+            const user = ctx.request.body;
             await db(this.table).insert(user);
 
             ctx.body = { message: 'Success' };
