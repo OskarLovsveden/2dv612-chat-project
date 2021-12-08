@@ -17,9 +17,9 @@ data:
           "1": {
             "Name": "PostgreSQL DB",
             "Group": "Servers",
-            "Port": 30807,
+            "Port": 5432,
             "Username": "postgres",
-            "Host": "192.168.49.2",
+            "Host": "pg-svc",
             "Password": "testdbuserpassword",
             "MaintenanceDB": "chatapp"
           }
@@ -59,6 +59,8 @@ spec:
         app: pgadmin
     spec:
       terminationGracePeriodSeconds: 10
+      securityContext:
+        runAsUser: 1001
       containers:
         - name: pgadmin
           image: dpage/pgadmin4:5.4
