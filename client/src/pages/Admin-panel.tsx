@@ -7,7 +7,7 @@ import addUserImg from '../images/add-user.png'
 import deleteImg from '../images/delete.png'
 import editUserImg from '../images/edit.png'
 import addChatImg from '../images/add-chat.png'
-import {User} from "../types/user";
+import type {User} from "../types/user";
 import userService from "../utils/http/user-service";
 
 const AdminPanel = () => {
