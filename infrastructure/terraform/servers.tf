@@ -2,7 +2,7 @@
 # Create master server
 resource "openstack_compute_instance_v2" "kube-master-server" {
   depends_on = [
-    openstack_networking_router_interface_v2.router_interface
+    openstack_networking_router_interface_v2.prod-router_interface
   ]
 
 
@@ -13,12 +13,12 @@ resource "openstack_compute_instance_v2" "kube-master-server" {
   force_delete = true
   security_groups = [
     "default",
-    "${openstack_networking_secgroup_v2.ssh_secgroup.name}"
+    "${openstack_networking_secgroup_v2.ssh1_secgroup.name}"
   ]
   availability_zone = "Education"
 
   network {
-    name = openstack_networking_network_v2.network.name
+    name = openstack_networking_network_v2.prod-network.name
   }
 
   tags = ["master"]
@@ -32,7 +32,7 @@ resource "openstack_compute_instance_v2" "kube-master-server" {
 # Create node servers
 resource "openstack_compute_instance_v2" "kube-node-server" {
   depends_on = [
-    openstack_networking_router_interface_v2.router_interface
+    openstack_networking_router_interface_v2.prod-router_interface
   ]
 
   name         = "kube-node-server-${count.index}"
@@ -42,14 +42,14 @@ resource "openstack_compute_instance_v2" "kube-node-server" {
   force_delete = true
   security_groups = [
     "default",
-    openstack_networking_secgroup_v2.ssh_secgroup.name,
+    openstack_networking_secgroup_v2.ssh1_secgroup.name,
     openstack_networking_secgroup_v2.proxy_secgroup.name
 
   ]
   availability_zone = "Education"
 
   network {
-    name = openstack_networking_network_v2.network.name
+    name = openstack_networking_network_v2.prod-network.name
   }
 
   tags = ["nodes"]

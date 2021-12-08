@@ -1,13 +1,13 @@
 # Configure network
-resource "openstack_networking_network_v2" "network" {
-  name           = "network"
+resource "openstack_networking_network_v2" "prod-network" {
+  name           = "prod-network"
   admin_state_up = "true"
 }
 
 # Configure subnet
-resource "openstack_networking_subnet_v2" "subnet" {
-  name       = "subnet"
-  network_id = openstack_networking_network_v2.network.id
+resource "openstack_networking_subnet_v2" "prod-subnet" {
+  name       = "prod-subnet"
+  network_id = openstack_networking_network_v2.prod-network.id
   cidr       = "172.168.199.0/24"
   ip_version = 4
   dns_nameservers = [
@@ -17,16 +17,16 @@ resource "openstack_networking_subnet_v2" "subnet" {
 }
 
 # Configure router
-resource "openstack_networking_router_v2" "router" {
-  name                = "router"
+resource "openstack_networking_router_v2" "prod-router" {
+  name                = "prod-router"
   admin_state_up      = true
   external_network_id = var.external_gateway
 }
 
 # Connect subnet to router
-resource "openstack_networking_router_interface_v2" "router_interface" {
-  router_id = openstack_networking_router_v2.router.id
-  subnet_id = openstack_networking_subnet_v2.subnet.id
+resource "openstack_networking_router_interface_v2" "prod-router_interface" {
+  router_id = openstack_networking_router_v2.prod-router.id
+  subnet_id = openstack_networking_subnet_v2.prod-subnet.id
 }
 
 

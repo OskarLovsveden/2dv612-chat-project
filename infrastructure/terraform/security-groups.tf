@@ -24,18 +24,18 @@ resource "openstack_networking_secgroup_rule_v2" "db_secgroup_rule_2" {
 }
 
 # Configure security group ssh_secgroup and rules
-resource "openstack_networking_secgroup_v2" "ssh_secgroup" {
-  name = "ssh_secgroup"
+resource "openstack_networking_secgroup_v2" "ssh1_secgroup" {
+  name = "ssh1_secgroup"
 }
 
-resource "openstack_networking_secgroup_rule_v2" "ssh_secgroup_rule_1" {
+resource "openstack_networking_secgroup_rule_v2" "ssh1_secgroup_rule_1" {
   direction         = "ingress"
   ethertype         = "IPv4"
   protocol          = "tcp"
   port_range_min    = 22
   port_range_max    = 22
   remote_ip_prefix  = "0.0.0.0/0"
-  security_group_id = openstack_networking_secgroup_v2.ssh_secgroup.id
+  security_group_id = openstack_networking_secgroup_v2.ssh1_secgroup.id
 }
 
 
@@ -87,26 +87,6 @@ resource "openstack_networking_secgroup_rule_v2" "web_secgroup_rule_4" {
 # Configure security group registry_secgroup and rules
 resource "openstack_networking_secgroup_v2" "registry_secgroup" {
   name = "registry_secgroup"
-}
-
-resource "openstack_networking_secgroup_rule_v2" "registry_secgroup_rule_1" {
-  direction         = "ingress"
-  ethertype         = "IPv4"
-  protocol          = "tcp"
-  port_range_min    = 5000
-  port_range_max    = 5000
-  remote_ip_prefix  = "0.0.0.0/0"
-  security_group_id = openstack_networking_secgroup_v2.registry_secgroup.id
-}
-
-resource "openstack_networking_secgroup_rule_v2" "registry_secgroup_rule_2" {
-  direction         = "egress"
-  ethertype         = "IPv4"
-  protocol          = "tcp"
-  port_range_min    = 5000
-  port_range_max    = 5000
-  remote_ip_prefix  = "0.0.0.0/0"
-  security_group_id = openstack_networking_secgroup_v2.registry_secgroup.id
 }
 
 # Configure security group proxy_secgroup and rules
