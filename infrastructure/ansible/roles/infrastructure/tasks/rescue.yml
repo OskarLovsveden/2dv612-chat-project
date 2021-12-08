@@ -15,12 +15,3 @@
 
 - name: Retrying..
   include_tasks: create.yml
-  when: scale_cluster is not defined
-
-- name: Retrying..
-  include_tasks: scale-up.yml
-  when: (scale_cluster is defined) and (scale_type | int == 1)
-
-- name: Retrying..
-  include_tasks: scale-down.yml
-  when: (scale_cluster is defined) and (scale_type | int == 0)

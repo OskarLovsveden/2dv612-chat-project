@@ -1,6 +1,0 @@
----
-# Handlers for registry server
-- name: Restart docker
-  systemd:
-    name: docker
-    state: restarted
