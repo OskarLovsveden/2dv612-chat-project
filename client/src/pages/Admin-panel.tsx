@@ -1,6 +1,6 @@
 import { MouseEvent, useState } from "react";
 import User from "../types/user";
-import userService from "../utils/http/userService";
+import userService from "../utils/http/user-service";
 
 const AdminPanel = () => {
   const [users, setUsers] = useState<User[]>([

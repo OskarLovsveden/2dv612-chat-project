@@ -1,6 +1,6 @@
 import Router, { IMiddleware } from 'koa-router';
-import UserRouter from './userRouter';
-import ChatroomRouter from './chatroom';
+import UserRouter from './user-router';
+import ChatroomRouter from './chatroom-router';
 
 export default class IndexRouter {
     private _router: Router = new Router();

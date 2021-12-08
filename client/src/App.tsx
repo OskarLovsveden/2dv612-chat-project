@@ -1,10 +1,10 @@
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
-import AdminPanel from "./pages/AdminPanel";
+import AdminPanel from "./pages/Admin-panel";
 import Home from "./pages/Home";
 import Login from "./components/Login";
 import Chatroom from "./components/Chatroom";
-import UserCreation from "./components/UserCreation";
+import UserCreation from "./components/User-creation";
 import { useState } from "react";
 
 function App() {
