@@ -1,14 +1,14 @@
 {
     "_ansible_facts_gathered": true,
     "ansible_all_ipv4_addresses": [
-        "172.27.137.242"
+        "172.27.139.128"
     ],
     "ansible_all_ipv6_addresses": [
         "fe80::98b0:58ff:fe43:4e0d%anpi1",
         "fe80::98b0:58ff:fe43:4e0c%anpi0",
         "fe80::1c58:f09f:1c5b:7443%en0",
-        "fe80::d823:12ff:fe71:45e8%awdl0",
-        "fe80::d823:12ff:fe71:45e8%llw0",
+        "fe80::87:96ff:fe71:53b0%awdl0",
+        "fe80::87:96ff:fe71:53b0%llw0",
         "fe80::752b:54c0:d9a0:6d18%utun0",
         "fe80::6ed2:57e5:7d62:dd6c%utun1",
         "fe80::ce81:b1c:bd2c:69e%utun2",
@@ -112,12 +112,12 @@
         "ipv4": [],
         "ipv6": [
             {
-                "address": "fe80::d823:12ff:fe71:45e8%awdl0",
+                "address": "fe80::87:96ff:fe71:53b0%awdl0",
                 "prefix": "64",
                 "scope": "0xc"
             }
         ],
-        "macaddress": "da:23:12:71:45:e8",
+        "macaddress": "02:87:96:71:53:b0",
         "media": "Unknown",
         "media_select": "autoselect",
         "mtu": "1500",
@@ -155,28 +155,28 @@
         "type": "ether"
     },
     "ansible_date_time": {
-        "date": "2021-12-02",
-        "day": "02",
-        "epoch": "1638449777",
-        "hour": "13",
-        "iso8601": "2021-12-02T12:56:17Z",
-        "iso8601_basic": "20211202T135617947743",
-        "iso8601_basic_short": "20211202T135617",
-        "iso8601_micro": "2021-12-02T12:56:17.947743Z",
-        "minute": "56",
+        "date": "2021-12-08",
+        "day": "08",
+        "epoch": "1638975043",
+        "hour": "15",
+        "iso8601": "2021-12-08T14:50:43Z",
+        "iso8601_basic": "20211208T155043028186",
+        "iso8601_basic_short": "20211208T155043",
+        "iso8601_micro": "2021-12-08T14:50:43.028186Z",
+        "minute": "50",
         "month": "12",
-        "second": "17",
-        "time": "13:56:17",
+        "second": "43",
+        "time": "15:50:43",
         "tz": "CET",
         "tz_dst": "CEST",
         "tz_offset": "+0100",
-        "weekday": "Torsdag",
-        "weekday_number": "4",
-        "weeknumber": "48",
+        "weekday": "Onsdag",
+        "weekday_number": "3",
+        "weeknumber": "49",
         "year": "2021"
     },
     "ansible_default_ipv4": {
-        "address": "172.27.137.242",
+        "address": "172.27.139.128",
         "broadcast": "172.27.159.255",
         "device": "en0",
         "flags": [
@@ -217,7 +217,7 @@
             "client.lnu.se"
         ]
     },
-    "ansible_domain": "0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa",
+    "ansible_domain": "0.0.127.in-addr.arpa",
     "ansible_effective_group_id": 20,
     "ansible_effective_user_id": 501,
     "ansible_en0": {
@@ -232,7 +232,7 @@
         ],
         "ipv4": [
             {
-                "address": "172.27.137.242",
+                "address": "172.27.139.128",
                 "broadcast": "172.27.159.255",
                 "netmask": "255.255.224.0",
                 "network": "172.27.128.0"
@@ -370,17 +370,17 @@
         "PWD": "/Users/filipmyllari/Documents/Skola/2dv612/project/infrastructure/ansible",
         "SHELL": "/bin/zsh",
         "SHLVL": "5",
-        "SSH_AUTH_SOCK": "/private/tmp/com.apple.launchd.FQhqdFxhN2/Listeners",
+        "SSH_AUTH_SOCK": "/private/tmp/com.apple.launchd.p8wh1SA8s3/Listeners",
         "TERM": "xterm-256color",
         "TERM_PROGRAM": "vscode",
         "TERM_PROGRAM_VERSION": "1.62.3",
-        "TERM_SESSION_ID": "0F11ECAA-92E9-449B-A974-A2DCAE531D61",
+        "TERM_SESSION_ID": "C315A84C-9526-4415-AAD5-743233340337",
         "TMPDIR": "/var/folders/q0/83nnxx2s5_g6_tkdx9vc2xdr0000gn/T/",
         "USER": "filipmyllari",
         "VSCODE_GIT_ASKPASS_EXTRA_ARGS": "--ms-enable-electron-run-as-node",
         "VSCODE_GIT_ASKPASS_MAIN": "/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js",
         "VSCODE_GIT_ASKPASS_NODE": "/Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Renderer).app/Contents/MacOS/Code Helper (Renderer)",
-        "VSCODE_GIT_IPC_HANDLE": "/var/folders/q0/83nnxx2s5_g6_tkdx9vc2xdr0000gn/T/vscode-git-bc2d0ba0df.sock",
+        "VSCODE_GIT_IPC_HANDLE": "/var/folders/q0/83nnxx2s5_g6_tkdx9vc2xdr0000gn/T/vscode-git-46a43c26a5.sock",
         "XPC_FLAGS": "0x0",
         "XPC_SERVICE_NAME": "0",
         "_": "/opt/homebrew/Cellar/ansible/4.6.0_1/libexec/bin/python3.9",
@@ -389,7 +389,7 @@
     },
     "ansible_fibre_channel_wwn": [],
     "ansible_fips": false,
-    "ansible_fqdn": "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa",
+    "ansible_fqdn": "1.0.0.127.in-addr.arpa",
     "ansible_gif0": {
         "device": "gif0",
         "flags": [
@@ -442,12 +442,12 @@
         "ipv4": [],
         "ipv6": [
             {
-                "address": "fe80::d823:12ff:fe71:45e8%llw0",
+                "address": "fe80::87:96ff:fe71:53b0%llw0",
                 "prefix": "64",
                 "scope": "0xd"
             }
         ],
-        "macaddress": "da:23:12:71:45:e8",
+        "macaddress": "02:87:96:71:53:b0",
         "media": "Unknown",
         "media_select": "autoselect",
         "mtu": "1500",
@@ -496,7 +496,7 @@
     "ansible_local": {},
     "ansible_lsb": {},
     "ansible_machine": "arm64",
-    "ansible_memfree_mb": 7186,
+    "ansible_memfree_mb": 7107,
     "ansible_memtotal_mb": 8192,
     "ansible_model": "MacBookPro17,1",
     "ansible_nodename": "Filip-Myllari.local",

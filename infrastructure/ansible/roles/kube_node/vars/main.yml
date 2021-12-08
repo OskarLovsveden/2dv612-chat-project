@@ -1,4 +1,0 @@
-service_names:
-  - "docker"
-  - "kubelet"
-token_file: token_file

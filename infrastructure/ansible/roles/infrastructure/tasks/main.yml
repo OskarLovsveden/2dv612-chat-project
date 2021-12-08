@@ -7,7 +7,6 @@
 
 - name: Initiate infrastructures
   include_tasks: create.yml
-  when: scale_cluster is not defined
 
 - name: Setup tasks for the automation process
   include_tasks: setup.yml
