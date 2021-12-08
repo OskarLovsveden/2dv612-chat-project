@@ -31,6 +31,7 @@ const Chatroom = () => {
    }
 
     return(
+        <div className="bg-indigo-600 h-screen">
         <div className="max-w-xs w-full m-auto bg-indigo-100 rounded p-5">   
         <header>
             <img className="w-20 mx-auto mb-5" src={chatImg} />
@@ -51,6 +52,8 @@ const Chatroom = () => {
         </div>       
      </form>
      </div>
+     </div>
+     
     )
 }
 

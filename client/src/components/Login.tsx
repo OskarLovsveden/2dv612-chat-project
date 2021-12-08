@@ -36,6 +36,7 @@ const Login = ({login}: LoginProps) => {
    }
 
     return(
+        <div className="bg-indigo-600 h-screen">
         <div className="max-w-xs w-full m-auto bg-indigo-100 rounded p-5">   
         <header>
             <img className="w-20 mx-auto mb-5" src={chatImg} />
@@ -56,6 +57,7 @@ const Login = ({login}: LoginProps) => {
          <input onClick={handleOnSubmit} className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded" type="submit" value="Submit"/>
         </div>       
      </form>
+     </div>
      </div>
     )
 }
