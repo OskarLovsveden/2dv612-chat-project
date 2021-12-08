@@ -13,7 +13,7 @@ resource "openstack_compute_instance_v2" "kube-master-server" {
   force_delete = true
   security_groups = [
     "default",
-    "${openstack_networking_secgroup_v2.ssh1_secgroup.name}"
+    "${openstack_networking_secgroup_v2.ssh_secgroup.name}"
   ]
   availability_zone = "Education"
 
@@ -42,7 +42,7 @@ resource "openstack_compute_instance_v2" "kube-node-server" {
   force_delete = true
   security_groups = [
     "default",
-    openstack_networking_secgroup_v2.ssh1_secgroup.name,
+    openstack_networking_secgroup_v2.ssh_secgroup.name,
     openstack_networking_secgroup_v2.proxy_secgroup.name
 
   ]
