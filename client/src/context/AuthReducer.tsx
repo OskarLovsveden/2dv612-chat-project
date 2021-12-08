@@ -8,6 +8,7 @@ const reducer: Reducer<AuthContextState, Action> = (state, action) => {
       return {
         ...state,
         user: action.payload,
+        isAuthenticated: true,
       };
     default:
       return state;

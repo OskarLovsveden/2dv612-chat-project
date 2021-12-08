@@ -1,4 +1,4 @@
-import User from "./User";
+import type {User} from "./User";
 
 export enum ActionType {
   USER_LOGIN = "USER_LOGIN",

@@ -1,39 +1,48 @@
 import { Link, Route, Routes } from "react-router-dom";
 import "./App.css";
-import AdminPanel from "./pages/AdminPanel";
+import AdminPanel from "./pages/Admin-panel";
 import Home from "./pages/Home";
 import Login from "./components/Login";
 import Chatroom from "./components/Chatroom";
-import UserCreation from "./components/UserCreation";
 import Private from "./components/routes/Private";
 import Public from "./components/routes/Public";
 import ROLE from "./types/Role";
+import UserCreation from "./components/User-creation";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthProvider";
 
 function App() {
+  const { user } = useContext(AuthContext);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <nav className="pb-4 border-b-2 border-fuchsia-600 space-x-2 text-center">
-          <Link className="no-underline hover:underline" to="/">
-            Home
-          </Link>
-          <Link className="no-underline hover:underline" to="/admin">
-            Admin
-          </Link>
+      {user?.role === ROLE.ADMIN && (
+        <header className="App-header">
+          <nav className="pb-4 border-b-2 border-fuchsia-600 space-x-2 text-center">
+            <Link className="no-underline hover:underline" to="/">
+              Home
+            </Link>
+            <Link className="no-underline hover:underline" to="/admin">
+              Admin
+            </Link>
 
-          <Link className="no-underline hover:underline" to="/login">
-            Login
-          </Link>
+            <Link className="no-underline hover:underline" to="/login">
+              Login
+            </Link>
 
-          <Link className="no-underline hover:underline" to="/create-chatroom">
-            Create Chatroom
-          </Link>
+            <Link
+              className="no-underline hover:underline"
+              to="/create-chatroom"
+            >
+              Create Chatroom
+            </Link>
 
-          <Link className="no-underline hover:underline" to="/create-user">
-            Create user
-          </Link>
-        </nav>
-      </header>
+            <Link className="no-underline hover:underline" to="/create-user">
+              Create user
+            </Link>
+          </nav>
+        </header>
+      )}
 
       <main>
         <Routes>
@@ -52,7 +61,9 @@ function App() {
           />
           <Route
             path="home"
-            element={<Private roles={[ROLE.ADMIN]} component={Home} />}
+            element={
+              <Private roles={[ROLE.ADMIN, ROLE.USER]} component={Home} />
+            }
           />
         </Routes>
       </main>

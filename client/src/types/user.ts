@@ -1,11 +1,17 @@
 import ROLE from "./Role";
 
 type User = {
-    // TODO: ID as number or string?
     id: Number;
     name: String;
     role: ROLE;
     status: String;
 };
 
-export default User;
+type NewUser = {
+    name: String;
+    password: String;
+    role: ROLE;
+    status: String;
+};
+
+export type { User, NewUser };

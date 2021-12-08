@@ -1,12 +1,10 @@
 import { Context } from 'koa';
 import Router, { IMiddleware } from 'koa-router';
-import UserController from '../controllers/userController';
-import UserMiddleware from '../middlewares/userMiddleware';
+import UserController from '../controllers/user-controller';
 
 export default class UserRouter {
     private _router: Router = new Router();
     private controller: UserController = new UserController();
-    private middleware: UserMiddleware = new UserMiddleware();
 
     constructor() {
         this.initializeRoutes();
@@ -21,22 +19,21 @@ export default class UserRouter {
             this.controller.get(ctx)
         );
         
-        this._router.get('/',
-            (ctx: Context, next: () => Promise<void>) => this.middleware.adminRightsCheck(ctx, next), 
+        this._router.get('/', 
             (ctx: Context) => this.controller.getAll(ctx)
         );
         
         this._router.post('/',
-            (ctx: Context, next: () => Promise<void>) => this.middleware.adminRightsCheck(ctx, next), 
+            // TODO Add auth
             (ctx: Context) => this.controller.add(ctx)
         );
         
         this._router.delete('/:id',
-            (ctx: Context, next: () => Promise<void>) => this.middleware.adminRightsCheck(ctx, next),
+            // TODO Add auth
             (ctx: Context) => this.controller.remove(ctx)
         );
         this._router.put('/:id',
-            (ctx: Context, next: () => Promise<void>) => this.middleware.adminRightsCheck(ctx, next),
+            // TODO Add auth
             (ctx: Context) => this.controller.update(ctx)
         );
         

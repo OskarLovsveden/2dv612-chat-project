@@ -2,7 +2,7 @@ import { createContext, useReducer } from "react";
 import AuthContextState from "../types/AuthContextState";
 import reducer from "./AuthReducer";
 import { ActionType } from "../types/AuthReducerAction";
-import User from "../types/User";
+import type { User } from "../types/User";
 import ROLE from "../types/Role";
 
 const initialState: AuthContextState = {
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     // Send login request to server > dispatch (user)
     // const user = serverLogin(); xXddddDD
 
-    // FAKE BOI
+    // FAKE BOI ADMIN
     const user: User = {
       id: 1,
       name: username,

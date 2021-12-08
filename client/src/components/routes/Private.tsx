@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 import ROLE from "../../types/Role";
 
@@ -13,11 +13,14 @@ export const Private = ({ component: RouteComponent, roles }: PrivateProps) => {
   const userHasRequiredRole = user && roles.includes(user.role);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!isAuthenticated) navigate("/");
+  }, [isAuthenticated, navigate]);
+
   return (
     <>
       {isAuthenticated && userHasRequiredRole && <RouteComponent />}
       {isAuthenticated && !userHasRequiredRole && navigate("/home")}
-      {!isAuthenticated && !userHasRequiredRole && navigate("/")}
     </>
   );
 };
