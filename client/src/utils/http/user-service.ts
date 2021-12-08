@@ -1,6 +1,6 @@
 import http from "./axios";
-import type { User } from "../../types/user"
-import type { NewUser } from "../../types/user"
+import type { User } from "../../types/User"
+import type { NewUser } from "../../types/User"
 
 // Default implementation, change if needed!
 class UserService {

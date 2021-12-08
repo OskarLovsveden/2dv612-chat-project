@@ -1,40 +1,37 @@
 import React, { useEffect, useState } from "react";
 import Chat from "../components/Chatroom/Chat";
 import chatImg from "../images/chat.png";
-import Channel from '../components/Chatroom/Channel';
-
-type LoggedInUser = {
-  user: string;
-};
+import Channel from "../components/Chatroom/Channel";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthProvider";
 
 type ChannelInfo = {
   name: string;
   message: string;
 };
- const test = [
-   {
-     name: "Simon Palm",
-     message: "SCRUM is nice!"
-   },
-   {
-     name: "Jonas Nilsson",
-     message: "Fan va grymt!"
-   }
- ]
 
-const Home = ({ user }: LoggedInUser ) => {
+const test = [
+  {
+    name: "Simon Palm",
+    message: "SCRUM is nice!",
+  },
+  {
+    name: "Jonas Nilsson",
+    message: "Fan va grymt!",
+  },
+];
+
+const Home = () => {
+  const { user } = useContext(AuthContext);
   const [chatOpen, setChatOpen] = useState<boolean>(false);
-
   const [currentChannel, setChannels] = useState<ChannelInfo[]>([]);
 
-  useEffect (() => {
-    
-  })
+  useEffect(() => {});
   const onChat = () => {
-    console.log('Du klickade på mig')
+    console.log("Du klickade på mig");
     setChatOpen((chatOpen: boolean) => !chatOpen);
     setChannels((currentChannel: ChannelInfo[]) => [...currentChannel]);
-    console.log(currentChannel)
+    console.log(currentChannel);
   };
 
   return (
@@ -64,15 +61,14 @@ const Home = ({ user }: LoggedInUser ) => {
                       placeholder="Search"
                     />
                   </div>
-                  {test && 
-                  test.map((channelInfo: any) => (
-                    <Channel 
-                    Toggle={onChat}
-                    name={channelInfo.name}
-                    message={channelInfo.message}
-                     />
-                  ))
-                  }
+                  {test &&
+                    test.map((channelInfo: any) => (
+                      <Channel
+                        Toggle={onChat}
+                        name={channelInfo.name}
+                        message={channelInfo.message}
+                      />
+                    ))}
                 </div>
               </div>
             </div>
@@ -146,7 +142,7 @@ const Home = ({ user }: LoggedInUser ) => {
                       </svg>
                     </span>
                   </span>
-                  { <Chat Toggle={onChat} username={user} />}
+                  {user && <Chat Toggle={onChat} username={user.name} />}
                 </div>
               </div>
             </div>
