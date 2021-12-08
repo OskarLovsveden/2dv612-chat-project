@@ -26,9 +26,9 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.chatroom (
     id integer NOT NULL,
-    name character varying(255),
-    public boolean,
-    tag character varying(255)
+    name character varying(255) NOT NULL,
+    public boolean NOT NULL,
+    tag character varying(255) NOT NULL
 );
 
 
@@ -63,9 +63,9 @@ ALTER SEQUENCE public.chatroom_id_seq OWNED BY public.chatroom.id;
 CREATE TABLE public.users (
     id integer NOT NULL,
     username character varying(255) NOT NULL,
-    password character varying(255),
-    active boolean,
-    role character varying(255)
+    password character varying(255) NOT NULL,
+    active boolean NOT NULL,
+    role character varying(255) NOT NULL
 );
 
 
