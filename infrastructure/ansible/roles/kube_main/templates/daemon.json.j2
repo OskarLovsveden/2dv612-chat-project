@@ -1,0 +1,4 @@
+{
+  "exec-opts" : ["native.cgroupdriver=systemd"],
+  "insecure-registries" : ["{{ hostvars['kube-master-server']['openstack']['private_v4'] }}:5000"]
+}
