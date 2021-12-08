@@ -1,15 +1,21 @@
 import { Context } from 'koa';
+import User from '../models/user';
 import { createToken } from '../utils/jwt-helper';
 
 export default class AuthController {
-
+    private userModel: User = new User();
 
     public async login(ctx: Context): Promise<void> {
         try {
+            
+            const { username, password } = ctx.request.body;
+
+            const userModel = await this.userModel.validateLogin(username, password);
+            console.log('Yahoo');
             const token = await createToken({
-                id: 5,
-                role: 'Admin',
-                username: ctx.request.body.username
+                id: userModel.id,
+                role: userModel.role,
+                username: userModel.username
             });
 
             ctx.body = { token };

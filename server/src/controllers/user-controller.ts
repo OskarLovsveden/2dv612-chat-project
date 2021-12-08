@@ -1,8 +1,10 @@
 import { Context } from 'koa';
 import { db } from '../db/postgres';
+import User from '../models/user';
 
 export default class UserController {
     readonly table = 'users'; 
+    private userModel = new User();
     // private testService: TestService = new TestService();
 
     public async getAll(ctx: Context): Promise<void> {
@@ -18,9 +20,9 @@ export default class UserController {
     public async add(ctx: Context): Promise<void> {
         try {
             const user = ctx.request.body.data;
-            await db(this.table).insert(user);
+            /* await db(this.table).insert(user); */
 
-            ctx.body = { message: 'Success' };
+            ctx.body = { message: 'Success', user };
         } catch (e) {
             console.error(e);
         }
@@ -28,11 +30,19 @@ export default class UserController {
 
     public async get(ctx: Context): Promise<void> {
         try {
-            const id = ctx.params.id;
-            const user = await db.from(this.table).select('*').where({ id: id });
+            const id = ctx.params.id;            
+            const user = await this.userModel.get(id);
+
+            if (!user) {
+                ctx.throw(400,{ message: 'Username was missing in the request' });
+            }
             
-            ctx.body = user;
-            ctx.state.user = user;
+            ctx.body = {
+                id: user.id,
+                username: user.username,
+                role: user.role,
+                active: user.active
+            };
         } catch (e) {
             console.error(e);
         }

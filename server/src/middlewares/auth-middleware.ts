@@ -19,6 +19,15 @@ export default class AuthMiddleware {
         await next();
     }
 
+    public requesterHasAdminRights(ctx: Context, next: Next) {
+
+        if (ctx.user.role !== 'Admin') {
+            ctx.throw(401, { message: 'Unauthorized', role: ctx.user.role });
+        }
+
+        next();
+    }
+
     public async requestHasValidToken(ctx: Context, next: Next) {
         if (!(ctx.headers.authorization)) {
             ctx.throw(401, { message: 'Token is missing' });
@@ -38,8 +47,9 @@ export default class AuthMiddleware {
             
             ctx.user = payload;
             
-            await next();
+            return await next();
         } catch (error) {
+            console.log(error);
             ctx.throw(403, { message: 'Whoopsidooopsi something went wrong!' });
         }
     
