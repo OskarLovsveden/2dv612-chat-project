@@ -228,9 +228,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-### clouds.yml ###
-clouds.yml
-
 ### Vagrant ###
 # General
 .vagrant/
@@ -290,5 +287,4 @@ $RECYCLE.BIN/
 package-lock.json
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,macos,node,vagrant,visualstudiocode,dotenv,ansible,pulumi
-
-clouds.yaml
+password.txt

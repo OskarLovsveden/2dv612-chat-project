@@ -4,7 +4,7 @@ resource "local_file" "ssh_config_template" {
     master_ip = openstack_compute_floatingip_associate_v2.associate-master-fip.floating_ip,
     key_path  = var.key_path
   })
-  filename = pathexpand("../ansible/ssh_config")
+  filename = pathexpand("./ssh_config")
 }
 
 #Create a vars file
@@ -17,5 +17,5 @@ resource "local_file" "vars_template" {
     #reg_ip  = openstack_compute_instance_v2.registry-server.access_ip_v4,
     k8_port = var.k8_port,
   })
-  filename = pathexpand("../ansible/inventory/group_vars/all/tf_vars.yml")
+  filename = pathexpand("./inventory/group_vars/all/tf_vars.yml")
 }

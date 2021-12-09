@@ -4,7 +4,7 @@ import reducer from "./AuthReducer";
 import { ActionType } from "../types/AuthReducerAction";
 import type { LoginUser, User } from "../types/User";
 import ROLE from "../types/Role";
-import authService from '../utils/http/auth-service'
+import authService from "../utils/http/auth-service";
 
 const initialState: AuthContextState = {
   isAuthenticated: false,
@@ -21,10 +21,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const login = async (user: LoginUser): Promise<void> => {
     // Send login request to server > dispatch (user)
     // const user = serverLogin(); xXddddDD
-    const res  = await authService.login(user)
+    const res = await authService.login(user);
 
-    const {username, id, role, token} = res.data
-    localStorage.setItem('token', token)
+    const { username, id, role, token } = res.data;
+    localStorage.setItem("token", token);
     // FAKE BOI ADMIN
     // const user: User = {
     //   id: 1,
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     dispatch({
       type: ActionType.USER_LOGIN,
-      payload: {username, id, role},
+      payload: { username, id, role },
     });
   };
 

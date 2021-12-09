@@ -4,14 +4,14 @@ export type User = {
     id: number;
     username: string;
     role: ROLE;
-    // status: string;
+    active: boolean;
 };
 
 export type NewUser = {
     username: string;
     password: string;
-    role: ROLE;
-    // status: string;
+    role: string;
+    active: boolean;
 };
 
 export type LoginUser = {

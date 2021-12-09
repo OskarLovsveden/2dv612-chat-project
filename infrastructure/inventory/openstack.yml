@@ -2,7 +2,7 @@
 # Make the plugin behave like the default behavior of the old script
 plugin: openstack.cloud.openstack
 clouds_yaml_path:
-  - ../clouds.yaml
+  - ./clouds.yaml
 expand_hostvars: yes
 
 groups:

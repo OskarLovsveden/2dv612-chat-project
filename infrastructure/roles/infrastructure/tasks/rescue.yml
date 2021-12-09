@@ -1,13 +1,13 @@
 - name: Getting servers stuck in build
-  shell: chdir=../ openstack --os-cloud=openstack server list -f json | jq '.[] | select(.Status == "BUILD") | .Name'
+  shell: openstack --os-cloud=openstack server list -f json | jq '.[] | select(.Status == "BUILD") | .Name'
   register: result
   ignore_errors: yes
 
 - debug: msg="Server(s) failed during creation:{{ result.stdout_lines }}"
 
 - name: Removing failed server(s)..
-  shell: chdir=../ openstack --os-cloud=openstack server delete "{{item}}" 
-  loop: "{{result.stdout_lines}}"
+  shell: openstack --os-cloud=openstack server delete "{{item}}"
+  loop: '{{result.stdout_lines}}'
 
 - name: Waiting for removed server(s) to die
   pause:

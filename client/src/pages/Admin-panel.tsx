@@ -4,6 +4,7 @@ import {
   ReactChild,
   ReactFragment,
   ReactPortal,
+  useEffect,
   useState,
 } from "react";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
@@ -15,31 +16,42 @@ import deleteImg from "../images/delete.png";
 import editUserImg from "../images/edit.png";
 import addChatImg from "../images/add-chat.png";
 import type { User } from "../types/User";
+import { Chatroom } from "../types/Chatroom";
 import userService from "../utils/http/user-service";
+import chatroomService from "../utils/http/chatroom-service";
 import ROLE from "../types/Role";
 
 const AdminPanel = () => {
-  const [users, setUsers] = useState<User[]>([
-    { id: 1, name: "chatter1", role: ROLE.USER, status: "" },
-    { id: 2, name: "chatter2", role: ROLE.USER, status: "" },
-    { id: 3, name: "admin1", role: ROLE.ADMIN, status: "" },
-    { id: 5, name: "mod1", role: ROLE.MOD, status: "" },
-  ]);
+  const [chatRoomData, setChatRoomData] = useState<Chatroom[]>([])
+  const [userData, setUserData] = useState<User[]>([])
 
-  const [chatRooms, setChatRooms] = useState<any>([
-    { id: 1, tag: "#photography", status: "Online" },
-    { id: 2, tag: "#travel", status: "Online" },
-    { id: 3, tag: "#food", status: "Online" },
-    { id: 4, tag: "#howdy", status: "Offline" },
-  ]);
+  useEffect(() => {
+    (async () => {
+   const resUser = await userService.getAll()
+   const resChatRoom = await chatroomService.getAll()
+   setUserData(resUser.data)
+   setChatRoomData(resChatRoom.data)
+  })()
 
+  }, [])
+
+  
   const removeUser = async (
     event: MouseEvent<HTMLButtonElement>,
     id: number
   ) => {
-    event.preventDefault();
 
+    event.preventDefault();
     const res = await userService.delete(id);
+    console.log(res);
+  };
+
+  const removeChatroom = async (
+    event: MouseEvent<HTMLImageElement>,
+    id: Number
+  ) => {
+    event.preventDefault();
+    const res = await chatroomService.delete(id);
     console.log(res);
   };
 
@@ -49,13 +61,30 @@ const AdminPanel = () => {
         <div className="px-6 py-4">
           <img className="w-1/4 h-1/4" src={adminImg} alt="Admin" />
           <div className="font-bold text-xl mb-2">Admin</div>
+          <div className="inline-flex space-x-4">
+          <Link to="/create-user">
+            <img
+              className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+              src={addUserImg}
+              alt="Add Users"
+            />
+          </Link>
+
+          <Link to="/create-chatroom">
+            <img
+              className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+              src={addChatImg}
+              alt="Add Chat"
+            />
+          </Link>
+          </div>
           <ul>
-            {users.map(
+            {userData.map(
               (u, i) =>
                 u.role === ROLE.ADMIN && (
                   <li key={i}>
                     <div className="inline-flex space-x-4 ">
-                      <h3>{u.name} </h3>
+                      <h3>{u.username} </h3>
                       <button
                         onClick={(e) => {
                           removeUser(e, u.id);
@@ -78,12 +107,13 @@ const AdminPanel = () => {
           </ul>
 
           <div>
-            <div className="font-bold text-xl mb-2">Rooms online</div>
+            <div className="font-bold text-xl mb-2">Rooms Public</div>
             <ul>
-              {chatRooms.map(
+              {chatRoomData.map(
                 (
                   u: {
-                    status: string;
+                    public: boolean;
+                    name: string;
                     tag:
                       | boolean
                       | ReactChild
@@ -95,12 +125,17 @@ const AdminPanel = () => {
                   },
                   i: Key | null | undefined
                 ) =>
-                  u.status === "Online" && (
+                  u.public === true && (
                     <li key={i}>
-                      <div className="inline-flex space-x-4 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+                      <div className="inline-flex space-x-4">
+                        <h3>{u.name} </h3>
                         <h3>{u.tag} </h3>
-                        <span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white"></span>
-                        <img className="w-6 h-6" src={deleteImg} alt="Delete" />
+                        <span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white "></span>
+                        <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={deleteImg} alt="Delete"  
+                        onClick={(e) => {
+                          removeChatroom(e, u.id);
+                        }} /> 
+                        <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={editUserImg} alt="Edit"/>
                       </div>
                     </li>
                   )
@@ -109,12 +144,13 @@ const AdminPanel = () => {
           </div>
 
           <div>
-            <div className="font-bold text-xl mb-2">Rooms offline</div>
+            <div className="font-bold text-xl mb-2">Rooms Private</div>
             <ul>
-              {chatRooms.map(
+              {chatRoomData.map(
                 (
                   u: {
-                    status: string;
+                    public: boolean;
+                    name: string;
                     tag:
                       | boolean
                       | ReactChild
@@ -126,25 +162,20 @@ const AdminPanel = () => {
                   },
                   i: Key | null | undefined
                 ) =>
-                  u.status === "Offline" && (
+                  u.public === false && (
                     <li key={i}>
-                      <div className="inline-flex space-x-4 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+                      <div className="inline-flex space-x-4">
+                        <h3>{u.name} </h3>
                         <h3>{u.tag} </h3>
-                        <span className="inline-block align-text-bottom w-4 h-4 bg-red-400 rounded-full border-2 border-white"></span>
-                        <img className="w-6 h-6" src={deleteImg} alt="Delete" />
+                        <span className="inline-block align-text-bottom w-4 h-4 bg-blue-400 rounded-full border-2 border-white"></span>
+                        <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={deleteImg} alt="Delete" />
+                        <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={editUserImg} alt="Edit"/>
                       </div>
                     </li>
                   )
               )}
             </ul>
           </div>
-          <Link to="/create-chatroom">
-            <img
-              className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-              src={addChatImg}
-              alt="Add Chat"
-            />
-          </Link>
         </div>
       </div>
 
@@ -156,20 +187,13 @@ const AdminPanel = () => {
             alt="Moderator"
           />
           <div className="font-bold text-xl mb-2">Moderator</div>
-          <Link to="/create-user">
-            <img
-              className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-              src={addUserImg}
-              alt="Add Moderator"
-            />
-          </Link>
           <ul>
-            {users.map(
+            {userData.map(
               (u, i) =>
                 u.role === ROLE.MOD && (
                   <li key={i}>
                     <div className="inline-flex space-x-4 ">
-                      <h3>{u.name} </h3>
+                      <h3>{u.username} </h3>
                       <button
                         onClick={(e) => {
                           removeUser(e, u.id);
@@ -197,20 +221,13 @@ const AdminPanel = () => {
         <div className="px-6 py-4">
           <img className="w-1/4 h-1/4" src={chattareImg} alt="Chattare" />
           <div className="font-bold text-xl mb-2">Chattare</div>
-          <Link to="/create-user">
-            <img
-              className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-              src={addUserImg}
-              alt="Add Chattare"
-            />
-          </Link>
           <ul>
-            {users.map(
+            {userData.map(
               (u, i) =>
                 u.role === ROLE.USER && (
                   <li key={i}>
                     <div className="inline-flex space-x-4 ">
-                      <h3>{u.name} </h3>
+                      <h3>{u.username} </h3>
                       <button
                         onClick={(e) => {
                           removeUser(e, u.id);
@@ -227,7 +244,7 @@ const AdminPanel = () => {
                         />
                       </Link>
                     </div>
-                    <div className="px-6 pt-4 pb-2">
+                    {/* <div className="px-6 pt-4 pb-2">
                       <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">
                         #photography
                       </span>
@@ -237,7 +254,7 @@ const AdminPanel = () => {
                       <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">
                         #food
                       </span>
-                    </div>
+                    </div> */}
                   </li>
                 )
             )}
