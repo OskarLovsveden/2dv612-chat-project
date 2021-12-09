@@ -6,7 +6,7 @@ class ChatroomService {
       return http.get<Array<Chatroom>>("/room");
     }
     
-    get(id: Number) {
+    get(id: number) {
       return http.get<Chatroom>(`/room/${id}`);
     }
     
@@ -14,11 +14,11 @@ class ChatroomService {
       return http.post<any>("/room", data);
     }
 
-    update(data: Chatroom, id: Number) {
+    update(data: Chatroom, id: number) {
       return http.put<any>(`/room/${id}`, data);
     }
   
-    delete(id: Number) {
+    delete(id: number) {
       return http.delete<any>(`/room/${id}`);
     }
   }

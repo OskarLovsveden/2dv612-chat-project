@@ -22,25 +22,22 @@ import chatroomService from "../utils/http/chatroom-service";
 import ROLE from "../types/Role";
 
 const AdminPanel = () => {
-  const [chatRoomData, setChatRoomData] = useState<Chatroom[]>([])
-  const [userData, setUserData] = useState<User[]>([])
+  const [chatRoomData, setChatRoomData] = useState<Chatroom[]>([]);
+  const [userData, setUserData] = useState<User[]>([]);
 
   useEffect(() => {
     (async () => {
-   const resUser = await userService.getAll()
-   const resChatRoom = await chatroomService.getAll()
-   setUserData(resUser.data)
-   setChatRoomData(resChatRoom.data)
-  })()
+      const resUser = await userService.getAll();
+      const resChatRoom = await chatroomService.getAll();
+      setUserData(resUser.data);
+      setChatRoomData(resChatRoom.data);
+    })();
+  }, []);
 
-  }, [])
-
-  
   const removeUser = async (
     event: MouseEvent<HTMLButtonElement>,
-    id: Number
+    id: number
   ) => {
-
     event.preventDefault();
     const res = await userService.delete(id);
     console.log(res);
@@ -48,7 +45,7 @@ const AdminPanel = () => {
 
   const removeChatroom = async (
     event: MouseEvent<HTMLImageElement>,
-    id: Number
+    id: number
   ) => {
     event.preventDefault();
     const res = await chatroomService.delete(id);
@@ -62,21 +59,21 @@ const AdminPanel = () => {
           <img className="w-1/4 h-1/4" src={adminImg} alt="Admin" />
           <div className="font-bold text-xl mb-2">Admin</div>
           <div className="inline-flex space-x-4">
-          <Link to="/create-user">
-            <img
-              className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-              src={addUserImg}
-              alt="Add Users"
-            />
-          </Link>
+            <Link to="/create-user">
+              <img
+                className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                src={addUserImg}
+                alt="Add Users"
+              />
+            </Link>
 
-          <Link to="/create-chatroom">
-            <img
-              className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-              src={addChatImg}
-              alt="Add Chat"
-            />
-          </Link>
+            <Link to="/create-chatroom">
+              <img
+                className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                src={addChatImg}
+                alt="Add Chat"
+              />
+            </Link>
           </div>
           <ul>
             {userData.map(
@@ -121,7 +118,7 @@ const AdminPanel = () => {
                       | ReactPortal
                       | null
                       | undefined;
-                    id: Number;
+                    id: number;
                   },
                   i: Key | null | undefined
                 ) =>
@@ -131,11 +128,19 @@ const AdminPanel = () => {
                         <h3>{u.name} </h3>
                         <h3>{u.tag} </h3>
                         <span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white "></span>
-                        <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={deleteImg} alt="Delete"  
-                        onClick={(e) => {
-                          removeChatroom(e, u.id);
-                        }} /> 
-                        <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={editUserImg} alt="Edit"/>
+                        <img
+                          className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                          src={deleteImg}
+                          alt="Delete"
+                          onClick={(e) => {
+                            removeChatroom(e, u.id);
+                          }}
+                        />
+                        <img
+                          className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                          src={editUserImg}
+                          alt="Edit"
+                        />
                       </div>
                     </li>
                   )
@@ -158,7 +163,7 @@ const AdminPanel = () => {
                       | ReactPortal
                       | null
                       | undefined;
-                    id: Number;
+                    id: number;
                   },
                   i: Key | null | undefined
                 ) =>
@@ -168,8 +173,16 @@ const AdminPanel = () => {
                         <h3>{u.name} </h3>
                         <h3>{u.tag} </h3>
                         <span className="inline-block align-text-bottom w-4 h-4 bg-blue-400 rounded-full border-2 border-white"></span>
-                        <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={deleteImg} alt="Delete" />
-                        <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={editUserImg} alt="Edit"/>
+                        <img
+                          className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                          src={deleteImg}
+                          alt="Delete"
+                        />
+                        <img
+                          className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                          src={editUserImg}
+                          alt="Edit"
+                        />
                       </div>
                     </li>
                   )
@@ -181,11 +194,7 @@ const AdminPanel = () => {
 
       <div className="rounded overflow-hidden shadow-lg">
         <div className="px-6 py-4">
-          <img
-            className="w-1/4 h-1/4"
-            src={moderatorImg}
-            alt="Moderator"
-          />
+          <img className="w-1/4 h-1/4" src={moderatorImg} alt="Moderator" />
           <div className="font-bold text-xl mb-2">Moderator</div>
           <ul>
             {userData.map(

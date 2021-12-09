@@ -2,6 +2,7 @@ import "../App.css";
 import chatImg from "../images/chat.png";
 import { useContext, useRef } from "react";
 import { AuthContext } from "../context/AuthProvider";
+import { LoginUser } from "../types/User";
 
 /**
  * Login form for users.
@@ -19,7 +20,12 @@ const Login = () => {
     console.log(username.current.value);
     console.log(password.current.value);
 
-    login(username.current.value, password.current.value);
+    const loginUser: LoginUser = {
+      password: password.current.value,
+      username: username.current.value,
+    };
+
+    login(loginUser);
   };
 
   return (

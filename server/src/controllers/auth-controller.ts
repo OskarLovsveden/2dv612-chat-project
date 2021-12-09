@@ -18,7 +18,7 @@ export default class AuthController {
                 username: userModel.username
             });
 
-            ctx.body = { token };
+            ctx.body = { token, id: userModel.id, username: userModel.username, role: userModel.role };
         } catch (error) {
             console.error(error);
         }
@@ -26,7 +26,7 @@ export default class AuthController {
 
     public async authenticate(ctx: Context): Promise<void> {
         try {
-            ctx.body = { user: ctx.user.username, id:ctx.user.id, role: ctx.user.role };
+            ctx.body = { username: ctx.user.username, id:ctx.user.id, role: ctx.user.role };
         } catch (error) {
             console.error(error);
         }
