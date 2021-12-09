@@ -4,7 +4,6 @@ export type User = {
     id: number;
     username: string;
     role: ROLE;
-    active: boolean;
 };
 
 export type NewUser = {
@@ -23,5 +22,13 @@ export type LoginResponse = {
     username: string;
     id: number;
     role: ROLE;
-    token: string
+    token: string;
 };
+
+export type AuthResponse = {
+    token: string
+    id: number,
+    username: string,
+    role: string,
+    status: boolean
+}

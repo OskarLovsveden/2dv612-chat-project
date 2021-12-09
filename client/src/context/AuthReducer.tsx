@@ -1,8 +1,8 @@
 import { Reducer } from "react";
 import AuthContextState from "../types/AuthContextState";
-import Action, { ActionType } from "../types/AuthReducerAction";
+import { ActionType, LoginAction } from "../types/AuthReducerAction";
 
-const reducer: Reducer<AuthContextState, Action> = (state, action) => {
+const reducer: Reducer<AuthContextState, LoginAction> = (state, action) => {
   switch (action.type) {
     case ActionType.USER_LOGIN:
       return {
