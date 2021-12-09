@@ -18,10 +18,10 @@ export default class ChatroomRouter {
     }
 
     private initializeRoutes(): void {
-        this._router.post('/', 
+        this._router.post('/',
             (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
             (ctx: Context, next: Next) => this.middleware.requesterHasAdminRights(ctx, next),
-            (ctx: Context) => this.controller.chatroomInfo(ctx)
+            (ctx: Context) => this.controller.add(ctx)
         );
             
         this._router.get('/',
