@@ -1,12 +1,8 @@
 import { Context } from 'koa';
-import { db } from '../db/postgres';
 import Room from '../models/chatroom';
 
-
-// Fix this DEMO!
 export default class ChatroomController {
     readonly table = 'chatroom';
-    chatDatabase = [];
     private roomModel = new Room();
 
     public async add(ctx: Context): Promise<void> {
@@ -26,9 +22,8 @@ export default class ChatroomController {
 
     public async getAll(ctx: Context): Promise<void> {
         try {
-            // const chatroom = await db.from(this.table).select('*');
-            // ctx.body = chatroom;
-            // ctx.body = this.chatDatabase;
+            const chatrooms = await this.roomModel.getAll();
+            ctx.body = chatrooms;
         } catch (e) {
             console.error(e);
         }
@@ -37,10 +32,11 @@ export default class ChatroomController {
     public async get(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
-            const chatroom = await db.from(this.table).select('*').where({ id: id });
+            // const chatroom = await db.from(this.table).select('*').where({ id: id });
+            const room = await this.roomModel.get(id);
             
-            ctx.body = chatroom;
-            ctx.state.chatroom = chatroom;
+            ctx.body = room;
+            // ctx.state.chatroom = room;
         } catch (e) {
             console.error(e);
         }
