@@ -26,7 +26,7 @@ export default class UserRouter {
         );
         
         this._router.get('/',
-            (ctx: Context, next: Next) => this.authMiddleware.requestHasValidToken(ctx, next), 
+            // (ctx: Context, next: Next) => this.authMiddleware.requestHasValidToken(ctx, next), 
             (ctx: Context) => this.controller.getAll(ctx)
         );
         
