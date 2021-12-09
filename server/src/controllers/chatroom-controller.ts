@@ -1,18 +1,24 @@
 import { Context } from 'koa';
 import { db } from '../db/postgres';
+import Room from '../models/chatroom';
 
 
 // Fix this DEMO!
 export default class ChatroomController {
     readonly table = 'chatroom';
     chatDatabase = [];
+    private roomModel = new Room();
 
     public async add(ctx: Context): Promise<void> {
         try {
             const room = ctx.request.body.data;
-            await db(this.table).insert(ctx.request.body.data);
+            const roomCreated = await this.roomModel.create(ctx.request.body.data);
 
-            ctx.body = { message: 'Success', room };
+            if (!roomCreated) {
+                ctx.throw(400, { message: 'Failed to create room' });
+            }
+
+            ctx.body = { message: 'Room created', room };
         } catch (e) {
             console.error(e);
         }
@@ -22,7 +28,7 @@ export default class ChatroomController {
         try {
             // const chatroom = await db.from(this.table).select('*');
             // ctx.body = chatroom;
-            ctx.body = this.chatDatabase;
+            // ctx.body = this.chatDatabase;
         } catch (e) {
             console.error(e);
         }
