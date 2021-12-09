@@ -1,8 +1,11 @@
 ---
 # Tasks for role infrastructure
+- name: Descrypt clouds.yaml
+  shell:
+    cmd: ansible-vault decrypt clouds.yaml --vault-password-file=.vault/password.txt
+
 - name: Init terraform
   shell:
-    chdir: ../terraform
     cmd: terraform init
 
 - name: Initiate infrastructures
@@ -10,3 +13,7 @@
 
 - name: Setup tasks for the automation process
   include_tasks: setup.yml
+
+- name: Encrypt clouds.yaml
+  shell:
+    cmd: ansible-vault encrypt clouds.yaml
