@@ -19,13 +19,13 @@ export default class AuthMiddleware {
         await next();
     }
 
-    public requesterHasAdminRights(ctx: Context, next: Next) {
-
-        if (ctx.user.role !== 'Admin') {
+    public async requesterHasAdminRights(ctx: Context, next: Next) {
+        console.log(ctx.user);  
+        if (ctx.user.role !== 'admin') {
             ctx.throw(401, { message: 'Unauthorized', role: ctx.user.role });
         }
 
-        next();
+        await next();
     }
 
     public async requestHasValidToken(ctx: Context, next: Next) {
@@ -46,12 +46,10 @@ export default class AuthMiddleware {
             const payload = jwt.verify(authorization[1], publicKey) as TokenPayload;
             
             ctx.user = payload;
-            
-            return await next();
         } catch (error) {
             console.log(error);
             ctx.throw(403, { message: 'Whoopsidooopsi something went wrong!' });
         }
-    
+        await next();
     }
 }
