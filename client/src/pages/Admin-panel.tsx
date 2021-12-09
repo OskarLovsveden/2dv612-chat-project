@@ -4,6 +4,7 @@ import {
   ReactChild,
   ReactFragment,
   ReactPortal,
+  useEffect,
   useState,
 } from "react";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
@@ -19,6 +20,19 @@ import userService from "../utils/http/user-service";
 import ROLE from "../types/Role";
 
 const AdminPanel = () => {
+  const [roomData, setRoomData] = useState<User[]>([])
+  const [userData, setUserData] = useState<User[]>([])
+
+  useEffect(() => {
+    (async () => {
+    setUserData((await userService.getAll()).data) // Get username, id and password.
+    })()
+
+    return () => {
+      
+    }
+  }, [])
+
   const [users, setUsers] = useState<User[]>([
     { id: 1, name: "chatter1", role: ROLE.USER, status: "" },
     { id: 2, name: "chatter2", role: ROLE.USER, status: "" },
@@ -27,10 +41,10 @@ const AdminPanel = () => {
   ]);
 
   const [chatRooms, setChatRooms] = useState<any>([
-    { id: 1, tag: "#photography", status: "Online" },
-    { id: 2, tag: "#travel", status: "Online" },
-    { id: 3, tag: "#food", status: "Online" },
-    { id: 4, tag: "#howdy", status: "Offline" },
+    { id: 1, tag: "#photography", status: "Public" },
+    { id: 2, tag: "#travel", status: "Public" },
+    { id: 3, tag: "#food", status: "Public" },
+    { id: 4, tag: "#howdy", status: "Private" },
   ]);
 
   const removeUser = async (
@@ -78,7 +92,7 @@ const AdminPanel = () => {
           </ul>
 
           <div>
-            <div className="font-bold text-xl mb-2">Rooms online</div>
+            <div className="font-bold text-xl mb-2">Rooms Public</div>
             <ul>
               {chatRooms.map(
                 (
@@ -95,12 +109,13 @@ const AdminPanel = () => {
                   },
                   i: Key | null | undefined
                 ) =>
-                  u.status === "Online" && (
+                  u.status === "Public" && (
                     <li key={i}>
-                      <div className="inline-flex space-x-4 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+                      <div className="inline-flex space-x-4">
                         <h3>{u.tag} </h3>
-                        <span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white"></span>
-                        <img className="w-6 h-6" src={deleteImg} alt="Delete" />
+                        <span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white "></span>
+                        <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={deleteImg} alt="Delete" />
+                        <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={editUserImg} alt="Edit"/>
                       </div>
                     </li>
                   )
@@ -109,7 +124,7 @@ const AdminPanel = () => {
           </div>
 
           <div>
-            <div className="font-bold text-xl mb-2">Rooms offline</div>
+            <div className="font-bold text-xl mb-2">Rooms Private</div>
             <ul>
               {chatRooms.map(
                 (
@@ -126,12 +141,13 @@ const AdminPanel = () => {
                   },
                   i: Key | null | undefined
                 ) =>
-                  u.status === "Offline" && (
+                  u.status === "Private" && (
                     <li key={i}>
-                      <div className="inline-flex space-x-4 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">
+                      <div className="inline-flex space-x-4">
                         <h3>{u.tag} </h3>
-                        <span className="inline-block align-text-bottom w-4 h-4 bg-red-400 rounded-full border-2 border-white"></span>
-                        <img className="w-6 h-6" src={deleteImg} alt="Delete" />
+                        <span className="inline-block align-text-bottom w-4 h-4 bg-blue-400 rounded-full border-2 border-white"></span>
+                        <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={deleteImg} alt="Delete" />
+                        <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={editUserImg} alt="Edit"/>
                       </div>
                     </li>
                   )
