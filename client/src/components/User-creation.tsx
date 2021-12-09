@@ -12,7 +12,7 @@ const UserCreation = () => {
   const [username, setUserName] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
   const [userRole, setUserRole] = useState<string>("chattare");
-
+  const test = "";
   const options = [
     {
       label: "Chattare",
@@ -47,7 +47,7 @@ const UserCreation = () => {
 
   const handleOnSubmit = async (Event: { preventDefault: () => void }) => {
     const data = {
-      name: username,
+      username: username,
       password: userPassword,
       role: ROLE.USER,
       status: "active",
