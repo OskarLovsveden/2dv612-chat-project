@@ -4,7 +4,7 @@
     - name: Running terraform apply
       shell:
         cmd: terraform apply -auto-approve
-      no_log: False
+      no_log: True
 
   # - fail:
   #   when: result.stdout_lines|length != 0

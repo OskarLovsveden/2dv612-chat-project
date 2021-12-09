@@ -28,3 +28,8 @@
 
     - name: Add user Ubuntu to Docker
       command: usermod -aG docker ubuntu
+
+    - name: Install skaffold
+      shell: | 
+        curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+        sudo install skaffold /usr/local/bin/
