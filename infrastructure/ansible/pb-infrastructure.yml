@@ -1,6 +1,0 @@
----
-- hosts: localhost
-  become: False
-  roles:
-  - role: infrastructure
-
