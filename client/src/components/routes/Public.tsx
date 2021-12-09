@@ -1,21 +1,21 @@
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 
 interface PublicProps {
   component: React.ComponentType;
 }
 
-export const Private = ({ component: RouteComponent }: PublicProps) => {
+export const Public = ({ component: RouteComponent }: PublicProps) => {
   const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  return (
-    <>
-      {!isAuthenticated && <RouteComponent />}
-      {isAuthenticated && navigate("/home")}
-    </>
-  );
+  useEffect(() => {
+    console.log(isAuthenticated);
+    if (isAuthenticated) navigate("/");
+  }, [isAuthenticated, navigate]);
+
+  return <>{!isAuthenticated && <RouteComponent />}</>;
 };
 
-export default Private;
+export default Public;

@@ -46,7 +46,7 @@ function App() {
 
       <main>
         <Routes>
-          <Route path="/" element={<Public component={Login} />} />
+          <Route path="login" element={<Public component={Login} />} />
           <Route
             path="create-chatroom"
             element={<Private roles={[ROLE.ADMIN]} component={Chatroom} />}
@@ -60,7 +60,7 @@ function App() {
             element={<Private roles={[ROLE.ADMIN]} component={AdminPanel} />}
           />
           <Route
-            path="home"
+            path="/"
             element={
               <Private roles={[ROLE.ADMIN, ROLE.USER]} component={Home} />
             }
