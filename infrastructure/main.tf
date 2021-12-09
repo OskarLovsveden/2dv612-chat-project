@@ -7,5 +7,8 @@ terraform {
       version = "~> 1.44.0"
     }
   }
+}
 
+provider "openstack" {
+  cloud = "openstack"
 }

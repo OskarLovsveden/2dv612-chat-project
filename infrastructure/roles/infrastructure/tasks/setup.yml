@@ -2,7 +2,7 @@
 # Task that setup ssh, inventory, and variables to be used for the automation
 
 - name: Get master ip
-  command: chdir=../terraform terraform output --raw master_ip
+  command: terraform output --raw master_ip
   register: master_ip
 
 - name: Master ip

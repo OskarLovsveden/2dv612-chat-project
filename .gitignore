@@ -225,9 +225,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-### clouds.yml ###
-clouds.yml
-
 ### Vagrant ###
 # General
 .vagrant/
