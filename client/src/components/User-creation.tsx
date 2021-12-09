@@ -51,7 +51,7 @@ const UserCreation = () => {
         <div className="bg-indigo-600 h-screen">
         <div className="max-w-xs w-full m-auto bg-indigo-100 rounded p-5">   
             <header>
-                <img className="w-20 mx-auto mb-5" src={userImg} />
+                <img className="w-20 mx-auto mb-5" alt={userImg} src={userImg} />
             </header>
             <form onSubmit={handleOnSubmit}>
                 <div>
