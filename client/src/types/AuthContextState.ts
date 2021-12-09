@@ -1,9 +1,9 @@
-import type {User} from "./User";
+import type {LoginUser, User} from "./User";
 
 type AuthContextState = {
     user?: User;
     isAuthenticated:  boolean,
-    login: (username: String, password: String) => void;
+    login: (user: LoginUser) => void;
 };
 
 export default AuthContextState

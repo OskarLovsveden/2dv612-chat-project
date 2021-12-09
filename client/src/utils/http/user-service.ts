@@ -7,7 +7,7 @@ class UserService {
       return http.get<Array<User>>("/user");
     }
     
-    get(id: Number) {
+    get(id: number) {
       return http.get<User>(`/user/${id}`);
     }
     
@@ -15,11 +15,11 @@ class UserService {
       return http.post<any>("/user", data);
     }
     
-    update(data: User, id: Number) {
+    update(data: User, id: number) {
       return http.put<any>(`/user/${id}`, data);
     }
   
-    delete(id: Number) {
+    delete(id: number) {
       return http.delete<any>(`/user/${id}`);
     }
   }

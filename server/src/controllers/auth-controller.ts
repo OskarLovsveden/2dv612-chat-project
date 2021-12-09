@@ -18,7 +18,7 @@ export default class AuthController {
                 username: userModel.username
             });
 
-            ctx.body = { token };
+            ctx.body = { token, id: userModel.id, username: userModel.username, role: userModel.role };
         } catch (error) {
             console.error(error);
         }

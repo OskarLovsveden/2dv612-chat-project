@@ -1,14 +1,14 @@
 type Chatroom = {
-    id: Number;
-    name: String;
+    id: number;
+    name: string;
     public: Boolean;
-    tag: String;
+    tag: string;
 };
 
 type NewChatroom = {
-    name: String;
+    name: string;
     public: Boolean;
-    tag: String;
+    tag: string;
 };
 
 export type { Chatroom, NewChatroom };

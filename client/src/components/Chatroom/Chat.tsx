@@ -10,7 +10,7 @@ type MessageEvent = {
 
 type ChatProps = {
   Toggle: () => void;
-  username: String;
+  username: string;
 };
 
 export default function ChatRoom({ Toggle, username }: ChatProps) {

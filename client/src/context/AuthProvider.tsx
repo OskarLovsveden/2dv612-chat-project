@@ -2,8 +2,9 @@ import { createContext, useReducer } from "react";
 import AuthContextState from "../types/AuthContextState";
 import reducer from "./AuthReducer";
 import { ActionType } from "../types/AuthReducerAction";
-import type { User } from "../types/User";
+import type { LoginUser, User } from "../types/User";
 import ROLE from "../types/Role";
+import authService from '../utils/http/auth-service'
 
 const initialState: AuthContextState = {
   isAuthenticated: false,
@@ -17,21 +18,24 @@ type AuthProviderProps = { children: React.ReactChild[] | React.ReactChild };
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const login = (username: String, password: String): void => {
+  const login = async (user: LoginUser): Promise<void> => {
     // Send login request to server > dispatch (user)
     // const user = serverLogin(); xXddddDD
+    const res  = await authService.login(user)
 
+    const {username, id, role, token} = res.data
+    localStorage.setItem('token', token)
     // FAKE BOI ADMIN
-    const user: User = {
-      id: 1,
-      name: username,
-      role: ROLE.ADMIN,
-      status: "active",
-    };
+    // const user: User = {
+    //   id: 1,
+    //   name: username,
+    //   role: ROLE.ADMIN,
+    //   status: "active",
+    // };
 
     dispatch({
       type: ActionType.USER_LOGIN,
-      payload: user,
+      payload: {username, id, role},
     });
   };
 

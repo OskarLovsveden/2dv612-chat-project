@@ -1,17 +1,27 @@
 import ROLE from "./Role";
 
-type User = {
-    id: Number;
-    name: String;
+export type User = {
+    id: number;
+    username: string;
     role: ROLE;
-    status: String;
+    // status: string;
 };
 
-type NewUser = {
-    name: String;
-    password: String;
+export type NewUser = {
+    username: string;
+    password: string;
     role: ROLE;
-    status: String;
+    // status: string;
 };
 
-export type { User, NewUser };
+export type LoginUser = {
+    username: string;
+    password: string;
+};
+
+export type LoginResponse = {
+    username: string;
+    id: number;
+    role: ROLE;
+    token: string
+};

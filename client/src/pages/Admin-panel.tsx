@@ -35,7 +35,7 @@ const AdminPanel = () => {
 
   const removeUser = async (
     event: MouseEvent<HTMLButtonElement>,
-    id: Number
+    id: number
   ) => {
     event.preventDefault();
 
@@ -91,7 +91,7 @@ const AdminPanel = () => {
                       | ReactPortal
                       | null
                       | undefined;
-                    id: Number;
+                    id: number;
                   },
                   i: Key | null | undefined
                 ) =>
@@ -122,7 +122,7 @@ const AdminPanel = () => {
                       | ReactPortal
                       | null
                       | undefined;
-                    id: Number;
+                    id: number;
                   },
                   i: Key | null | undefined
                 ) =>
