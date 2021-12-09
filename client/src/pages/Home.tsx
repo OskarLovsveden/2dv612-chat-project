@@ -142,7 +142,7 @@ const Home = () => {
                       </svg>
                     </span>
                   </span>
-                  {user && <Chat Toggle={onChat} username={user.name} />}
+                  {user && <Chat Toggle={onChat} username={user.username} />}
                 </div>
               </div>
             </div>

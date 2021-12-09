@@ -11,20 +11,20 @@ import ROLE from "../types/Role";
 const UserCreation = () => {
   const [username, setUserName] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
-  const [userRole, setUserRole] = useState<string>("chattare");
+  const [userRole, setUserRole] = useState<string>(ROLE.USER);
 
   const options = [
     {
       label: "Chattare",
-      value: "chattare",
+      value: ROLE.USER,
     },
     {
       label: "Moderator",
-      value: "moderator",
+      value: ROLE.MOD,
     },
     {
       label: "Admin",
-      value: "admin",
+      value: ROLE.ADMIN,
     },
   ];
 
@@ -47,10 +47,10 @@ const UserCreation = () => {
 
   const handleOnSubmit = async (Event: { preventDefault: () => void }) => {
     const data = {
-      name: username,
+      username: username,
       password: userPassword,
-      role: ROLE.USER,
-      status: "active",
+      role: userRole,
+      active: true,
     };
     const res = await userService.create(data);
     console.log(res);

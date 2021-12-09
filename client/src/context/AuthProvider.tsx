@@ -17,16 +17,16 @@ type AuthProviderProps = { children: React.ReactChild[] | React.ReactChild };
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const login = (username: String, password: String): void => {
+  const login = (username: string, password: string): void => {
     // Send login request to server > dispatch (user)
     // const user = serverLogin(); xXddddDD
 
     // FAKE BOI ADMIN
     const user: User = {
       id: 1,
-      name: username,
+      username: username,
       role: ROLE.ADMIN,
-      status: "active",
+      active: true,
     };
 
     dispatch({

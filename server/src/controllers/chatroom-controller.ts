@@ -7,8 +7,8 @@ export default class ChatroomController {
 
     public async add(ctx: Context): Promise<void> {
         try {
-            const room = ctx.request.body.data;
-            const roomCreated = await this.roomModel.create(ctx.request.body.data);
+            const room = ctx.request.body;
+            const roomCreated = await this.roomModel.create(room);
 
             if (!roomCreated) {
                 ctx.throw(400, { message: 'Failed to create room' });
