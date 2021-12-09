@@ -14,13 +14,13 @@ export const Private = ({ component: RouteComponent, roles }: PrivateProps) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthenticated) navigate("/");
-  }, [isAuthenticated, navigate]);
+    if (!isAuthenticated || !userHasRequiredRole) navigate("/login");
+  }, [isAuthenticated, userHasRequiredRole, navigate]);
 
   return (
     <>
       {isAuthenticated && userHasRequiredRole && <RouteComponent />}
-      {isAuthenticated && !userHasRequiredRole && navigate("/home")}
+      {isAuthenticated && !userHasRequiredRole && navigate("/")}
     </>
   );
 };

@@ -22,7 +22,8 @@ export default class Server {
 
     public run(): void {
         this.setUp();
-        this.app.use(this.indexRouter.router);
+        this.app.use(this.indexRouter.router.routes());
+        this.app.use(this.indexRouter.router.allowedMethods());
         this.listen();
     }
 

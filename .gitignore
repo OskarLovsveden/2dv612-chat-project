@@ -1,4 +1,3 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/linux,windows,macos,node,vagrant,visualstudiocode,dotenv,ansible,pulumi
 # Edit at https://www.toptal.com/developers/gitignore?templates=linux,windows,macos,node,vagrant,visualstudiocode,dotenv,ansible,pulumi
 
@@ -61,6 +60,10 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
+
+# Pem keys
+
+*.pem
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

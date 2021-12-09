@@ -1,4 +1,4 @@
-import Router, { IMiddleware } from 'koa-router';
+import Router from 'koa-router';
 import UserRouter from './user-router';
 import ChatroomRouter from './chatroom-router';
 import AuthRouter from './auth-router';
@@ -13,8 +13,8 @@ export default class IndexRouter {
         this.initializeRoutes();
     }
     
-    public get router(): IMiddleware<any, unknown> {
-        return this._router.routes();
+    public get router(): Router {
+        return this._router;
     }
     
     private initializeRoutes(): void {
