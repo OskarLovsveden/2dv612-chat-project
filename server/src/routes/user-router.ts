@@ -32,14 +32,14 @@ export default class UserRouter {
         
         this._router.post('/',
             (ctx: Context, next: Next) => this.userMiddleware.requestHasValidParams(ctx, next),
-            (ctx: Context, next: Next) => this.authMiddleware.requestHasValidToken(ctx, next),
-            (ctx: Context, next: Next) => this.authMiddleware.requesterHasAdminRights(ctx, next),
+            // (ctx: Context, next: Next) => this.authMiddleware.requestHasValidToken(ctx, next),
+            // (ctx: Context, next: Next) => this.authMiddleware.requesterHasAdminRights(ctx, next),
             (ctx: Context) => this.controller.add(ctx)
         );
         
         this._router.delete('/:id',
-            (ctx: Context, next: Next) => this.authMiddleware.requestHasValidToken(ctx, next),
-            (ctx: Context, next: Next) => this.authMiddleware.requesterHasAdminRights(ctx, next),
+            // (ctx: Context, next: Next) => this.authMiddleware.requestHasValidToken(ctx, next),
+            // (ctx: Context, next: Next) => this.authMiddleware.requesterHasAdminRights(ctx, next),
             (ctx: Context) => this.controller.remove(ctx)
         );
         this._router.put('/:id',
