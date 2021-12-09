@@ -1,17 +1,17 @@
 import ROLE from "./Role";
 
 type User = {
-    id: Number;
-    name: String;
+    id: number;
+    name: string;
     role: ROLE;
-    status: String;
+    active: boolean;
 };
 
 type NewUser = {
-    name: String;
-    password: String;
+    name: string;
+    password: string;
     role: ROLE;
-    status: String;
+    active: boolean;
 };
 
 export type { User, NewUser };
