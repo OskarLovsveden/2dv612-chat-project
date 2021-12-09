@@ -1,5 +1,5 @@
 import { io, Socket } from "socket.io-client";
-import { SetStateAction, useEffect, useRef, useState } from "react";
+import React, { SetStateAction, useEffect, useRef, useState } from "react";
 import Message from "./Message";
 
 type MessageEvent = {
@@ -15,8 +15,9 @@ type ChatProps = {
 
 export default function ChatRoom({ Toggle, username }: ChatProps) {
   const [messages, setMessages] = useState<MessageEvent[]>([]);
-  const CHAT_ROOM = "room_1";
 
+  const CHAT_ROOM = "room_1";
+  const enterPressRef = useRef<any>();
   const messageRef = useRef<any>();
 
   const [socket, setSocket] = useState(() =>
@@ -46,14 +47,22 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
     };
   }, [socket, username]);
 
-  const handleOnSubmit = (Event: { preventDefault: () => void }) => {
-    Event.preventDefault();
-    //@ts-ignore
+  const handleEnter = (e: any) => {
+    if (e.code == "Enter" && e.shiftKey == false) {
+      e.preventDefault();
+      handleOnSubmit(e);
+    }
+  };
+
+  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     socket.emit("chat-message", {
       room_id: CHAT_ROOM,
       user_id: username,
       message: messageRef.current?.value,
     });
+
+    messageRef.current.value = "";
   };
 
   return (
@@ -73,7 +82,10 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
         </ul>
       </div>
       <div className="mb-6 mx-4">
-        <form onSubmit={handleOnSubmit}>
+        <form
+          onSubmit={handleOnSubmit}
+          ref={(el) => (enterPressRef.current = el)}
+        >
           <div className="pt-4 absolute pb-0 w-3/4 bottom-0">
             <div className="write bg-white shadow flex rounded-lg">
               <div className="flex-3 flex content-center items-center text-center p-4 pr-0">
@@ -93,6 +105,7 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
               </div>
               <div className="flex-1">
                 <textarea
+                  onKeyDown={(e) => handleEnter(e)}
                   ref={messageRef}
                   name="message"
                   className="w-full block outline-none py-4 px-4 bg-transparent"

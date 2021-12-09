@@ -40,6 +40,7 @@ const AdminPanel = () => {
   ) => {
     event.preventDefault();
     const res = await userService.delete(id);
+    setUserData(userData.filter((ud) => ud.id !== id));
     console.log(res);
   };
 
@@ -49,6 +50,7 @@ const AdminPanel = () => {
   ) => {
     event.preventDefault();
     const res = await chatroomService.delete(id);
+    setChatRoomData(chatRoomData.filter((cr) => cr.id !== id));
     console.log(res);
   };
 
@@ -58,7 +60,7 @@ const AdminPanel = () => {
         <div className="px-6 py-4">
           <img className="w-1/4 h-1/4" src={adminImg} alt="Admin" />
           <div className="font-bold text-xl mb-2">Admin</div>
-          <div className="inline-flex space-x-4">
+          {/* <div className="inline-flex space-x-4">
             <Link to="/create-user">
               <img
                 className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
@@ -74,8 +76,8 @@ const AdminPanel = () => {
                 alt="Add Chat"
               />
             </Link>
-          </div>
-          <ul>
+          </div> */}
+          {/*  <ul>
             {userData.map(
               (u, i) =>
                 u.role === ROLE.ADMIN && (
@@ -101,7 +103,7 @@ const AdminPanel = () => {
                   </li>
                 )
             )}
-          </ul>
+          </ul> */}
 
           <div>
             <div className="font-bold text-xl mb-2">Rooms Public</div>

@@ -12,7 +12,7 @@ import { useContext } from "react";
 import { AuthContext } from "./context/AuthProvider";
 
 function App() {
-  const { user } = useContext(AuthContext);
+  const { user, isAuthenticated } = useContext(AuthContext);
 
   return (
     <div className="App">
@@ -26,9 +26,21 @@ function App() {
               Admin
             </Link>
 
-            <Link className="no-underline hover:underline" to="/login">
-              Login
-            </Link>
+            {isAuthenticated ? (
+              <a
+                className="no-underline hover:underline"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                }}
+                href="/"
+              >
+                Logout
+              </a>
+            ) : (
+              <Link className="no-underline hover:underline" to="/login">
+                Login
+              </Link>
+            )}
 
             <Link
               className="no-underline hover:underline"

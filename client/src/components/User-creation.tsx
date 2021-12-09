@@ -3,6 +3,7 @@ import "../App.css";
 import userService from "../utils/http/user-service";
 import userImg from "../images/user.png";
 import ROLE from "../types/Role";
+import { useNavigate } from "react-router";
 
 /**
  * Makes Admin able to create users.
@@ -12,6 +13,7 @@ const UserCreation = () => {
   const [username, setUserName] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
   const [userRole, setUserRole] = useState<string>(ROLE.USER);
+  const navigate = useNavigate();
 
   const options = [
     {
@@ -45,7 +47,8 @@ const UserCreation = () => {
     setUserRole(Event.target.value);
   };
 
-  const handleOnSubmit = async (Event: { preventDefault: () => void }) => {
+  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const data = {
       username: username,
       password: userPassword,
@@ -54,7 +57,8 @@ const UserCreation = () => {
     };
     const res = await userService.create(data);
     console.log(res);
-    Event.preventDefault();
+
+    navigate("/admin");
   };
 
   return (
