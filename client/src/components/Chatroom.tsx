@@ -1,6 +1,6 @@
 import {SetStateAction, useState} from "react"
 import '../App.css'
-import axios from "axios"
+import chatroomService from "../utils/http/chatroom-service";
 import chatImg from '../images/chat.png'
 
 
@@ -20,21 +20,22 @@ const Chatroom = () => {
         setChatroomTag(Event.target.value)
     }
 
-    const handleOnSubmit = (Event: { preventDefault: () => void }) =>  {
-        const chatroomJSON = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            data: { name: chatroomName, public: true, tag: chatroomTag }
-        }
-        axios.post('http://localhost:5000/api/room', chatroomJSON)
-        Event.preventDefault()
+    const handleOnSubmit = async (Event: { preventDefault: () => void }) =>  {
+        const data = { 
+            name: chatroomName, 
+            public: true, 
+            tag: chatroomTag
+        };
+        const res = await chatroomService.create(data);
+        console.log(res);
+        Event.preventDefault();
    }
 
     return(
         <div className="bg-indigo-600 h-screen">
         <div className="max-w-xs w-full m-auto bg-indigo-100 rounded p-5">   
         <header>
-            <img className="w-20 mx-auto mb-5" src={chatImg} />
+            <img className="w-20 mx-auto mb-5" alt={chatImg} src={chatImg} />
         </header>
         <form onSubmit={handleOnSubmit}>
         <div>

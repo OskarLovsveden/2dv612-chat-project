@@ -47,7 +47,7 @@ const AdminPanel = () => {
     <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 bg-indigo-600 h-screen">
       <div className="rounded overflow-hidden shadow-lg">
         <div className="px-6 py-4">
-          <img className="w-1/4 h-1/4" src={adminImg} alt="Admin image" />
+          <img className="w-1/4 h-1/4" src={adminImg} alt="Admin" />
           <div className="font-bold text-xl mb-2">Admin</div>
           <ul>
             {users.map(
@@ -153,7 +153,7 @@ const AdminPanel = () => {
           <img
             className="w-1/4 h-1/4"
             src={moderatorImg}
-            alt="Moderator image"
+            alt="Moderator"
           />
           <div className="font-bold text-xl mb-2">Moderator</div>
           <Link to="/create-user">
@@ -195,7 +195,7 @@ const AdminPanel = () => {
 
       <div className="rounded overflow-hidden shadow-lg">
         <div className="px-6 py-4">
-          <img className="w-1/4 h-1/4" src={chattareImg} alt="Chattare image" />
+          <img className="w-1/4 h-1/4" src={chattareImg} alt="Chattare" />
           <div className="font-bold text-xl mb-2">Chattare</div>
           <Link to="/create-user">
             <img

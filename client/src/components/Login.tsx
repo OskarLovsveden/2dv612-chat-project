@@ -26,7 +26,7 @@ const Login = () => {
     <div className="bg-indigo-600 h-screen">
       <div className="max-w-xs w-full m-auto bg-indigo-100 rounded p-5">
         <header>
-          <img className="w-20 mx-auto mb-5" src={chatImg} />
+          <img className="w-20 mx-auto mb-5" alt={chatImg} src={chatImg} />
           <h3 className="block mb-2 text-indigo-800">Login</h3>
         </header>
         <form>
