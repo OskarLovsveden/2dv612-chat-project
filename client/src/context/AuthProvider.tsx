@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     // FAKE BOI ADMIN
     const user: User = {
       id: 1,
-      name: username,
+      username: username,
       role: ROLE.ADMIN,
       active: true,
     };
