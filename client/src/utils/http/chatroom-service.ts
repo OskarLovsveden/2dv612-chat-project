@@ -1,7 +1,7 @@
 import http from "./axios";
 import type { Chatroom, NewChatroom } from "../../types/Chatroom"
 
-class UserService {
+class ChatroomService {
     getAll() {
       return http.get<Array<Chatroom>>("/room");
     }
@@ -23,4 +23,4 @@ class UserService {
     }
   }
   
-  export default new UserService();
+  export default new ChatroomService();
