@@ -41,4 +41,24 @@ export default class ChatroomController {
             console.error(e);
         }
     }
+
+    public async remove(ctx: Context): Promise<void> {
+        try {
+            const id = ctx.params.id;
+        
+            const roomDeleted = await this.roomModel.delete(id);
+
+            if (!roomDeleted) {
+                ctx.throw(400, { message: 'Failed to delete room' });
+            }
+
+            ctx.body = { message: 'Room deleted' };
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    public async update(ctx: Context): Promise<void> {
+        console.log(ctx.request.body);
+    }
 }

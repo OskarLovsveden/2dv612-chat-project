@@ -46,11 +46,18 @@ export default class ChatRoom {
         return roomsArray;
     }
 
-    //     public delete(roomID: number) {
+    public async delete(roomID: number): Promise<boolean> {
+        const roomDeleted = await db<DBChatroom>(this.ROOM_TABLE).where({ id: roomID }).del();
 
-    //     }
+        if (!roomDeleted) {
+            return false;
+        }
 
-    //     public update(roomID: number) {
+        return true;
+    }
 
-//     }
+    // TODO
+    // public update(roomID: number) {
+
+    // }
 }

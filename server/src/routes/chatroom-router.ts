@@ -33,5 +33,17 @@ export default class ChatroomRouter {
             (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next), 
             (ctx: Context) => this.controller.get(ctx)
         );
+
+        this._router.delete('/:id',
+            (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
+            (ctx: Context, next: Next) => this.middleware.requesterHasAdminRights(ctx, next),
+            (ctx: Context) => this.controller.remove(ctx)
+        );
+
+        // this._router.put('/:id',
+        //     (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
+        //     (ctx: Context, next: Next) => this.middleware.requesterHasAdminRights(ctx, next),
+        //     (ctx: Context) => this.controller.update(ctx)
+        // );
     }
 }
