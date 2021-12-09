@@ -27,39 +27,31 @@ const AdminPanel = () => {
 
   useEffect(() => {
     (async () => {
-    const resUser = await userService.getAll()
-   setUserData(resUser.data) // Get username, id and password.
+   const resUser = await userService.getAll()
    const resChatRoom = await chatroomService.getAll()
-   setChatRoomData(resChatRoom.data) // Get chatroom info
-   console.log(userData)
-   console.log(chatRoomData)
+   setUserData(resUser.data)
+   setChatRoomData(resChatRoom.data)
   })()
 
   }, [])
 
   
-
-  const [users, setUsers] = useState<User[]>([
-    { id: 1, name: "chatter1", role: ROLE.USER, active: true },
-    { id: 2, name: "chatter2", role: ROLE.USER, active: true },
-    { id: 3, name: "admin1", role: ROLE.ADMIN, active: true },
-    { id: 5, name: "mod1", role: ROLE.MOD, active: true },
-  ]);
-
-  const [chatRooms, setChatRooms] = useState<any>([
-    { id: 1, tag: "#photography", status: "Public" },
-    { id: 2, tag: "#travel", status: "Public" },
-    { id: 3, tag: "#food", status: "Public" },
-    { id: 4, tag: "#howdy", status: "Private" },
-  ]);
-
   const removeUser = async (
     event: MouseEvent<HTMLButtonElement>,
     id: Number
   ) => {
-    event.preventDefault();
 
+    event.preventDefault();
     const res = await userService.delete(id);
+    console.log(res);
+  };
+
+  const removeChatroom = async (
+    event: MouseEvent<HTMLImageElement>,
+    id: Number
+  ) => {
+    event.preventDefault();
+    const res = await chatroomService.delete(id);
     console.log(res);
   };
 
@@ -69,13 +61,30 @@ const AdminPanel = () => {
         <div className="px-6 py-4">
           <img className="w-1/4 h-1/4" src={adminImg} alt="Admin" />
           <div className="font-bold text-xl mb-2">Admin</div>
+          <div className="inline-flex space-x-4">
+          <Link to="/create-user">
+            <img
+              className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+              src={addUserImg}
+              alt="Add Users"
+            />
+          </Link>
+
+          <Link to="/create-chatroom">
+            <img
+              className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+              src={addChatImg}
+              alt="Add Chat"
+            />
+          </Link>
+          </div>
           <ul>
-            {users.map(
+            {userData.map(
               (u, i) =>
                 u.role === ROLE.ADMIN && (
                   <li key={i}>
                     <div className="inline-flex space-x-4 ">
-                      <h3>{u.name} </h3>
+                      <h3>{u.username} </h3>
                       <button
                         onClick={(e) => {
                           removeUser(e, u.id);
@@ -100,10 +109,11 @@ const AdminPanel = () => {
           <div>
             <div className="font-bold text-xl mb-2">Rooms Public</div>
             <ul>
-              {chatRooms.map(
+              {chatRoomData.map(
                 (
                   u: {
-                    status: string;
+                    public: boolean;
+                    name: string;
                     tag:
                       | boolean
                       | ReactChild
@@ -115,12 +125,16 @@ const AdminPanel = () => {
                   },
                   i: Key | null | undefined
                 ) =>
-                  u.status === "Public" && (
+                  u.public === true && (
                     <li key={i}>
                       <div className="inline-flex space-x-4">
+                        <h3>{u.name} </h3>
                         <h3>{u.tag} </h3>
                         <span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white "></span>
-                        <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={deleteImg} alt="Delete" />
+                        <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={deleteImg} alt="Delete"  
+                        onClick={(e) => {
+                          removeChatroom(e, u.id);
+                        }} /> 
                         <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={editUserImg} alt="Edit"/>
                       </div>
                     </li>
@@ -132,10 +146,11 @@ const AdminPanel = () => {
           <div>
             <div className="font-bold text-xl mb-2">Rooms Private</div>
             <ul>
-              {chatRooms.map(
+              {chatRoomData.map(
                 (
                   u: {
-                    status: string;
+                    public: boolean;
+                    name: string;
                     tag:
                       | boolean
                       | ReactChild
@@ -147,9 +162,10 @@ const AdminPanel = () => {
                   },
                   i: Key | null | undefined
                 ) =>
-                  u.status === "Private" && (
+                  u.public === false && (
                     <li key={i}>
                       <div className="inline-flex space-x-4">
+                        <h3>{u.name} </h3>
                         <h3>{u.tag} </h3>
                         <span className="inline-block align-text-bottom w-4 h-4 bg-blue-400 rounded-full border-2 border-white"></span>
                         <img className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110" src={deleteImg} alt="Delete" />
@@ -160,13 +176,6 @@ const AdminPanel = () => {
               )}
             </ul>
           </div>
-          <Link to="/create-chatroom">
-            <img
-              className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-              src={addChatImg}
-              alt="Add Chat"
-            />
-          </Link>
         </div>
       </div>
 
@@ -178,20 +187,13 @@ const AdminPanel = () => {
             alt="Moderator"
           />
           <div className="font-bold text-xl mb-2">Moderator</div>
-          <Link to="/create-user">
-            <img
-              className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-              src={addUserImg}
-              alt="Add Moderator"
-            />
-          </Link>
           <ul>
-            {users.map(
+            {userData.map(
               (u, i) =>
                 u.role === ROLE.MOD && (
                   <li key={i}>
                     <div className="inline-flex space-x-4 ">
-                      <h3>{u.name} </h3>
+                      <h3>{u.username} </h3>
                       <button
                         onClick={(e) => {
                           removeUser(e, u.id);
@@ -219,20 +221,13 @@ const AdminPanel = () => {
         <div className="px-6 py-4">
           <img className="w-1/4 h-1/4" src={chattareImg} alt="Chattare" />
           <div className="font-bold text-xl mb-2">Chattare</div>
-          <Link to="/create-user">
-            <img
-              className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-              src={addUserImg}
-              alt="Add Chattare"
-            />
-          </Link>
           <ul>
-            {users.map(
+            {userData.map(
               (u, i) =>
                 u.role === ROLE.USER && (
                   <li key={i}>
                     <div className="inline-flex space-x-4 ">
-                      <h3>{u.name} </h3>
+                      <h3>{u.username} </h3>
                       <button
                         onClick={(e) => {
                           removeUser(e, u.id);
@@ -249,7 +244,7 @@ const AdminPanel = () => {
                         />
                       </Link>
                     </div>
-                    <div className="px-6 pt-4 pb-2">
+                    {/* <div className="px-6 pt-4 pb-2">
                       <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">
                         #photography
                       </span>
@@ -259,7 +254,7 @@ const AdminPanel = () => {
                       <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">
                         #food
                       </span>
-                    </div>
+                    </div> */}
                   </li>
                 )
             )}
