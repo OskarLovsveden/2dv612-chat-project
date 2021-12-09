@@ -17,7 +17,7 @@ export default class ChatroomRouter {
 
     private initializeRoutes(): void {
         this._router.post('/', 
-            (ctx: Context) => this.controller.chatroomInfo(ctx)
+            (ctx: Context) => this.controller.add(ctx)
         );
             
         this._router.get('/', 

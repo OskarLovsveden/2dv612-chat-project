@@ -7,21 +7,12 @@ export default class ChatroomController {
     readonly table = 'chatroom';
     chatDatabase = [];
 
-    public async chatroomInfo(ctx: Context): Promise<void> {
-        // try {
-        //     const { chatroomName,chatroomTag } = ctx.request.body.data;
-        //     console.log(chatroomName);
-        //     console.log(chatroomTag);
-        // } catch (e) {
-        //     console.log(e);
-        // }
+    public async add(ctx: Context): Promise<void> {
         try {
-            // console.log(ctx.request.body.data);
-            this.chatDatabase.push(ctx.request.body.data);
-            // const chatroom = ctx.request.body.data;
-            // await db(this.table).insert(chatroom);
+            const room = ctx.request.body.data;
+            await db(this.table).insert(ctx.request.body.data);
 
-            ctx.body = { message: 'Success' };
+            ctx.body = { message: 'Success', room };
         } catch (e) {
             console.error(e);
         }
