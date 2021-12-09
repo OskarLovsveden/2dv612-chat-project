@@ -16,7 +16,7 @@ export default class UserController {
         }
     }
 
-    // Work in progress
+    // TODO Knex implementation?
     public async add(ctx: Context): Promise<void> {
         try {
             /* await db(this.table).insert(user); */

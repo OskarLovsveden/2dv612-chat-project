@@ -2,7 +2,7 @@
 # Create master server
 resource "openstack_compute_instance_v2" "kube-master-server" {
   depends_on = [
-    openstack_networking_router_interface_v2.router_interface
+    openstack_networking_router_interface_v2.prod-router_interface
   ]
 
 
@@ -18,7 +18,7 @@ resource "openstack_compute_instance_v2" "kube-master-server" {
   availability_zone = "Education"
 
   network {
-    name = openstack_networking_network_v2.network.name
+    name = openstack_networking_network_v2.prod-network.name
   }
 
   tags = ["master"]
@@ -32,7 +32,7 @@ resource "openstack_compute_instance_v2" "kube-master-server" {
 # Create node servers
 resource "openstack_compute_instance_v2" "kube-node-server" {
   depends_on = [
-    openstack_networking_router_interface_v2.router_interface
+    openstack_networking_router_interface_v2.prod-router_interface
   ]
 
   name         = "kube-node-server-${count.index}"
@@ -49,7 +49,7 @@ resource "openstack_compute_instance_v2" "kube-node-server" {
   availability_zone = "Education"
 
   network {
-    name = openstack_networking_network_v2.network.name
+    name = openstack_networking_network_v2.prod-network.name
   }
 
   tags = ["nodes"]
@@ -60,34 +60,4 @@ resource "openstack_compute_instance_v2" "kube-node-server" {
     create = var.server_create_timeout
     delete = var.server_delete_timeout
   }
-}
-
-# Create docker registry
-resource "openstack_compute_instance_v2" "registry-server" {
-  depends_on = [
-    openstack_networking_router_interface_v2.router_interface
-  ]
-
-  name         = "registry-server"
-  image_id     = "ca4bec1a-ac25-434f-b14c-ad8078ccf39f"
-  flavor_name  = "c1-r1-d10"
-  key_pair     = var.key_pair
-  force_delete = true
-  security_groups = [
-    "default",
-    "${openstack_networking_secgroup_v2.ssh_secgroup.name}",
-    "${openstack_networking_secgroup_v2.registry_secgroup.name}"
-  ]
-  availability_zone = "Education"
-
-  network {
-    name = openstack_networking_network_v2.network.name
-  }
-
-  timeouts {
-    create = var.server_create_timeout
-    delete = var.server_delete_timeout
-  }
-
-  tags = ["registry"]
 }

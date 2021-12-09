@@ -1,8 +1,20 @@
-shared_dir:
-  - /wordpress
-  - /mysql
-
-acme_dir: acme
-mysql_dir: mysql
 storageclass_name: nfs-sc
 proxy_svc_port: 80
+service_names:
+  - "docker"
+  - "kubelet"
+packages_to_install:
+  - docker-ce
+  - kubelet
+  - kubeadm
+  - kubectl
+  - nfs-common
+keys_to_add:
+  - https://download.docker.com/linux/ubuntu/gpg
+  - https://packages.cloud.google.com/apt/doc/apt-key.gpg
+repos_to_add:
+  - deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+  - deb https://apt.kubernetes.io/ kubernetes-xenial main
+token_file: token_file
+ssh_key_local_path: "{{ ansible_ssh_private_key_file }}"
+ssh_key_remote_path: "{{ ansible_ssh_private_key_file }}"

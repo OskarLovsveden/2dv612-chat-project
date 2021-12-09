@@ -1,5 +1,6 @@
 import http from "./axios";
-import User from "../../types/user"
+import type { User } from "../../types/User"
+import type { NewUser } from "../../types/User"
 
 // Default implementation, change if needed!
 class UserService {
@@ -11,7 +12,7 @@ class UserService {
       return http.get<User>(`/user/${id}`);
     }
     
-    create(data: User) {
+    create(data: NewUser) {
       return http.post<any>("/user", data);
     }
     
@@ -21,7 +22,7 @@ class UserService {
     }
   
     delete(id: Number) {
-      return http.delete<any>(`/user/${id}?role=admin`);
+      return http.delete<any>(`/user/${id}`);
     }
   }
   

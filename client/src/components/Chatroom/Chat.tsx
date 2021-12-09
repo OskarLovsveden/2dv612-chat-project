@@ -10,7 +10,7 @@ type MessageEvent = {
 
 type ChatProps = {
   Toggle: () => void;
-  username: string;
+  username: String;
 };
 
 export default function ChatRoom({ Toggle, username }: ChatProps) {
@@ -42,7 +42,7 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
     });
 
     return () => {
-      socket.emit("disconnect");
+      socket.emit("user-disconnect");
     };
   }, [socket, username]);
 

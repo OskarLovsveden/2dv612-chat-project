@@ -63,8 +63,3 @@ variable "k8_port" {
   type        = number
   description = ""
 }
-
-variable "num_of_nodes" {
-  type        = number
-  description = ""
-}

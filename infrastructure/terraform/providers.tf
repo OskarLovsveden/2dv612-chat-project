@@ -7,5 +7,3 @@ provider "openstack" {
   auth_url    = var.auth_url
   region      = var.region
 }
-
-provider "tls" {}
