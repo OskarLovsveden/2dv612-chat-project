@@ -50,7 +50,7 @@ const UserCreation = () => {
       name: username,
       password: userPassword,
       role: ROLE.USER,
-      status: "active",
+      active: true,
     };
     const res = await userService.create(data);
     console.log(res);

@@ -16,28 +16,34 @@ import deleteImg from "../images/delete.png";
 import editUserImg from "../images/edit.png";
 import addChatImg from "../images/add-chat.png";
 import type { User } from "../types/User";
+import { Chatroom } from "../types/Chatroom";
 import userService from "../utils/http/user-service";
+import chatroomService from "../utils/http/chatroom-service";
 import ROLE from "../types/Role";
 
 const AdminPanel = () => {
-  const [roomData, setRoomData] = useState<User[]>([])
+  const [chatRoomData, setChatRoomData] = useState<Chatroom[]>([])
   const [userData, setUserData] = useState<User[]>([])
 
   useEffect(() => {
     (async () => {
-    setUserData((await userService.getAll()).data) // Get username, id and password.
-    })()
+    const resUser = await userService.getAll()
+   setUserData(resUser.data) // Get username, id and password.
+   const resChatRoom = await chatroomService.getAll()
+   setChatRoomData(resChatRoom.data) // Get chatroom info
+   console.log(userData)
+   console.log(chatRoomData)
+  })()
 
-    return () => {
-      
-    }
   }, [])
 
+  
+
   const [users, setUsers] = useState<User[]>([
-    { id: 1, name: "chatter1", role: ROLE.USER, status: "" },
-    { id: 2, name: "chatter2", role: ROLE.USER, status: "" },
-    { id: 3, name: "admin1", role: ROLE.ADMIN, status: "" },
-    { id: 5, name: "mod1", role: ROLE.MOD, status: "" },
+    { id: 1, name: "chatter1", role: ROLE.USER, active: true },
+    { id: 2, name: "chatter2", role: ROLE.USER, active: true },
+    { id: 3, name: "admin1", role: ROLE.ADMIN, active: true },
+    { id: 5, name: "mod1", role: ROLE.MOD, active: true },
   ]);
 
   const [chatRooms, setChatRooms] = useState<any>([
