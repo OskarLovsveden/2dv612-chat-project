@@ -1,27 +1,20 @@
 import { Context } from 'koa';
-import { db } from '../db/postgres';
+import Room from '../models/chatroom';
 
-
-// Fix this DEMO!
 export default class ChatroomController {
     readonly table = 'chatroom';
-    chatDatabase = [];
+    private roomModel = new Room();
 
-    public async chatroomInfo(ctx: Context): Promise<void> {
-        // try {
-        //     const { chatroomName,chatroomTag } = ctx.request.body.data;
-        //     console.log(chatroomName);
-        //     console.log(chatroomTag);
-        // } catch (e) {
-        //     console.log(e);
-        // }
+    public async add(ctx: Context): Promise<void> {
         try {
-            // console.log(ctx.request.body.data);
-            this.chatDatabase.push(ctx.request.body.data);
-            // const chatroom = ctx.request.body.data;
-            // await db(this.table).insert(chatroom);
+            const room = ctx.request.body.data;
+            const roomCreated = await this.roomModel.create(ctx.request.body.data);
 
-            ctx.body = { message: 'Success' };
+            if (!roomCreated) {
+                ctx.throw(400, { message: 'Failed to create room' });
+            }
+
+            ctx.body = { message: 'Room created', room };
         } catch (e) {
             console.error(e);
         }
@@ -29,9 +22,8 @@ export default class ChatroomController {
 
     public async getAll(ctx: Context): Promise<void> {
         try {
-            // const chatroom = await db.from(this.table).select('*');
-            // ctx.body = chatroom;
-            ctx.body = this.chatDatabase;
+            const chatrooms = await this.roomModel.getAll();
+            ctx.body = chatrooms;
         } catch (e) {
             console.error(e);
         }
@@ -40,12 +32,33 @@ export default class ChatroomController {
     public async get(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
-            const chatroom = await db.from(this.table).select('*').where({ id: id });
+            // const chatroom = await db.from(this.table).select('*').where({ id: id });
+            const room = await this.roomModel.get(id);
             
-            ctx.body = chatroom;
-            ctx.state.chatroom = chatroom;
+            ctx.body = room;
+            // ctx.state.chatroom = room;
         } catch (e) {
             console.error(e);
         }
+    }
+
+    public async remove(ctx: Context): Promise<void> {
+        try {
+            const id = ctx.params.id;
+        
+            const roomDeleted = await this.roomModel.delete(id);
+
+            if (!roomDeleted) {
+                ctx.throw(400, { message: 'Failed to delete room' });
+            }
+
+            ctx.body = { message: 'Room deleted' };
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    public async update(ctx: Context): Promise<void> {
+        console.log(ctx.request.body);
     }
 }

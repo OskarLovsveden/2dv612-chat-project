@@ -4,3 +4,9 @@ export type RequestUserCreate = {
     role: string;
     active: boolean;
 }
+
+export type RequestRoomCreate = {
+    name: string;
+    public: boolean;
+    tag: string;
+}
