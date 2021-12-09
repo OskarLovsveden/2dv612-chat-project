@@ -2,15 +2,15 @@ import ROLE from "./Role";
 
 type User = {
     id: number;
-    name: string;
+    username: string;
     role: ROLE;
     active: boolean;
 };
 
 type NewUser = {
-    name: string;
+    username: string;
     password: string;
-    role: ROLE;
+    role: string;
     active: boolean;
 };
 
