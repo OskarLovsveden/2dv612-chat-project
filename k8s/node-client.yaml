@@ -5,7 +5,6 @@ metadata:
 spec:
   ports:
   - port: 3000
-  type: LoadBalancer
   selector:
     app: node-client
 ---
@@ -22,8 +21,6 @@ spec:
       labels:
         app: node-client
     spec:
-      securityContext:
-        runAsUser: 1000
       containers:
       - name: node-client
         image: node-client-img
