@@ -195,7 +195,6 @@ dist
 # Local .terraform directories
 **/.terraform/*
 
-!public.auto.tfvars
 
 # .tfstate files
 *.tfstate
@@ -210,6 +209,7 @@ crash.log
 # to change depending on the environment.
 #
 *.tfvars
+!public.auto.tfvars
 
 # Ignore override files as they are usually used to override resources locally and so
 # are not checked in
@@ -288,3 +288,5 @@ package-lock.json
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,macos,node,vagrant,visualstudiocode,dotenv,ansible,pulumi
 password.txt
+
+infrastructure/cache/*

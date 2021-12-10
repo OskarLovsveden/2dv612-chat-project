@@ -37,7 +37,7 @@ resource "openstack_compute_instance_v2" "kube-node-server" {
 
   name         = "kube-node-server-${count.index}"
   image_id     = "ca4bec1a-ac25-434f-b14c-ad8078ccf39f"
-  flavor_name  = "c1-r1-d10"
+  flavor_name  = "c1-r2-d10"
   key_pair     = var.key_pair
   force_delete = true
   security_groups = [
@@ -60,4 +60,64 @@ resource "openstack_compute_instance_v2" "kube-node-server" {
     create = var.server_create_timeout
     delete = var.server_delete_timeout
   }
+}
+
+# Create docker registry
+resource "openstack_compute_instance_v2" "registry-server" {
+  depends_on = [
+    openstack_networking_router_interface_v2.prod-router_interface
+  ]
+
+  name         = "registry-server"
+  image_id     = "ca4bec1a-ac25-434f-b14c-ad8078ccf39f"
+  flavor_name  = "c1-r1-d10"
+  key_pair     = var.key_pair
+  force_delete = true
+  security_groups = [
+    "default",
+    "${openstack_networking_secgroup_v2.ssh_secgroup.name}",
+    "${openstack_networking_secgroup_v2.registry_secgroup.name}"
+  ]
+  availability_zone = "Education"
+
+  network {
+    name = openstack_networking_network_v2.prod-network.name
+  }
+
+  timeouts {
+    create = var.server_create_timeout
+    delete = var.server_delete_timeout
+  }
+
+  tags = ["registry"]
+}
+
+# Create nfs server
+resource "openstack_compute_instance_v2" "nfs-server" {
+  depends_on = [
+    openstack_networking_router_interface_v2.prod-router_interface
+  ]
+
+  name         = "nfs-server_${count.index}"
+  image_id     = "ca4bec1a-ac25-434f-b14c-ad8078ccf39f"
+  flavor_name  = "c1-r1-d40"
+  key_pair     = var.key_pair
+  force_delete = true
+  security_groups = [
+    "default",
+    "${openstack_networking_secgroup_v2.ssh_secgroup.name}"
+  ]
+  availability_zone = "Education"
+
+  timeouts {
+    create = var.server_create_timeout
+    delete = var.server_delete_timeout
+  }
+
+  count = 1
+
+  network {
+    name = openstack_networking_network_v2.prod-network.name
+  }
+
 }

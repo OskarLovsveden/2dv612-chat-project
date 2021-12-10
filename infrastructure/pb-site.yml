@@ -18,3 +18,16 @@
 # Set up K8s worker nodes.
 - name: kubernetes-nodes
   import_playbook: pb-nodes.yml
+
+# Set up File server.
+- name: nfs
+  import_playbook: pb-nfs.yml
+
+# Set up registry server.
+- name: registry
+  import_playbook: pb-registry.yml
+
+
+# Set up registry server.
+- name: k8-dep
+  import_playbook: pb-kube-acme.yml
