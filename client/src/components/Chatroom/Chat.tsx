@@ -1,6 +1,7 @@
 import { io, Socket } from "socket.io-client";
 import React, { SetStateAction, useEffect, useRef, useState } from "react";
 import Message from "./Message";
+import Userlist from "./User-list"
 
 type MessageEvent = {
   name: string;
@@ -66,6 +67,7 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
   };
 
   return (
+    <>
     <div className="max-w-auto h-screen w-full m-auto bg-indigo-300 rounded p-5">
       <div className="h-3/4 overflow-y-scroll">
         <ul>
@@ -154,5 +156,9 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
         </form>
       </div>
     </div>
+    <div>
+        <Userlist />
+    </div>
+    </>
   );
 }
