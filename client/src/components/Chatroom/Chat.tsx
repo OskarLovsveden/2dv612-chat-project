@@ -9,11 +9,12 @@ type MessageEvent = {
 };
 
 type ChatProps = {
-  Toggle: () => void;
+  // toggle: () => void;
   username: string;
 };
 
-export default function ChatRoom({ Toggle, username }: ChatProps) {
+// export default function ChatRoom({ toggle, username }: ChatProps) {
+export default function ChatRoom({ username }: ChatProps) {
   const [messages, setMessages] = useState<MessageEvent[]>([]);
 
   const CHAT_ROOM = "room_1";
@@ -48,7 +49,7 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
   }, [socket, username]);
 
   const handleEnter = (e: any) => {
-    if (e.code == "Enter" && e.shiftKey == false) {
+    if (e.code === "Enter" && e.shiftKey === false) {
       e.preventDefault();
       handleOnSubmit(e);
     }
