@@ -59,6 +59,19 @@ export default class ChatroomController {
     }
 
     public async update(ctx: Context): Promise<void> {
-        console.log(ctx.request.body);
+        try { 
+            const id = ctx.params.id;
+            const room = ctx.request.body;
+
+            const roomUpdated = await this.roomModel.update(id, room);
+
+            if (!roomUpdated) {
+                ctx.throw(400, { message: 'Failed to update room' });
+            }
+
+            ctx.body = { message: 'Room updated' };
+        } catch (e) {
+            console.error(e);
+        }
     }
 }

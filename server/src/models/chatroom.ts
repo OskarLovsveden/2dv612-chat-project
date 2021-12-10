@@ -57,7 +57,13 @@ export default class ChatRoom {
     }
 
     // TODO
-    // public update(roomID: number) {
+    public async update(roomID: number, clientRoom: RequestRoomCreate): Promise<boolean> {
+        const roomUpdated = await db<DBChatroom>(this.ROOM_TABLE).where({ id: roomID }).update(clientRoom);
 
-    // }
+        if (!roomUpdated) {
+            return false;
+        }
+
+        return true;
+    }
 }
