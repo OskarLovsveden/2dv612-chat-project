@@ -1,8 +1,0 @@
-shared_dir:
-  - /wordpress
-  - /mysql
-
-acme_dir: acme
-mysql_dir: mysql
-storageclass_name: nfs-sc
-proxy_svc_port: 80

@@ -1,5 +1,5 @@
 import { io, Socket } from "socket.io-client";
-import { SetStateAction, useEffect, useRef, useState } from "react";
+import React, { SetStateAction, useEffect, useRef, useState } from "react";
 import Message from "./Message";
 
 type MessageEvent = {
@@ -15,8 +15,9 @@ type ChatProps = {
 
 export default function ChatRoom({ Toggle, username }: ChatProps) {
   const [messages, setMessages] = useState<MessageEvent[]>([]);
-  const CHAT_ROOM = "room_1";
 
+  const CHAT_ROOM = "room_1";
+  const enterPressRef = useRef<any>();
   const messageRef = useRef<any>();
 
   const [socket, setSocket] = useState(() =>
@@ -42,49 +43,30 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
     });
 
     return () => {
-      socket.emit("disconnect");
+      socket.emit("user-disconnect");
     };
   }, [socket, username]);
 
-  const handleOnSubmit = (Event: { preventDefault: () => void }) => {
-    Event.preventDefault();
-    //@ts-ignore
+  const handleEnter = (e: any) => {
+    if (e.code == "Enter" && e.shiftKey == false) {
+      e.preventDefault();
+      handleOnSubmit(e);
+    }
+  };
+
+  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     socket.emit("chat-message", {
       room_id: CHAT_ROOM,
       user_id: username,
       message: messageRef.current?.value,
     });
+
+    messageRef.current.value = "";
   };
 
   return (
     <div className="max-w-auto h-screen w-full m-auto bg-indigo-300 rounded p-5">
-      <header>
-        <div className="relative left-5 top-5">
-          <button
-            onClick={Toggle}
-            type="button"
-            className="absolute bottom-0 right-0 bg-white rounded-md p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-          >
-            <span className="sr-only">Close menu</span>
-            <svg
-              className="h-6 w-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-      </header>
-
       <div className="h-3/4 overflow-y-scroll">
         <ul>
           {messages &&
@@ -100,7 +82,10 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
         </ul>
       </div>
       <div className="mb-6 mx-4">
-        <form onSubmit={handleOnSubmit}>
+        <form
+          onSubmit={handleOnSubmit}
+          ref={(el) => (enterPressRef.current = el)}
+        >
           <div className="pt-4 absolute pb-0 w-3/4 bottom-0">
             <div className="write bg-white shadow flex rounded-lg">
               <div className="flex-3 flex content-center items-center text-center p-4 pr-0">
@@ -120,6 +105,7 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
               </div>
               <div className="flex-1">
                 <textarea
+                  onKeyDown={(e) => handleEnter(e)}
                   ref={messageRef}
                   name="message"
                   className="w-full block outline-none py-4 px-4 bg-transparent"

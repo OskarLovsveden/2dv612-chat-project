@@ -61,6 +61,10 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
+# Pem keys
+
+*.pem
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
@@ -191,6 +195,7 @@ dist
 # Local .terraform directories
 **/.terraform/*
 
+
 # .tfstate files
 *.tfstate
 *.tfstate.*
@@ -204,6 +209,7 @@ crash.log
 # to change depending on the environment.
 #
 *.tfvars
+!public.auto.tfvars
 
 # Ignore override files as they are usually used to override resources locally and so
 # are not checked in
@@ -221,9 +227,6 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
-
-### clouds.yml ###
-clouds.yml
 
 ### Vagrant ###
 # General
@@ -284,5 +287,6 @@ $RECYCLE.BIN/
 package-lock.json
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,macos,node,vagrant,visualstudiocode,dotenv,ansible,pulumi
+password.txt
 
-clouds.yaml
+infrastructure/cache/*

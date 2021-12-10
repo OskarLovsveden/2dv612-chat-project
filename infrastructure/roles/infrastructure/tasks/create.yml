@@ -1,0 +1,18 @@
+---
+- name: Create infrastructures
+  block:
+    - name: Running terraform apply
+      shell:
+        cmd: terraform apply -auto-approve
+      no_log: True
+
+    - name: Encrypt clouds.yaml
+      shell:
+        cmd: ansible-vault encrypt clouds.yaml
+  # - fail:
+  #   when: result.stdout_lines|length != 0
+
+  rescue:
+    - debug:
+        msg: 'Server(s) failed during creation, trying to build again'
+    - include_tasks: rescue.yml

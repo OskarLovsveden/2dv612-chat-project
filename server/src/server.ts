@@ -2,9 +2,9 @@ import Koa from 'koa';
 import cors from 'koa2-cors';
 import bodyParser from 'koa-bodyparser';
 import logger from 'koa-logger';
-import IndexRouter from './routes/indexRouter';
+import IndexRouter from './routes/index-router';
 import { Server as ServerCreate, createServer } from 'http'; // ServerCreate är hittepå bara för att inte krocka med server
-import SocketEvents from './utils/socketEvents';
+import SocketEvents from './utils/socket-events';
 
 export default class Server {
     private app: Koa;
@@ -22,7 +22,8 @@ export default class Server {
 
     public run(): void {
         this.setUp();
-        this.app.use(this.indexRouter.router);
+        this.app.use(this.indexRouter.router.routes());
+        this.app.use(this.indexRouter.router.allowedMethods());
         this.listen();
     }
 
