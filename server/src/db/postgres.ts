@@ -1,17 +1,14 @@
-import {knex, Knex} from 'knex';
+import { knex } from 'knex';
+import { DBConfig } from '../types/db-types';
 
-type User = {
-  id: number,
-  name: string
-}
-
-const config: Knex.Config = {
+const config: DBConfig = {
     client: 'pg',
     connection: {
         host: process.env.POSTGRES_HOST,
         user: process.env.POSTGRES_USER,
         password: process.env.POSTGRES_PASSWORD,
-        database: process.env.POSTGRES_DB
+        database: process.env.POSTGRES_DB,
+        port: process.env.POSTGRES_PORT
     }
 };
 

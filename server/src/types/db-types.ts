@@ -12,3 +12,14 @@ export type DBChatroom = {
     public: boolean;
     tag: string; 
 }
+
+export type DBConfig = {
+    client: string,
+    connection: {
+        host: string,
+        user: string,
+        password: string,
+        database: string,
+        port: string
+    }
+}
