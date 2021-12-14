@@ -1,0 +1,56 @@
+variables:
+  TESTVAR: hejhej
+
+stages:
+  #- build
+  - test
+  #- manual_approval
+  #- deploy
+  #- deploy-staging
+
+# compile:
+#   image: node:latest
+#   stage: build
+#   script:
+#     - npm config set registry ${CI_NPM_REGISTRY}
+#     - npm install
+#     - bash test.sh
+#   cache:
+#     paths:
+#       - node_modules/
+#   artifacts:
+#     expire_in: 1 days
+#     when: on_success
+#     paths:
+#       - node_modules/
+#   tags:
+#     - k8-runner
+
+test:
+  image: node:latest
+  stage: test
+  script:
+    - echo 'hello'
+
+# manual:
+#   stage: manual_approval
+#   dependencies:
+#     - test
+#   script:
+#     - echo ${TESTVAR}
+#   when: manual
+#   allow_failure: false
+#   tags:
+#     - k8-runner
+
+# deploy-staging:
+#   image:
+#     name: bitnami/kubectl:latest
+#     entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
+#   stage: deploy-staging
+#   before_script:
+#     - touch /.kube/config
+#     - echo "$K8_CONFIG" > /.kube/config
+#     - cat /.kube/config
+#   script:
+#     - kubectl get nodes
