@@ -7,25 +7,6 @@ stages:
   - build
   - hello-world
 
-build:
-  image: docker:stable-dind
-  stage: build
-  before_script:
-    - docker info
-  script:
-    - docker build -t gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project:${CI_COMMIT_SHORT_SHA} postgres/
-    - docker push gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project:${CI_COMMIT_SHORT_SHA}
-  tags:
-    - k8-runner
-
-test:
-  image: node:latest
-  stage: hello-world
-  script:
-    - echo "hello $TESTVAR"
-  only: 
-    - pipeline-test
-
 docker-build:
   # Use the official docker image.
   image: docker:latest
