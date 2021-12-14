@@ -11,7 +11,7 @@ test:
   image: node:latest
   stage: hello-world
   script:
-    - echo "hello $TESTVAR"
+    - mkdir testing && echo "hello $TESTVAR" >> testing/hello.txt
   only: 
     - pipeline-test
 
@@ -27,7 +27,7 @@ build_npm1:
     changes:
       - infrastructure/*
   artifacts:
-    name: npm_server
+    name: hello
     when: on_success
     paths:
       - node_modules/
