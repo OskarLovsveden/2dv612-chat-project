@@ -21,7 +21,7 @@ docker-build:
     - echo $GIT_REGISTRY
     - echo $GIT_REGISTRY_USER
     - echo $GIT_REGISTRY_PASSWORD
-    - docker login $GIT_REGISTRY -u "$GIT_REGISTRY_USER" -p "$GIT_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker login -u "$GIT_REGISTRY_USER" -p "$GIT_REGISTRY_PASSWORD" $CI_REGISTRY
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
