@@ -5,7 +5,7 @@ variables:
 
 stages:
   - build
-  - hello-world
+  - deploy
 
 
 docker-build:
@@ -17,10 +17,6 @@ docker-build:
     DOCKER_HOST: tcp://localhost:2375/
     DOCKER_DRIVER: overlay
   before_script:
-    - echo $CI_REGISTRY
-    - echo $GIT_REGISTRY
-    - echo $GIT_REGISTRY_USER
-    - echo $GIT_REGISTRY_PASSWORD
     - docker login -u "$GIT_REGISTRY_USER" -p "$GIT_REGISTRY_PASSWORD" $CI_REGISTRY
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)
@@ -33,8 +29,8 @@ docker-build:
         tag=":$CI_COMMIT_REF_SLUG"
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
-    - docker build -t $IMG_REGISTRY/postgres:${CI_COMMIT_SHORT_SHA} postgres/
-    - docker push $IMG_REGISTRY/postgres:${CI_COMMIT_SHORT_SHA}
+    - docker build -t $IMG_REGISTRY/postgres$tag postgres/
+    - docker push $IMG_REGISTRY/postgres$tag
   tags:
     - k8-runner
 
@@ -74,3 +70,14 @@ docker-build:
 #     when: on_success
 #     paths:
 #       - node_modules/
+deploy:
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
+  stage: deploy
+  before_script:
+    - touch /.kube/config
+    - echo "$K8_CONFIG" > /.kube/config
+    - cat /.kube/config
+  script:
+    - kubectl get nodes
