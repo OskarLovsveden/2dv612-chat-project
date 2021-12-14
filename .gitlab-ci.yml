@@ -11,23 +11,28 @@ test:
   image: node:latest
   stage: hello-world
   script:
-    - echo "hello $TESTVAR"
+    - mkdir testing && echo "hello $TESTVAR" >> testing/hello.txt
   only: 
     - pipeline-test
-
-# (jag testar bara)
-build_npm1:
-  image: node:latest
-  stage: build
-  script:
-   - npm install ./server
-  only: 
-    - pipeline-test
-  except:
-    changes:
-      - infrastructure/*
   artifacts:
-    name: npm_server
+    name: hello
     when: on_success
     paths:
-      - node_modules/
+      - test/
+
+# (jag testar bara)
+# build_npm1:
+#   image: node:latest
+#   stage: build
+#   script:
+#    - npm install ./server
+#   only: 
+#     - pipeline-test
+#   except:
+#     changes:
+#       - infrastructure/*
+#   artifacts:
+#     name: npm_server
+#     when: on_success
+#     paths:
+#       - node_modules/
