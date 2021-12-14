@@ -21,5 +21,8 @@
   become: yes
   become_user: ubuntu
   shell: | 
-    kubectl apply -f ~/{{ kube_dir }}/
-    helm install --namespace default gitlab-runner -f ~/{{ kube_dir }}/git-runner-conf.yml gitlab/gitlab-runner
+    helm template --values k8s/git-runner-conf.yml --output-dir ~/{{ kube_dir }}/ gitlab/gitlab-runner
+    kubectl apply -f ~/{{ kube_dir }}/ --recursive
+
+#    kubectl create secret docker-registry regcred --docker-server="{{git_reg}}" --docker-username="{{git_token}}" --docker-password="{{git_username}}"
+#   helm install --namespace default gitlab-runner -f ~/{{ kube_dir }}/git-runner-conf.yml gitlab/gitlab-runner

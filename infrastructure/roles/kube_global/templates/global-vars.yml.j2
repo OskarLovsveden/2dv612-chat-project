@@ -5,12 +5,3 @@ metadata:
 data:
     lb_ip: {{ hostvars['localhost']['lb_ip'] }}
 ---
-# apiVersion: v1
-# stringData: 
-#   .dockerconfigjson: |
-#     {"auths":{"{{ git_url }}":{"username":"{{ git_username }}","password":"{{ docker_reg_token }}","auth":"{{ git_auth }}"}}}
-# kind: Secret
-# metadata:
-#   name: regcred
-#   namespace: default
-# type: kubernetes.io/dockerconfigjson
