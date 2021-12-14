@@ -1,8 +1,5 @@
 ---
 # Tasks for role infrastructure
-- name: Descrypt clouds.yaml
-  shell:
-    cmd: ansible-vault decrypt clouds.yaml --vault-password-file=.vault/password.txt
 
 - name: Init terraform
   shell:

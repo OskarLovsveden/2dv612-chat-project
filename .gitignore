@@ -290,3 +290,4 @@ package-lock.json
 password.txt
 
 infrastructure/cache/*
+**/clouds.yaml

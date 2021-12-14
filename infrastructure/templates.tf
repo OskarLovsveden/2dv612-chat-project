@@ -13,8 +13,8 @@ resource "local_file" "vars_template" {
     master_ip = openstack_compute_floatingip_associate_v2.associate-master-fip.floating_ip,
     node_ips  = openstack_compute_instance_v2.kube-node-server.*.access_ip_v4,
     lb_ip     = openstack_networking_floatingip_v2.lb-fip.address,
-    #nfs_ips   = openstack_compute_instance_v2.nfs-server.*.access_ip_v4,
-    reg_ip  = openstack_compute_instance_v2.registry-server.access_ip_v4,
+    nfs_ips   = openstack_compute_instance_v2.nfs-server.*.access_ip_v4,
+    #reg_ip  = openstack_compute_instance_v2.registry-server.access_ip_v4,
     k8_port = var.k8_port,
   })
   filename = pathexpand("./inventory/group_vars/all/tf_vars.yml")

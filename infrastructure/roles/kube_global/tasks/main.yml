@@ -12,7 +12,5 @@
     dest: '{{ item.remote }}'
   loop:
     - { local: 'provisioner-dep.yml.j2',remote: '{{ kube_dir }}/provisioner-dep.yml',}
-    - { local: 'lb-dep.yml.j2', remote: '{{ kube_dir }}/lb-dep.yml' }
-
-- name: Run skaffold
-  command: skaffold dev --insecure-registry "{{ hostvars['registry-server']['openstack']['private_v4'] }}:5000"
+    - { local: 'proxy-cm.yml.j2', remote: '{{ kube_dir }}/proxy-cm.yml' }
+    - { local: 'global-vars.yml.j2', remote: '{{ kube_dir }}/global-vars.yml' }

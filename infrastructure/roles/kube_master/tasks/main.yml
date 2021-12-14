@@ -33,3 +33,9 @@
       shell: | 
         curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
         sudo install skaffold /usr/local/bin/
+
+    - name: Remove old keys
+      shell: rm /etc/kubernetes/pki/apiserver.*
+
+    - name: Update certificates
+      shell: kubeadm init phase certs apiserver --apiserver-cert-extra-sans={{ hostvars['kube-master-server']['openstack']['access'] }}

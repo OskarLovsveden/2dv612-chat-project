@@ -8,11 +8,10 @@ expand_hostvars: yes
 groups:
   nodes: inventory_hostname.startswith('kube-node')
   master: inventory_hostname.startswith('kube-master')
-  registry: inventory_hostname.startswith('registry-server')
   nfs: inventory_hostname.startswith('nfs')
 
 legacy_groups: no
-cache: yes
-cache_plugin: jsonfile
-cache_connection: ./cache/inventory_cache
+# cache: yes
+# cache_plugin: jsonfile
+# cache_connection: ./cache/inventory_cache
 show_all: yes
