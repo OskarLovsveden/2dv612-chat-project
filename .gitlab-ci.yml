@@ -5,7 +5,7 @@ variables:
 
 stages:
   - build
-  - hello-world
+  - deploy
 
 
 docker-build:
@@ -70,3 +70,14 @@ docker-build:
 #     when: on_success
 #     paths:
 #       - node_modules/
+deploy:
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
+  stage: deploy
+  before_script:
+    - touch /.kube/config
+    - echo "$K8_CONFIG" > /.kube/config
+    - cat /.kube/config
+  script:
+    - kubectl get nodes
