@@ -1,7 +1,7 @@
 # This file defines the pipeline that runs when
 # pushing to gitlab! // STEFFE
 variables:
-  TESTVAR: hejhej
+  IMG_REGISTRY: gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project
 
 stages:
   - build
