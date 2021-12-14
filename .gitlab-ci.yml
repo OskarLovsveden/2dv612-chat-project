@@ -10,6 +10,8 @@ stages:
 build:
   image: docker:latest
   stage: build
+  before_script:
+    - docker info
   script:
     - docker build -t gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project:${CI_COMMIT_SHORT_SHA} postgres/
     - docker push gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project:${CI_COMMIT_SHORT_SHA}
