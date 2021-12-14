@@ -287,7 +287,7 @@ $RECYCLE.BIN/
 package-lock.json
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,macos,node,vagrant,visualstudiocode,dotenv,ansible,pulumi
-password.txt
 
+**/.vault/**
 infrastructure/cache/*
 **/clouds.yaml
