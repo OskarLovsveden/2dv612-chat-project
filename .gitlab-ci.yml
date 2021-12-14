@@ -5,7 +5,6 @@ variables:
 
 stages:
   - build
-  - deploy
 
 
 docker-build:
@@ -16,6 +15,9 @@ docker-build:
   variables:
     DOCKER_HOST: tcp://localhost:2375/
     DOCKER_DRIVER: overlay
+  only:
+    changes:
+      - postgres/*
   before_script:
     - docker login -u "$GIT_REGISTRY_USER" -p "$GIT_REGISTRY_PASSWORD" $CI_REGISTRY
   # Default branch leaves tag empty (= latest tag)
@@ -70,16 +72,3 @@ docker-build:
 #     when: on_success
 #     paths:
 #       - node_modules/
-deploy:
-  image:
-    name: bitnami/kubectl:latest
-    entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
-  stage: deploy
-  before_script:
-    - touch /.kube/config
-    - echo "$K8_CONFIG" > /.kube/config
-    - cat /.kube/config
-  script:
-    - kubectl apply -f k8_test
-  tags:
-    - k8-runner
