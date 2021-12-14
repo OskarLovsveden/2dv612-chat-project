@@ -4,13 +4,15 @@ variables:
   TESTVAR: hejhej
 
 stages:
-  - deploy
   - build
+  - deploy
 
 
 docker-build:
   stage: build
   image: docker:18.09.7-dind
+  services:
+    - docker:18.09.7-dind
   variables:
     DOCKER_HOST: tcp://localhost:2375/
     DOCKER_DRIVER: overlay
