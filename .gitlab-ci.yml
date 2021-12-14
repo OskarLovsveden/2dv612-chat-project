@@ -12,7 +12,8 @@ test:
   stage: hello-world
   script:
     - echo "hello $TESTVAR"
-  only: pipeline-test
+  only: 
+    - pipeline-test
 
 # (jag testar bara)
 build_npm1:
