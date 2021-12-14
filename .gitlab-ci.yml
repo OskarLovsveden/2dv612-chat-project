@@ -11,7 +11,7 @@ stages:
 docker-build:
   only:
     changes:
-      - postgres/*
+#      - postgres/*
   stage: build
   image: docker:18.09.7-dind
   services:
