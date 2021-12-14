@@ -4,8 +4,8 @@ variables:
   TESTVAR: hejhej
 
 stages:
-  - build
   - deploy
+  - build
 
 
 docker-build:
