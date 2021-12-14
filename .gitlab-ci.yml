@@ -1,8 +1,11 @@
+# This file defines the pipeline that runs when
+# pushing to gitlab! // STEFFE
 variables:
   TESTVAR: hejhej
 
 stages:
   - hello-world
+  - build
 
 test:
   image: node:latest
@@ -10,3 +13,17 @@ test:
   script:
     - echo "hello $TESTVAR"
   only: pipeline-test
+
+# (jag testar bara)
+build_npm1:
+  image: node:latest
+  stage: build
+  script:
+   - npm install ./server
+  only: 
+    - pipeline-test
+  artifacts:
+    name: npm_server
+    when: on_success
+    paths:
+      - npm_server/node_modules/
