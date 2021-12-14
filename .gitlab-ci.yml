@@ -46,7 +46,6 @@ deploy:
     - echo "$K8_CONFIG" > /.kube/config
     - cat /.kube/config
   script:
-    - echo "$CI_REGISTRY_USER"
-    - kubectl apply -f k8_test
+    - kubectl get no
   tags:
     - k8-runner
