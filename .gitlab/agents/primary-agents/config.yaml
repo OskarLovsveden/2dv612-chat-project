@@ -2,5 +2,5 @@ gitops:
   manifest_projects:
   - id: "2dv612/student/team-1---ht21/project"
     paths:
-    - glob: 'k8s/*.{yaml,yml,json}'
+    - glob: '**/*.{yaml,yml,json}'
 
