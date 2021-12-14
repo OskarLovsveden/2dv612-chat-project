@@ -8,6 +8,7 @@ stages:
   - hello-world
 
 build:
+  image: docker:dind
   stage: build
   script:
     - docker build -t gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project:${CI_COMMIT_SHORT_SHA} postgres/
