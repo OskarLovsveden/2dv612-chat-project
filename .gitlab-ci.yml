@@ -9,4 +9,5 @@ test:
   stage: hello-world
   script:
     - echo "hello $TESTVAR"
-  only: pipeline-test
+  only: 
+    - pipeline-test
