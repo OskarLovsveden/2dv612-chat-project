@@ -8,7 +8,7 @@ stages:
   - hello-world
 
 build:
-  image: docker:dind
+  image: docker:stable-dind
   stage: build
   before_script:
     - docker info
