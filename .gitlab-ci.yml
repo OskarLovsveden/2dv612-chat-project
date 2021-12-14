@@ -9,6 +9,9 @@ stages:
 
 
 docker-build:
+  only:
+    changes:
+      - postgres/*
   stage: build
   image: docker:18.09.7-dind
   services:
@@ -45,6 +48,7 @@ deploy:
     - echo "$K8_CONFIG" > /.kube/config
     - cat /.kube/config
   script:
+    - echo "$CI_REGISTRY_USER"
     - kubectl apply -f k8_test
   tags:
     - k8-runner
