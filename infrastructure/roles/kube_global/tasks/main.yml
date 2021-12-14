@@ -5,6 +5,12 @@
     state: directory
     mode: '0777'
 
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: '{{ helm_dir }}'
+    state: directory
+    mode: '0777'
+
 - name: Copying templates
   become: yes
   become_user: ubuntu
@@ -15,14 +21,21 @@
     - { local: 'provisioner-dep.yml.j2',remote: '{{ kube_dir }}/provisioner-dep.yml',}
     - { local: 'proxy-cm.yml.j2', remote: '{{ kube_dir }}/proxy-cm.yml' }
     - { local: 'global-vars.yml.j2', remote: '{{ kube_dir }}/global-vars.yml' }
-    - { local: 'git-runner-conf.yml.j2', remote: '{{ kube_dir }}/git-runner-conf.yml' }
+    - { local: 'git-runner-conf.yml.j2', remote: '{{ helm_dir }}/git-runner-conf.yml' }
 
-- name: Deploy configs
+- name: Create manifests
   become: yes
   become_user: ubuntu
   shell: | 
-    helm template --values k8s/git-runner-conf.yml --output-dir ~/{{ kube_dir }}/ gitlab/gitlab-runner
+    helm template --name-template=gitlab-runner --values {{ helm_dir }}/git-runner-conf.yml --output-dir ~/{{ kube_dir }}/ gitlab/gitlab-runner
     kubectl apply -f ~/{{ kube_dir }}/ --recursive
+    kubectl create secret docker-registry regcred --save-config --dry-run=client \
+      --docker-server="{{git_reg}}" \
+      --docker-username="{{git_token}}" \
+      --docker-password="{{git_username}}" -o yaml > {{ kube_dir }}/regcred.yml
 
-#    kubectl create secret docker-registry regcred --docker-server="{{git_reg}}" --docker-username="{{git_token}}" --docker-password="{{git_username}}"
-#   helm install --namespace default gitlab-runner -f ~/{{ kube_dir }}/git-runner-conf.yml gitlab/gitlab-runner
+- name: Apply Manifests
+  become: yes
+  become_user: ubuntu
+  shell: | 
+    kubectl apply -f ~/{{ kube_dir }}/ --recursive
