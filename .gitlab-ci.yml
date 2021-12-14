@@ -15,7 +15,7 @@ docker-build:
   services:
     - docker:dind
   before_script:
-    - docker login -u "$GIT_REGISTRY_USER" -p "$GIT_REGISTRY_PASSWORD" $GIT_REGISTRY
+    - docker login $GIT_REGISTRY -u "$GIT_REGISTRY_USER" -p "$GIT_REGISTRY_PASSWORD"
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
