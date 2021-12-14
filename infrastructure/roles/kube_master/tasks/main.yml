@@ -1,6 +1,6 @@
 - name: K8 master
   block:
-    # OBS! Error when this task have already been done
+    # OBS! NO error when this task have already been done
     - name: Initializing k8s cluster
       command: kubeadm init --pod-network-cidr=192.168.0.0/16 --ignore-preflight-errors=All #--ignore-preflight-errors=NumCPU --ignore-preflight-errors=Mem
 
@@ -38,4 +38,4 @@
       shell: rm /etc/kubernetes/pki/apiserver.*
 
     - name: Update certificates
-      shell: kubeadm init phase certs apiserver --apiserver-cert-extra-sans={{ hostvars['kube-master-server']['openstack']['access'] }}
+      shell: kubeadm init phase certs apiserver --apiserver-cert-extra-sans={{ hostvars['localhost']['master_ip'] }}

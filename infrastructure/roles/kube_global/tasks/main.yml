@@ -14,3 +14,8 @@
     - { local: 'provisioner-dep.yml.j2',remote: '{{ kube_dir }}/provisioner-dep.yml',}
     - { local: 'proxy-cm.yml.j2', remote: '{{ kube_dir }}/proxy-cm.yml' }
     - { local: 'global-vars.yml.j2', remote: '{{ kube_dir }}/global-vars.yml' }
+
+- name: Deploy configs
+  become: yes
+  become_user: ubuntu
+  command: kubectl apply -f ~/{{ kube_dir }}/

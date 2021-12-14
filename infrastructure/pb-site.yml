@@ -23,10 +23,6 @@
 - name: nfs
   import_playbook: pb-nfs.yml
 
-# Set up registry server.
-- name: registry
-  import_playbook: pb-registry.yml
-
 
 # Set up global config.
 - name: k8-dep

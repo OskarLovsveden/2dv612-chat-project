@@ -11,7 +11,7 @@ groups:
   nfs: inventory_hostname.startswith('nfs')
 
 legacy_groups: no
-# cache: yes
-# cache_plugin: jsonfile
-# cache_connection: ./cache/inventory_cache
+cache: yes
+cache_plugin: jsonfile
+cache_connection: ./cache/inventory_cache
 show_all: yes

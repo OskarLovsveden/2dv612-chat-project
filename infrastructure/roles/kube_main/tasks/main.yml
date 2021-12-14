@@ -27,6 +27,13 @@
         enabled: yes
       loop: '{{ service_names }}'
 
+    - name: Updating daemon.json to include insecure registries
+      template:
+        src: daemon.json.j2
+        dest: /etc/docker/daemon.json
+      notify:
+        - Restart docker
+
     # Kubernetes swapoff
     # Reading: https://discuss.kubernetes.io/t/swap-off-why-is-it-necessary/6879/4
     - name: Turn swap off
