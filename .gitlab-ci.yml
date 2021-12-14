@@ -32,6 +32,8 @@ docker-build:
       fi
     - docker build -t gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project:${CI_COMMIT_SHORT_SHA} postgres/
     - docker push gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project:${CI_COMMIT_SHORT_SHA}
+  tags:
+    - k8-runner
 
 # # Test building node_modules in /server and store it in artifact repository
 # build_npm1:
