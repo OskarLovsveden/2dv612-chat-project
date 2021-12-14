@@ -50,5 +50,3 @@ build_npm2:
     when: on_success
     paths:
       - node_modules/
-  environment:
-    name: not_production
