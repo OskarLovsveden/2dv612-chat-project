@@ -29,8 +29,8 @@ docker-build:
         tag=":$CI_COMMIT_REF_SLUG"
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
-    - docker build -t $IMG_REGISTRY/postgres:tag postgres/
-    - docker push $IMG_REGISTRY/postgres:tag
+    - docker build -t $IMG_REGISTRY/postgres:${tag} postgres/
+    - docker push $IMG_REGISTRY/postgres:${tag}
   tags:
     - k8-runner
 
