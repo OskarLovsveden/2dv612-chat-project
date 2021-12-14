@@ -15,7 +15,7 @@ test:
   only: 
     - pipeline-test
 
-# (jag testar bara)
+# Test building node_modules in /server and store it in artifact repository
 build_npm1:
   image: node:latest
   stage: build
@@ -23,11 +23,28 @@ build_npm1:
    - npm install ./server
   only: 
     - pipeline-test
-  except:
+  except: # ignore anton's work
     changes:
       - infrastructure/*
   artifacts:
     name: npm_server
+    when: on_success
+    paths:
+      - node_modules/
+
+# Artifacts /client
+build_npm2:
+  image: node:latest
+  stage: build
+  script:
+   - npm install ./client
+  only: 
+    - pipeline-test
+  except: # ignore anton's work
+    changes:
+      - infrastructure/*
+  artifacts:
+    name: npm_client
     when: on_success
     paths:
       - node_modules/
