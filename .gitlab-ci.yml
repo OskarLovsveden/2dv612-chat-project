@@ -9,6 +9,9 @@ stages:
 
 
 docker-build:
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_DRIVER: overlay2
   # Use the official docker image.
   image: docker:latest
   stage: build
@@ -16,9 +19,10 @@ docker-build:
     - docker:dind
   before_script:
     - echo $CI_REGISTRY
+    - echo $GIT_REGISTRY
     - echo $GIT_REGISTRY_USER
     - echo $GIT_REGISTRY_PASSWORD
-    - docker login -u "$GIT_REGISTRY_USER" -p "$GIT_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker login $GIT_REGISTRY -u "$GIT_REGISTRY_USER" -p "$GIT_REGISTRY_PASSWORD" $CI_REGISTRY
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
@@ -30,8 +34,8 @@ docker-build:
         tag=":$CI_COMMIT_REF_SLUG"
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
-    - docker build -t gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project:${CI_COMMIT_SHORT_SHA} postgres/
-    - docker push gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project:${CI_COMMIT_SHORT_SHA}
+    - docker build -t $CI_REGISTRY/2dv612/student/team-1---ht21/project:${CI_COMMIT_SHORT_SHA} postgres/
+    - docker push $CI_REGISTRY/2dv612/student/team-1---ht21/project:${CI_COMMIT_SHORT_SHA}
 
 # # Test building node_modules in /server and store it in artifact repository
 # build_npm1:
