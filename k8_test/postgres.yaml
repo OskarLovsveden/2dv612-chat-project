@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: postgresql-db
-          image: gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project/postgres:pipeline-test
-          imagePullPolicy: Always
+          image: pg-img
+          imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: postgresql-db-disk
               mountPath: /data
