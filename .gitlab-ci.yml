@@ -21,8 +21,8 @@ build_npm1:
   stage: build
   script:
    - npm install ./server
-  only: 
-    - pipeline-test
+  only:             # Pipeline will only trigger on commits 
+    - pipeline-test # to this branch
   except: # ignore anton's work
     changes:
       - infrastructure/*
@@ -31,6 +31,8 @@ build_npm1:
     when: on_success
     paths:
       - node_modules/
+  environment:
+    name: not_production
 
 # Artifacts /client
 build_npm2:
@@ -48,3 +50,5 @@ build_npm2:
     when: on_success
     paths:
       - node_modules/
+  environment:
+    name: not_production
