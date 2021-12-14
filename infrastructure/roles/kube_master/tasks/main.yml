@@ -33,6 +33,13 @@
       shell: | 
         curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
         sudo install skaffold /usr/local/bin/
+        
+    - name: Install Helm
+      shell: |
+        curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+        chmod 700 get_helm.sh
+        ./get_helm.sh
+        helm repo add gitlab https://charts.gitlab.io
 
     - name: Remove old keys
       shell: rm /etc/kubernetes/pki/apiserver.*

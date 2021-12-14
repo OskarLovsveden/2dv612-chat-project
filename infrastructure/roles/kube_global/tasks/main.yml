@@ -1,3 +1,4 @@
+
 - name: Create a directory if it does not exist
   ansible.builtin.file:
     path: '{{ kube_dir }}'
@@ -14,8 +15,11 @@
     - { local: 'provisioner-dep.yml.j2',remote: '{{ kube_dir }}/provisioner-dep.yml',}
     - { local: 'proxy-cm.yml.j2', remote: '{{ kube_dir }}/proxy-cm.yml' }
     - { local: 'global-vars.yml.j2', remote: '{{ kube_dir }}/global-vars.yml' }
+    - { local: 'git-runner-conf.yml.j2', remote: '{{ kube_dir }}/git-runner-conf.yml' }
 
 - name: Deploy configs
   become: yes
   become_user: ubuntu
-  command: kubectl apply -f ~/{{ kube_dir }}/
+  shell: | 
+    kubectl apply -f ~/{{ kube_dir }}/
+    helm install --namespace default gitlab-runner -f ~/{{ kube_dir }}/git-runner-conf.yml gitlab/gitlab-runner
