@@ -27,4 +27,4 @@ build_npm1:
     name: npm_server
     when: on_success
     paths:
-      - npm_server/node_modules/
+      - node_modules/
