@@ -8,4 +8,4 @@ test:
   image: node:latest
   stage: hello-world
   script:
-    - echo 'hello $TESTVAR'
+    - echo "hello $TESTVAR"
