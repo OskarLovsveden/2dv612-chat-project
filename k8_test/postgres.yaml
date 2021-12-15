@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: postgresql-db
-          image: $(img)
+          image: "{{ci_environment_slug}}"
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: postgresql-db-disk
