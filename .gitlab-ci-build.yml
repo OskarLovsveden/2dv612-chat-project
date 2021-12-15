@@ -22,5 +22,11 @@ docker-build:
       fi
     - docker build -t $IMG_REGISTRY/postgres$tag postgres/
     - docker push $IMG_REGISTRY/postgres$tag
+
+    - docker build -t $IMG_REGISTRY/client$tag client/
+    - docker push $IMG_REGISTRY/client$tag
+
+    - docker build -t $IMG_REGISTRY/koa$tag server/
+    - docker push $IMG_REGISTRY/koa$tag
   tags:
     - k8-runner
