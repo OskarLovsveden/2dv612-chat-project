@@ -22,4 +22,4 @@ ENV NODE_ENV $NODE_ENV
 RUN echo $NODE_ENV
 
 RUN npm run build
-ENTRYPOINT ["npm", "run", "production"]
+ENTRYPOINT ["ts-node", "./build/app.js"]
