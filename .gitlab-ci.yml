@@ -1,7 +1,7 @@
 # This file defines the pipeline that runs when
 # pushing to gitlab! // STEFFE
 variables:
-  TESTVAR: hejhej
+  IMG_REGISTRY: $CI_REGISTRY/2dv612/student/team-1---ht21/project
 
 stages:
   - build
@@ -17,7 +17,8 @@ docker-build:
     DOCKER_HOST: tcp://localhost:2375/
     DOCKER_DRIVER: overlay
   before_script:
-    - docker login -u "$GIT_REGISTRY_USER" -p "$GIT_REGISTRY_PASSWORD" $CI_REGISTRY
+    - echo IMG_REGISTRY
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
@@ -35,41 +36,6 @@ docker-build:
     - k8-runner
 
 
-# # Test building node_modules in /server and store it in artifact repository
-# build_npm1:
-#   image: node:latest
-#   stage: build
-#   script:
-#    - npm install ./server
-#   only:             # Pipeline will only trigger on commits 
-#     - pipeline-test # to this branch
-#   except: # ignore anton's work
-#     changes:
-#       - infrastructure/*
-#   artifacts:
-#     name: hello
-#     when: on_success
-#     paths:
-#       - node_modules/
-# #  environment:           # Don't use this until we actually
-# #    name: not_production # deploy to production :)
-
-# # Artifacts /client
-# build_npm2:
-#   image: node:latest
-#   stage: build
-#   script:
-#    - npm install ./client
-#   only: 
-#     - pipeline-test
-#   except: # ignore anton's work
-#     changes:
-#       - infrastructure/*
-#   artifacts:
-#     name: npm_client
-#     when: on_success
-#     paths:
-#       - node_modules/
 deploy:
   image:
     name: bitnami/kubectl:latest
@@ -80,6 +46,6 @@ deploy:
     - echo "$K8_CONFIG" > /.kube/config
     - cat /.kube/config
   script:
-    - kubectl apply -f k8_test
+    - kubectl get no
   tags:
     - k8-runner
