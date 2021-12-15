@@ -102,8 +102,22 @@ build-image-frontend:
       fi
     - echo $CI_REGISTRY_IMAGE
     - cd client
-    - docker build -t $IMG_REGISTRY/client$tag .
+    - >
+      docker build
+      --pull
+      --build-arg http_proxy=$http_proxy
+      --build-arg https_proxy=$https_proxy
+      --build-arg no_proxy=$no_proxy
+      --cache-from $CI_REGISTRY_IMAGE:latest
+      --label "org.opencontainers.image.title=$CI_PROJECT_TITLE"
+      --label "org.opencontainers.image.url=$CI_PROJECT_URL"
+      --label "org.opencontainers.image.created=$CI_JOB_STARTED_AT"
+      --label "org.opencontainers.image.revision=$CI_COMMIT_SHA"
+      --label "org.opencontainers.image.version=$CI_COMMIT_REF_NAME"
+      --label "org.opencontainers.image.version=$CI_COMMIT_BRANCH"
+      --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+      .
     - ls -la
-    - docker push $IMG_REGISTRY/client$tag
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
   tags:
     - k8-runner
