@@ -1,17 +1,27 @@
 import Searchbar from "./Searchbar";
 import chatImg from "../../images/chat.png";
-import Channel from "../Chatroom/Channel";
 import { useState, MouseEvent } from "react";
-import { ChannelInfo } from "../../types/ChannelInfo";
+import List from "./List";
 
-const test = [
+const dms = [
   {
     name: "Simon Palm",
-    message: "SCRUM is nice!",
+    id: 1,
   },
   {
     name: "Jonas Nilsson",
-    message: "Fan va grymt!",
+    id: 2,
+  },
+];
+
+const rooms = [
+  {
+    name: "Random",
+    id: 1,
+  },
+  {
+    name: "FUNFUNFUN",
+    id: 2,
   },
 ];
 
@@ -20,15 +30,6 @@ const CHAT_ROOMS: string = "chat-rooms";
 
 const SideBar = () => {
   const [activeList, setActiveList] = useState<string>(MESSAGES);
-  //   const [chatOpen, setChatOpen] = useState<boolean>(false);
-  //   const [currentChannel, setChannels] = useState<ChannelInfo[]>([]);
-
-  //   const onChat = () => {
-  //     console.log("Du klickade på mig");
-  //     setChatOpen((chatOpen: boolean) => !chatOpen);
-  //     setChannels((currentChannel: ChannelInfo[]) => [...currentChannel]);
-  //     console.log(currentChannel);
-  //   };
 
   const onSwapListView = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -49,32 +50,23 @@ const SideBar = () => {
             onClick={onSwapListView}
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l mx-auto"
           >
-            Private
+            Messages
           </button>
           <button
             onClick={onSwapListView}
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r mx-auto"
           >
-            Group Chats
+            Rooms
           </button>
         </div>
         <div>
           <div className="sidebar hidden lg:flex w-full flex-2 flex-col pr-6">
             <Searchbar />
-            {activeList === MESSAGES
-              ? test &&
-                test.map((channelInfo: any) => (
-                  <Channel
-                    name={channelInfo.name}
-                    message={channelInfo.message}
-                  />
-                  //   <Channel
-                  //     toggle={onChat}
-                  //     name={channelInfo.name}
-                  //     message={channelInfo.message}
-                  //   />
-                ))
-              : "HÄR SKA MAN KOLLA OM CHATROOM DATA FINNS" && <div>hej</div>}
+            {/* TODO "type = dms/rooms" bad! FIX BETTER */}
+            {activeList === MESSAGES && dms && <List type="dms" data={dms} />}
+            {activeList === CHAT_ROOMS && rooms && (
+              <List type="rooms" data={rooms} />
+            )}
           </div>
         </div>
       </div>

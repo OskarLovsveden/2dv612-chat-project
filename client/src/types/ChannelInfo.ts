@@ -1,4 +1,4 @@
 export type ChannelInfo = {
-    name: string;
-    message: string;
+  name: string;
+  id: number;
 };
