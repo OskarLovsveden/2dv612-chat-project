@@ -49,7 +49,7 @@ build-backend:
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
 
-    - docker build -t $IMG_REGISTRY/koa$tag --build-arg ENV=dev server/
+    - docker build -t $IMG_REGISTRY/koa$tag server/
     - docker push $IMG_REGISTRY/koa$tag
   tags:
     - k8-runner
