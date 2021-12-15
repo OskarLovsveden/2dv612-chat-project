@@ -39,13 +39,6 @@
     - { local: 'prometheus.yml.j2', remote: '{{ helm_dir }}/prometheus-conf.yml' }
 
 
-- name: add and updates repos in Helm
-  become: yes
-  become_user: ubuntu
-  shell: |
-    helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-    helm repo update
-
 - name: Create manifests
   become: yes
   become_user: ubuntu
