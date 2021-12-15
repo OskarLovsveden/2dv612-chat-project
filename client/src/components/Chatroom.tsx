@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState } from "react";
+import { FormEvent, SetStateAction, useState } from "react";
 import "../App.css";
 import chatroomService from "../utils/http/chatroom-service";
 import chatImg from "../images/chat.png";
@@ -25,7 +25,7 @@ const Chatroom = () => {
     setChatroomTag(Event.target.value);
   };
 
-  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = {
       name: chatroomName,

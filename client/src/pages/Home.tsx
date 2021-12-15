@@ -1,78 +1,17 @@
-import React, { useEffect, useState } from "react";
 import Chat from "../components/Chatroom/Chat";
-import chatImg from "../images/chat.png";
-import Channel from "../components/Chatroom/Channel";
+
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
-
-type ChannelInfo = {
-  name: string;
-  message: string;
-};
-
-const test = [
-  {
-    name: "Simon Palm",
-    message: "SCRUM is nice!",
-  },
-  {
-    name: "Jonas Nilsson",
-    message: "Fan va grymt!",
-  },
-];
+import SideBar from "../components/sidebar/SideBar";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
-  const [chatOpen, setChatOpen] = useState<boolean>(false);
-  const [currentChannel, setChannels] = useState<ChannelInfo[]>([]);
-
-  useEffect(() => {});
-  const onChat = () => {
-    console.log("Du klickade på mig");
-    setChatOpen((chatOpen: boolean) => !chatOpen);
-    setChannels((currentChannel: ChannelInfo[]) => [...currentChannel]);
-    console.log(currentChannel);
-  };
 
   return (
     <>
       <div className="w-screen h-screen">
         <div className="flex">
-          <div className="hidden xl:block sm:flex-2 w-64 bg-indigo-500">
-            <div className="user-profile text-center">
-              <img className="w-32 h-32 mx-auto" src={chatImg} alt="user" />
-            </div>
-
-            <div className="menu mt-8">
-              <div className="inline-flex w-full">
-                <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l mx-auto">
-                  Private
-                </button>
-                <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r mx-auto">
-                  Group Chats
-                </button>
-              </div>
-              <div>
-                <div className="sidebar hidden lg:flex w-full flex-2 flex-col pr-6">
-                  <div className="search flex-2 pb-6 px-2">
-                    <input
-                      type="text"
-                      className="outline-none py-2 block w-full bg-transparent border-b-2 border-gray-200"
-                      placeholder="Search"
-                    />
-                  </div>
-                  {test &&
-                    test.map((channelInfo: any) => (
-                      <Channel
-                        Toggle={onChat}
-                        name={channelInfo.name}
-                        message={channelInfo.message}
-                      />
-                    ))}
-                </div>
-              </div>
-            </div>
-          </div>
+          <SideBar />
           <div className="main-body container m-auto w-11/12 h-full flex flex-col">
             <div>
               <div className="flex-1">
@@ -142,7 +81,8 @@ const Home = () => {
                       </svg>
                     </span>
                   </span>
-                  {user && <Chat Toggle={onChat} username={user.username} />}
+                  {user && <Chat username={user.username} />}
+                  {/* {user && <Chat Toggle={onChat} username={user.username} />} */}
                 </div>
               </div>
             </div>
