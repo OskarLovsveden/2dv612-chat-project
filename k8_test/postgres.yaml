@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: postgresql-db
-          image: testis
+          image: $tag
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - name: postgresql-db-disk
