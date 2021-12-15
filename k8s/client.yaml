@@ -32,3 +32,60 @@ spec:
         #     name: all-vars
       imagePullSecrets:
         - name: regcred
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-proxy
+  labels:
+    app: react-proxy
+spec:
+  selector:
+    matchLabels:
+      app: react-proxy
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: react-proxy
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d/
+      volumes:
+        - name: nginx-proxy-config
+          configMap:
+            name: nginx-proxy-config
+            items:
+              - key: nginx.conf
+                path: default.conf
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: react-proxy-svc
+spec:
+  selector:
+    app: react-proxy
+  ports:
+  - protocol: TCP
+    port: 3001
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-proxy-config
+data:
+  nginx.conf: |
+    server {
+        listen      *;
+
+        location / {
+            root /usr/share/nginx/html;
+            try_files $uri /index.html;
+        }
+
+    }
