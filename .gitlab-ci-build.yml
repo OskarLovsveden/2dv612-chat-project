@@ -81,7 +81,7 @@ build-image-frontend:
   # only:
   #   changes:
   #     - client/*
-  stage: build
+  stage: build-img
   variables:
     DOCKER_HOST: tcp://localhost:2375/
     DOCKER_DRIVER: overlay

@@ -21,6 +21,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
+    "ci": "craco build",
     "production": "serve -s ./build",
     "start": "craco start",
     "build": "craco build",
