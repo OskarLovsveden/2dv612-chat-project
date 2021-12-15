@@ -15,5 +15,3 @@ stages:
   - test
   - acceptance
   - deploy
-
-
