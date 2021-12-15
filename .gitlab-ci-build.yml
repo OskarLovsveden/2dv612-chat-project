@@ -80,8 +80,5 @@ build-frontend:
     - docker build -t $IMG_REGISTRY/client$tag .
     - ls -la
     - docker push $IMG_REGISTRY/client$tag
-  artifacts:
-    paths:
-      - build/
   tags:
     - k8-runner
