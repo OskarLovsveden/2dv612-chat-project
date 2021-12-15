@@ -4,3 +4,10 @@ eslint:
     - echo Testing!
   tags:
     - k8-runner
+
+unit-test:
+  stage: test
+  script:
+    - echo Unit Testing!
+  tags:
+    - k8-runner    
