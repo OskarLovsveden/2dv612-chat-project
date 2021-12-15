@@ -30,5 +30,5 @@ spec:
   ports:
   - protocol: TCP
     port: 3001
-    nodePort: 32163
+    nodePort: 32165
 
