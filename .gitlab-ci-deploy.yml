@@ -1,6 +1,6 @@
 deploy:
   variables:
-    test:"IMG_REGISTRY:$CI_COMMIT_BRANCH"
+    test:IMG_REGISTRY$CI_COMMIT_BRANCH
   image:
     name: bitnami/kubectl:latest
     entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
