@@ -23,3 +23,11 @@ export type DBConfig = {
         port: string
     }
 }
+
+export type SequelizeConfig = {
+        host: string,
+        user: string,
+        password: string,
+        database: string,
+        port: number
+}

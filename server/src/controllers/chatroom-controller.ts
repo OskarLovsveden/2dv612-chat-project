@@ -1,5 +1,6 @@
 import { Context } from 'koa';
 import Room from '../models/chatroom';
+import Chatroom from '../models/sequelizeModels/Chatroom';
 
 export default class ChatroomController {
     readonly table = 'chatroom';
@@ -8,13 +9,15 @@ export default class ChatroomController {
     public async add(ctx: Context): Promise<void> {
         try {
             const room = ctx.request.body;
-            const roomCreated = await this.roomModel.create(room);
+            // const roomCreated = await this.roomModel.create(room);
+            const roomCreated = await Chatroom.create(room);
 
             if (!roomCreated) {
                 ctx.throw(400, { message: 'Failed to create room' });
             }
 
-            ctx.body = { message: 'Room created', room };
+            const createdRoom = roomCreated.toJSON();
+            ctx.body = { message: 'Room created', createdRoom };
         } catch (e) {
             console.error(e);
         }
@@ -22,8 +25,10 @@ export default class ChatroomController {
 
     public async getAll(ctx: Context): Promise<void> {
         try {
-            const chatrooms = await this.roomModel.getAll();
-            ctx.body = chatrooms;
+            // const chatrooms = await this.roomModel.getAll();
+            // ctx.body = chatrooms;
+            const users = await Chatroom.findAll();
+            ctx.body = users;
         } catch (e) {
             console.error(e);
         }
@@ -32,11 +37,10 @@ export default class ChatroomController {
     public async get(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
-            // const chatroom = await db.from(this.table).select('*').where({ id: id });
-            const room = await this.roomModel.get(id);
-            
+            // const room = await this.roomModel.get(id);
+            const room = await Chatroom.findOne({ where: { id: id } });
+
             ctx.body = room;
-            // ctx.state.chatroom = room;
         } catch (e) {
             console.error(e);
         }
