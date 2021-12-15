@@ -1,5 +1,6 @@
 include:
   - local: '/.gitlab-ci-build.yml'
+  - local: '/.gitlab-ci-test.yml'
   - local: '/.gitlab-ci-deploy.yml'
 
 variables:
@@ -7,6 +8,7 @@ variables:
 
 stages:
   - build
+  - test
   - deploy
 
 
