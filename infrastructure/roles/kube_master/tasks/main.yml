@@ -30,11 +30,23 @@
       command: usermod -aG docker ubuntu
 
     - name: Install skaffold
+      become: yes
+      become_user: ubuntu
       shell: | 
         curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
         sudo install skaffold /usr/local/bin/
 
+
+    - name: Remove old keys
+      shell: rm /etc/kubernetes/pki/apiserver.*
+
+    - name: Update certificates
+      shell: kubeadm init phase certs apiserver --apiserver-cert-extra-sans="{{ hostvars['localhost']['master_ip'] }}"
+
+
     - name: Install Helm
+      become: yes
+      become_user: ubuntu
       shell: |
         curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
         chmod 700 get_helm.sh
@@ -42,9 +54,3 @@
         helm repo add gitlab https://charts.gitlab.io
         helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
         helm repo update
-
-    - name: Remove old keys
-      shell: rm /etc/kubernetes/pki/apiserver.*
-
-    - name: Update certificates
-      shell: kubeadm init phase certs apiserver --apiserver-cert-extra-sans={{ hostvars['localhost']['master_ip'] }}

@@ -37,7 +37,7 @@ resource "openstack_compute_instance_v2" "kube-node-server" {
 
   name         = "kube-node-server-${count.index}"
   image_id     = "ca4bec1a-ac25-434f-b14c-ad8078ccf39f"
-  flavor_name  = "c1-r2-d10"
+  flavor_name  = "c2-r2-d20"
   key_pair     = var.key_pair
   force_delete = true
   security_groups = [
@@ -53,7 +53,7 @@ resource "openstack_compute_instance_v2" "kube-node-server" {
 
   tags = ["nodes"]
 
-  count = 3
+  count = 7
 
   timeouts {
     create = var.server_create_timeout
