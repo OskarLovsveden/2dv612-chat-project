@@ -1,14 +1,17 @@
 FROM node:16
 
-USER node
 RUN mkdir /home/node/app
 WORKDIR /home/node/app
 
-EXPOSE 3000
-# CMD ["npm", "run", "start"]
-# ENV CI=true
-CMD ["npm", "run", "start"]
-COPY --chown=node:node package* ./
-# examples don't use package-lock.json to minimize updates 
-RUN npm install --no-package-lock
-COPY --chown=node:node . .
+# Defaults to production, docker-compose overrides this to development on build and run.
+ARG NODE_ENV=production
+ENV NODE_ENV $NODE_ENV
+
+# Install dependencies first, as they change less often than code.
+COPY package*.json ./
+RUN npm ci && npm cache clean --force
+
+COPY . .
+
+# Execute NodeJS (not NPM script) to handle SIGTERM and SIGINT signals.
+CMD npm run $NODE_ENV
