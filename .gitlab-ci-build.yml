@@ -22,7 +22,6 @@ build-database:
       fi
     - docker build -t $IMG_REGISTRY/postgres$tag postgres/
     - docker push $IMG_REGISTRY/postgres$tag
-
   tags:
     - k8-runner
 
@@ -102,13 +101,9 @@ build-image-frontend:
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
     - cd client
-    - docker build -t $IMG_REGISTRY/client$tag . -f Dockerfile.deploy
+    - ls -la
+    - docker build -t $IMG_REGISTRY/client$tag . -f Dockerfile
     - ls -la
     - docker push $IMG_REGISTRY/client$tag
-  artifacts:
-    paths:
-      - client/build/
-  dependencies:
-    - build-frontend
   tags:
     - k8-runner
