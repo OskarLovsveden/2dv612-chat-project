@@ -14,3 +14,10 @@ COPY . .
 
 # Execute NodeJS (not NPM script) to handle SIGTERM and SIGINT signals.
 CMD npm run build
+
+FROM nginx:1.15
+COPY --from=front-build /app/build/ /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+
+CMD ["nginx", "-g", "daemon off;"]

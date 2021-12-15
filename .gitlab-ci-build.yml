@@ -78,6 +78,7 @@ build-frontend:
       fi
 
     - docker build -t $IMG_REGISTRY/client$tag client/ -f client/Dockerfile.build
+    - ls -la
     - docker push $IMG_REGISTRY/client$tag
   artifacts:
     paths:
