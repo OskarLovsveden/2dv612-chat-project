@@ -116,9 +116,9 @@ build-image-frontend:
       --label "org.opencontainers.image.revision=$CI_COMMIT_SHA"
       --label "org.opencontainers.image.version=$CI_COMMIT_REF_NAME"
       --label "org.opencontainers.image.version=$CI_COMMIT_BRANCH"
-      --tag $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH:$CI_COMMIT_SHA
+      --tag $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/client:$CI_COMMIT_SHA
       .
     - ls -la
-    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH:$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/client:$CI_COMMIT_SHA
   tags:
     - k8-runner
