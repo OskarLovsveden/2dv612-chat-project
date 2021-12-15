@@ -26,7 +26,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app: react-proxy
+    app: react-frontend
   ports:
   - protocol: TCP
     port: 3001
