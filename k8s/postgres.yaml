@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: postgresql-db
-          image: gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project/postgres:pipeline-test
+          image: gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project/postgres:pipeline-test2
           imagePullPolicy: Always
           volumeMounts:
             - name: postgresql-db-disk
@@ -37,6 +37,8 @@ spec:
                 configMapKeyRef:
                   name: all-vars
                   key: POSTGRES_PASSWORD
+      imagePullSecrets:
+        - name: regcred
   # Volume Claim
   volumeClaimTemplates:
     - metadata:

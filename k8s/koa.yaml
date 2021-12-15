@@ -25,10 +25,12 @@ spec:
         runAsUser: 1000
       containers:
       - name: node
-        image: node-img
+        image: gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project/koa:pipeline-test2
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000
         envFrom:
         - configMapRef:
             name: all-vars
+      imagePullSecrets:
+        - name: regcred

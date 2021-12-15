@@ -23,10 +23,12 @@ spec:
     spec:
       containers:
       - name: node-client
-        image: node-client-img
+        image: gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project/client:pipeline-test2
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
         # envFrom:
         # - configMapRef:
         #     name: all-vars
+      imagePullSecrets:
+        - name: regcred

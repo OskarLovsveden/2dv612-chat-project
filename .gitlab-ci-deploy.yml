@@ -8,6 +8,6 @@ deploy:
     - echo "$K8_CONFIG" > /.kube/config
     - cat /.kube/config
   script:
-    - kubectl apply -f k8_test/
+    - kubectl apply -f k8s/
   tags:
     - k8-runner
