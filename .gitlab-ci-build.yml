@@ -77,7 +77,7 @@ build-frontend:
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
 
-    - docker build -t $IMG_REGISTRY/client$tag client/
+    - docker build -t $IMG_REGISTRY/client$tag client/ -f Dockerfile.build
     - docker push $IMG_REGISTRY/client$tag
   artifacts:
     paths:
