@@ -1,4 +1,6 @@
 eslint:
   stage: test
+  script:
+    - echo Testing!
   tags:
     - k8-runner
