@@ -68,7 +68,7 @@ build-frontend:
   # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
     - cd client
-      npm ci
+    - npm ci && npm cache clean --force
     - ls -la
   artifacts:
     paths:
