@@ -5,7 +5,7 @@ metadata:
 data:
   nginx.conf: |
     upstream svc {
-        server react-proxy-svc.default.svc.cluster.local:3001 fail_timeout=0;
+        server react-frontend-svc.default.svc.cluster.local:3001 fail_timeout=0;
     }
 
     upstream koa {

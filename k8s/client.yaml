@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: react-proxy
+  name: react-frontend
   labels:
-    app: react-proxy
+    app: react-frontend
 spec:
   selector:
     matchLabels:
-      app: react-proxy
+      app: react-frontend
   replicas: 1
   template:
     metadata:
       labels:
-        app: react-proxy
+        app: react-frontend
     spec:
       containers:
         - name: nginx
@@ -22,7 +22,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: react-proxy-svc
+  name: react-frontend-svc
 spec:
   type: NodePort
   selector:
