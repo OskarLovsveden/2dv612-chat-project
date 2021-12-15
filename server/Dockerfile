@@ -31,7 +31,7 @@ ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
 # Install dependencies first, as they change less often than code.
-COPY package.json package-lock.json* ./
+COPY --chown=node:node package*.json ./
 RUN npm ci && npm cache clean --force
 COPY --chown=node:node . .
 
