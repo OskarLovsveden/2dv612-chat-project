@@ -101,7 +101,7 @@ build-image-frontend:
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
     - cd client
-    - docker build -t $IMG_REGISTRY/client$tag . -f Dockerfile
+    - docker build -t $IMG_REGISTRY/client$tag .
     - ls -la
     - docker push $IMG_REGISTRY/client$tag
   tags:
