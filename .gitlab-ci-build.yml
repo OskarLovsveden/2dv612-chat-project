@@ -76,9 +76,12 @@ build-frontend:
         tag=":$CI_COMMIT_REF_SLUG"
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
-    - cd client
-    - docker build -t $IMG_REGISTRY/client$tag .
+    - ls -la
+    - docker build -t $IMG_REGISTRY/client$tag client/ -f client/Dockerfile.build
     - ls -la
     - docker push $IMG_REGISTRY/client$tag
+  artifacts:
+    paths:
+      - client/build/
   tags:
     - k8-runner
