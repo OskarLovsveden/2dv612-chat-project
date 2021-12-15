@@ -62,6 +62,7 @@ build-frontend:
   # only:
   #   changes:
   #     - client/*
+  image: node:16
   stage: build
   variables:
     DOCKER_HOST: tcp://localhost:2375/
@@ -110,5 +111,7 @@ build-image-frontend:
   artifacts:
     paths:
       - client/build/
+  dependencies:
+    - build-frontend
   tags:
     - k8-runner
