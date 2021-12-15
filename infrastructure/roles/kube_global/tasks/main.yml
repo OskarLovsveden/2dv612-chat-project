@@ -47,10 +47,6 @@
     helm template --name-template=prometheus -n gitlab-managed-apps --values {{ helm_dir }}/prometheus-conf.yml --output-dir ~/{{ kube_dir }}/ prometheus-community/prometheus
     kubectl apply -f ~/{{ kube_dir }}/ --recursive
     kubectl create namespace gitlab-managed-apps --dry-run=client -o yaml > {{ kube_dir }}/gitlab-managed-apps-ns.yml
-    kubectl create secret docker-registry regcred \
-      --docker-server="{{git_reg}}" \
-      --docker-username="{{git_token}}" \
-      --docker-password="{{git_username}}" --dry-run=client -o yaml > {{ kube_dir }}/regcred.yml
 
 - name: Apply Manifests
   become: yes
