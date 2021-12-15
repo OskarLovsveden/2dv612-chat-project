@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project/client:pipeline-test2
+          image: gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project/pipeline-test2:latest
           imagePullPolicy: IfNotPresent
 ---
 kind: Service
