@@ -9,7 +9,6 @@ export default class ChatroomController {
     public async add(ctx: Context): Promise<void> {
         try {
             const room = ctx.request.body;
-            // const roomCreated = await this.roomModel.create(room);
             const roomCreated = await Chatroom.create(room);
 
             if (!roomCreated) {
@@ -25,8 +24,6 @@ export default class ChatroomController {
 
     public async getAll(ctx: Context): Promise<void> {
         try {
-            // const chatrooms = await this.roomModel.getAll();
-            // ctx.body = chatrooms;
             const users = await Chatroom.findAll();
             ctx.body = users;
         } catch (e) {
@@ -37,7 +34,6 @@ export default class ChatroomController {
     public async get(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
-            // const room = await this.roomModel.get(id);
             const room = await Chatroom.findOne({ where: { id: id } });
 
             ctx.body = room;
@@ -50,8 +46,9 @@ export default class ChatroomController {
         try {
             const id = ctx.params.id;
         
-            const roomDeleted = await this.roomModel.delete(id);
-
+            // const roomDeleted = await this.get(ctx);
+            const roomDeleted = await Chatroom.destroy({ where: { id: id } });
+            
             if (!roomDeleted) {
                 ctx.throw(400, { message: 'Failed to delete room' });
             }
@@ -63,6 +60,25 @@ export default class ChatroomController {
     }
 
     public async update(ctx: Context): Promise<void> {
-        console.log(ctx.request.body);
+        try {
+            const id = ctx.params.id;
+            const room: any = ctx.body;
+        
+            // const roomDeleted = await this.get(ctx);
+            const roomDeleted = await Chatroom.update({
+                name: room.name,
+                public: room.public,
+                tag: room.tag
+            }, { where: { id: id } 
+            });
+            
+            if (!roomDeleted) {
+                ctx.throw(400, { message: 'Failed to delete room' });
+            }
+            
+            ctx.body = { message: 'Room deleted' };
+        } catch (e) {
+            console.error(e);
+        }
     }
 }

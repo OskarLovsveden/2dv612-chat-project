@@ -3,7 +3,7 @@ import { dbConfig } from '../../db/postgres';
 
 const Chatroom = dbConfig.define('Chatroom', {
     id: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
@@ -18,6 +18,10 @@ const Chatroom = dbConfig.define('Chatroom', {
     tag: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    usersid: {
+        type: DataTypes.ARRAY(DataTypes.INTEGER),
+        allowNull: true
     }
 }, {
     tableName: 'chatroom',

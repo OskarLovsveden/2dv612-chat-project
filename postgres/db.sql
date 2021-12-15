@@ -47,7 +47,8 @@ CREATE TABLE public.chatroom (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
     public boolean NOT NULL,
-    tag character varying(255) NOT NULL
+    tag character varying(255) NOT NULL,
+    usersID integer[]
 );
 
 
