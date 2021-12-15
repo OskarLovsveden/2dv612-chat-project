@@ -33,6 +33,7 @@ ENV NODE_ENV $NODE_ENV
 # Install dependencies first, as they change less often than code.
 COPY --chown=node:node package*.json ./
 RUN npm ci && npm cache clean --force
+RUN mkdir -p node_modules/.cache && chmod -R 777 node_modules/.cache
 COPY --chown=node:node . .
 
 # Execute NodeJS (not NPM script) to handle SIGTERM and SIGINT signals.
