@@ -24,7 +24,6 @@ WORKDIR /home/node/app
 
 # Copy files as a non-root user. The `node` user is built in the Node image.
 WORKDIR /usr/src/app
-RUN chown node:node ./
 USER node
 
 # Defaults to production, docker-compose overrides this to development on build and run.
