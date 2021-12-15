@@ -15,4 +15,4 @@ COPY . .
 
 # Execute NodeJS (not NPM script) to handle SIGTERM and SIGINT signals.
 CMD npm run build
-ENTRYPOINT npm run $NODE_ENV
+ENTRYPOINT ["npm", "run", "production"]
