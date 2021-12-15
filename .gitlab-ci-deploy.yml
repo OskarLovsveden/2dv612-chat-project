@@ -11,6 +11,7 @@ deploy:
     - cat /.kube/config
   script:
     - sed -i 's/testis/$test/g' k8_test/postgres.yaml
+    - cat k8_test/postgres.yaml
     - kubectl delete statefulset --all
     - kubectl delete secret regcred  --ignore-not-found
     - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN"
