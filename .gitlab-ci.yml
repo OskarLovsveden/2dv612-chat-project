@@ -10,7 +10,7 @@ variables:
 stages:
   - build
   - test
-  - acceptance-test
+  - acceptance
   - deploy
 
 
