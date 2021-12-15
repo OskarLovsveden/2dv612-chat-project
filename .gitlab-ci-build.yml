@@ -1,7 +1,7 @@
-docker-build:
-#  only:
-#    changes:
-#      - postgres/*
+build-database:
+  only:
+    changes:
+      - postgres/*
   stage: build
   variables:
     DOCKER_HOST: tcp://localhost:2375/
@@ -23,10 +23,61 @@ docker-build:
     - docker build -t $IMG_REGISTRY/postgres$tag postgres/
     - docker push $IMG_REGISTRY/postgres$tag
 
-    - docker build -t $IMG_REGISTRY/client$tag client/
-    - docker push $IMG_REGISTRY/client$tag
+  tags:
+    - k8-runner
+
+build-backend:
+  only:
+    changes:
+      - server/*
+  stage: build
+  variables:
+    DOCKER_HOST: tcp://localhost:2375/
+    DOCKER_DRIVER: overlay
+  before_script:
+    - echo IMG_REGISTRY
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  # Default branch leaves tag empty (= latest tag)
+  # All other branches are tagged with the escaped branch name (commit ref slug)
+  script:
+    - |
+      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+        tag=""
+        echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = 'latest'"
+      else
+        tag=":$CI_COMMIT_REF_SLUG"
+        echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
+      fi
 
     - docker build -t $IMG_REGISTRY/koa$tag server/
     - docker push $IMG_REGISTRY/koa$tag
+  tags:
+    - k8-runner
+
+build-frontend:
+  # only:
+  #   changes:
+  #     - client/*
+  stage: build
+  variables:
+    DOCKER_HOST: tcp://localhost:2375/
+    DOCKER_DRIVER: overlay
+  before_script:
+    - echo IMG_REGISTRY
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  # Default branch leaves tag empty (= latest tag)
+  # All other branches are tagged with the escaped branch name (commit ref slug)
+  script:
+    - |
+      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+        tag=""
+        echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = 'latest'"
+      else
+        tag=":$CI_COMMIT_REF_SLUG"
+        echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
+      fi
+
+    - docker build -t $IMG_REGISTRY/client$tag client/ --build-arg ENV=dev
+    - docker push $IMG_REGISTRY/client$tag
   tags:
     - k8-runner
