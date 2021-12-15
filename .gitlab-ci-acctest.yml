@@ -1,0 +1,6 @@
+include:
+  template: Verify/Browser-Performance.gitlab-ci.yml
+
+browser_performance:
+  variables:
+    URL: http://194.47.177.96/
