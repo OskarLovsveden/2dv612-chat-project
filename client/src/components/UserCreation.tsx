@@ -56,7 +56,6 @@ const UserCreation = () => {
       active: true,
     };
     const res = await userService.create(data);
-    console.log(res);
 
     navigate("/admin");
   };

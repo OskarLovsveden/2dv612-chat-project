@@ -33,7 +33,6 @@ const Chatroom = () => {
       tag: chatroomTag,
     };
     const res = await chatroomService.create(data);
-    console.log(res);
 
     navigate("/admin");
   };

@@ -3,12 +3,13 @@ import Chat from "../components/Chatroom/Chat";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import SideBar from "../components/sidebar/SideBar";
+import { HomeProvider } from "../context/HomeProvider";
 
 const Home = () => {
   const { user } = useContext(AuthContext);
 
   return (
-    <>
+    <HomeProvider>
       <div className="w-screen h-screen">
         <div className="flex">
           <SideBar />
@@ -20,9 +21,9 @@ const Home = () => {
                     <svg
                       className="w-4 h-4"
                       fill="none"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
@@ -35,9 +36,9 @@ const Home = () => {
                     <svg
                       className="h-4 w-4"
                       fill="none"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
@@ -56,9 +57,9 @@ const Home = () => {
                       <svg
                         fill="none"
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         viewBox="0 0 24 24"
                         className="w-4 h-4"
                       >
@@ -71,9 +72,9 @@ const Home = () => {
                       <svg
                         fill="none"
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         viewBox="0 0 24 24"
                         className="w-4 h-4"
                       >
@@ -91,7 +92,7 @@ const Home = () => {
       </div>
       {/* <button onClick={onChat}>open chat</button>
         {chatOpen && <Chat Toggle={ onChat } />} */}
-    </>
+    </HomeProvider>
   );
 };
 

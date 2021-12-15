@@ -41,7 +41,6 @@ const AdminPanel = () => {
     event.preventDefault();
     const res = await userService.delete(id);
     setUserData(userData.filter((ud) => ud.id !== id));
-    console.log(res);
   };
 
   const removeChatroom = async (
@@ -51,7 +50,6 @@ const AdminPanel = () => {
     event.preventDefault();
     const res = await chatroomService.delete(id);
     setChatRoomData(chatRoomData.filter((cr) => cr.id !== id));
-    console.log(res);
   };
 
   return (
