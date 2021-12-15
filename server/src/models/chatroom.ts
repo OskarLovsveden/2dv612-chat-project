@@ -1,7 +1,7 @@
 import { db } from '../db/postgres';
-import { RespondRoom } from '../types/respond-types';
+import { RespondRoom, RespondRoomUser } from '../types/respond-types';
 import { RequestRoomCreate } from '../types/request-types';
-import { DBChatroom } from '../types/db-types';
+import { DBChatroom, DBChatroomUser, DBUser } from '../types/db-types';
 
 export default class ChatRoom {
     private ROOM_TABLE = 'chatroom';
@@ -44,6 +44,21 @@ export default class ChatRoom {
         });
 
         return roomsArray;
+    }
+    public async getUsersInChatroom(roomID: number): Promise<RespondRoomUser[]> {
+        // const room = await this.get(roomID);
+        const room = await db<DBChatroomUser>(this.ROOM_TABLE).where({ id : roomID }).first();
+        console.log('test' + room);
+        // usersInRoom.users.map()
+        const usersInRoomArray: RespondRoomUser[] = room.users.map((u: DBUser) => {
+            return {
+                active: u.active,
+                id: u.id,
+                role: u.role,
+                username: u.username
+            };
+        });
+        return usersInRoomArray;
     }
 
     public async delete(roomID: number): Promise<boolean> {

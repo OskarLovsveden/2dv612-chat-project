@@ -28,6 +28,16 @@ export default class ChatroomController {
             console.error(e);
         }
     }
+    // get all users in a chatroom
+    public async getAllUsersInChatroom(ctx: Context): Promise<void> {
+        try {
+            const id = ctx.params.id;
+            const usersInChatroom = await this.roomModel.getUsersInChatroom(id);
+            ctx.body = usersInChatroom;
+        } catch(e) {
+            console.error(e);
+        }
+    }
     
     public async get(ctx: Context): Promise<void> {
         try {
