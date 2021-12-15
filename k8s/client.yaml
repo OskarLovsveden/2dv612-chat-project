@@ -21,15 +21,19 @@ spec:
       labels:
         app: react-client
     spec:
+      volumes:
+        - name: react-vol
+          persistentVolumeClaim:
+            claimName: react-pvc
       containers:
       - name: react-client
         image: gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project/client:pipeline-test2
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
-        # envFrom:
-        # - configMapRef:
-        #     name: all-vars
+        volumeMounts:
+          - mountPath: "/build"
+            name: react-vol
       imagePullSecrets:
         - name: regcred
 ---
@@ -53,8 +57,10 @@ spec:
         - name: nginx
           image: nginx:alpine
           volumeMounts:
-            - name: nginx-config
+            - name: nginx-proxy-config
               mountPath: /etc/nginx/conf.d/
+            - name: proxy-vol
+              mountPath: "/usr/share/nginx/html"
       volumes:
         - name: nginx-proxy-config
           configMap:
@@ -62,6 +68,9 @@ spec:
             items:
               - key: nginx.conf
                 path: default.conf
+        - name: proxy-vol
+          persistentVolumeClaim:
+            claimName: react-pvc
 ---
 kind: Service
 apiVersion: v1
@@ -89,3 +98,15 @@ data:
         }
 
     }
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: react-pvc
+spec:
+  storageClassName: nfs-sc
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
