@@ -1,11 +1,8 @@
 docker-build:
-  only:
-    changes:
-      - postgres/*
+#  only:
+#    changes:
+#      - postgres/*
   stage: build
-  image: docker:18.09.7-dind
-  services:
-    - docker:18.09.7-dind
   variables:
     DOCKER_HOST: tcp://localhost:2375/
     DOCKER_DRIVER: overlay
@@ -25,5 +22,11 @@ docker-build:
       fi
     - docker build -t $IMG_REGISTRY/postgres$tag postgres/
     - docker push $IMG_REGISTRY/postgres$tag
+
+    - docker build -t $IMG_REGISTRY/client$tag client/
+    - docker push $IMG_REGISTRY/client$tag
+
+    - docker build -t $IMG_REGISTRY/koa$tag server/
+    - docker push $IMG_REGISTRY/koa$tag
   tags:
     - k8-runner
