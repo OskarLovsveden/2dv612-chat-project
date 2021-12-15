@@ -6,12 +6,13 @@ include:
 image: docker:18.09.7-dind
 services:
   - docker:18.09.7-dind
-  
+
 variables:
   IMG_REGISTRY: $CI_REGISTRY/2dv612/student/team-1---ht21/project
 
 stages:
   - build
+  - build-img
   - test
   - acceptance
   - deploy
