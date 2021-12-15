@@ -48,6 +48,7 @@ deploy:
     - touch /.kube/config
     - echo "$K8_CONFIG" > /.kube/config
     - cat /.kube/config
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - kubectl get no
   tags:
