@@ -10,7 +10,7 @@ deploy:
     - echo "$K8_CONFIG" > /.kube/config
     - cat /.kube/config
   script:
-    - sed -i 's/$TAG/'"$test"'/g' k8_test/postgres.yaml
+    - sed -i "s/$TAG/$test/g" k8_test/postgres.yaml
     - cat k8_test/postgres.yaml
     - kubectl delete statefulset --all
     - kubectl delete secret regcred  --ignore-not-found
