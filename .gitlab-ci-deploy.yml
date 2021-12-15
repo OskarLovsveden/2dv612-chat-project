@@ -1,4 +1,6 @@
 deploy:
+  variables:
+    test:IMG_REGISTRY:$CI_COMMIT_BRANCH
   image:
     name: bitnami/kubectl:latest
     entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
@@ -8,6 +10,7 @@ deploy:
     - echo "$K8_CONFIG" > /.kube/config
     - cat /.kube/config
   script:
+    - echo $test
     - kubectl delete statefulset --all
     - kubectl delete secret regcred  --ignore-not-found
     - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN"
