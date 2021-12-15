@@ -13,6 +13,6 @@ deploy:
     - kubectl delete statefulset --all
     - kubectl delete secret regcred  --ignore-not-found
     - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN"
-    - kubectl apply -f k8_test/
+    - kubectl apply -f k8s/
   tags:
     - k8-runner
