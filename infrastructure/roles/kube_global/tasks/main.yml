@@ -10,6 +10,19 @@
     path: '{{ helm_dir }}'
     state: directory
     mode: '0777'
+    
+- name: Locating all files in files dir
+  find:
+    path: "{{ kube_dir }}"
+  register: cleanup
+  ignore_errors: true
+
+- name: Removing all files previously found in files dir
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ cleanup.files }}"
+  ignore_errors: true
 
 - name: Copying templates
   become: yes
@@ -21,18 +34,22 @@
     - { local: 'provisioner-dep.yml.j2',remote: '{{ kube_dir }}/provisioner-dep.yml',}
     - { local: 'proxy-cm.yml.j2', remote: '{{ kube_dir }}/proxy-cm.yml' }
     - { local: 'global-vars.yml.j2', remote: '{{ kube_dir }}/global-vars.yml' }
+    - { local: 'gitlab-admin-service-account.yml.j2', remote: '{{ kube_dir }}/gitlab-admin-service-account.yml' }
     - { local: 'git-runner-conf.yml.j2', remote: '{{ helm_dir }}/git-runner-conf.yml' }
+    - { local: 'prometheus.yml.j2', remote: '{{ helm_dir }}/prometheus-conf.yml' }
 
 - name: Create manifests
   become: yes
   become_user: ubuntu
-  shell: | 
+  shell: |
     helm template --name-template=gitlab-runner --values {{ helm_dir }}/git-runner-conf.yml --output-dir ~/{{ kube_dir }}/ gitlab/gitlab-runner
+    helm template --name-template=prometheus -n gitlab-managed-apps --values {{ helm_dir }}/prometheus-conf.yml --output-dir ~/{{ kube_dir }}/ prometheus-community/prometheus
     kubectl apply -f ~/{{ kube_dir }}/ --recursive
-    kubectl create secret docker-registry regcred --save-config --dry-run=client \
+    kubectl create namespace gitlab-managed-apps --dry-run=client -o yaml > {{ kube_dir }}/gitlab-managed-apps-ns.yml
+    kubectl create secret docker-registry regcred \
       --docker-server="{{git_reg}}" \
       --docker-username="{{git_token}}" \
-      --docker-password="{{git_username}}" -o yaml > {{ kube_dir }}/regcred.yml
+      --docker-password="{{git_username}}" --dry-run=client -o yaml > {{ kube_dir }}/regcred.yml
 
 - name: Apply Manifests
   become: yes
