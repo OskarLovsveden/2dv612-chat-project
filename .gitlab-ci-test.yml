@@ -1,1 +1,4 @@
-
+eslint:
+  stage: test
+  tags:
+    - k8-runner
