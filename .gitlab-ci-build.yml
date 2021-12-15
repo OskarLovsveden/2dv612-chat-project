@@ -68,7 +68,6 @@ build-frontend:
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
-    - echo $CI_REGISTRY_IMAGE
     - cd client
     - npm ci && npm cache clean --force
     - npm run build
@@ -101,6 +100,7 @@ build-image-frontend:
         tag=":$CI_COMMIT_REF_SLUG"
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
+    - echo $CI_REGISTRY_IMAGE
     - cd client
     - docker build -t $IMG_REGISTRY/client$tag .
     - ls -la
