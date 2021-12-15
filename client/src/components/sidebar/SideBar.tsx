@@ -1,41 +1,25 @@
 import Searchbar from "./Searchbar";
 import chatImg from "../../images/chat.png";
-import { useState, MouseEvent } from "react";
-import List from "./List";
-
-const dms = [
-  {
-    name: "Simon Palm",
-    id: 1,
-  },
-  {
-    name: "Jonas Nilsson",
-    id: 2,
-  },
-];
-
-const rooms = [
-  {
-    name: "Random",
-    id: 1,
-  },
-  {
-    name: "FUNFUNFUN",
-    id: 2,
-  },
-];
+import { useState, MouseEvent, useContext } from "react";
+import ChatroomList from "./ChatroomList";
+import { HomeContext } from "../../context/HomeProvider";
+import DirectMessageList from "./DirectMessageList";
 
 const MESSAGES: string = "messages";
 const CHAT_ROOMS: string = "chat-rooms";
 
 const SideBar = () => {
   const [activeList, setActiveList] = useState<string>(MESSAGES);
+  const { rooms, dms } = useContext(HomeContext);
 
-  const onSwapListView = (e: MouseEvent<HTMLButtonElement>) => {
+  const showMessages = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    activeList === MESSAGES
-      ? setActiveList(CHAT_ROOMS)
-      : setActiveList(MESSAGES);
+    setActiveList(MESSAGES);
+  };
+
+  const showRooms = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setActiveList(CHAT_ROOMS);
   };
 
   return (
@@ -47,13 +31,13 @@ const SideBar = () => {
       <div className="menu mt-8">
         <div className="inline-flex w-full">
           <button
-            onClick={onSwapListView}
+            onClick={showMessages}
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l mx-auto"
           >
             Messages
           </button>
           <button
-            onClick={onSwapListView}
+            onClick={showRooms}
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r mx-auto"
           >
             Rooms
@@ -62,10 +46,11 @@ const SideBar = () => {
         <div>
           <div className="sidebar hidden lg:flex w-full flex-2 flex-col pr-6">
             <Searchbar />
-            {/* TODO "type = dms/rooms" bad! FIX BETTER */}
-            {activeList === MESSAGES && dms && <List type="dms" data={dms} />}
+            {activeList === MESSAGES && dms && (
+              <DirectMessageList messages={dms} />
+            )}
             {activeList === CHAT_ROOMS && rooms && (
-              <List type="rooms" data={rooms} />
+              <ChatroomList chatrooms={rooms} />
             )}
           </div>
         </div>
