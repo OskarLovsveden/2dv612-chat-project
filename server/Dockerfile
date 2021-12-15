@@ -1,4 +1,4 @@
-FROM node as nodeBase
+FROM node as nodebase
 
 # USER node
 RUN mkdir /home/node/app
@@ -13,7 +13,7 @@ RUN npm ci && npm cache clean --force
 
 COPY . .
 
-FROM nodeBase as production
+FROM nodebase as production
 
 # Defaults to production, override in pipeline.
 ARG NODE_ENV=production
@@ -22,4 +22,4 @@ ENV NODE_ENV $NODE_ENV
 RUN echo $NODE_ENV
 
 RUN npm run build
-CMD npm run production
+ENTRYPOINT ["npm", "run", "production"]

@@ -1,12 +1,12 @@
 // tsconfig.json
 {
   "compilerOptions": {
-    "outDir": "dist", // where to put the compiled JS files
+    "outDir": "./build", // where to put the compiled JS files
     "target": "ES2020", // which level of JS support to target
     "module": "CommonJS", // which system for the program AMD, UMD, System, CommonJS
     "rootDir": "./src",
     "esModuleInterop": true,
   },
   "include": ["src"], // which files to compile
-  "exclude": ["node_modules", "dist"], // which files to skip
+  "exclude": ["node_modules", "build"], // which files to skip
 }
