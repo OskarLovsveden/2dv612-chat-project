@@ -26,6 +26,10 @@ build-database:
   tags:
     - k8-runner
 
+
+
+
+
 build-backend:
   only:
     changes:
@@ -68,6 +72,29 @@ build-frontend:
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
+    - cd client
+      npm ci && npm cache clean --force
+    - ls -la
+  artifacts:
+    paths:
+      - client/build/
+  tags:
+    - k8-runner
+
+build-image-frontend:
+  # only:
+  #   changes:
+  #     - client/*
+  stage: build
+  variables:
+    DOCKER_HOST: tcp://localhost:2375/
+    DOCKER_DRIVER: overlay
+  before_script:
+    - echo IMG_REGISTRY
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  # Default branch leaves tag empty (= latest tag)
+  # All other branches are tagged with the escaped branch name (commit ref slug)
+  script:
     - |
       if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
         tag=""
@@ -77,7 +104,6 @@ build-frontend:
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
     - cd client
-      npm ci && npm cache clean --force
     - docker build -t $IMG_REGISTRY/client$tag . -f Dockerfile.deploy
     - ls -la
     - docker push $IMG_REGISTRY/client$tag
