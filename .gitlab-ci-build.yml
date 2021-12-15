@@ -27,9 +27,9 @@ build-database:
     - k8-runner
 
 build-backend:
-  only:
-    changes:
-      - server/*
+  # only:
+  #   changes:
+  #     - server/*
   stage: build
   variables:
     DOCKER_HOST: tcp://localhost:2375/
