@@ -22,10 +22,10 @@ FROM node
 RUN mkdir /home/node/app
 WORKDIR /home/node/app
 
-# Copy files as a non-root user. The `node` user is built in the Node image.
+
 WORKDIR /usr/src/app
 
-# Defaults to production, docker-compose overrides this to development on build and run.
+# Defaults to production, override in pipeline.
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
@@ -35,4 +35,6 @@ RUN npm ci && npm cache clean --force
 
 COPY . .
 
-CMD npm run $NODE_ENV
+RUN echo $NODE_ENV
+
+CMD ts-node src/app.ts
