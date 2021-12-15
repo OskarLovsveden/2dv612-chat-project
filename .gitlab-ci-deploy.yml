@@ -1,3 +1,6 @@
+include:
+  -local: '/k8_test/postgres.yaml'
+
 deploy:
   variables:
     test: $IMG_REGISTRY:$CI_COMMIT_BRANCH
