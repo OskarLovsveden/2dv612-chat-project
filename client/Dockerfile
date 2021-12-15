@@ -1,7 +1,6 @@
-FROM node:16
+FROM node:16 as front-build
 
-RUN mkdir /home/node/app
-WORKDIR /home/node/app
+WORKDIR /app
 
 # Defaults to production, docker-compose overrides this to development on build and run.
 ARG NODE_ENV=production
@@ -15,3 +14,9 @@ COPY . .
 
 # Execute NodeJS (not NPM script) to handle SIGTERM and SIGINT signals.
 CMD npm run build
+
+FROM nginx:1.15
+COPY --from=front-build /app/build/ /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+CMD ["nginx", "-g", "daemon off;"]
