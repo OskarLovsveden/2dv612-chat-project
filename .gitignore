@@ -286,6 +286,8 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,windows,macos,node,vagrant,visualstudiocode,dotenv,ansible,pulumi
 
+**/build
+
 */.vault/**
 infrastructure/cache/*
 **/clouds.yaml
