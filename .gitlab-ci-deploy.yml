@@ -1,6 +1,3 @@
-include:
-  -local: '/k8_test/postgres.yaml'
-
 deploy:
   variables:
     test: $IMG_REGISTRY:$CI_COMMIT_BRANCH
@@ -13,7 +10,7 @@ deploy:
     - echo "$K8_CONFIG" > /.kube/config
     - cat /.kube/config
   script:
-    - echo $test
+    - sed -i 's/testis/$test/g' k8_test/postgres.yaml
     - kubectl delete statefulset --all
     - kubectl delete secret regcred  --ignore-not-found
     - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN"
