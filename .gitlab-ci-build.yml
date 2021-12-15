@@ -119,6 +119,6 @@ build-image-frontend:
       --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
       .
     - ls -la
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH:$CI_COMMIT_SHA
   tags:
     - k8-runner
