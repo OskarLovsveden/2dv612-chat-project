@@ -14,10 +14,10 @@ stages:
   - $CI_DEPLOY_STAGE
 
 
-# cache:
-#   paths:
-#     - $CI_CLIENT_PATH/build
-#     - $CI_SERVER_PATH/build
+cache:
+  paths:
+    - $CI_CLIENT_PATH/build
+    - $CI_SERVER_PATH/build
 
 
 # compile-client:
