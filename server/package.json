@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "production": "ts-node ./build/app.js",
+    "production": "node ./build/app.js",
     "build": "tsc -p .",
     "dev": "ts-node-dev --poll -r dotenv/config src/app.ts",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",

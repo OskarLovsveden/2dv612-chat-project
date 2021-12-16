@@ -26,10 +26,10 @@ compile-client:
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
-# compile-server:
-#   extends: .compile-npm
-#   variables:
-#     CI_APP_PATH: $CI_SERVER_PATH
+compile-server:
+  extends: .compile-npm
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
 
 # build:static-client:
 #   extends: .build:static
