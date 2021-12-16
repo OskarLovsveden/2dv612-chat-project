@@ -58,7 +58,7 @@ const Chatroom = ( { chatroom }: ChatroomProps ) => {
         public: publicRef.current?.checked,
         tag: chatroomTag,
       };
-      const res = await chatroomService.update(data, chatroom.id);
+      const res = await chatroomService.update(data, data.id);
   
       navigate("/admin");
     }
