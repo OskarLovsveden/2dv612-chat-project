@@ -9,6 +9,7 @@
   variables:
     DOCKER_HOST: tcp://localhost:2375/
     DOCKER_DRIVER: overlay
+    IMAGE_REG_NAME: $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_APP_PATH
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   # Default branch leaves tag empty (= latest tag)
@@ -19,32 +20,29 @@
         tag=""
         echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = 'latest'"
       else
-        tag="$CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_APP_PATH:$CI_COMMIT_SHA"
+        tag="$CI_APP_PATH"
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
-
     - echo $CI_REGISTRY_IMAGE
     - cd $CI_APP_PATH
     - ls -la
     - >
       docker build
       --pull
-      --cache-from $CI_REGISTRY_IMAGE:latest
+      --cache-from $IMAGE_REG_NAME:$tag
       --label "org.opencontainers.image.title=$CI_PROJECT_TITLE"
       --label "org.opencontainers.image.url=$CI_PROJECT_URL"
       --label "org.opencontainers.image.created=$CI_JOB_STARTED_AT"
       --label "org.opencontainers.image.revision=$CI_COMMIT_SHA"
       --label "org.opencontainers.image.version=$CI_COMMIT_REF_NAME"
-      --tag $tag
+      --tag $IMAGE_REG_NAME:$tag
       .
     - ls -la
-    - docker push $tag
+    - docker push $IMAGE_REG_NAME:$tag
   cache:
       key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
       paths:
         - $CI_APP_PATH/build
         - $CI_APP_PATH/node_modules
-  # dependencies:
-  #   - build:static-client
   tags:
     - $CI_RUNNER_TAG  
