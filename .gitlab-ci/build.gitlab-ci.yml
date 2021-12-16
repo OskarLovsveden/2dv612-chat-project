@@ -1,7 +1,7 @@
 .build-image:
   # only:
   #   changes:
-  #     - $CI_BUILD_PATH/*
+  #     - $CI_APP_PATH/*
   stage: build
   image: docker:18.09.7-dind
   services:
@@ -24,25 +24,25 @@
       fi
     - echo $CI_REGISTRY_IMAGE
     - ls -la
-    - cd $CI_BUILD_PATH
+    - cd $CI_APP_PATH
     - ls -la
     - >
       docker build
       --pull
-      --cache-from $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_BUILD_PATH:latest
+      --cache-from $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_APP_PATH:latest
       --label "org.opencontainers.image.title=$CI_PROJECT_TITLE"
       --label "org.opencontainers.image.url=$CI_PROJECT_URL"
       --label "org.opencontainers.image.created=$CI_JOB_STARTED_AT"
       --label "org.opencontainers.image.revision=$CI_COMMIT_SHA"
       --label "org.opencontainers.image.version=$CI_COMMIT_REF_NAME"
       --label "org.opencontainers.image.version=$CI_COMMIT_BRANCH"
-      --tag $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_BUILD_PATH:latest
+      --tag $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_APP_PATH:latest
       .
     - ls -la
-    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_BUILD_PATH:latest
+    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_APP_PATH:latest
   cache:
-      key: ${CI_COMMIT_REF_SLUG}-${CI_BUILD_PATH}
+      key: ${CI_COMMIT_REF_SLUG}-${CI_APP_PATH}
       paths:
-        - $CI_BUILD_PATH/node_modules
+        - $CI_APP_PATH/node_modules
   tags:
     - $CI_RUNNER_TAG  
