@@ -1,10 +1,10 @@
 .deploy:
   stage: deploy
-  variables:
-    test: $IMG_REGISTRY:$CI_COMMIT_BRANCH
   image:
     name: bitnami/kubectl:latest
     entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
+  variables:
+    test: $IMG_REGISTRY:$CI_COMMIT_BRANCH
   before_script:
     - touch /.kube/config
     - echo "$K8_CONFIG" > /.kube/config
