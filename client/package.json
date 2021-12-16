@@ -48,9 +48,7 @@
     "@types/jest": "^26.0.24",
     "autoprefixer": "^9.8.8",
     "babel-jest": "^26.6.3",
-    "jest": "^26.6.0",
     "postcss": "^7.0.39",
-    "react-test-render": "^1.1.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
   }
 }

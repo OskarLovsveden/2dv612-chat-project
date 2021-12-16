@@ -5,7 +5,7 @@ import logger from 'koa-logger';
 import IndexRouter from './routes/index-router';
 import { Server as ServerCreate, createServer } from 'http'; // ServerCreate är hittepå bara för att inte krocka med server
 import SocketEvents from './utils/socket-events';
-import { dbConfig } from './db/postgres';
+
 
 export default class Server {
     private app: Koa;
@@ -28,16 +28,10 @@ export default class Server {
         this.listen();
     }
 
-    private async setUp(): Promise<void> {
+    private setUp(): void {
         this.app.use(bodyParser());
         this.app.use(cors({ origin: '*' }));
         this.app.use(logger());
-        try {
-            await dbConfig.authenticate();
-            console.log('Database connected');
-        } catch(e) {
-            console.error(e);
-        }
     }
 
     private listen(): void {
