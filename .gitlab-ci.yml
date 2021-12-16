@@ -13,10 +13,10 @@ stages:
   - acceptance
   - deploy
 
-cache:
-  paths:
-    - $CLIENT_PATH/build
-    - $SERVER_PATH/build
+# cache:
+#   paths:
+#     - $CLIENT_PATH/build
+#     - $SERVER_PATH/build
 
 
 compile-client:
