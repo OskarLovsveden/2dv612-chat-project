@@ -26,10 +26,10 @@ compile-client:
   variables:
     CI_NPM_APP_PATH: $CI_CLIENT_PATH
 
-# compile-server:
-#   extends: .compile-npm
-#   variables:
-#     CI_NPM_APP_PATH: $SERVER_PATH
+compile-server:
+  extends: .compile-npm
+  variables:
+    CI_NPM_APP_PATH: $SERVER_PATH
 
 build-image-client:
   extends: .build-image

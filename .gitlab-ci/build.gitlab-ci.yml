@@ -23,6 +23,7 @@
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
     - echo $CI_REGISTRY_IMAGE
+    - ls -la
     - cd $CI_BUILD_PATH
     - ls -la
     - >
