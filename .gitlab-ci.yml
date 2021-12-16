@@ -31,7 +31,12 @@ compile-server:
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
-build-image-client:
+build:static-client:
+  extend: .build-static
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
+
+build:image-client:
   extends: .build-image
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
