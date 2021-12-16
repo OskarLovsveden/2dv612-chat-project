@@ -48,7 +48,7 @@ CREATE TABLE public.chatroom (
     name character varying(255) NOT NULL,
     public boolean NOT NULL,
     tag character varying(255) NOT NULL,
-    usersID integer[]
+    user_ids integer[]
 );
 
 
@@ -166,6 +166,12 @@ SELECT pg_catalog.setval('public.users_id_seq', 13, true);
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
+--
+-- Name: chatroom chatroom_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.chatroom
+    ADD CONSTRAINT chatroom_pkey PRIMARY KEY (id);
 
 --
 -- PostgreSQL database dump complete

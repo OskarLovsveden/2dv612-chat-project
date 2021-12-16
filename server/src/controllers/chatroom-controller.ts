@@ -1,22 +1,20 @@
 import { Context } from 'koa';
-import Room from '../models/chatroom';
-import Chatroom from '../models/sequelizeModels/Chatroom';
+import Room from '../services/chatroom-service';
 
 export default class ChatroomController {
     readonly table = 'chatroom';
-    private roomModel = new Room();
+    private chatroomService = new Room();
 
     public async add(ctx: Context): Promise<void> {
         try {
             const room = ctx.request.body;
-            const roomCreated = await Chatroom.create(room);
+            const roomCreated = await this.chatroomService.create(room);
 
             if (!roomCreated) {
                 ctx.throw(400, { message: 'Failed to create room' });
             }
 
-            const createdRoom = roomCreated.toJSON();
-            ctx.body = { message: 'Room created', createdRoom };
+            ctx.body = { message: 'Room created', room };
         } catch (e) {
             console.error(e);
         }
@@ -24,8 +22,8 @@ export default class ChatroomController {
 
     public async getAll(ctx: Context): Promise<void> {
         try {
-            const users = await Chatroom.findAll();
-            ctx.body = users;
+            const chatroom = await this.chatroomService.getAll();
+            ctx.body = chatroom;
         } catch (e) {
             console.error(e);
         }
@@ -34,7 +32,7 @@ export default class ChatroomController {
     public async get(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
-            const room = await Chatroom.findOne({ where: { id: id } });
+            const room = await this.chatroomService.get(id);
 
             ctx.body = room;
         } catch (e) {
@@ -44,10 +42,8 @@ export default class ChatroomController {
 
     public async remove(ctx: Context): Promise<void> {
         try {
-            const id = ctx.params.id;
-        
-            // const roomDeleted = await this.get(ctx);
-            const roomDeleted = await Chatroom.destroy({ where: { id: id } });
+            const id = ctx.params.id;        
+            const roomDeleted = await this.chatroomService.delete(id);
             
             if (!roomDeleted) {
                 ctx.throw(400, { message: 'Failed to delete room' });
@@ -62,21 +58,19 @@ export default class ChatroomController {
     public async update(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
-            const room: any = ctx.body;
-        
-            // const roomDeleted = await this.get(ctx);
-            const roomDeleted = await Chatroom.update({
-                name: room.name,
-                public: room.public,
-                tag: room.tag
-            }, { where: { id: id } 
-            });
+            const room = ctx.request.body;
+            let newID;
+            if (ctx.request.body.length) {
+                newID = ctx.request.body.usersid;
+            }
+            console.log(room);        
+            const roomUpdated = await this.chatroomService.update(room, id, newID);
             
-            if (!roomDeleted) {
-                ctx.throw(400, { message: 'Failed to delete room' });
+            if (!roomUpdated) {
+                ctx.throw(400, { message: 'Failed to update room' });
             }
             
-            ctx.body = { message: 'Room deleted' };
+            ctx.body = { message: 'Room updated' };
         } catch (e) {
             console.error(e);
         }
