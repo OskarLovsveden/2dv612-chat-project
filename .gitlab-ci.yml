@@ -11,11 +11,11 @@ services:
   - docker:18.09.7-dind
 
 stages:
-  - $COMPILE_STAGE
-  - $TEST_STAGE
-  - $BUILD_STAGE
-  - $ACCEPTANCE_STAGE
-  - $DEPLOY_STAGE
+  - ${COMPILE_STAGE}
+  - ${TEST_STAGE}
+  - ${BUILD_STAGE}
+  - ${ACCEPTANCE_STAGE}
+  - ${DEPLOY_STAGE}
 
 compile-client:
   extends: .compile-npm
