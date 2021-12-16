@@ -40,5 +40,9 @@
       .
     - ls -la
     - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_BUILD_PATH:latest
+  cache:
+      key: "$CI_COMMIT_REF_SLUG"
+      paths:
+        - $CI_BUILD_PATH/node_modules
   tags:
     - $CI_RUNNER_TAG  
