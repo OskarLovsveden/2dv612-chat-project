@@ -6,10 +6,6 @@ include:
   - local: '.gitlab-ci/compile.gitlab-ci.yml'
   - local: '.gitlab-ci/vars.gitlab-ci.yml'
 
-image: docker:18.09.7-dind
-services:
-  - docker:18.09.7-dind
-
 stages:
   - $COMPILE_STAGE
   - $TEST_STAGE
