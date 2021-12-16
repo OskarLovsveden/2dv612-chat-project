@@ -18,7 +18,7 @@
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
     - echo $CI_REGISTRY_IMAGE
-    - cd client
+    - cd $PATH
     - ls -la
     - >
       docker build
@@ -30,9 +30,9 @@
       --label "org.opencontainers.image.revision=$CI_COMMIT_SHA"
       --label "org.opencontainers.image.version=$CI_COMMIT_REF_NAME"
       --label "org.opencontainers.image.version=$CI_COMMIT_BRANCH"
-      --tag $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/client:latest
+      --tag $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$PATH:latest
       .
     - ls -la
-    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/client:latest
+    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$PATH:latest
   tags:
     - k8-runner
