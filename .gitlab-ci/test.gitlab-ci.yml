@@ -3,11 +3,11 @@
   script:
     - echo Testing!
   tags:
-    - k8-runner
+    - $RUNNER_TAG
 
 .unit-test:
   stage: $TEST_STAGE
   script:
     - echo Unit Testing!
   tags:
-    - k8-runner    
+    - $RUNNER_TAG   

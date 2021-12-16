@@ -15,7 +15,7 @@
     - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN"
     - kubectl apply -f k8s/
   tags:
-    - k8-runner
+    - $RUNNER_TAG
 
 # Only runs on main branch.
 # deploy-main:

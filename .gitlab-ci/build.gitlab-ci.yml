@@ -35,4 +35,4 @@
     - ls -la
     - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$PATH:latest
   tags:
-    - k8-runner
+    - $RUNNER_TAG

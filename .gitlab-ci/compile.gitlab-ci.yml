@@ -16,4 +16,4 @@
     paths:
       - $NPM_APP_PATH/build/
   tags:
-    - k8-runner
+    - $RUNNER_TAG
