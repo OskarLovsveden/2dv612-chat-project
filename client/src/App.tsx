@@ -10,6 +10,7 @@ import ROLE from "./types/Role";
 import UserCreation from "./components/UserCreation";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthProvider";
+import UpdateChatroom from "./components/UpdateChatroom";
 
 function App() {
   const { user, isAuthenticated } = useContext(AuthContext);
@@ -63,6 +64,10 @@ function App() {
             path="create-chatroom"
             element={<Private roles={[ROLE.ADMIN]} component={Chatroom} />}
           />
+          {/* <Route
+            path="update-chatroom"
+            element={<Private roles={[ROLE.ADMIN]} component={UpdateChatroom} />}
+          /> */}
           <Route
             path="create-user"
             element={<Private roles={[ROLE.ADMIN]} component={UserCreation} />}

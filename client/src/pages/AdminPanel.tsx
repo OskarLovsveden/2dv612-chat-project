@@ -20,6 +20,7 @@ import { Chatroom } from "../types/Chatroom";
 import userService from "../utils/http/user-service";
 import chatroomService from "../utils/http/chatroom-service";
 import ROLE from "../types/Role";
+import updateChatroom from "../components/UpdateChatroom";
 
 const AdminPanel = () => {
   const [chatRoomData, setChatRoomData] = useState<Chatroom[]>([]);
@@ -178,11 +179,16 @@ const AdminPanel = () => {
                           src={deleteImg}
                           alt="Delete"
                         />
+                        {/* <Link to="/update-chatroom"> */}
                         <img
                           className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
                           src={editUserImg}
                           alt="Edit"
+                          onClick={(e) => {
+                            updateChatroom(u);
+                          }}
                         />
+                        {/* </Link> */}
                       </div>
                     </li>
                   )
