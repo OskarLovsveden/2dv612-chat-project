@@ -4,7 +4,7 @@ FROM node:latest
 RUN mkdir /home/node/app
 WORKDIR /home/node/app
 
-COPY . .
+COPY /build .
 
 # Defaults to production, override in pipeline.
 ARG NODE_ENV=production
