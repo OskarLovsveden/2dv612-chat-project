@@ -7,9 +7,9 @@
   variables:
     CI: "false" # Must be added to allow for warnings during build using craco
   script:
-    - ls -la
     - echo $CI_APP_PATH
     - cd $CI_APP_PATH
+    - ls -la
     - npm ci && npm cache clean --force
     #- npm run build
     - ls -la
