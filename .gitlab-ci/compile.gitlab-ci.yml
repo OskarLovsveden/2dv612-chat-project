@@ -1,5 +1,5 @@
 .compile-npm:
-  rules:
+  only:
     changes:
       - $NPM_APP_PATH/package.json
   image: node:16-alpine
