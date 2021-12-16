@@ -10,6 +10,7 @@ services:
 
 variables:
   IMG_REGISTRY: $CI_REGISTRY/2dv612/student/team-1---ht21/project
+  NPM_APP_PATH: "client server"
 
 stages:
   - compile
