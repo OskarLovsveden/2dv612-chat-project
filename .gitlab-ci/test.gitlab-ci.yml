@@ -1,12 +1,12 @@
 .eslint:
-  stage: $TEST_STAGE
+  stage: test
   script:
     - echo Testing!
   tags:
     - $RUNNER_TAG
 
 .unit-test:
-  stage: $TEST_STAGE
+  stage: test
   script:
     - echo Unit Testing!
   tags:

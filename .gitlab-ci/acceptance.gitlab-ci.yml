@@ -1,5 +1,5 @@
 .browser_performance:
-  stage: $ACCEPTANCE_STAGE
+  stage: acceptance
   image: docker:19.03.12
   allow_failure: true
   variables:

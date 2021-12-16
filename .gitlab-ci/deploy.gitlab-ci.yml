@@ -1,5 +1,5 @@
 .deploy:
-  stage: $DEPLOY_STAGE
+  stage: deploy
   variables:
     test: $IMG_REGISTRY:$CI_COMMIT_BRANCH
   image:
