@@ -14,8 +14,8 @@
     #- npm run build
     - ls -la
   cache:
-    key: $CI_COMMIT_REF_SLUG-$CI_BUILD_PATH
+    key: "$CI_COMMIT_REF_SLUG-$CI_BUILD_PATH"
     paths:
-      - $CI_BUILD_PATH/node_modules
+      - node_modules
   tags:
     - $CI_RUNNER_TAG
