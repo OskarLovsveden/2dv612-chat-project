@@ -12,3 +12,10 @@ export type DBChatroom = {
     public: boolean;
     tag: string; 
 }
+
+export type DBMessage = {
+    userID: number;
+    message: string;
+    id: number;
+    roomID: number; 
+}

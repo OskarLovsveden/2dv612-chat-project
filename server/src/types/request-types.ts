@@ -10,3 +10,10 @@ export type RequestRoomCreate = {
     public: boolean;
     tag: string;
 }
+
+export type RequestMessageCreate = {
+    userID: number;
+    message: string;
+    id: number;
+    roomID: number
+}
