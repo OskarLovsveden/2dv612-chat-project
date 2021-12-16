@@ -19,3 +19,4 @@
       - $CI_NPM_APP_PATH/node_modules
   tags:
     - $CI_RUNNER_TAG
+
