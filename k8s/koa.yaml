@@ -25,7 +25,7 @@ spec:
         runAsUser: 1000
       containers:
       - name: koa-backend
-        image: gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project/koa:pipeline-test2
+        image: gitlab.lnu.se:5050/2dv612/student/team-1---ht21/project/pipeline-test2/server
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000
