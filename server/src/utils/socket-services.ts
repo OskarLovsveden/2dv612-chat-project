@@ -5,6 +5,11 @@ import SocketRooms from './socket-rooms';
 import SocketRoom from './socket-rooms';
 import SocketUsers from './socket-users';
 import SocketUser from './socket-users';
+import {
+    EventChatMessage,
+    EventJoinRoom,
+    EventLogin
+} from '../types/event-data-types';
 
 export default class SocketServices {
     private socketRooms: SocketRooms = new SocketRooms();
@@ -46,7 +51,7 @@ export default class SocketServices {
             io.in(`${data.room_id}`).emit('room-message', { id: data.user_id, message: data.message });
         }
     }
- 
+
     public handleUserDisconnect(socket: Socket) {
         const disconnectedUser = this.onlineUsers.disconnectUser(socket.id);
 
