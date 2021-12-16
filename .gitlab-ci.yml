@@ -20,10 +20,10 @@ cache:
     - $CI_SERVER_PATH/build
 
 
-# compile-client:
-#   extends: .compile-npm
-#   variables:
-#     CI_NPM_APP_PATH: $CLIENT_PATH
+compile-client:
+  extends: .compile-npm
+  variables:
+    CI_NPM_APP_PATH: $CLIENT_PATH
 
 # compile-server:
 #   extends: .compile-npm
