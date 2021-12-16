@@ -40,15 +40,28 @@ const Chatroom = ( { chatroom }: ChatroomProps ) => {
 
   const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(publicRef)
-    const data = {
-      name: chatroomName,
-      public: publicRef.current,
-      tag: chatroomTag,
-    };
-    const res = await chatroomService.create(data);
-
-    navigate("/admin");
+    
+    if (chatroom === undefined) {
+      const data = {
+        name: chatroomName,
+        public: publicRef.current?.checked,
+        tag: chatroomTag,
+      };
+      const res = await chatroomService.create(data);
+  
+      navigate("/admin");
+    }
+    else {
+      const data = {
+        id: chatroom.id,
+        name: chatroomName,
+        public: publicRef.current?.checked,
+        tag: chatroomTag,
+      };
+      const res = await chatroomService.update(data, chatroom.id);
+  
+      navigate("/admin");
+    }
   };
 
 
@@ -89,7 +102,7 @@ const Chatroom = ( { chatroom }: ChatroomProps ) => {
               Chatroom Public
             </label>
             <input
-              ref={publicRef.current}
+              ref={publicRef}
               // onChange={setChatroomPublic(!chatroomPublic)}
               className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
               type="checkbox"
