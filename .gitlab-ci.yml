@@ -15,17 +15,11 @@ stages:
   - deploy
 
 compile-client:
-  only:
-    changes:
-      - $CI_CLIENT_PATH/*
   extends: .compile-npm
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
 compile-server:
-  only:
-    changes:
-      - $CI_CLIENT_PATH/*
   extends: .compile-npm
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
