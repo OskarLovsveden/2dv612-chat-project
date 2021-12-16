@@ -10,6 +10,9 @@
     - echo "$K8_CONFIG" > /.kube/config
     - cat /.kube/config
   script:
+    - echo $CI_REGISTRY
+    - echo $GIT_USERNAME
+    - echo $GIT_TOKEN
     - kubectl delete -f k8s/ --ignore-not-found
     - kubectl delete secret regcred  --ignore-not-found
     - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN"
