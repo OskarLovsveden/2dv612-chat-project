@@ -1,17 +1,24 @@
-import { FormEvent, SetStateAction, useState } from "react";
+import { FormEvent, SetStateAction, useRef, useState } from "react";
 import "../App.css";
 import chatroomService from "../utils/http/chatroom-service";
 import chatImg from "../images/chat.png";
 import { useNavigate } from "react-router";
+import { Chatroom as ChatroomType } from "../types/Chatroom";
+
+type ChatroomProps = {
+  chatroom?: ChatroomType
+};
 
 /**
  * Makes Admin able to create chat rooms for users.
  * @returns HTML for creating a chatroom.
  */
-const Chatroom = () => {
+const Chatroom = ( { chatroom }: ChatroomProps ) => {
   const [chatroomName, setChatroomName] = useState<string>("");
+  // const [chatroomPublic, setChatroomPublic] = useState<boolean>(true);
   const [chatroomTag, setChatroomTag] = useState<string>("");
   const navigate = useNavigate();
+  const publicRef = useRef<any>();
 
   const handleChatroomName = (Event: {
     target: { value: SetStateAction<string> };
@@ -25,11 +32,18 @@ const Chatroom = () => {
     setChatroomTag(Event.target.value);
   };
 
+  // const handleChatroomPublic = (Event: {
+  //   target: { value: SetStateAction<boolean> };
+  // }) => {
+  //   setChatroomPublic(Event.target.value);
+  // };
+
   const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(publicRef)
     const data = {
       name: chatroomName,
-      public: true,
+      public: publicRef.current,
       tag: chatroomTag,
     };
     const res = await chatroomService.create(data);
@@ -37,9 +51,10 @@ const Chatroom = () => {
     navigate("/admin");
   };
 
+
   return (
-    <div className="bg-indigo-600 h-screen">
-      <div className="max-w-xs w-full m-auto bg-indigo-100 rounded p-5">
+    // <div className="bg-indigo-600 h-screen">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 m-auto bg-indigo-100 rounded p-5 w-96">
         <header>
           <img className="w-20 mx-auto mb-5" alt={chatImg} src={chatImg} />
         </header>
@@ -70,6 +85,19 @@ const Chatroom = () => {
             ></input>
           </div>
           <div>
+            <label className="block mb-2 text-indigo-500" htmlFor="ChatroomPublic">
+              Chatroom Public
+            </label>
+            <input
+              ref={publicRef.current}
+              // onChange={setChatroomPublic(!chatroomPublic)}
+              className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+              type="checkbox"
+              defaultChecked={true}
+              name="ChatroomPublic"
+            ></input>
+          </div>
+          <div>
             <input
               className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded"
               type="submit"
@@ -78,8 +106,10 @@ const Chatroom = () => {
           </div>
         </form>
       </div>
-    </div>
+    // </div>
   );
 };
+
+
 
 export default Chatroom;
