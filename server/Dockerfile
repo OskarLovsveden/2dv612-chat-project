@@ -4,7 +4,11 @@ FROM node:latest
 RUN mkdir /home/node/app
 WORKDIR /home/node/app
 
+RUN npm install
+
 COPY . .
+
+RUN npm run build
 
 # Defaults to production, override in pipeline.
 ARG NODE_ENV=production

@@ -35,11 +35,11 @@
       --tag $IMAGE_REG_NAME:$tag
       .
     - ls -la
-    - docker push ${IMAGE_REG_NAME}:$tag
+    - docker push $IMAGE_REG_NAME:$tag
   cache:
-      key: "${CI_APP_PATH}-${CI_COMMIT_REF_SLUG}"
+      key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
       paths:
-        - ${CI_APP_PATH}/build
-        - ${CI_APP_PATH}/node_modules
+        - $CI_APP_PATH/build
+        - $CI_APP_PATH/node_modules
   tags:
     - $CI_RUNNER_TAG  
