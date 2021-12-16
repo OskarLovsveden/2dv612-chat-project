@@ -18,8 +18,8 @@ deploy:
     - k8-runner
 
 # Only runs on main branch.
-deploy-main:
-  rules:
-    if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  script:
-    echo "example job $CI_COMMIT_BRANCH"
+# deploy-main:
+#   rules:
+#     if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+#   script:
+#     echo "example job $CI_COMMIT_BRANCH"
