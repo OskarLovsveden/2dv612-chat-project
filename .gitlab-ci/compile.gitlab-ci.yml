@@ -1,4 +1,4 @@
-compile-npm:
+.compile-npm:
   # only:
   #   changes:
   #     - $NPM_APP_PATH/package.json

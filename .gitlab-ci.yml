@@ -19,6 +19,6 @@ stages:
   - deploy
 
 compile-client:
-  extends: compile-npm
+  extends: .compile-npm
   variables:
     NPM_APP_PATH: client
