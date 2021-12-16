@@ -4,13 +4,15 @@ FROM node:latest
 RUN mkdir /home/node/app
 WORKDIR /home/node/app
 
-COPY /build .
+COPY package*.json ./
 
+RUN npm install
+
+COPY . .
+RUN npm run build
 # Defaults to production, override in pipeline.
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
-WORKDIR ./build
-
-CMD node src/app.js
-
+# CMD npm run $NODE_ENV
+CMD npm run $NODE_ENV
