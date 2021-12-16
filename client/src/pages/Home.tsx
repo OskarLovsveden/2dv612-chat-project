@@ -142,7 +142,13 @@ const Home = () => {
                       </svg>
                     </span>
                   </span>
-                  {user && <Chat Toggle={onChat} username={user.username} />}
+                  {user && (
+                    <Chat
+                      Toggle={onChat}
+                      username={user.username}
+                      id={user.id}
+                    />
+                  )}
                 </div>
               </div>
             </div>
