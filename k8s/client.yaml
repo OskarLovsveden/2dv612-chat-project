@@ -18,6 +18,9 @@ spec:
         - name: nginx
           image: client-img
           imagePullPolicy: Always
+          envFrom:
+          - configMapRef:
+              name: all-vars
       imagePullSecrets:
         - name: regcred
 ---
