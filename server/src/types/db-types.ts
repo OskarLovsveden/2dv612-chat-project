@@ -6,6 +6,17 @@ export type DBUser = {
     role: string;
 }
 
+export type DBConfig = {
+    client: string,
+    connection: {
+        host: string,
+        user: string,
+        password: string,
+        database: string,
+        port: string
+    }
+}
+
 export type SequelizeConfig = {
         host: string,
         user: string,
