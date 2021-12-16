@@ -1,6 +1,6 @@
 compile-npm:
   rules:
-    changes:
+    - changes:
       - $NPM_APP_PATH/package.json
   image: node:16-alpine
   stage: build
