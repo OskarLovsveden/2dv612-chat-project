@@ -19,7 +19,7 @@ const Chatroom = dbConfig.define('Chatroom', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    usersid: {
+    user_ids: {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
         allowNull: true
     }
