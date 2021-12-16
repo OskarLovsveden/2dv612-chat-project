@@ -41,10 +41,10 @@ build:image-client:
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
-build:image-server:
-  extends: .build:image
-  variables:
-    CI_APP_PATH: $CI_SERVER_PATH
+# build:image-server:
+#   extends: .build:image
+#   variables:
+#     CI_APP_PATH: $CI_SERVER_PATH
 
 build:image-postgres:
   extends: .build:image

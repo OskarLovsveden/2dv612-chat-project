@@ -10,4 +10,4 @@ COPY ./build .
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
-ENTRYPOINT ["node", "./build/app.js"]
+ENTRYPOINT ["npm", "run", $NODE_ENV]
