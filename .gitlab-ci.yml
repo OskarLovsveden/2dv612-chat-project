@@ -1,10 +1,10 @@
 include:
-  - local: '.gitlab-ci/vars.gitlab-ci.yml'
-  - local: '.gitlab-ci/compile.gitlab-ci.yml'
-  #- local: '.gitlab-ci/test.gitlab-ci.yml'
-  - local: '.gitlab-ci/build.gitlab-ci.yml'
-  #- local: '.gitlab-ci/acceptance.gitlab-ci.yml'
-  - local: '.gitlab-ci/deploy.gitlab-ci.yml'
+  - local: 'vars.gitlab-ci.yml'
+  - local: 'compile.gitlab-ci.yml'
+  #- local: 'test.gitlab-ci.yml'
+  - local: 'build.gitlab-ci.yml'
+  #- local: 'acceptance.gitlab-ci.yml'
+  - local: 'deploy.gitlab-ci.yml'
 
 
 stages:
