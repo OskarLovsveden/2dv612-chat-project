@@ -12,7 +12,7 @@
     - npm ci && npm cache clean --force
     - npm run build
     - ls -la
-  artifacts:
+  cache:
     paths:
       - $CI_NPM_APP_PATH/build/
   tags:
