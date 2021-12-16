@@ -1,4 +1,4 @@
-export type ChannelInfo = {
+export type DirectMessage = {
   name: string;
   id: number;
 };

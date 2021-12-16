@@ -32,9 +32,8 @@ const Chatroom = () => {
       public: true,
       tag: chatroomTag,
     };
-    const res = await chatroomService.create(data);
-    console.log(res);
 
+    await chatroomService.create(data);
     navigate("/admin");
   };
 

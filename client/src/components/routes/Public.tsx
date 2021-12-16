@@ -11,8 +11,6 @@ export const Public = ({ component: RouteComponent }: PublicProps) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(isAuthenticated);
-
     if (isAuthenticated) navigate("/");
   }, [isAuthenticated, navigate]);
 

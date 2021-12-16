@@ -1,6 +1,7 @@
-import { io, Socket } from "socket.io-client";
-import React, { SetStateAction, useEffect, useRef, useState } from "react";
+import { io } from "socket.io-client";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Message from "./Message";
+import { HomeContext } from "../../context/HomeProvider";
 
 type MessageEvent = {
   name: string;
@@ -16,12 +17,12 @@ type ChatProps = {
 // export default function ChatRoom({ toggle, username }: ChatProps) {
 export default function ChatRoom({ username }: ChatProps) {
   const [messages, setMessages] = useState<MessageEvent[]>([]);
+  const { activeChat } = useContext(HomeContext);
 
-  const CHAT_ROOM = "room_1";
   const enterPressRef = useRef<any>();
   const messageRef = useRef<any>();
 
-  const [socket, setSocket] = useState(() =>
+  const [socket] = useState(() =>
     io("http://localhost:5000", { path: "/socket.io" })
   );
 
@@ -31,22 +32,25 @@ export default function ChatRoom({ username }: ChatProps) {
     };
 
     socket.on("connect", () => {
+      console.log("Socket connected! ID: " + socket.id);
+    });
+
+    if (activeChat) {
       socket.emit("join-room", {
-        room_id: CHAT_ROOM,
+        room_id: activeChat?.name,
         user_id: username,
       });
-    }); //test
 
-    socket.on("room-message", (data) => {
-      console.log("MEssage:  as" + data.message);
-      const isUser = data.username === username;
-      handleNewMessage({ isUser, name: data.username, text: data.message });
-    });
+      socket.on("room-message", (data) => {
+        const isUser = data.username === username;
+        handleNewMessage({ isUser, name: data.username, text: data.message });
+      });
+    }
 
     return () => {
       socket.emit("user-disconnect");
     };
-  }, [socket, username]);
+  }, [activeChat, activeChat?.name, socket, username]);
 
   const handleEnter = (e: any) => {
     if (e.code === "Enter" && e.shiftKey === false) {
@@ -58,7 +62,7 @@ export default function ChatRoom({ username }: ChatProps) {
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     socket.emit("chat-message", {
-      room_id: CHAT_ROOM,
+      room_id: activeChat?.name,
       user_id: username,
       message: messageRef.current?.value,
     });
@@ -93,9 +97,9 @@ export default function ChatRoom({ username }: ChatProps) {
                 <span className="block text-center text-gray-400 hover:text-gray-800">
                   <svg
                     fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                     className="h-6 w-6"
@@ -120,9 +124,9 @@ export default function ChatRoom({ username }: ChatProps) {
                     <span className="inline-block align-text-bottom">
                       <svg
                         fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                         className="w-6 h-6"
@@ -138,9 +142,9 @@ export default function ChatRoom({ username }: ChatProps) {
                       <svg
                         fill="none"
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         viewBox="0 0 24 24"
                         className="w-4 h-4 text-white"
                       >

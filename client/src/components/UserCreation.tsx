@@ -55,9 +55,8 @@ const UserCreation = () => {
       role: userRole,
       active: true,
     };
-    const res = await userService.create(data);
-    console.log(res);
 
+    await userService.create(data);
     navigate("/admin");
   };
 
