@@ -32,8 +32,8 @@ stages:
 
 build-image-client:
   extends: .build-image
-  # variables:
-  #   PATH: $CLIENT_PATH
+  variables:
+    PATH: $CLIENT_PATH
 
 # build-image-server:
 #   extends: .build-image
