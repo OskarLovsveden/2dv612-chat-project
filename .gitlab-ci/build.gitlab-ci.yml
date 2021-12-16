@@ -14,6 +14,15 @@
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
+    - |
+      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+        tag=""
+        echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = 'latest'"
+      else
+        tag=":$CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_APP_PATH:$CI_COMMIT_SHA"
+        echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
+      fi
+
     - echo $CI_REGISTRY_IMAGE
     - cd $CI_APP_PATH
     - ls -la
@@ -26,10 +35,10 @@
       --label "org.opencontainers.image.created=$CI_JOB_STARTED_AT"
       --label "org.opencontainers.image.revision=$CI_COMMIT_SHA"
       --label "org.opencontainers.image.version=$CI_COMMIT_REF_NAME"
-      --tag $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_APP_PATH:$CI_COMMIT_SHA
+      --tag $tag
       .
     - ls -la
-    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_APP_PATH:$CI_COMMIT_SHA
+    - docker push $tag
   cache:
       key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
       paths:
