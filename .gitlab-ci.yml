@@ -1,9 +1,9 @@
 include:
-  - local: '/build.gitlab-ci.yml'
-  #- local: '/test.gitlab-ci.yml'
-  #- local: '/acceptance.gitlab-ci.yml'
-  - local: '/deploy.gitlab-ci.yml'
-  - local: '/compile.gitlab-ci.yml'
+  - local: 'ci/build.gitlab-ci.yml'
+  #- local: 'ci/test.gitlab-ci.yml'
+  #- local: 'ci/acceptance.gitlab-ci.yml'
+  - local: 'ci/deploy.gitlab-ci.yml'
+  - local: 'ci/compile.gitlab-ci.yml'
 image: docker:18.09.7-dind
 services:
   - docker:18.09.7-dind
