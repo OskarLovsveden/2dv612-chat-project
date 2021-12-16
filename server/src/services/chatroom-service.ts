@@ -3,10 +3,7 @@ import Chatroom from '../models/sequelizeModels/Chatroom';
 import { Model } from 'sequelize';
 import { dbConfig } from '../db/postgres';
 
-// TODO add sequelize
 export default class ChatRoom {
-    private ROOM_TABLE = 'chatroom';
-
     public async create(clientRoom: RequestRoomCreate): Promise<boolean> {
         const roomCreated = await Chatroom.create(clientRoom);
 
@@ -30,15 +27,6 @@ export default class ChatRoom {
             return [];
         }
 
-        // const roomsArray: RespondRoom[] = rooms.map((r: DBChatroom) => {
-        //     return {
-        //         name: r.name,
-        //         id: r.id,
-        //         public: r.public,
-        //         tag: r.tag
-        //     };
-        // });
-
         return rooms;
     }
 
@@ -60,10 +48,6 @@ export default class ChatRoom {
             usersid: dbConfig.fn('array_append', dbConfig.col('usersid'), newID)
         }, { where: { id: roomID } 
         });
-
-        if (!updatedRoom) {
-            return false;
-        }
 
         return updatedRoom;
     }

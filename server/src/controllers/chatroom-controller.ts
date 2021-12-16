@@ -60,9 +60,11 @@ export default class ChatroomController {
             const id = ctx.params.id;
             const room = ctx.request.body;
             let newID;
+            
             if (ctx.request.body.length) {
                 newID = ctx.request.body.usersid;
             }
+            
             console.log(room);        
             const roomUpdated = await this.chatroomService.update(room, id, newID);
             
