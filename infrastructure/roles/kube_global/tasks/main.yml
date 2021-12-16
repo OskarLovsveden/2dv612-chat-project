@@ -12,17 +12,7 @@
     mode: '0777'
     
 - name: Locating all files in files dir
-  find:
-    path: "{{ kube_dir }}"
-  register: cleanup
-  ignore_errors: true
-
-- name: Removing all files previously found in files dir
-  file:
-    path: "{{ item.path }}"
-    state: absent
-  with_items: "{{ cleanup.files }}"
-  ignore_errors: true
+  shell: rm -r '{{ kube_dir }}'/*
 
 - name: Copying templates
   become: yes
