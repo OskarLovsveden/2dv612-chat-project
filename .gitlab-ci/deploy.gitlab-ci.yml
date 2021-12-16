@@ -13,13 +13,12 @@
     - echo $CI_REGISTRY
     - echo $GIT_USERNAME
     - echo $GIT_TOKEN
-    - kubectl delete -f k8s/ --ignore-not-found
     - kubectl delete secret regcred  --ignore-not-found
     - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN"
-    - sed -i 's/server-img/$CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/server:$CI_COMMIT_SHA/g' k8s/koa.yaml
-    - sed -i 's/client-img/$CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/client:$CI_COMMIT_SHA/g' k8s/client.yaml
-    - sed -i 's/postgres-img/$CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/postgres:$CI_COMMIT_SHA/g' k8s/postgres.yaml
-    - kubectl apply -f k8s/
+    - sed -i --expression "s@server-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/client:${CI_COMMIT_SHA}@" k8s/koa.yaml
+    - sed -i --expression "s@server-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/server:${CI_COMMIT_SHA}@" k8s/client.yaml
+    - sed -i --expression "s@server-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/postgres:${CI_COMMIT_SHA}@" k8s/postgres.yaml
+    - kubectl replace -f k8s/
   tags:
     - $CI_RUNNER_TAG
 
