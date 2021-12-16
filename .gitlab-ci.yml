@@ -1,8 +1,9 @@
 include:
-  - local: '/.gitlab-ci-build.yml'
-  #- local: '/.gitlab-ci-test.yml'
-  #- local: '/.gitlab-ci-acctest.yml'
-  - local: '/.gitlab-ci-deploy.yml'
+  - local: '/build.gitlab-ci.yml'
+  #- local: '/test.gitlab-ci.yml'
+  #- local: '/acceptance.gitlab-ci.yml'
+  - local: '/deploy.gitlab-ci.yml'
+  - local: '/compile.gitlab-ci.yml'
 image: docker:18.09.7-dind
 services:
   - docker:18.09.7-dind
@@ -11,9 +12,9 @@ variables:
   IMG_REGISTRY: $CI_REGISTRY/2dv612/student/team-1---ht21/project
 
 stages:
-  - build
-  - build-img
+  - compile
   - test
+  - build
   - acceptance
   - deploy
 

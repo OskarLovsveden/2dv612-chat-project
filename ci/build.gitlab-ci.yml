@@ -118,7 +118,5 @@ build-image-frontend:
       .
     - ls -la
     - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/client:latest
-  dependencies:
-    - build-frontend
   tags:
     - k8-runner
