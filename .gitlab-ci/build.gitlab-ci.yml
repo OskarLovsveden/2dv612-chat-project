@@ -60,6 +60,6 @@
       paths:
         - $CI_APP_PATH/build
   dependencies:
-    - .build-static-client
+    - .build:static
   tags:
     - $CI_RUNNER_TAG  
