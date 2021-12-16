@@ -36,6 +36,7 @@
     - { local: 'global-vars.yml.j2', remote: '{{ kube_dir }}/global-vars.yml' }
     - { local: 'gitlab-admin-service-account.yml.j2', remote: '{{ kube_dir }}/gitlab-admin-service-account.yml' }
     - { local: 'git-runner-conf.yml.j2', remote: '{{ helm_dir }}/git-runner-conf.yml' }
+    - { local: 'git-runner-pvc.yml.j2', remote: '{{ kube_dir }}/git-runner-pvc.yml' }
     - { local: 'prometheus.yml.j2', remote: '{{ helm_dir }}/prometheus-conf.yml' }
 
 

@@ -1,4 +1,5 @@
 variables:
+  MVN_OPTS: "-Dmaven.repo.local=/cache/maven.repository"
   CI_CLIENT_PATH: client
   CI_SERVER_PATH: server
   CI_COMPILE_STAGE: compile
