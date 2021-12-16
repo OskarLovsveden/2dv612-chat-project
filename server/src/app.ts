@@ -3,6 +3,7 @@ import Server from './server';
 const PORT = config.port;
 import dotenv from 'dotenv';
 
+// aspodkaspod
 dotenv.config();
 
 const main = async () => {
