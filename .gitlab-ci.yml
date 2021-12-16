@@ -46,6 +46,11 @@ build:image-server:
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
+build:image-postgres:
+  extends: .build:image
+  variables:
+    CI_APP_PATH: $CI_POSTGRES_PATH
+
 deploy-all:
   extends: .deploy
 

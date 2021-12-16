@@ -26,7 +26,7 @@ spec:
       containers:
       - name: koa-backend
         image: server-img
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
         envFrom:

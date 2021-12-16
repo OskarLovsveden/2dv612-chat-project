@@ -2,6 +2,7 @@ variables:
   MVN_OPTS: "-Dmaven.repo.local=/cache"
   CI_CLIENT_PATH: client
   CI_SERVER_PATH: server
+  CI_POSTGRES_PATH: postgres
   CI_COMPILE_STAGE: compile
   CI_TEST_STAGE: test
   CI_BUILD_STAGE: build
