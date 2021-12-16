@@ -82,4 +82,4 @@
     - ls -la
     - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/client:latest
   tags:
-    - k8-runner   
+    - $RUNNER_TAG  
