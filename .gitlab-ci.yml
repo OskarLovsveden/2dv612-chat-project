@@ -13,14 +13,6 @@ stages:
   - acceptance
   - deploy
 
-
-# cache:
-#   key: $CI_COMMIT_REF_SLUG
-#   paths:
-#     - $CI_CLIENT_PATH/build
-#     - $CI_SERVER_PATH/build
-
-
 compile-client:
   extends: .compile-npm
   variables:
