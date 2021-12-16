@@ -11,12 +11,13 @@ type MessageEvent = {
 type ChatProps = {
   Toggle: () => void;
   username: string;
+  id: number | string;
 };
 
-export default function ChatRoom({ Toggle, username }: ChatProps) {
+export default function ChatRoom({ Toggle, username, id }: ChatProps) {
   const [messages, setMessages] = useState<MessageEvent[]>([]);
 
-  const CHAT_ROOM = "room_1";
+  const CHAT_ROOM = "1";
   const enterPressRef = useRef<any>();
   const messageRef = useRef<any>();
 
@@ -30,22 +31,21 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
     };
 
     socket.on("connect", () => {
-      socket.emit("join-room", {
-        room_id: CHAT_ROOM,
-        user_id: username,
+      socket.emit("user-connect", {
+        user_id: id,
       });
     }); //test
 
     socket.on("room-message", (data) => {
       console.log("MEssage:  as" + data.message);
-      const isUser = data.username === username;
-      handleNewMessage({ isUser, name: data.username, text: data.message });
+      const isUser = data.id === id;
+      handleNewMessage({ isUser, name: data.id, text: data.message });
     });
 
     return () => {
-      socket.emit("user-disconnect");
+      socket.disconnect();
     };
-  }, [socket, username]);
+  }, [socket, username, id]);
 
   const handleEnter = (e: any) => {
     if (e.code == "Enter" && e.shiftKey == false) {
@@ -58,7 +58,7 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
     e.preventDefault();
     socket.emit("chat-message", {
       room_id: CHAT_ROOM,
-      user_id: username,
+      user_id: id,
       message: messageRef.current?.value,
     });
 
