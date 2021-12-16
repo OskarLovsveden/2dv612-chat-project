@@ -41,6 +41,9 @@ build:image-client:
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
+deploy-all:
+  extends: .deploy
+
 # build-image-server:
 #   extends: .build-image
 #   variables:
