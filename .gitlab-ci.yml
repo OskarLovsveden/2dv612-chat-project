@@ -19,4 +19,5 @@ stages:
   - deploy
 
 compile-npm:
-  variables: client
+  variables:
+    - client
