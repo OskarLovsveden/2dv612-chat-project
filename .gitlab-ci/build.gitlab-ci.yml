@@ -56,7 +56,7 @@
       --label "org.opencontainers.image.created=$CI_JOB_STARTED_AT"
       --label "org.opencontainers.image.revision=$CI_COMMIT_SHA"
       --label "org.opencontainers.image.version=$CI_COMMIT_REF_NAME"
-      --tag $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH:$CI_APP_PATH
+      --tag $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_APP_PATH:$CI_COMMIT_SHA
       .
     - ls -la
     - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_APP_PATH:latest
