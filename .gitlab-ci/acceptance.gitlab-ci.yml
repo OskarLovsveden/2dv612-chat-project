@@ -1,13 +1,13 @@
 .browser_performance:
   stage: acceptance
   image: docker:19.03.12
-  allow_failure: true
   variables:
     URL: http://194.47.177.96/
     DOCKER_TLS_CERTDIR: ""
     SITESPEED_IMAGE: sitespeedio/sitespeed.io
     SITESPEED_VERSION: 14.1.0
     SITESPEED_OPTIONS: ''
+  allow_failure: true
   services:
     - docker:19.03.12-dind
   script:

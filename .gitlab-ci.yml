@@ -19,22 +19,64 @@ stages:
 #     - $SERVER_PATH/build
 
 
-compile-client:
-  extends: .compile-npm
-  variables:
-    NPM_APP_PATH: $CLIENT_PATH
+# compile-client:
+#   extends: .compile-npm
+#   variables:
+#     NPM_APP_PATH: $CLIENT_PATH
 
-compile-server:
-  extends: .compile-npm
-  variables:
-    NPM_APP_PATH: $SERVER_PATH
+# compile-server:
+#   extends: .compile-npm
+#   variables:
+#     NPM_APP_PATH: $SERVER_PATH
 
-build-image-client:
-  extends: .build-image
-  variables:
-    PATH: $CLIENT_PATH
+# build-image-client:
+#   extends: .build-image
+#   variables:
+#     PATH: $CLIENT_PATH
 
-build-image-server:
-  extends: .build-image
+# build-image-server:
+#   extends: .build-image
+#   variables:
+
+build-image:
+  stage: build
+  image: docker:18.09.7-dind
   variables:
     PATH: $SERVER_PATH    
+    DOCKER_HOST: tcp://localhost:2375/
+    DOCKER_DRIVER: overlay
+  services:
+    - docker:18.09.7-dind
+  before_script:
+    - echo $IMG_REGISTRY
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  # Default branch leaves tag empty (= latest tag)
+  # All other branches are tagged with the escaped branch name (commit ref slug)
+  script:
+    - |
+      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+        tag=""
+        echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = 'latest'"
+      else
+        tag=":$CI_COMMIT_REF_SLUG"
+        echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
+      fi
+    - echo $CI_REGISTRY_IMAGE
+    - cd $PATH
+    - ls -la
+    - >
+      docker build
+      --pull
+      --cache-from $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/client:latest
+      --label "org.opencontainers.image.title=$CI_PROJECT_TITLE"
+      --label "org.opencontainers.image.url=$CI_PROJECT_URL"
+      --label "org.opencontainers.image.created=$CI_JOB_STARTED_AT"
+      --label "org.opencontainers.image.revision=$CI_COMMIT_SHA"
+      --label "org.opencontainers.image.version=$CI_COMMIT_REF_NAME"
+      --label "org.opencontainers.image.version=$CI_COMMIT_BRANCH"
+      --tag $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$PATH:latest
+      .
+    - ls -la
+    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$PATH:latest
+  tags:
+    - $RUNNER_TAG
