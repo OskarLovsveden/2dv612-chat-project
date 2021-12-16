@@ -1,7 +1,7 @@
-import type {AuthResponse, User} from "./User";
+import type { User } from "./User";
 
-export enum ActionType {
-  USER_LOGIN = "USER_LOGIN"
+export enum AuthActionType {
+  USER_LOGIN = "USER_LOGIN",
 }
 
-export type LoginAction = { type: ActionType; payload: User }
+export type LoginAction = { type: AuthActionType; payload: User };
