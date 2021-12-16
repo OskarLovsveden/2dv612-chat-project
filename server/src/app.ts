@@ -4,7 +4,6 @@ const PORT = config.port;
 import dotenv from 'dotenv';
 
 dotenv.config();
-///asdsa
 const main = async () => {
     try {
         const server = new Server(PORT || 5000);
