@@ -7,11 +7,11 @@ include:
   - local: '.gitlab-ci/deploy.gitlab-ci.yml'
 
 stages:
-  - $CI_COMPILE_STAGE
-  - $CI_TEST_STAGE
-  - $CI_BUILD_STAGE
-  - $CI_ACCEPTANCE_STAGE
-  - $CI_DEPLOY_STAGE
+  - compile
+  - test
+  - build
+  - acceptance
+  - deploy
 
 
 cache:

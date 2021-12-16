@@ -2,7 +2,7 @@
   # only:
   #   changes:
   #     - $CI_BUILD_PATH/*
-  stage: $CI_BUILD_STAGE
+  stage: build
   image: docker:18.09.7-dind
   services:
     - docker:18.09.7-dind

@@ -1,5 +1,5 @@
 .deploy:
-  stage: $CI_DEPLOY_STAGE
+  stage: deploy
   image:
     name: bitnami/kubectl:latest
     entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.

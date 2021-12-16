@@ -1,5 +1,5 @@
 .eslint:
-  stage: $CI_TEST_STAGE
+  stage: test
   script:
     - echo Testing!
   tags:
