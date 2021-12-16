@@ -21,9 +21,9 @@
 
 
 .build:image:
-  only:
-    changes:
-      - $CI_APP_PATH/*
+  # only:
+  #   changes:
+  #     - $CI_APP_PATH/*
   stage: build
   image: docker:18.09.7-dind
   services:
