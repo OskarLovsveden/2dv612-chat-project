@@ -1,4 +1,4 @@
-build-image-frontend:
+.build-image-frontend:
   stage: build
   variables:
     DOCKER_HOST: tcp://localhost:2375/

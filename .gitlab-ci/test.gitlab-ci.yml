@@ -1,11 +1,11 @@
-eslint:
+.eslint:
   stage: test
   script:
     - echo Testing!
   tags:
     - k8-runner
 
-unit-test:
+.unit-test:
   stage: test
   script:
     - echo Unit Testing!

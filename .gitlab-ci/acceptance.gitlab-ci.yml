@@ -1,4 +1,4 @@
-browser_performance:
+.browser_performance:
   stage: acceptance
   image: docker:19.03.12
   allow_failure: true

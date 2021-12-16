@@ -1,4 +1,4 @@
-deploy:
+.deploy:
   variables:
     test: $IMG_REGISTRY:$CI_COMMIT_BRANCH
   image:
