@@ -10,5 +10,5 @@ COPY . .
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
-# CMD npm run $NODE_ENV
-CMD npm run ts-node src/app.ts
+CMD npm run $NODE_ENV
+# CMD npm run ts-node src/app.ts
