@@ -7,14 +7,12 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import adminImg from "../images/admin.png";
 import moderatorImg from "../images/moderator.png";
 import chattareImg from "../images/chattare.png";
-import addUserImg from "../images/add-user.png";
 import deleteImg from "../images/delete.png";
 import editUserImg from "../images/edit.png";
-import addChatImg from "../images/add-chat.png";
 import type { User } from "../types/User";
 import { Chatroom as ChatroomType} from "../types/Chatroom";
 import userService from "../utils/http/user-service";
@@ -47,7 +45,7 @@ const AdminPanel = () => {
     id: number
   ) => {
     event.preventDefault();
-    const res = await userService.delete(id);
+    await userService.delete(id);
     setUserData(userData.filter((ud) => ud.id !== id));
   };
 
@@ -56,7 +54,7 @@ const AdminPanel = () => {
     id: number
   ) => {
     event.preventDefault();
-    const res = await chatroomService.delete(id);
+    await chatroomService.delete(id);
     setChatRoomData(chatRoomData.filter((cr) => cr.id !== id));
   };
 
