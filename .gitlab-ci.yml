@@ -18,6 +18,7 @@ stages:
   - acceptance
   - deploy
 
-compile-npm:
+compile-client:
+  extends: compile-npm
   variables:
-    - client
+    NPM_APP_PATH: client
