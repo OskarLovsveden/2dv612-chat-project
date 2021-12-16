@@ -24,7 +24,7 @@ cache:
 compile-client:
   extends: .compile-npm
   variables:
-    CI_NPM_APP_PATH: $CLIENT_PATH
+    CI_NPM_APP_PATH: $CI_CLIENT_PATH
 
 # compile-server:
 #   extends: .compile-npm
