@@ -29,7 +29,7 @@ compile-client:
 compile-server:
   extends: .compile-npm
   variables:
-    CI_NPM_APP_PATH: $SERVER_PATH
+    CI_NPM_APP_PATH: $CI_SERVER_PATH
 
 build-image-client:
   extends: .build-image
