@@ -1,5 +1,5 @@
-.build-image-frontend:
-  stage: build
+.build-image:
+  stage: $BUILD_STAGE
   variables:
     DOCKER_HOST: tcp://localhost:2375/
     DOCKER_DRIVER: overlay

@@ -1,12 +1,12 @@
 .eslint:
-  stage: test
+  stage: $TEST_STAGE
   script:
     - echo Testing!
   tags:
     - k8-runner
 
 .unit-test:
-  stage: test
+  stage: $TEST_STAGE
   script:
     - echo Unit Testing!
   tags:

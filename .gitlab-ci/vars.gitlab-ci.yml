@@ -1,0 +1,9 @@
+variables:
+  IMG_REGISTRY: $CI_REGISTRY/2dv612/student/team-1---ht21/project
+  CLIENT_PATH: client
+  SERVER_PATH: server
+  COMPILE_STAGE: compile
+  TEST_STAGE: test
+  BUILD_STAGE: build
+  ACCEPTANCE_STAGE: acceptance
+  DEPLOY_STAGE: deploy

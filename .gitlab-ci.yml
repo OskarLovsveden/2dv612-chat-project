@@ -4,21 +4,35 @@ include:
   #- local: '.gitlab-ci/acceptance.gitlab-ci.yml'
   - local: '.gitlab-ci/deploy.gitlab-ci.yml'
   - local: '.gitlab-ci/compile.gitlab-ci.yml'
+  - local: '.gitlab-ci/vars.gitlab-ci.yml'
+
 image: docker:18.09.7-dind
 services:
   - docker:18.09.7-dind
 
-variables:
-  IMG_REGISTRY: $CI_REGISTRY/2dv612/student/team-1---ht21/project
-
 stages:
-  - compile
-  - test
-  - build
-  - acceptance
-  - deploy
+  - $COMPILE_STAGE
+  - $TEST_STAGE
+  - $BUILD_STAGE
+  - $ACCEPTANCE_STAGE
+  - $DEPLOY_STAGE
 
 compile-client:
   extends: .compile-npm
   variables:
-    NPM_APP_PATH: client
+    NPM_APP_PATH: $CLIENT_PATH
+
+compile-server:
+  extends: .compile-npm
+  variables:
+    NPM_APP_PATH: $SERVER_PATH
+
+build-image-client:
+  extends: .build-image
+  variables:
+    PATH: $CLIENT_PATH
+
+build-image-server:
+  extends: .build-image
+  variables:
+    PATH: $SERVER_PATH    
