@@ -20,3 +20,4 @@
       - $CI_APP_PATH/build
   tags:
     - $CI_RUNNER_TAG
+
