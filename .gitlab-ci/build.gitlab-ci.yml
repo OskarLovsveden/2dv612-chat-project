@@ -59,7 +59,7 @@
       --tag $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_APP_PATH:$CI_COMMIT_SHA
       .
     - ls -la
-    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_APP_PATH:latest
+    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_APP_PATH:$CI_COMMIT_SHA
   cache:
       key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
       paths:
