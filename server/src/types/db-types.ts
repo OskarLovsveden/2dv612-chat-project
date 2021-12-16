@@ -6,9 +6,10 @@ export type DBUser = {
     role: string;
 }
 
-export type DBChatroom = {
-    id: number;
-    name: string;
-    public: boolean;
-    tag: string; 
+export type SequelizeConfig = {
+        host: string,
+        user: string,
+        password: string,
+        database: string,
+        port: number
 }

@@ -5,7 +5,7 @@ import { TokenPayload } from '../types/token-payload';
 
 export default class AuthMiddleware {
     public async requestIncludesUsername(ctx: Context, next: Next) {
-        console.log(ctx.request.body);
+        // console.log(ctx.request.body);
         if (!ctx.request.body.username) {
             ctx.throw(400,{ message: 'Username was missing in the request' });
         }
