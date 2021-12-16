@@ -1,5 +1,5 @@
 .deploy:
-  stage: deploy
+  stage: $CI_DEPLOY_STAGE
   image:
     name: bitnami/kubectl:latest
     entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
@@ -15,7 +15,7 @@
     - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN"
     - kubectl apply -f k8s/
   tags:
-    - $RUNNER_TAG
+    - $CI_RUNNER_TAG
 
 # Only runs on main branch.
 # deploy-main:

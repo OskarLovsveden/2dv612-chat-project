@@ -1,10 +1,9 @@
 variables:
-  IMG_REGISTRY: $CI_REGISTRY/2dv612/student/team-1---ht21/project
-  CLIENT_PATH: client
-  SERVER_PATH: server
-  COMPILE_STAGE: compile
-  TEST_STAGE: test
-  BUILD_STAGE: build
-  ACCEPTANCE_STAGE: acceptance
-  DEPLOY_STAGE: deploy
-  RUNNER_TAG: k8-runner
+  CI_CLIENT_PATH: client
+  CI_SERVER_PATH: server
+  CI_COMPILE_STAGE: compile
+  CI_TEST_STAGE: test
+  CI_BUILD_STAGE: build
+  CI_ACCEPTANCE_STAGE: acceptance
+  CI_DEPLOY_STAGE: deploy
+  CI_RUNNER_TAG: k8-runner

@@ -23,17 +23,17 @@ stages:
 # compile-client:
 #   extends: .compile-npm
 #   variables:
-#     NPM_APP_PATH: $CLIENT_PATH
+#     CI_NPM_APP_PATH: $CLIENT_PATH
 
 # compile-server:
 #   extends: .compile-npm
 #   variables:
-#     NPM_APP_PATH: $SERVER_PATH
+#     CI_NPM_APP_PATH: $SERVER_PATH
 
 build-image-client:
   extends: .build-image
   variables:
-    PATH: $CLIENT_PATH
+    CI_BUILD_PATH: $CLIENT_PATH
 
 # build-image-server:
 #   extends: .build-image

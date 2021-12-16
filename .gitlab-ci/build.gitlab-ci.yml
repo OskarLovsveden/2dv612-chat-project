@@ -1,5 +1,5 @@
 # .build-image:
-#   stage: build
+#   stage: $CI_BUILD_STAGE
 #   image: docker:18.09.7-dind
 #   variables:
 #     DOCKER_HOST: tcp://localhost:2375/
@@ -43,8 +43,8 @@
 .build-image:
   # only:
   #   changes:
-  #     - $PATH/*
-  stage: build
+  #     - $CI_BUILD_PATH/*
+  stage: $CI_BUILD_STAGE
   image: docker:18.09.7-dind
   services:
     - docker:18.09.7-dind
@@ -65,21 +65,21 @@
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
     - echo $CI_REGISTRY_IMAGE
-    - cd $PATH
+    - cd $CI_BUILD_PATH
     - ls -la
     - >
       docker build
       --pull
-      --cache-from $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$PATH:latest
+      --cache-from $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_BUILD_PATH:latest
       --label "org.opencontainers.image.title=$CI_PROJECT_TITLE"
       --label "org.opencontainers.image.url=$CI_PROJECT_URL"
       --label "org.opencontainers.image.created=$CI_JOB_STARTED_AT"
       --label "org.opencontainers.image.revision=$CI_COMMIT_SHA"
       --label "org.opencontainers.image.version=$CI_COMMIT_REF_NAME"
       --label "org.opencontainers.image.version=$CI_COMMIT_BRANCH"
-      --tag $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$PATH:latest
+      --tag $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_BUILD_PATH:latest
       .
     - ls -la
-    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$PATH:latest
+    - docker push $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_BUILD_PATH:latest
   tags:
-    - $RUNNER_TAG  
+    - $CI_RUNNER_TAG  
