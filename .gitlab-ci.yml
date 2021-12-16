@@ -7,17 +7,17 @@ include:
   - local: '.gitlab-ci/deploy.gitlab-ci.yml'
 
 stages:
-  - compile
-  - test
-  - build
-  - acceptance
-  - deploy
+  - $CI_COMPILE_STAGE
+  - $CI_TEST_STAGE
+  - $CI_BUILD_STAGE
+  - $CI_ACCEPTANCE_STAGE
+  - $CI_DEPLOY_STAGE
 
 
 # cache:
 #   paths:
-#     - $CLIENT_PATH/build
-#     - $SERVER_PATH/build
+#     - $CI_CLIENT_PATH/build
+#     - $CI_SERVER_PATH/build
 
 
 # compile-client:

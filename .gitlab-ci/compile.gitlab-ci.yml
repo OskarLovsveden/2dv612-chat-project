@@ -1,19 +1,19 @@
 .compile-npm:
   only:
     changes:
-      - $NPM_APP_PATH/package.json
+      - $CI_NPM_APP_PATH/package.json
   stage: compile
   image: node:16-alpine
   variables:
     CI: "false" # Must be added to allow for warnings during build using craco
   script:
-    - echo $NPM_APP_PATH
-    - cd $NPM_APP_PATH
+    - echo $CI_NPM_APP_PATH
+    - cd $CI_NPM_APP_PATH
     - npm ci && npm cache clean --force
     - npm run build
     - ls -la
   artifacts:
     paths:
-      - $NPM_APP_PATH/build/
+      - $CI_NPM_APP_PATH/build/
   tags:
-    - $RUNNER_TAG
+    - $CI_RUNNER_TAG
