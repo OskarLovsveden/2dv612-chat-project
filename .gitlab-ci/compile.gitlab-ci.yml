@@ -1,7 +1,7 @@
 .compile-npm:
-  only:
-    changes:
-      - ${CI_APP_PATH}/package.json
+  # only:
+  #   changes:
+  #     - ${CI_APP_PATH}/package.json
   stage: compile
   image: node:16-alpine
   variables:
