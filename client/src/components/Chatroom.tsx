@@ -52,6 +52,7 @@ const Chatroom = ( { chatroom }: ChatroomProps ) => {
       navigate("/admin");
     }
     else {
+      console.log(chatroom.id)
       const data = {
         id: chatroom.id,
         name: chatroomName,

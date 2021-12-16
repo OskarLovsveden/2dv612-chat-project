@@ -100,6 +100,7 @@ const AdminPanel = () => {
                         src={editUserImg}
                         alt="Edit"
                         onClick={(e) => {
+                          console.log(chatroom.id)
                           if (modalState === ModalState.UPDATE) {
                             setModalState(ModalState.NONE)
                           } else {
