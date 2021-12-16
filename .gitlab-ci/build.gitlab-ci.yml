@@ -1,4 +1,4 @@
-.build-static:
+.build:static:
   # only:
   #   changes:
   #     - $CI_APP_PATH/package.json
@@ -20,7 +20,7 @@
     - $CI_RUNNER_TAG
 
 
-.build-image:
+.build:image:
   # only:
   #   changes:
   #     - $CI_APP_PATH/*
@@ -60,6 +60,6 @@
       paths:
         - $CI_APP_PATH/build
   dependencies:
-    - .build-static
+    - .build-static-client
   tags:
     - $CI_RUNNER_TAG  
