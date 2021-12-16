@@ -6,6 +6,7 @@ include:
   #- local: '.gitlab-ci/acceptance.gitlab-ci.yml'
   - local: '.gitlab-ci/deploy.gitlab-ci.yml'
 
+
 stages:
   - compile
   - test
