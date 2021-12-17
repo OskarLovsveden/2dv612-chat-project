@@ -2,11 +2,14 @@ import { io } from "socket.io-client";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Message from "./Message";
 import { HomeContext } from "../../context/HomeProvider";
+import { AuthContext } from "../../context/AuthProvider";
+import { SocketContext } from "../../context/SocketProvider";
 
 type MessageEvent = {
   name: string;
   text: string;
   isUser: boolean;
+  roomID: string;
 };
 
 type ChatProps = {
@@ -18,40 +21,41 @@ type ChatProps = {
 // export default function ChatRoom({ toggle, username }: ChatProps) {
 export default function ChatRoom({ username, id }: ChatProps) {
   const [messages, setMessages] = useState<MessageEvent[]>([]);
+  const { connectUser, sendMessage, socket } = useContext(SocketContext);
   const { activeChat } = useContext(HomeContext);
-
+  const { user } = useContext(AuthContext);
   const enterPressRef = useRef<any>();
   const messageRef = useRef<any>();
 
-  const [socket] = useState(() =>
-    io("http://localhost:5000", { path: "/socket.io" })
-  );
-
   useEffect(() => {
     const handleNewMessage = (newMessage: MessageEvent) => {
-      setMessages((messages: MessageEvent[]) => [...messages, newMessage]);
-    };
+      console.log("haha new message", activeChat);
 
-    socket.on("connect", () => {
-      console.log("Socket connected! ID: " + socket.id);
+      const shouldAddNewMessage =
+        newMessage.roomID == activeChat?.id.toString();
+
+      console.log(newMessage.roomID, activeChat?.id.toString());
+
+      if (shouldAddNewMessage) {
+        console.log("Adding message");
+        setMessages((messages: MessageEvent[]) => [...messages, newMessage]);
+      }
+    };
+    connectUser(user?.id || "");
+
+    socket?.on("room-message", (data) => {
+      console.log("haha in room");
+      console.log(data);
+
+      const isUser = data.username === username;
+      handleNewMessage({
+        isUser,
+        name: data.username,
+        text: data.message,
+        roomID: data.room_id,
+      });
     });
-
-    if (activeChat) {
-      socket.emit("join-room", {
-        room_id: activeChat?.name,
-        user_id: username,
-      });
-
-      socket.on("room-message", (data) => {
-        const isUser = data.username === username;
-        handleNewMessage({ isUser, name: data.username, text: data.message });
-      });
-    }
-
-    return () => {
-      socket.disconnect();
-    };
-  }, [activeChat, activeChat?.name, socket, username]);
+  }, [connectUser, socket, user, username, activeChat]);
 
   const handleEnter = (e: any) => {
     if (e.code === "Enter" && e.shiftKey === false) {
@@ -62,12 +66,8 @@ export default function ChatRoom({ username, id }: ChatProps) {
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    socket.emit("chat-message", {
-      room_id: activeChat?.name,
-      user_id: username,
-      message: messageRef.current?.value,
-    });
 
+    sendMessage(activeChat?.id || 0, user?.id || -1, messageRef.current.value);
     messageRef.current.value = "";
   };
 

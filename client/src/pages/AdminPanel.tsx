@@ -15,9 +15,9 @@ import deleteImg from "../images/delete.png";
 import editUserImg from "../images/edit.png";
 import type { User } from "../types/User";
 import { Chatroom } from "../types/Chatroom";
-import userService from "../utils/http/user-service";
-import chatroomService from "../utils/http/chatroom-service";
+import UserService from "../utils/http/user-service";
 import ROLE from "../types/Role";
+import ChatroomService from "../utils/http/chatroom-service";
 
 const AdminPanel = () => {
   const [chatRoomData, setChatRoomData] = useState<Chatroom[]>([]);
@@ -25,6 +25,8 @@ const AdminPanel = () => {
 
   useEffect(() => {
     (async () => {
+      const userService = new UserService();
+      const chatroomService = new ChatroomService();
       const resUser = await userService.getAll();
       const resChatRoom = await chatroomService.getAll();
       setUserData(resUser.data);
@@ -36,6 +38,7 @@ const AdminPanel = () => {
     event: MouseEvent<HTMLButtonElement>,
     id: number
   ) => {
+    const userService = new UserService();
     event.preventDefault();
     await userService.delete(id);
     setUserData(userData.filter((ud) => ud.id !== id));
@@ -46,6 +49,7 @@ const AdminPanel = () => {
     id: number
   ) => {
     event.preventDefault();
+    const chatroomService = new ChatroomService();
     await chatroomService.delete(id);
     setChatRoomData(chatRoomData.filter((cr) => cr.id !== id));
   };

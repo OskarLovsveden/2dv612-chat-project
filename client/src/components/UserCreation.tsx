@@ -1,6 +1,6 @@
 import { SetStateAction, useState } from "react";
 import "../App.css";
-import userService from "../utils/http/user-service";
+import UserService from "../utils/http/user-service";
 import userImg from "../images/user.png";
 import ROLE from "../types/Role";
 import { useNavigate } from "react-router";
@@ -13,6 +13,7 @@ const UserCreation = () => {
   const [username, setUserName] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
   const [userRole, setUserRole] = useState<string>(ROLE.USER);
+
   const navigate = useNavigate();
 
   const options = [
@@ -49,6 +50,7 @@ const UserCreation = () => {
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const userService = new UserService();
     const data = {
       username: username,
       password: userPassword,

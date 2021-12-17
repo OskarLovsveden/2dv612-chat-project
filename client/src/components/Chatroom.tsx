@@ -1,8 +1,8 @@
 import { FormEvent, SetStateAction, useState } from "react";
 import "../App.css";
-import chatroomService from "../utils/http/chatroom-service";
 import chatImg from "../images/chat.png";
 import { useNavigate } from "react-router";
+import ChatroomService from "../utils/http/chatroom-service";
 
 /**
  * Makes Admin able to create chat rooms for users.
@@ -26,6 +26,7 @@ const Chatroom = () => {
   };
 
   const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const chatroomService = new ChatroomService();
     e.preventDefault();
     const data = {
       name: chatroomName,
