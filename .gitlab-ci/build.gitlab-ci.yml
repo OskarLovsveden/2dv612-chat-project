@@ -47,9 +47,8 @@
 cert:
   image: alpine/openssl
   script:
-    - cd server
-    - openssl genrsa -out private.pem 2048
-    - openssl rsa -in private.pem -pubout -out public.pem
+    - openssl genrsa -out server/private.pem 2048
+    - openssl rsa -in server/private.pem -pubout -out server/public.pem
   artifacts:
     paths:
       - server/private.pem
