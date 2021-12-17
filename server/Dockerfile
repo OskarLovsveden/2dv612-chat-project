@@ -6,10 +6,10 @@ WORKDIR /home/node/app
 
 COPY --chown=node:node package*.json ./
 
-RUN npm install
+# RUN npm install
 
 COPY --chown=node:node . .
-RUN npm run build
+# RUN npm run build
 # Defaults to production, override in pipeline.
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
