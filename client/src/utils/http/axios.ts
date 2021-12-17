@@ -1,8 +1,8 @@
 import axios from "axios";
 
-console.log(process.env.API_HOST+":"+process.env.API_PORT)
+console.log(process.env.PUBLIC_URL)
 
-axios.defaults.baseURL = "http://194.47.177.79:80/api";
+axios.defaults.baseURL = `${process.env.PUBLIC_URL}/api`;
 if(localStorage.getItem('token')) {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token') 
 }

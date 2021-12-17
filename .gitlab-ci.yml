@@ -15,9 +15,9 @@ stages:
   - deploy
 
 compile-client:
-  only:
-    changes:
-      - client/package.json
+  # only:
+  #   changes:
+  #     - client/package.json
   extends: .compile-npm
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
