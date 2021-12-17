@@ -30,6 +30,7 @@ const AdminPanel = () => {
   const [chatRoomData, setChatRoomData] = useState<ChatroomType[]>([]);
   const [userData, setUserData] = useState<User[]>([]);
   const [modalState, setModalState] = useState<ModalState>(ModalState.NONE);
+  const [activeChatroom, setActiveChatroom] = useState<ChatroomType>();
 
   useEffect(() => {
     (async () => {
@@ -60,6 +61,7 @@ const AdminPanel = () => {
 
   return (
     <>
+    {modalState === ModalState.UPDATE && <Chatroom chatroom={activeChatroom}/>}
     <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 bg-indigo-600 h-screen">
       <div className="rounded overflow-hidden shadow-lg">
         <div className="px-6 py-4">
@@ -82,7 +84,6 @@ const AdminPanel = () => {
                 return u.public === true && (
                   
                   <li key={i}>
-                    {modalState === ModalState.UPDATE && <Chatroom chatroom={chatroom}/>}
                     <div className="inline-flex space-x-4">
                       <h3>{u.name} </h3>
                       <h3>{u.tag} </h3>
@@ -100,7 +101,7 @@ const AdminPanel = () => {
                         src={editUserImg}
                         alt="Edit"
                         onClick={(e) => {
-                          console.log(chatroom.id)
+                          setActiveChatroom(chatroom)
                           if (modalState === ModalState.UPDATE) {
                             setModalState(ModalState.NONE)
                           } else {
@@ -134,7 +135,6 @@ const AdminPanel = () => {
                   return (
                   u.public === false && 
                   <li key={i}>
-                      {modalState === ModalState.UPDATE && <Chatroom chatroom={chatroom}/>}
                       <div className="inline-flex space-x-4">
                         <h3>{u.name} </h3>
                         <h3>{u.tag} </h3>
@@ -149,6 +149,7 @@ const AdminPanel = () => {
                           src={editUserImg}
                           alt="Edit"
                           onClick={(e) => {
+                            setActiveChatroom(chatroom)
                             if (modalState === ModalState.UPDATE) {
                               setModalState(ModalState.NONE)
                             } else {
@@ -157,9 +158,8 @@ const AdminPanel = () => {
                           }}
                         />
                       </div>
-                    </li>)
-                    }
-                  
+                  </li>)
+                }
               )}
             </ul>
           </div>
