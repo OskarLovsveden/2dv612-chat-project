@@ -9,6 +9,9 @@
     IMAGE_REG_NAME: $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_APP_PATH
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - apk upgrade --update-cache --available && \
+      apk add openssl && \
+      rm -rf /var/cache/apk/*
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
@@ -22,9 +25,6 @@
       fi
     - echo $CI_REGISTRY_IMAGE
     - cd $CI_APP_PATH
-    - apk upgrade --update-cache --available && \
-    - apk add openssl && \
-    - rm -rf /var/cache/apk/*
     - openssl genrsa -out private.pem 2048
     - openssl rsa -in private.pem -pubout -out public.pem
     - ls -la
