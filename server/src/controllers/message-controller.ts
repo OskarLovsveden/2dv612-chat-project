@@ -6,7 +6,6 @@ export default class MessageController {
     private messageService = new Message();
 
     public async add(ctx: Context): Promise<void> {
-        console.log('hejsan');
         try {
             const msg = ctx.request.body;
 
@@ -21,7 +20,20 @@ export default class MessageController {
             console.error(e);
         }
     }
+    // get one message
+    public async get(ctx: Context): Promise<void> {
+        try {
+            const id = ctx.params.id;
+            const msg = await this.messageService.get(id);
+            console.log(msg);
 
+            ctx.body = msg;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    // update one message
     public async update(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
@@ -42,7 +54,30 @@ export default class MessageController {
         }
     }
 
+    // all messages connected to the room
+    public async getRoomMessages(ctx: Context): Promise<void> {
+        try {
+            const roomID = ctx.params.id;
+            const roomsMsgs = await this.messageService.getRoomsMessages(roomID);
+            ctx.body = roomsMsgs;
+        } catch (e) {
+            console.error(e);
+        }
+    } 
 
+    // All messages a user has sent.
+    public async getAll(ctx: Context): Promise<void> {
+        try {
+            const userID = ctx.params.id;
+            const messages = await this.messageService.getAll(userID);
+            ctx.body = messages;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+
+    // remove one message
     public async remove(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;

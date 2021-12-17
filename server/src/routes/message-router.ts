@@ -21,5 +21,14 @@ export default class MessageRouter {
             // (ctx: Context, next: Next) => this.middleware.requesterHasAdminRights(ctx, next),
             (ctx: Context) => this.controller.add(ctx)
         );
+        this._router.get('/room/:id', 
+            (ctx: Context) => this.controller.getRoomMessages(ctx)
+        );
+        this._router.get('/:id', 
+            (ctx: Context) => this.controller.get(ctx)
+        );
+        this._router.get('/user/:id', 
+            (ctx: Context) => this.controller.getAll(ctx)
+        );
     }
 }
