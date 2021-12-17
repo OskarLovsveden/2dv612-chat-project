@@ -1,13 +1,15 @@
-import http from "./axios";
+import { instance } from "./axios";
 import { AuthResponse, LoginResponse, LoginUser } from "../../types/User";
 
 class AuthService {
+  private http = instance()
+
   login(user: LoginUser) {
-    return http.post<LoginResponse>("/auth/login", user);
+    return this.http.post<LoginResponse>("/auth/login", user);
   }
 
   async checkIsAuthenticated() {
-    const response = await http.post<AuthResponse>("/auth/authenticate");
+    const response = await this.http.post<AuthResponse>("/auth/authenticate");
     if (response.status !== 200) {
       return null;
     }
@@ -15,4 +17,4 @@ class AuthService {
   }
 }
 
-export default new AuthService();
+export default AuthService;
