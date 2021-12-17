@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // let apiURL = ''
-process.env.ENV_VARIABLE === 'production' ? axios.defaults.baseURL=`${process.env.PUBLIC_URL}/api` : axios.defaults.baseURL='http://localhost:5000/api'
+process.env.NODE_ENV === 'production' ? axios.defaults.baseURL=`${process.env.PUBLIC_URL}/api` : axios.defaults.baseURL='http://localhost:5000/api'
 console.log(axios.defaults.baseURL)
 // axios.defaults.baseURL = `${apiURL}/api`;
 if(localStorage.getItem('token')) {

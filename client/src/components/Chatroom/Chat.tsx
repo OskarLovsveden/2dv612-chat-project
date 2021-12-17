@@ -23,7 +23,7 @@ export default function ChatRoom({ username }: ChatProps) {
   const messageRef = useRef<any>();
 
   let apiURL = ''
-  process.env.ENV_VARIABLE === 'production' ? apiURL=process.env.PUBLIC_URL : apiURL='http://localhost:5000'
+  process.env.NODE_ENV === 'production' ? apiURL=process.env.PUBLIC_URL : apiURL='http://localhost:5000'
 
   console.log(apiURL)
   const [socket] = useState(() =>
