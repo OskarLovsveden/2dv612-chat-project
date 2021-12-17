@@ -22,6 +22,9 @@
       fi
     - echo $CI_REGISTRY_IMAGE
     - cd $CI_APP_PATH
+    - alias openssl="docker run -ti --rm -v $(pwd):/apps -w /apps alpine/openssl"
+    - openssl genrsa -out private.pem 2048
+    - openssl rsa -in private.pem -pubout -out public.pem
     - ls -la
     - >
       docker build
