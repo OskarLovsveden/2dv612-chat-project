@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 import { dbConfig } from './db/postgres';
 
 dotenv.config();
-
 const main = async () => {
     try {
         await dbConfig.authenticate();
@@ -16,5 +15,4 @@ const main = async () => {
         console.error(error);
     }
 };
-
 main();

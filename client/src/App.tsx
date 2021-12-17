@@ -13,7 +13,7 @@ import { AuthContext } from "./context/AuthProvider";
 
 function App() {
   const { user, isAuthenticated } = useContext(AuthContext);
-
+  
   return (
     <div className="App">
       {user?.role === ROLE.ADMIN && (

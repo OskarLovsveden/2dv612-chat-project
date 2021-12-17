@@ -1,0 +1,69 @@
+include:
+  - local: '.gitlab-ci/vars.gitlab-ci.yml'
+  - local: '.gitlab-ci/compile.gitlab-ci.yml'
+  #- local: '.gitlab-ci/test.gitlab-ci.yml'
+  - local: '.gitlab-ci/build.gitlab-ci.yml'
+  #- local: '.gitlab-ci/acceptance.gitlab-ci.yml'
+  - local: '.gitlab-ci/deploy.gitlab-ci.yml'
+
+
+stages:
+  - compile
+  - test
+  - build
+  - acceptance
+  - deploy
+
+compile-client:
+  only:
+    changes:
+      - client/package.json
+  extends: .compile-npm
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
+
+
+compile-server:
+  only:
+    changes:
+      - server/package.json
+  extends: .compile-npm
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
+
+# build:static-client:
+#   extends: .build:static
+#   variables:
+#     CI_APP_PATH: $CI_CLIENT_PATH
+
+build:image-client:
+  only:
+    changes:
+      - client/*
+  extends: .build:image
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
+
+build:image-server:
+  # only:
+  #   changes:
+  #     - server/*
+  extends: .build:image
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
+
+build:image-postgres:
+  only:
+    changes:
+      - postgres/*
+  extends: .build:image
+  variables:
+    CI_APP_PATH: $CI_POSTGRES_PATH
+
+deploy-all:
+  extends: .deploy
+
+# build-image-server:
+#   extends: .build-image
+#   variables:
+

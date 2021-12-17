@@ -1,8 +1,0 @@
-proxy_svc_port: 80
-nfs_provision_name: nfs-prov
-master_db_pv: mysql-pv
-master_db_pvc: mysql-pvc
-client_provisioner_serviceAccountName: nfs-pod-provisioner-sa
-db_name: db
-wp_name: wp
-grafana_svc: grafana

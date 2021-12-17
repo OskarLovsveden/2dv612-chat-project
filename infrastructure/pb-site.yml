@@ -4,8 +4,8 @@
   import_playbook: pb-infrastructure.yml
 
 # Apply common configuration to all hosts (eg. update servers).
-#- name: update
-#  import_playbook: pb-update.yml
+- name: update
+  import_playbook: pb-update.yml
 
 # Set up K8s main dependencies.
 - name: kubernetes-main
@@ -23,11 +23,7 @@
 - name: nfs
   import_playbook: pb-nfs.yml
 
-# Set up registry server.
-- name: registry
-  import_playbook: pb-registry.yml
 
-
-# Set up registry server.
+# Set up global config.
 - name: k8-dep
-  import_playbook: pb-kube-acme.yml
+  import_playbook: pb-kube-global.yml
