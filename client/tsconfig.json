@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "outDir": "./build", // where to put the compiled JS files
+    "rootDir": "./src",
     "target": "es5",
     "lib": [
       "dom",

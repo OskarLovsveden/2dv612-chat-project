@@ -1,0 +1,13 @@
+.eslint:
+  stage: test
+  script:
+    - echo Testing!
+  tags:
+    - $CI_RUNNER_TAG
+
+.unit-test:
+  stage: test
+  script:
+    - echo Unit Testing!
+  tags:
+    - $CI_RUNNER_TAG   

@@ -4,4 +4,4 @@
   become_user: root
   become_method: sudo
   roles:
-  - role: kube_acme
+  - role: kube_global

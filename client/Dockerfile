@@ -1,14 +1,8 @@
-FROM node:16
+FROM nginx:1.15
+COPY build/ /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-USER node
-RUN mkdir /home/node/app
-WORKDIR /home/node/app
+ARG NODE_ENV=production
+ENV NODE_ENV $NODE_ENV
 
-EXPOSE 3000
-# CMD ["npm", "run", "start"]
-# ENV CI=true
-CMD ["npm", "run", "start"]
-COPY --chown=node:node package* ./
-# examples don't use package-lock.json to minimize updates 
-RUN npm install --no-package-lock
-COPY --chown=node:node . .
+CMD ["nginx", "-g", "daemon off;"]
