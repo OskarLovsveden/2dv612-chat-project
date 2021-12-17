@@ -26,8 +26,8 @@ export type SequelizeConfig = {
 }
 
 export type DBMessage = {
-    userID: number;
+    user_id: number;
     message: string;
     id: number;
-    roomID: number; 
+    room_id: number; 
 }
