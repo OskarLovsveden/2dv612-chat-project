@@ -1,9 +1,11 @@
 import axios from "axios";
 
-axios.defaults.baseURL = 'http://localhost:5000/api';
-if(localStorage.getItem('token')) {
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token') 
-}
+/* axios.defaults.baseURL = 'http://localhost:5000/api';
+const token = window.localStorage.getItem('token');
+console.log(token)
+if(token) {
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+} */
 /* axios.interceptors.response.use(
   (response) => {
     return response;
@@ -19,4 +21,19 @@ if(localStorage.getItem('token')) {
   },
 ); */
 
-export default axios;
+/* export default axios; */
+
+export const instance = () => {
+  console.log("HAHA JAG ÄR HÄR")
+  const token = window.localStorage.getItem('token');
+  console.log(token)
+  const options = {
+    baseURL: 'http://localhost:5000/api',
+    headers: {
+      Authorization: token ? `Bearer ${token}` : ''
+    } 
+  }
+
+  return axios.create(options)
+
+}
