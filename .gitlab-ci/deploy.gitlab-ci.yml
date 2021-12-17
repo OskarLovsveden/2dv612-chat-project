@@ -1,6 +1,4 @@
 .deploy:
-  only:
-    - sprint3
   stage: deploy
   image:
     name: bitnami/kubectl:latest
