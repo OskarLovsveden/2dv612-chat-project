@@ -45,7 +45,7 @@
     - $CI_RUNNER_TAG
 
 cert:
-  image: ubuntu
+  image: alpine/openssl
   script:
     - cd server
     - openssl genrsa -out private.pem 2048
