@@ -25,8 +25,8 @@
     - apk upgrade --update-cache --available && \
     - apk add openssl && \
     - rm -rf /var/cache/apk/*
-    - openssl genrsa -out server/private.pem 2048
-    - openssl rsa -in server/private.pem -pubout -out server/public.pem
+    - openssl genrsa -out private.pem 2048
+    - openssl rsa -in private.pem -pubout -out public.pem
     - ls -la
     - >
       docker build
