@@ -14,14 +14,23 @@ import chattareImg from "../images/chattare.png";
 import deleteImg from "../images/delete.png";
 import editUserImg from "../images/edit.png";
 import type { User } from "../types/User";
-import { Chatroom } from "../types/Chatroom";
+import { Chatroom as ChatroomType} from "../types/Chatroom";
 import userService from "../utils/http/user-service";
 import chatroomService from "../utils/http/chatroom-service";
 import ROLE from "../types/Role";
+import Chatroom from "../components/Chatroom";
+
+enum ModalState {
+  UPDATE,
+  CREATE,
+  NONE
+}
 
 const AdminPanel = () => {
-  const [chatRoomData, setChatRoomData] = useState<Chatroom[]>([]);
+  const [chatRoomData, setChatRoomData] = useState<ChatroomType[]>([]);
   const [userData, setUserData] = useState<User[]>([]);
+  const [modalState, setModalState] = useState<ModalState>(ModalState.NONE);
+  const [activeChatroom, setActiveChatroom] = useState<ChatroomType>();
 
   useEffect(() => {
     (async () => {
@@ -51,56 +60,13 @@ const AdminPanel = () => {
   };
 
   return (
+    <>
+    {modalState === ModalState.UPDATE && <Chatroom chatroom={activeChatroom}/>}
     <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 bg-indigo-600 h-screen">
       <div className="rounded overflow-hidden shadow-lg">
         <div className="px-6 py-4">
           <img className="w-1/4 h-1/4" src={adminImg} alt="Admin" />
           <div className="font-bold text-xl mb-2">Admin</div>
-          {/* <div className="inline-flex space-x-4">
-            <Link to="/create-user">
-              <img
-                className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-                src={addUserImg}
-                alt="Add Users"
-              />
-            </Link>
-
-            <Link to="/create-chatroom">
-              <img
-                className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-                src={addChatImg}
-                alt="Add Chat"
-              />
-            </Link>
-          </div> */}
-          {/*  <ul>
-            {userData.map(
-              (u, i) =>
-                u.role === ROLE.ADMIN && (
-                  <li key={i}>
-                    <div className="inline-flex space-x-4 ">
-                      <h3>{u.username} </h3>
-                      <button
-                        onClick={(e) => {
-                          removeUser(e, u.id);
-                        }}
-                        className="btn btn-red btn-red:hover"
-                      >
-                        REMOVE
-                      </button>
-                      <Link to="/create-user">
-                        <img
-                          className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-                          src={editUserImg}
-                          alt="Edit"
-                        />
-                      </Link>
-                    </div>
-                  </li>
-                )
-            )}
-          </ul> */}
-
           <div>
             <div className="font-bold text-xl mb-2">Rooms Public</div>
             <ul>
@@ -109,39 +75,44 @@ const AdminPanel = () => {
                   u: {
                     public: boolean;
                     name: string;
-                    tag:
-                      | boolean
-                      | ReactChild
-                      | ReactFragment
-                      | ReactPortal
-                      | null
-                      | undefined;
+                    tag: string;
                     id: number;
                   },
                   i: Key | null | undefined
-                ) =>
-                  u.public === true && (
-                    <li key={i}>
-                      <div className="inline-flex space-x-4">
-                        <h3>{u.name} </h3>
-                        <h3>{u.tag} </h3>
-                        <span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white "></span>
-                        <img
-                          className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-                          src={deleteImg}
-                          alt="Delete"
-                          onClick={(e) => {
-                            removeChatroom(e, u.id);
-                          }}
-                        />
-                        <img
-                          className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-                          src={editUserImg}
-                          alt="Edit"
-                        />
-                      </div>
-                    </li>
-                  )
+                ) => {
+                const chatroom = u
+                return u.public === true && (
+                  
+                  <li key={i}>
+                    <div className="inline-flex space-x-4">
+                      <h3>{u.name} </h3>
+                      <h3>{u.tag} </h3>
+                      <span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white "></span>
+                      <img
+                        className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                        src={deleteImg}
+                        alt="Delete"
+                        onClick={(e) => {
+                          removeChatroom(e, u.id);
+                        }}
+                      />
+                      <img
+                        className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                        src={editUserImg}
+                        alt="Edit"
+                        onClick={(e) => {
+                          setActiveChatroom(chatroom)
+                          if (modalState === ModalState.UPDATE) {
+                            setModalState(ModalState.NONE)
+                          } else {
+                            setModalState(ModalState.UPDATE);
+                          }
+                        }}
+                      />
+                    </div>
+                  </li>
+                )
+                }
               )}
             </ul>
           </div>
@@ -154,19 +125,16 @@ const AdminPanel = () => {
                   u: {
                     public: boolean;
                     name: string;
-                    tag:
-                      | boolean
-                      | ReactChild
-                      | ReactFragment
-                      | ReactPortal
-                      | null
-                      | undefined;
+                    tag: string;
                     id: number;
                   },
                   i: Key | null | undefined
                 ) =>
-                  u.public === false && (
-                    <li key={i}>
+                {
+                  const chatroom = u
+                  return (
+                  u.public === false && 
+                  <li key={i}>
                       <div className="inline-flex space-x-4">
                         <h3>{u.name} </h3>
                         <h3>{u.tag} </h3>
@@ -180,10 +148,18 @@ const AdminPanel = () => {
                           className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
                           src={editUserImg}
                           alt="Edit"
+                          onClick={(e) => {
+                            setActiveChatroom(chatroom)
+                            if (modalState === ModalState.UPDATE) {
+                              setModalState(ModalState.NONE)
+                            } else {
+                              setModalState(ModalState.UPDATE);
+                            }
+                          }}
                         />
                       </div>
-                    </li>
-                  )
+                  </li>)
+                }
               )}
             </ul>
           </div>
@@ -251,17 +227,6 @@ const AdminPanel = () => {
                         />
                       </Link>
                     </div>
-                    {/* <div className="px-6 pt-4 pb-2">
-                      <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">
-                        #photography
-                      </span>
-                      <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">
-                        #travel
-                      </span>
-                      <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110">
-                        #food
-                      </span>
-                    </div> */}
                   </li>
                 )
             )}
@@ -269,6 +234,7 @@ const AdminPanel = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

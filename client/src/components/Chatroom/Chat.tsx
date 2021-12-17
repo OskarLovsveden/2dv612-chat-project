@@ -22,8 +22,12 @@ export default function ChatRoom({ username }: ChatProps) {
   const enterPressRef = useRef<any>();
   const messageRef = useRef<any>();
 
+  let apiURL = ''
+  process.env.NODE_ENV === 'production' ? apiURL=process.env.PUBLIC_URL : apiURL='http://localhost:5000'
+
+  console.log(apiURL)
   const [socket] = useState(() =>
-    io("http://localhost:5000", { path: "/socket.io" })
+    io(apiURL, { path: "/socket.io" })
   );
 
   useEffect(() => {

@@ -5,7 +5,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --poll -r dotenv/config src/app.ts",
+    "production": "ts-node src/app.ts",
+    "build": "tsc -p .",
+    "dev": "ts-node-dev -r dotenv/config src/app.ts",
     "test": "NODE_ENV=test ts-mocha -r dotenv/config src/**/*.test.ts",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "lint-fix": "eslint --fix --ignore-path .eslintignore --ext .js,.ts ."

@@ -5,7 +5,6 @@ resource "openstack_compute_instance_v2" "kube-master-server" {
     openstack_networking_router_interface_v2.prod-router_interface
   ]
 
-
   name         = "kube-master-server"
   image_id     = "ca4bec1a-ac25-434f-b14c-ad8078ccf39f"
   flavor_name  = "c2-r4-d20"
@@ -13,7 +12,8 @@ resource "openstack_compute_instance_v2" "kube-master-server" {
   force_delete = true
   security_groups = [
     "default",
-    "${openstack_networking_secgroup_v2.ssh_secgroup.name}"
+    openstack_networking_secgroup_v2.ssh_secgroup.name,
+    openstack_networking_secgroup_v2.k8_api.name
   ]
   availability_zone = "Education"
 
@@ -37,14 +37,13 @@ resource "openstack_compute_instance_v2" "kube-node-server" {
 
   name         = "kube-node-server-${count.index}"
   image_id     = "ca4bec1a-ac25-434f-b14c-ad8078ccf39f"
-  flavor_name  = "c1-r2-d10"
+  flavor_name  = "c2-r2-d20"
   key_pair     = var.key_pair
   force_delete = true
   security_groups = [
     "default",
     openstack_networking_secgroup_v2.ssh_secgroup.name,
     openstack_networking_secgroup_v2.proxy_secgroup.name
-
   ]
   availability_zone = "Education"
 
@@ -54,42 +53,12 @@ resource "openstack_compute_instance_v2" "kube-node-server" {
 
   tags = ["nodes"]
 
-  count = 3
+  count = 7
 
   timeouts {
     create = var.server_create_timeout
     delete = var.server_delete_timeout
   }
-}
-
-# Create docker registry
-resource "openstack_compute_instance_v2" "registry-server" {
-  depends_on = [
-    openstack_networking_router_interface_v2.prod-router_interface
-  ]
-
-  name         = "registry-server"
-  image_id     = "ca4bec1a-ac25-434f-b14c-ad8078ccf39f"
-  flavor_name  = "c1-r1-d10"
-  key_pair     = var.key_pair
-  force_delete = true
-  security_groups = [
-    "default",
-    "${openstack_networking_secgroup_v2.ssh_secgroup.name}",
-    "${openstack_networking_secgroup_v2.registry_secgroup.name}"
-  ]
-  availability_zone = "Education"
-
-  network {
-    name = openstack_networking_network_v2.prod-network.name
-  }
-
-  timeouts {
-    create = var.server_create_timeout
-    delete = var.server_delete_timeout
-  }
-
-  tags = ["registry"]
 }
 
 # Create nfs server
@@ -105,7 +74,7 @@ resource "openstack_compute_instance_v2" "nfs-server" {
   force_delete = true
   security_groups = [
     "default",
-    "${openstack_networking_secgroup_v2.ssh_secgroup.name}"
+    openstack_networking_secgroup_v2.ssh_secgroup.name
   ]
   availability_zone = "Education"
 

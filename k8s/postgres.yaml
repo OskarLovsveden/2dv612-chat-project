@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: postgresql-db
-          image: pg-img
-          imagePullPolicy: IfNotPresent
+          image: postgres-img
+          imagePullPolicy: Always
           volumeMounts:
             - name: postgresql-db-disk
               mountPath: /data
@@ -37,6 +37,8 @@ spec:
                 configMapKeyRef:
                   name: all-vars
                   key: POSTGRES_PASSWORD
+      imagePullSecrets:
+        - name: regcred
   # Volume Claim
   volumeClaimTemplates:
     - metadata:

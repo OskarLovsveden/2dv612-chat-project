@@ -13,7 +13,7 @@ import { AuthContext } from "./context/AuthProvider";
 
 function App() {
   const { user, isAuthenticated } = useContext(AuthContext);
-
+  
   return (
     <div className="App">
       {user?.role === ROLE.ADMIN && (
@@ -61,7 +61,7 @@ function App() {
           <Route path="login" element={<Public component={Login} />} />
           <Route
             path="create-chatroom"
-            element={<Private roles={[ROLE.ADMIN]} component={Chatroom} />}
+            element={<Private roles={[ROLE.ADMIN]} component={() => <Chatroom chatroom={undefined} />} />}
           />
           <Route
             path="create-user"

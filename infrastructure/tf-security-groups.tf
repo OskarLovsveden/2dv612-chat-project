@@ -84,10 +84,21 @@ resource "openstack_networking_secgroup_rule_v2" "web_secgroup_rule_4" {
   security_group_id = openstack_networking_secgroup_v2.web_secgroup.id
 }
 
-# Configure security group registry_secgroup and rules
-resource "openstack_networking_secgroup_v2" "registry_secgroup" {
-  name = "registry_secgroup"
+# Configure security group k8_api and rules
+resource "openstack_networking_secgroup_v2" "k8_api" {
+  name = "k8_api"
 }
+
+resource "openstack_networking_secgroup_rule_v2" "k8_api" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 6443
+  port_range_max    = 6443
+  remote_ip_prefix  = "0.0.0.0/0"
+  security_group_id = openstack_networking_secgroup_v2.k8_api.id
+}
+
 
 # Configure security group proxy_secgroup and rules
 resource "openstack_networking_secgroup_v2" "proxy_secgroup" {
