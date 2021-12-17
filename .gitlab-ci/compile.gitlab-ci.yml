@@ -7,7 +7,7 @@
     - echo $CI_APP_PATH
     - cd $CI_APP_PATH
     - ls -la
-    - npm ci && npm cache clean --force
+    - npm ci --legacy-peer-deps && npm cache clean --force
     - npm run build
     - ls -la
   cache:
