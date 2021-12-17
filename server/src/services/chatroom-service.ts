@@ -2,7 +2,7 @@ import { RequestRoomCreate } from '../types/request-types';
 import { Model } from 'sequelize';
 import dbConfig from '../db/postgres';
 
-export default class ChatRoom {
+export default class ChatRoomService {
     public async create(clientRoom: RequestRoomCreate, Chatroom: any): Promise<boolean> {
         const roomCreated = await Chatroom.create(clientRoom);
 

@@ -1,10 +1,10 @@
 import { Context } from 'koa';
-import Room from '../services/chatroom-service';
+import ChatRoomService from '../services/chatroom-service';
 import Chatroom from '../models/sequelizeModels/Chatroom';
 
 export default class ChatroomController {
     readonly table = 'chatroom';
-    private chatroomService = new Room();
+    private chatroomService = new ChatRoomService();
 
     public async add(ctx: Context): Promise<void> {
         try {

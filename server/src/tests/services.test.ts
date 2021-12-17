@@ -1,9 +1,9 @@
 // Unit test the services.
 import { expect } from 'chai';
 import Room from './models/chatroomMock';
-import ChatRoom from '../services/chatroom-service';
+import ChatRoomService from '../services/chatroom-service';
 
-const sut = new ChatRoom();
+const sut = new ChatRoomService();
 const roomID = 1;
 
 describe('Chatroom service', () => {
@@ -18,12 +18,22 @@ describe('Chatroom service', () => {
             .to.have.key('user_ids');
     });
 
-    it('Should not return room'); 
-
     it('Should return array of rooms', async () => {
         const actual = await sut.getAll(Room);
 
         expect(actual).to.be.lengthOf.greaterThan(0)
             .to.have.an('array');
+    });
+
+    it('Should return empty room array', async () => {
+        Room.$queryInterface.$useHandler((query: string) => {
+            if (query === 'findAll') {
+                return null; 
+            }
+        });
+
+        const actual = await sut.getAll(Room);
+        expect(actual).to.have.an('array')
+            .to.be.lengthOf(0);
     });
 });
