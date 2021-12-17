@@ -12,8 +12,9 @@ import { useContext } from "react";
 import { AuthContext } from "./context/AuthProvider";
 
 function App() {
+  console.log(process.env.API_HOST+":"+process.env.API_PORT)
   const { user, isAuthenticated } = useContext(AuthContext);
-
+  
   return (
     <div className="App">
       {user?.role === ROLE.ADMIN && (

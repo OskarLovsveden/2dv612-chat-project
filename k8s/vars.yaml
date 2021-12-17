@@ -10,5 +10,5 @@ data:
   POSTGRES_PASSWORD: testdbuserpassword
   PGDATA: /data/pgdata
   NODE_PORT: "5000"
-  API_HOST: 'koa-backend'
-  API_PORT: '5000'
+  API_HOST: '194.47.177.79'
+  API_PORT: '80'
