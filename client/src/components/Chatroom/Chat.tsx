@@ -21,7 +21,7 @@ export default function ChatRoom({ Toggle, username }: ChatProps) {
   const messageRef = useRef<any>();
 
   const [socket, setSocket] = useState(() =>
-    io(process.env.PUBLIC_URl, { path: "/socket.io" })
+    io(process.env.PUBLIC_URL, { path: "/socket.io" })
   );
 
   useEffect(() => {
