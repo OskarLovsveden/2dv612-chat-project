@@ -1,14 +1,14 @@
 FROM node:latest
 
-# USER node
+USER node
 RUN mkdir /home/node/app
 WORKDIR /home/node/app
 
-COPY package*.json ./
+COPY --chown=node:node package*.json ./
 
 RUN npm install
 
-COPY . .
+COPY --chown=node:node . .
 RUN npm run build
 # Defaults to production, override in pipeline.
 ARG NODE_ENV=production

@@ -46,6 +46,7 @@
 
 cert:
   image: alpine
+  stage: build
   script:
     - apk upgrade --update-cache --available && \
     - apk add openssl && \
