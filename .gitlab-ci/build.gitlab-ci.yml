@@ -45,12 +45,15 @@
     - $CI_RUNNER_TAG
 
 cert:
-  image: alpine/openssl
+  image: alpine
   script:
     - openssl genrsa -out server/private.pem 2048
     - openssl rsa -in server/private.pem -pubout -out server/public.pem
   artifacts:
     paths:
+        apk upgrade --update-cache --available && \
+        apk add openssl && \
+        rm -rf /var/cache/apk/*
       - server/private.pem
       - server/public.pem
     expire_in: 1 week
