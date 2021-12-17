@@ -22,7 +22,7 @@ export default class SocketEvents {
 
         this.io.attach(this.createServer);
         this.io.on('connection', async (socket: Socket) => {
-            await this.socketServices.populateRooms(socket);
+            await this.socketServices.populateRooms();
             this.initializeEvents(socket);
         });
     }
@@ -30,6 +30,7 @@ export default class SocketEvents {
     private initializeEvents(socket: Socket) {
         console.log('Socket is online :)..');
         
+
         socket.on('user-connect', (data: EventLogin) => this.socketServices.handleUserConnect(data, socket));
         socket.on('disconnect', () => this.socketServices.handleUserDisconnect(socket));
         socket.on('join-room', (data: EventJoinRoom) => this.socketServices.handleJoinRoom(data, socket));

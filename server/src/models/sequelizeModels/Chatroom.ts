@@ -1,7 +1,26 @@
 import { DataTypes } from 'sequelize';
 import { dbConfig } from '../../db/postgres';
 
-const Chatroom = dbConfig.define('Chatroom', {
+import { Model, Optional } from 'sequelize';
+
+
+type ChatroomAttributes ={
+  id: number;
+  name: string;
+  public: boolean;
+  tag: string;
+  user_ids: number[]; 
+}
+
+
+type ChatroomCreationAttributes = Optional<ChatroomAttributes, 'id'>
+
+type ChatroomInstance = {
+      createdAt?: Date;
+      updatedAt?: Date;
+    } & Model<ChatroomAttributes, ChatroomCreationAttributes> & ChatroomAttributes
+
+const Chatroom = dbConfig.define<ChatroomInstance>('Chatroom', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -29,5 +48,7 @@ const Chatroom = dbConfig.define('Chatroom', {
     createdAt: false,
     updatedAt: false
 });
+
+
 
 export default Chatroom;

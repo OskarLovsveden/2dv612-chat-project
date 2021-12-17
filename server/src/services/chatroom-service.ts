@@ -20,7 +20,7 @@ export default class ChatRoom {
         return room;
     }
 
-    public async getAll(): Promise<Model[]> {
+    public async getAll(){
         const rooms = await Chatroom.findAll();
 
         if (!rooms) {
@@ -40,12 +40,14 @@ export default class ChatRoom {
         return true;
     }
 
+  
+
     public async update(room: any, roomID: number, newID: number) {
         const updatedRoom = await Chatroom.update({
             name: room.name,
             public: room.public,
             tag: room.tag,
-            usersid: dbConfig.fn('array_append', dbConfig.col('usersid'), newID)
+            user_ids: dbConfig.fn('array_append', dbConfig.col('user_ids'), newID)
         }, { where: { id: roomID } 
         });
 

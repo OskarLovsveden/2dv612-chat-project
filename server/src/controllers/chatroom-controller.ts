@@ -1,18 +1,31 @@
 import { Context } from 'koa';
+import User from '../models/user';
 import Room from '../services/chatroom-service';
+import { RequestRoomCreate } from '../types/request-types';
+import SocketServices from '../utils/socket-services';
 
 export default class ChatroomController {
     readonly table = 'chatroom';
     private chatroomService = new Room();
+    private userModel = new User();
+    private socketServices: SocketServices = new SocketServices();
 
     public async add(ctx: Context): Promise<void> {
         try {
-            const room = ctx.request.body;
+            const room: RequestRoomCreate = ctx.request.body;
+            const users = await this.userModel.getAll();
+
+            const userIDs = users.map((usr:any)=> usr.id);
+
+            room.user_ids = [...userIDs];
+
             const roomCreated = await this.chatroomService.create(room);
 
             if (!roomCreated) {
                 ctx.throw(400, { message: 'Failed to create room' });
             }
+
+            this.socketServices.populateRooms();
 
             ctx.body = { message: 'Room created', room };
         } catch (e) {

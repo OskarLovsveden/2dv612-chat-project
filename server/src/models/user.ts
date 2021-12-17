@@ -44,7 +44,7 @@ export default class User {
         return user;
     }
 
-    public async create(clientUser: RequestUserCreate): Promise<boolean> {
+    public async create(clientUser: RequestUserCreate): Promise<number> {
         const hashedPassword = await bcrypt.hash(clientUser.password, this.SALT_ROUNDS);
 
         const userCreated = await db(this.USER_TABLE).insert({ 
@@ -52,14 +52,15 @@ export default class User {
             password: hashedPassword, 
             role: clientUser.role,
             active: clientUser.active 
-        });
+        }).returning('id');
 
-        console.log(userCreated);
-        if (!userCreated) {
+
+        console.log('HAHA IN USER', userCreated);
+        /* if (!userCreated) {
             return false;
-        }
+        } */
 
-        return true;
+        return userCreated[0];
     }
 
     public async delete(userID: number): Promise<boolean> {

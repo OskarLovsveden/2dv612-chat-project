@@ -9,4 +9,5 @@ export type RequestRoomCreate = {
     name: string;
     public: boolean;
     tag: string;
+    user_ids: number[];
 }
