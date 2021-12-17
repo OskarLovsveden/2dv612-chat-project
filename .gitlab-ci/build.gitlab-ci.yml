@@ -22,9 +22,11 @@
       fi
     - echo $CI_REGISTRY_IMAGE
     - cd $CI_APP_PATH
-    - alias openssl="docker run -ti --rm -v $(pwd):/apps -w /apps alpine/openssl"
-    - openssl genrsa -out private.pem 2048
-    - openssl rsa -in private.pem -pubout -out public.pem
+    - apk upgrade --update-cache --available && \
+    - apk add openssl && \
+    - rm -rf /var/cache/apk/*
+    - openssl genrsa -out server/private.pem 2048
+    - openssl rsa -in server/private.pem -pubout -out server/public.pem
     - ls -la
     - >
       docker build
@@ -46,18 +48,3 @@
         - $CI_APP_PATH/node_modules
   tags:
     - $CI_RUNNER_TAG
-
-cert:
-  image: alpine
-  stage: build
-  script:
-    - apk upgrade --update-cache --available && \
-    - apk add openssl && \
-    - rm -rf /var/cache/apk/*
-    - openssl genrsa -out server/private.pem 2048
-    - openssl rsa -in server/private.pem -pubout -out server/public.pem
-  artifacts:
-    paths:
-      - server/private.pem
-      - server/public.pem
-    expire_in: 1 week
