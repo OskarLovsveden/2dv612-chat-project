@@ -31,15 +31,10 @@ compile-server:
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
-# build:static-client:
-#   extends: .build:static
-#   variables:
-#     CI_APP_PATH: $CI_CLIENT_PATH
-
 build:image-client:
-  only:
-    changes:
-      - client/*
+  # only:
+  #   changes:
+  #     - client/*
   extends: .build:image
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
@@ -53,9 +48,9 @@ build:image-server:
     CI_APP_PATH: $CI_SERVER_PATH
 
 build:image-postgres:
-  only:
-    changes:
-      - postgres/*
+  # only:
+  #   changes:
+  #     - postgres/*
   extends: .build:image
   variables:
     CI_APP_PATH: $CI_POSTGRES_PATH
@@ -63,7 +58,4 @@ build:image-postgres:
 deploy-all:
   extends: .deploy
 
-# build-image-server:
-#   extends: .build-image
-#   variables:
 
