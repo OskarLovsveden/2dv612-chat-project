@@ -44,7 +44,7 @@ build-image-client:
 
 build-image-server:
   needs: ["build-npm-server"]
-  extends: .build:image
+  extends: .build-image
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
