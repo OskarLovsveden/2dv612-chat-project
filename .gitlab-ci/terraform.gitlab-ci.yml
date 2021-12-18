@@ -1,6 +1,6 @@
 
 variables:
-  TF_ROOT: ${CI_PROJECT_DIR}/environments/example/production
+  TF_ROOT: ${CI_PROJECT_DIR}/infrastructure
   TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/terraform-state
 
 
