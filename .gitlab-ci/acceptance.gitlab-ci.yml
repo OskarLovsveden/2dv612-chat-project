@@ -1,5 +1,12 @@
 .browser_performance:
   stage: acceptance
+  rules:
+    - !reference [.rules-deploy, rules]
+    - if: '($CI_KUBERNETES_ACTIVE == null || $CI_KUBERNETES_ACTIVE == "") && ($KUBECONFIG == null || $KUBECONFIG == "")'
+      when: never
+    - if: '$BROWSER_PERFORMANCE_DISABLED'
+      when: never
+    - if: '$CI_COMMIT_TAG || $CI_COMMIT_BRANCH'
   image: docker:19.03.12
   variables:
     URL: http://194.47.177.96/
@@ -68,11 +75,5 @@
       - sitespeed-results/
     reports:
       browser_performance: browser-performance.json
-  rules:
-    - if: '($CI_KUBERNETES_ACTIVE == null || $CI_KUBERNETES_ACTIVE == "") && ($KUBECONFIG == null || $KUBECONFIG == "")'
-      when: never
-    - if: '$BROWSER_PERFORMANCE_DISABLED'
-      when: never
-    - if: '$CI_COMMIT_TAG || $CI_COMMIT_BRANCH'
   tags:
     - $CI_RUNNER_TAG
