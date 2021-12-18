@@ -17,5 +17,5 @@ apply:
     - cd $TF_ROOT
     - ls -la
     - echo ${CI_PROJECT_ID}
-    - gitlab-terraform init
+    - gitlab-terraform plan
 
