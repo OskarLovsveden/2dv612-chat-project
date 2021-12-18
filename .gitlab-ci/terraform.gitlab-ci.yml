@@ -14,6 +14,7 @@ apply:
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   stage: terraform
   script:
+    - cd ${CI_PROJECT_DIR}
     - echo ${CI_PROJECT_ID}
     - gitlab-terraform init
 
