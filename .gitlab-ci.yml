@@ -9,12 +9,13 @@ include:
   # - local: '.gitlab-ci/deploy.gitlab-ci.yml'
 
 
-# stages:
-#   - compile
-#   - test
-#   - build
-#   - acceptance
-#   - deploy
+stages:
+  - terraform
+  # - compile
+  # - test
+  # - build
+  # - acceptance
+  # - deploy
 
 # compile-client:
 #   extends: .compile-npm
