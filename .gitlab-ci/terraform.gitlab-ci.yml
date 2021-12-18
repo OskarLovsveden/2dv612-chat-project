@@ -20,7 +20,7 @@ apply:
     # - base64 -d encoded_clouds > clouds.yaml
     # - echo "$CI_TF_PRIVATE_KEY" > encoded
     # - base64 -d encoded > key.pem
-    - echo "$TEST_CLOUDS" > encoded_clouds
+    - echo "$TEST_CLOUD" > encoded_clouds
     - base64 -d encoded_clouds > clouds.yaml
     - echo "$TEST_KEY" > encoded
     - base64 -d encoded > key.pem
