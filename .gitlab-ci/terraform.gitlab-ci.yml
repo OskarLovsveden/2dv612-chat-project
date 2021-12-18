@@ -1,6 +1,6 @@
 
 variables:
-  TF_ROOT: ${CI_PROJECT_DIR}/environments/infrastructure
+  TF_ROOT: ${CI_PROJECT_DIR}
   TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/terraform-state
 
 
@@ -15,6 +15,7 @@ apply:
   stage: terraform
   script:
     - cd ${CI_PROJECT_DIR}
+    - ls -la
     - echo ${CI_PROJECT_ID}
     - gitlab-terraform init
 
