@@ -1,0 +1,19 @@
+
+variables:
+  TF_ROOT: ${CI_PROJECT_DIR}/environments/example/production
+  TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/terraform-state
+
+
+cache:
+  key: terraform-state
+  paths:
+    - ${TF_ROOT}/.terraform
+
+
+apply:
+  image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+  stage: terraform
+  script:
+    - ${CI_PROJECT_ID}
+    - gitlab-terraform init
+
