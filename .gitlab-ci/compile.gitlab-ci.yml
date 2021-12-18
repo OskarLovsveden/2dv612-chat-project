@@ -1,4 +1,6 @@
 .compile-npm:
+  rules:
+    - !reference [.rules-compile-npm, rules]
   stage: compile
   image: node:16-alpine
   variables:

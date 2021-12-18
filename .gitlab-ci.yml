@@ -1,5 +1,6 @@
 include:
   - local: '.gitlab-ci/vars.gitlab-ci.yml'
+  - local: '.gitlab-ci/rules.gitlab-ci.yml'
   - local: '.gitlab-ci/compile.gitlab-ci.yml'
   #- local: '.gitlab-ci/test.gitlab-ci.yml'
   - local: '.gitlab-ci/build.gitlab-ci.yml'
@@ -15,58 +16,44 @@ stages:
   - deploy
 
 compile-client:
-  only:
-    - sprint3
-    # changes:
-      # - $CI_CLIENT_PATH/package.json
   extends: .compile-npm
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
 
 compile-server:
-  only:
-    - sprint3
-    # changes:
-  #     - $CI_SERVER_PATH/package.json
   extends: .compile-npm
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
-build:npm-client:
-  extends: .build:npm
+build-npm-client:
+  extends: .build-npm
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
-build:npm-server:
-  extends: .build:npm
+build-npm-server:
+  extends: .build-npm
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
-build:image-client:
-  needs: ["build:npm-client"]
+build-image-client:
+  needs: ["build-npm-client"]
   extends: .build:image
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
-build:image-server:
-  needs: ["build:npm-server"]
+build-image-server:
+  needs: ["build-npm-server"]
   extends: .build:image
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
-build:image-postgres:
-  only:
-    - sprint3
-    # changes:
-      # - postgres/*
-  extends: .build:image
+build-image-postgres:
+  extends: .build-image
   variables:
     CI_APP_PATH: $CI_POSTGRES_PATH
 
 deploy-all:
-  only:
-    - sprint3
   extends: .deploy
 
 

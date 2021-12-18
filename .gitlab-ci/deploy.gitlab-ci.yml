@@ -1,5 +1,7 @@
 .deploy:
   stage: deploy
+  rules:
+    - !reference [.rules-deploy, rules]
   image:
     name: bitnami/kubectl:latest
     entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
@@ -23,9 +25,3 @@
   tags:
     - $CI_RUNNER_TAG
 
-# Only runs on main branch.
-# deploy-main:
-#   rules:
-#     if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-#   script:
-#     echo "example job $CI_COMMIT_BRANCH"
