@@ -16,7 +16,7 @@ apply:
   before_script:
     - echo "$TF_VARS" > terraform.tfvars
     - echo "$PRIVATE_KEY" > encoded
-    - base64 -di encoded > key.pem
+    - base64 -d encoded > key.pem
   script:
     - cd $TF_ROOT
     - ls -la
