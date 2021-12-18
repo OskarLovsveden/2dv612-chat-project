@@ -15,8 +15,8 @@ apply:
   stage: terraform
   before_script:
     - cd $TF_ROOT
-    - echo "$TF_VARS" > terraform.tfvars
-    - echo "$PRIVATE_KEY" > encoded
+    - echo "$CI_TF_VARS" > terraform.tfvars
+    - echo "$CI_TF_PRIVATE_KEY" > encoded
     - base64 -d encoded > key.pem
   script:
     - ls -la
