@@ -10,7 +10,7 @@
   before_script:
     - touch /.kube/config
     - echo "$K8_CONFIG" > /.kube/config
-    - cat /.kube/config
+#    - cat /.kube/config
   script:
     - echo $CI_REGISTRY
     - echo $GIT_USERNAME
