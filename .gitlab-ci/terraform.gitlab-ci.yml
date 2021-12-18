@@ -13,9 +13,14 @@ cache:
 apply:
   image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
   stage: terraform
+  before_script:
+    - echo "$TF_VARS" > terraform.tfvars
+    - echo "$PRIVATE_KEY" > encoded
+    - base64 -di encoded > key.pem
   script:
     - cd $TF_ROOT
     - ls -la
+    - cat key.pem
     - echo ${CI_PROJECT_ID}
     - gitlab-terraform plan
 
