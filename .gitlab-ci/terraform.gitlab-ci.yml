@@ -16,13 +16,19 @@ apply:
   before_script:
     - cd $TF_ROOT
     - echo "$CI_TF_VARS" > terraform.tfvars
-    - echo "$CI_CLOUDS_FILE" > encoded_clouds
+    # - echo "$CI_CLOUDS_FILE" > encoded_clouds
+    # - base64 -d encoded_clouds > clouds.yaml
+    # - echo "$CI_TF_PRIVATE_KEY" > encoded
+    # - base64 -d encoded > key.pem
+    - echo "$TEST_CLOUDS" > encoded_clouds
     - base64 -d encoded_clouds > clouds.yaml
-    - echo "$CI_TF_PRIVATE_KEY" > encoded
+    - echo "$TEST_KEY" > encoded
     - base64 -d encoded > key.pem
   script:
     - ls -la
     - echo ${CI_PROJECT_ID}
+    - gitlab-terraform init
     - gitlab-terraform plan
+    - gitlab-terraform apply --auto-approve
 
 
