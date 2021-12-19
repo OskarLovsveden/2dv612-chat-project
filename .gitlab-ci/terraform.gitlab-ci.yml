@@ -28,8 +28,5 @@ apply:
   script:
     - ls -la
     - echo ${CI_PROJECT_ID}
-    - gitlab-terraform init
-    - gitlab-terraform plan
-    - gitlab-terraform apply --auto-approve
-
+    - gitlab-terraform destroy
 
