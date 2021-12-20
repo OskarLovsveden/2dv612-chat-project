@@ -5,10 +5,10 @@
     
 .rules-compile-npm:
   rules:
-    - changes:
+    - changes: # Run the job if the package.json file has been modified.
         - $CI_APP_PATH/package.json
       when: always
-    - exists:
+    - exists: # Do NOT run the job if node_modules exists & package.json is not modified.
       - node_modules
       when: never
-    - when: always
+    - when: always # Always run the job if the node_modules folder is missing
