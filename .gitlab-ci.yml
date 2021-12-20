@@ -74,5 +74,5 @@ deploy-all:
 
 test-acceptance-server:
   extends: .acc-test
-  varibles:
+  variables:
     CI_APP_PATH: $CI_SERVER_PATH
