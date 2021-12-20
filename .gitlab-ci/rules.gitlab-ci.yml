@@ -9,6 +9,6 @@
         - $CI_APP_PATH/package.json
       when: always
     - exists: # Do NOT run the job if node_modules exists & package.json is not modified.
-      - server/node_modules
+        - server/node_modules
       when: never
     - when: always # Always run the job if the node_modules folder is missing
