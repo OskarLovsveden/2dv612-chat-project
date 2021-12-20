@@ -69,7 +69,5 @@ create-manifests:
 deploy-all:
   needs: ["create-manifests"]
   extends: .deploy
-  variables:
-    CI_APP_PATH: $CI_SERVER_PATH
 
 
