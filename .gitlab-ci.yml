@@ -75,14 +75,10 @@ build-image-postgres:
 # == Deploy to staging and run acceptance/smoke tests ==
 build-staging-env:
   extends: .create-test-manifests
-  variables:
-    CI_APP_PATH: $CI_SERVER_PATH
 
 deploy-staging-env:
   needs: ["build-staging-env"]
   extends: .deploy-test-env
-  variables:
-    CI_APP_PATH: $CI_SERVER_PATH
 
 run-staging-tests:
   needs: ["deploy-staging-env"]
@@ -93,8 +89,6 @@ run-staging-tests:
 cleanup-staging-env:
   needs: ["run-staging-tests"]
   extends: .cleanup
-  variables:
-    CI_APP_PATH: $CI_SERVER_PATH
 
 # Deploy to production
 build-production-env:
