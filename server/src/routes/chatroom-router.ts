@@ -30,7 +30,7 @@ export default class ChatroomRouter {
         );
 
         this._router.get('/:id',
-            (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next), 
+            // (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next), 
             (ctx: Context) => this.controller.get(ctx)
         );
 
