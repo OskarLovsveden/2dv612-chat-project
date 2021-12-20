@@ -1,5 +1,4 @@
 // Acceptance tests
-
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import request from 'supertest';
@@ -7,13 +6,11 @@ import request from 'supertest';
 chai.use(chaiHttp);
 
 let token;
-const API = 'http://localhost:5000';
+const API = 'koa-backend-svc.development.svc.cluster.local:5000';
 const loginData = {
     username: process.env.DEV_ADMIN_USERNAME,
     password: process.env.DEV_ADMIN_PASS
 };
-
-
 
 describe('Login Endpoints', () => {
     it('POST /api/auth/login should respond with a token', async () => {

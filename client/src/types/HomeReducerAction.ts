@@ -1,9 +1,9 @@
-import { Chatroom } from "./Chatroom";
-import { DirectMessage } from "./DirectMessage";
+import { Chatroom } from './Chatroom';
+import { DirectMessage } from './DirectMessage';
 
 export enum HomeActionType {
-  SET_ACTIVE_CHAT = "set-active-chat",
-  SET_CHATROOMS = "set-chatrooms",
+  SET_ACTIVE_CHAT = 'set-active-chat',
+  SET_CHATROOMS = 'set-chatrooms',
 }
 
 export type HomeReducerAction =
