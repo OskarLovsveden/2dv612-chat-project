@@ -31,7 +31,6 @@
     - sed -i --expression "s@client-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/client:$tag@" k8s/client.yaml
     - sed -i --expression "s@server-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/server:$tag@" k8s/koa.yaml
     - sed -i --expression "s@postgres-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/postgres:$tag@" k8s/postgres.yaml
-    - kubectl apply -k k8s/
+    - kubectl apply -f k8s/
   tags:
     - $CI_RUNNER_TAG
-
