@@ -12,7 +12,7 @@
     - npm install --only=dev
     - ls -la
   cache:
-    key: "$CI_APP_PATH-dev-$CI_COMMIT_REF_SLUG"
+    key: "$CI_APP_PATH-test-$CI_COMMIT_REF_SLUG"
     paths:
       - $CI_APP_PATH/node_modules
   tags:

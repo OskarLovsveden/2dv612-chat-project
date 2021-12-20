@@ -8,10 +8,9 @@
   script:
     - echo $CI_APP_PATH
     - cd $CI_APP_PATH
-    - ls -la
     - npm install --legacy-peer-deps --force
-    - npm run build
     - ls -la
+    - npm run build
   cache:
     key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
     paths:
