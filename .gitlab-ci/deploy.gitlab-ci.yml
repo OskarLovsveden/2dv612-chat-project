@@ -48,7 +48,7 @@
     - cd helm/manifests/ChattApp/templates
     - ls -la
     - kubectl create secret docker-registry regcred --namespace="$env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > regcred.yaml
-    - kubectl delete -f ./
+    - kubectl delete -f ./ --ignore-not-found
     - kubectl apply -f ./
   tags:
     - $CI_RUNNER_TAG
