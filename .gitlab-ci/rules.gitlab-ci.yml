@@ -1,8 +1,9 @@
 .rules-deploy:
   rules:
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
     - if: $CI_COMMIT_BRANCH == 'dev'
-    
+    - if: $CI_COMMIT_BRANCH == 'pipeline-unit-test'
+
 .rules-compile-npm:
   rules:
     - changes: # Run the job if the package.json file has been modified.

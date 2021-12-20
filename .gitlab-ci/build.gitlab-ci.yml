@@ -8,9 +8,9 @@
   script:
     - echo $CI_APP_PATH
     - cd $CI_APP_PATH
+    - npm install --legacy-peer-deps --force
     - ls -la
     - npm run build
-    - ls -la
   cache:
     key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
     paths:
@@ -65,9 +65,9 @@
     - ls -la
     - docker push $IMAGE_REG_NAME:$tag
   cache:
-      key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
-      paths:
-        - $CI_APP_PATH/build
-        - $CI_APP_PATH/node_modules
+    key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
+    paths:
+      - $CI_APP_PATH/build
+      - $CI_APP_PATH/node_modules
   tags:
     - $CI_RUNNER_TAG

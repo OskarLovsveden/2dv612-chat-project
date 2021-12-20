@@ -1,4 +1,4 @@
-import ROLE from "./Role";
+import ROLE from './Role';
 
 export type User = {
     id: number;
