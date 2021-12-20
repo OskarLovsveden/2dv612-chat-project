@@ -7,6 +7,11 @@
     entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
   variables:
     test: $IMG_REGISTRY:$CI_COMMIT_BRANCH
+  environment:
+    name: development
+    url: http://194.47.177.79/
+    kubernetes:
+      namespace: development
   before_script:
     - touch /.kube/config
     - echo "$K8_CONFIG" > /.kube/config
