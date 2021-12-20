@@ -43,7 +43,7 @@
     - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN"
     - cd helm
     - ls -la
-    - kubectl apply -f manifests/
+    - kubectl apply -f manifests/ChattApp/templates
     # - sed -i --expression "s@client-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/client:$tag@" k8s/client.yaml
     # - sed -i --expression "s@server-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/server:$tag@" k8s/koa.yaml
     # - sed -i --expression "s@postgres-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/postgres:$tag@" k8s/postgres.yaml
