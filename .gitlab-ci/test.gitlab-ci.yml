@@ -7,6 +7,10 @@
     - cd $CI_APP_PATH
     - ls -la # Stefan
     - npm run lint
+  cache:
+    key: "$CI_APP_PATH-dev-$CI_COMMIT_REF_SLUG"
+    paths:
+      - $CI_APP_PATH/node_modules
   tags:
     - $CI_RUNNER_TAG
 
@@ -19,5 +23,9 @@
     - cd $CI_APP_PATH
     - ls -la
     - npm test
+  cache:
+    key: "$CI_APP_PATH-dev-$CI_COMMIT_REF_SLUG"
+    paths:
+      - $CI_APP_PATH/node_modules
   tags:
     - $CI_RUNNER_TAG
