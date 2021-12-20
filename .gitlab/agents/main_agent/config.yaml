@@ -1,0 +1,4 @@
+gitops:
+  manifest_projects:
+  - id: group1/project1
+  - id: group2/project2
