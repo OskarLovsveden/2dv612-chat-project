@@ -1,46 +1,6 @@
-variables:
-  dev_env: "development"
-  dev_proxy_port: "32163"
-  dev_listen_port: "443"
-  dev_listen_ip: "kubernetes.default.svc.cluster.local"
-  prod_env: "production"
-  prod_proxy_port: "32162"
-  prod_listen_port: "80"
-  prod_listen_ip: "194.47.177.79"
-
-.create-test-manifests:
-  stage: staging
-  rules:
-    - !reference [.rules-deploy, rules]
-  image:
-    name: alpine/helm
-  script:
-    - cd helm
-    - > # Create development manifests
-      helm template . --output-dir manifests/dev 
-      --set lb_ip=${dev_listen_ip} 
-      --set lb_port=${dev_listen_port} 
-      --set proxy_port=${dev_proxy_port} 
-      --set env_name=${dev_env} 
-      --set server_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_SERVER_PATH}:${CI_COMMIT_SHORT_SHA} 
-      --set client_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_CLIENT_PATH}:${CI_COMMIT_SHORT_SHA} 
-      --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_POSTGRES_PATH}:${CI_COMMIT_SHORT_SHA}
-    - > # Create production manifests
-      helm template . --output-dir manifests/prod 
-      --set lb_ip=${prod_listen_ip} 
-      --set lb_port=${prod_listen_port} 
-      --set proxy_port=${prod_proxy_port} 
-      --set env_name=${prod_env} 
-      --set server_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_SERVER_PATH}:${CI_COMMIT_SHORT_SHA} 
-      --set client_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_CLIENT_PATH}:${CI_COMMIT_SHORT_SHA} 
-      --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_POSTGRES_PATH}:${CI_COMMIT_SHORT_SHA}
-  artifacts:
-    paths:
-      - helm/manifests
-  tags:
-    - $CI_RUNNER_TAG
-
 .deploy-test-env:
+  dependencies: 
+    - build
   stage: staging
   rules:
     - !reference [.rules-deploy, rules]
@@ -53,9 +13,9 @@ variables:
     - cat /.kube/config
   script:
     - dep_env="development"
-    - kubectl create secret docker-registry regcred --namespace="$dev_env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > ~/helm/manifests/dev/ChattApp/templates/regcred.yaml
-    - kubectl create secret docker-registry regcred --namespace="$prod_env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > ~/helm/manifests/prod/ChattApp/templates/regcred.yaml
-    - cd ~/helm/manifests/dev/ChattApp/templates
+    - kubectl create secret docker-registry regcred --namespace="$dev_env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > /helm/manifests/dev/ChattApp/templates/regcred.yaml
+    - kubectl create secret docker-registry regcred --namespace="$prod_env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > /helm/manifests/prod/ChattApp/templates/regcred.yaml
+    - cd /helm/manifests/dev/ChattApp/templates
     - ls -la
     - kubectl delete -f ./ --ignore-not-found
     - kubectl apply -f ./
@@ -67,6 +27,8 @@ variables:
 
 
 .acc-test:
+  dependencies: 
+    - build
   image: node:16-alpine
   stage: staging
   script:
@@ -83,6 +45,8 @@ variables:
 
 
 .cleanup:
+  dependencies: 
+    - build
   stage: staging
   rules:
     - !reference [.rules-deploy, rules]
@@ -94,7 +58,7 @@ variables:
     - echo "$K8_CONFIG" > /.kube/config
     - cat /.kube/config
   script:
-    - cd helm/manifests/ChattApp/templates
+    - cd helm/manifests/dev/ChattApp/templates
     - ls -la
     - kubectl delete -f ./ --ignore-not-found
   tags:

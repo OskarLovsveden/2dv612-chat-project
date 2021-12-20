@@ -71,11 +71,10 @@ build-image-postgres:
   variables:
     CI_APP_PATH: $CI_POSTGRES_PATH
 
+build-manifests:
+  extends: .create-manifests
 
 # == Deploy to staging and run acceptance/smoke tests ==
-build-staging-env:
-  extends: .create-test-manifests
-
 deploy-staging-env:
   needs: ["build-staging-env"]
   extends: .deploy-test-env

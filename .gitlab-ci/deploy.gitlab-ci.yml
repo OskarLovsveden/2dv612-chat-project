@@ -18,6 +18,8 @@
 #     - $CI_RUNNER_TAG
 
 .deploy:
+  dependencies: 
+    - build
   stage: deploy
   rules:
     - !reference [.rules-deploy, rules]
