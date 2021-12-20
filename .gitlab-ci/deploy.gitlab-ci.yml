@@ -1,3 +1,29 @@
+.create-manifests:
+  stage: deploy
+  rules:
+    - !reference [.rules-deploy, rules]
+  image:
+    name: alpine/helm
+  script:
+    - |
+      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+        tag="latest"
+        echo "Running on default branch '$CI_DEFAULT_BRANCH'"
+      else
+        tag="$CI_APP_PATH"
+        echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
+      fi
+    - cd helm
+    - helm template . --output-dir manifests \
+      --set server_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/CI_SERVER_PATH:$tag@ \
+      --set client_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/CI_CLIENT_PATH:$tag@ \
+      --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/CI_POSTGRES_PATH:$tag@
+  artifacts:
+    paths:
+      - helm/manifests
+  tags:
+    - $CI_RUNNER_TAG
+
 .deploy:
   stage: deploy
   rules:
@@ -10,9 +36,6 @@
   before_script:
     - touch /.kube/config
     - echo "$K8_CONFIG" > /.kube/config
-    - adduser helmuser
-    - su helmuser
-    - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
     # - cat /.kube/config
   script:
     - |
@@ -30,11 +53,8 @@
     - kubectl delete secret regcred  --ignore-not-found
     - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN"
     - cd helm
-    - helm template . --output-dir manifests \
-      --set server_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/CI_SERVER_PATH:$tag@ \
-      --set client_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/CI_CLIENT_PATH:$tag@ \
-      --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/CI_POSTGRES_PATH:$tag@
-    - kubectl apply -f manifests
+    - ls -la
+    - kubectl apply -f manifests/
     # - sed -i --expression "s@client-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/client:$tag@" k8s/client.yaml
     # - sed -i --expression "s@server-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/server:$tag@" k8s/koa.yaml
     # - sed -i --expression "s@postgres-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/postgres:$tag@" k8s/postgres.yaml
