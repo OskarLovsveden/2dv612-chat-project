@@ -1,7 +1,7 @@
 include:
   - local: '.gitlab-ci/vars.gitlab-ci.yml'
   - local: '.gitlab-ci/rules.gitlab-ci.yml'
-  - local: '.gitlab-ci/compile.gitlab-ci.yml'
+  - local: '.gitlab-ci/install_dependencies.gitlab-ci.yml'
   - local: '.gitlab-ci/test.gitlab-ci.yml'
   - local: '.gitlab-ci/build.gitlab-ci.yml'
   #- local: '.gitlab-ci/acceptance.gitlab-ci.yml'
@@ -9,20 +9,20 @@ include:
 
 
 stages:
-  - compile
+  - install-dependencies
   - test
   - build
   - acceptance
   - deploy
 
-compile-client:
-  extends: .compile-npm
+npm-install-client:
+  extends: .npm-install
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
 
-compile-server:
-  extends: .compile-npm
+npm-install-server:
+  extends: .npm-install
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
