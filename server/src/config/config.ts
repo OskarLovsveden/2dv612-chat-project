@@ -3,7 +3,6 @@ type IConfig = {
 }
 
 export const config: IConfig = {
-    port: process.env.NODE_PORT || '5000',
-
+    port: process.env.NODE_PORT || '5000'
 };
   
