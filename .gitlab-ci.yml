@@ -40,15 +40,15 @@ stages:
 #   variables:
 #     CI_APP_PATH: $CI_SERVER_PATH
 
-# build-npm-client:
-#   extends: .build-npm
-#   variables:
-#     CI_APP_PATH: $CI_CLIENT_PATH
+build-npm-client:
+  extends: .build-npm
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
 
-# build-npm-server:
-#   extends: .build-npm
-#   variables:
-#     CI_APP_PATH: $CI_SERVER_PATH
+build-npm-server:
+  extends: .build-npm
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
 
 build-image-client:
   needs: ["build-npm-client"]
