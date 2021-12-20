@@ -2,6 +2,7 @@
   stage: test
   script:
     - echo test $CI_APP_PATH eslint here
+    - npm run lint
   tags:
     - $CI_RUNNER_TAG
 
