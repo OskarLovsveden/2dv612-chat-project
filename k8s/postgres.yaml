@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: postgresql-db
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: postgresql-db
-          image: pg-img
-          imagePullPolicy: IfNotPresent
+          image: postgres-img
+          imagePullPolicy: Always
           volumeMounts:
             - name: postgresql-db-disk
               mountPath: /data
@@ -37,6 +37,8 @@ spec:
                 configMapKeyRef:
                   name: all-vars
                   key: POSTGRES_PASSWORD
+      imagePullSecrets:
+        - name: regcred
   # Volume Claim
   volumeClaimTemplates:
     - metadata:
@@ -46,6 +48,7 @@ spec:
         resources:
           requests:
             storage: 2Gi
+        storageClassName: nfs-sc
 ---
 # PostgreSQL StatefulSet Service
 apiVersion: v1
@@ -55,7 +58,6 @@ metadata:
 spec:
   selector:
     app: postgresql-db
-  type: LoadBalancer
   ports:
     - port: 5432
       targetPort: 5432

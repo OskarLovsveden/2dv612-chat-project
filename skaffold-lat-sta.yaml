@@ -1,0 +1,46 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+build:
+  artifacts:
+  - image: node-img
+    context: server
+
+  - image: pg-img
+    context: postgres
+
+  - image: node-client-img
+    context: client
+
+profiles:
+  - name: dev
+    activation:
+      - command: dev
+    build:
+      artifacts:
+      # Node server
+      - image: node-img
+        context: server
+        docker:
+          buildArgs:
+            ENV: dev
+        sync:
+          manual:
+          - src: 'src/*'
+            dest: .
+      # Postgres
+      - image: pg-img
+        context: postgres
+        docker:
+          buildArgs:
+            ENV: dev
+      # Client
+      - image: node-client-img
+        context: client
+        # docker:
+        #   buildArgs:
+        #     ENV: dev
+        sync:
+          manual:
+          - src: 'src/*'
+            dest: .
+            

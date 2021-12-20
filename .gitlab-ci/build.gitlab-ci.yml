@@ -1,0 +1,73 @@
+.build-npm:
+  rules:
+    - !reference [.rules-deploy, rules]
+  stage: build
+  image: node:16-alpine
+  variables:
+    CI: "false" # Must be added to allow for warnings during build using craco
+  script:
+    - echo $CI_APP_PATH
+    - cd $CI_APP_PATH
+    - ls -la
+    - npm run build
+    - ls -la
+  cache:
+    key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
+    paths:
+      - $CI_APP_PATH/build
+      - $CI_APP_PATH/node_modules
+  tags:
+    - $CI_RUNNER_TAG
+
+.build-image:
+  rules:
+    - !reference [.rules-deploy, rules]
+  stage: build
+  image: docker:18.09.7-dind
+  services:
+    - docker:18.09.7-dind
+  variables:
+    DOCKER_HOST: tcp://localhost:2375/
+    DOCKER_DRIVER: overlay
+    IMAGE_REG_NAME: $CI_REGISTRY_IMAGE/$CI_COMMIT_BRANCH/$CI_APP_PATH
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - apk upgrade --update-cache --available
+    - apk add openssl
+    - rm -rf /var/cache/apk/*
+  # Default branch leaves tag empty (= latest tag)
+  # All other branches are tagged with the escaped branch name (commit ref slug)
+  script:
+    - |
+      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+        tag=""
+        echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = 'latest'"
+      else
+        tag="$CI_APP_PATH"
+        echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
+      fi
+    - echo $CI_REGISTRY_IMAGE
+    - cd $CI_APP_PATH
+    - openssl genrsa -out private.pem 2048
+    - openssl rsa -in private.pem -pubout -out public.pem
+    - ls -la
+    - >
+      docker build
+      --pull
+      --cache-from $IMAGE_REG_NAME:$tag
+      --label "org.opencontainers.image.title=$CI_PROJECT_TITLE"
+      --label "org.opencontainers.image.url=$CI_PROJECT_URL"
+      --label "org.opencontainers.image.created=$CI_JOB_STARTED_AT"
+      --label "org.opencontainers.image.revision=$CI_COMMIT_SHA"
+      --label "org.opencontainers.image.version=$CI_COMMIT_REF_NAME"
+      --tag $IMAGE_REG_NAME:$tag
+      .
+    - ls -la
+    - docker push $IMAGE_REG_NAME:$tag
+  cache:
+      key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
+      paths:
+        - $CI_APP_PATH/build
+        - $CI_APP_PATH/node_modules
+  tags:
+    - $CI_RUNNER_TAG

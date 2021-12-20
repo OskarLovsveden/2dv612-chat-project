@@ -1,19 +1,19 @@
 import { Link, Route, Routes } from "react-router-dom";
 import "./App.css";
-import AdminPanel from "./pages/Admin-panel";
+import AdminPanel from "./pages/AdminPanel";
 import Home from "./pages/Home";
 import Login from "./components/Login";
 import Chatroom from "./components/Chatroom";
 import Private from "./components/routes/Private";
 import Public from "./components/routes/Public";
 import ROLE from "./types/Role";
-import UserCreation from "./components/User-creation";
+import UserCreation from "./components/UserCreation";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthProvider";
 
 function App() {
   const { user, isAuthenticated } = useContext(AuthContext);
-
+  
   return (
     <div className="App">
       {user?.role === ROLE.ADMIN && (
@@ -61,7 +61,7 @@ function App() {
           <Route path="login" element={<Public component={Login} />} />
           <Route
             path="create-chatroom"
-            element={<Private roles={[ROLE.ADMIN]} component={Chatroom} />}
+            element={<Private roles={[ROLE.ADMIN]} component={() => <Chatroom chatroom={undefined} />} />}
           />
           <Route
             path="create-user"

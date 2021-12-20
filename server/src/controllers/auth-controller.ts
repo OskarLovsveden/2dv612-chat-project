@@ -11,7 +11,6 @@ export default class AuthController {
             const { username, password } = ctx.request.body;
 
             const userModel = await this.userModel.validateLogin(username, password);
-            console.log('Yahoo');
             const token = await createToken({
                 id: userModel.id,
                 role: userModel.role,

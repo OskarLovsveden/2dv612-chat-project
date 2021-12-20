@@ -19,8 +19,8 @@ export default class ChatroomRouter {
 
     private initializeRoutes(): void {
         this._router.post('/',
-            // (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
-            // (ctx: Context, next: Next) => this.middleware.requesterHasAdminRights(ctx, next),
+            (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
+            (ctx: Context, next: Next) => this.middleware.requesterHasAdminRights(ctx, next),
             (ctx: Context) => this.controller.add(ctx)
         );
             
@@ -35,15 +35,15 @@ export default class ChatroomRouter {
         );
 
         this._router.delete('/:id',
-            // (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
-            // (ctx: Context, next: Next) => this.middleware.requesterHasAdminRights(ctx, next),
+            (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
+            (ctx: Context, next: Next) => this.middleware.requesterHasAdminRights(ctx, next),
             (ctx: Context) => this.controller.remove(ctx)
         );
 
-        // this._router.put('/:id',
-        //     (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
-        //     (ctx: Context, next: Next) => this.middleware.requesterHasAdminRights(ctx, next),
-        //     (ctx: Context) => this.controller.update(ctx)
-        // );
+        this._router.put('/:id',
+            (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
+            (ctx: Context, next: Next) => this.middleware.requesterHasAdminRights(ctx, next),
+            (ctx: Context) => this.controller.update(ctx)
+        );
     }
 }
