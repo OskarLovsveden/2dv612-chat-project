@@ -42,7 +42,7 @@ const Chatroom = ({ chatroom }: ChatroomProps) => {
                 public: publicRef.current?.checked,
                 tag: chatroomTag
             };
-            const res = await chatroomService.create(data);
+            await chatroomService.create(data);
       
             navigate('/admin');
         }
@@ -53,7 +53,7 @@ const Chatroom = ({ chatroom }: ChatroomProps) => {
                 public: publicRef.current?.checked,
                 tag: chatroomTag
             };
-            const res = await chatroomService.update(data, data.id);
+            await chatroomService.update(data, data.id);
   
             navigate('/temporary-adress-which-just-makes-sure-to-reload-admin-page');
             navigate('/admin');

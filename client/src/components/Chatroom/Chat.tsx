@@ -45,7 +45,7 @@ export default function ChatRoom({ username }: ChatProps) {
                 user_id: username
             });
 
-            socket.on('room-message', (data) => {
+            socket.on('room-message', (data: any) => {
                 const isUser = data.username === username;
                 handleNewMessage({ isUser, name: data.username, text: data.message });
             });
@@ -93,7 +93,7 @@ export default function ChatRoom({ username }: ChatProps) {
             <div className="mb-6 mx-4">
                 <form
                     onSubmit={handleOnSubmit}
-                    ref={(el) => (enterPressRef.current = el)}
+                    ref={(el: HTMLFormElement) => (enterPressRef.current = el)}
                 >
                     <div className="pt-4 absolute pb-0 w-3/4 bottom-0">
                         <div className="write bg-white shadow flex rounded-lg">
@@ -114,7 +114,7 @@ export default function ChatRoom({ username }: ChatProps) {
                             </div>
                             <div className="flex-1">
                                 <textarea
-                                    onKeyDown={(e) => handleEnter(e)}
+                                    onKeyDown={(e: React.KeyboardEvent) => handleEnter(e)}
                                     ref={messageRef}
                                     name="message"
                                     className="w-full block outline-none py-4 px-4 bg-transparent"
