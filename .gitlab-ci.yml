@@ -9,10 +9,10 @@ include:
 
 
 stages:
-  - install-dependencies
-  - test
-  - build
-  - acceptance
+  # - install-dependencies
+  # - test
+  # - build
+  # - acceptance
   - deploy
 
 npm-install-client:

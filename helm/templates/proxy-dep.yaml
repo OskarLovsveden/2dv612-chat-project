@@ -51,11 +51,11 @@ metadata:
 data:
   nginx.conf: |
     upstream svc {
-        server {{.Values.client_svc}}.default.svc.cluster.local:{{.Values.client_port}} fail_timeout=0;
+        server {{.Values.client_svc}}.{{.Values.env_name}}.svc.cluster.local:{{.Values.client_port}} fail_timeout=0;
     }
 
     upstream koa {
-        server {{.Values.server_svc}}.default.svc.cluster.local:{{.Values.server_port}} fail_timeout=0;
+        server {{.Values.server_svc}}.{{.Values.env_name}}.svc.cluster.local:{{.Values.server_port}} fail_timeout=0;
     }
 
     server {
