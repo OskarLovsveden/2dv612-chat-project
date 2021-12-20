@@ -1,7 +1,0 @@
-gitops:
-  manifest_projects:
-  - id: group1/project1
-  - id: group2/project2
-ci_access:
-  projects:
-  - id: https://gitlab.lnu.se/-/ide/project/2dv612/student/team-1---ht21/project
