@@ -5,6 +5,7 @@
   script:
     - echo test $CI_APP_PATH eslint here
     - cd $CI_APP_PATH
+    - ls -la # Stefan
     - npm run lint
   tags:
     - $CI_RUNNER_TAG
@@ -16,6 +17,7 @@
   script:
     - echo unit-test $CI_APP_PATH here
     - cd $CI_APP_PATH
+    - ls -la
     - npm test
   tags:
     - $CI_RUNNER_TAG
