@@ -6,8 +6,12 @@
   variables:
     CI: "false" # Must be added to allow for warnings during build using craco
   script:
-    - echo $CI_APP_PATH
     - cd $CI_APP_PATH
+    - |
+      if [[ -d node_modules ]]; then
+        exit 10
+      fi
+    - echo $CI_APP_PATH
     - ls -la
     - npm ci --legacy-peer-deps && npm cache clean --force
     - npm run build
