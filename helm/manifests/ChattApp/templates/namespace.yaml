@@ -1,0 +1,9 @@
+---
+# Source: ChattApp/templates/dev-ns.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: {{.Values.env_name}}
+spec: {}
+status: {}
