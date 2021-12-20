@@ -1,14 +1,15 @@
 import { Context } from 'koa';
-import Room from '../services/chatroom-service';
+import ChatRoomService from '../services/chatroom-service';
+import Chatroom from '../models/sequelizeModels/Chatroom';
 
 export default class ChatroomController {
     readonly table = 'chatroom';
-    private chatroomService = new Room();
+    private chatroomService = new ChatRoomService();
 
     public async add(ctx: Context): Promise<void> {
         try {
             const room = ctx.request.body;
-            const roomCreated = await this.chatroomService.create(room);
+            const roomCreated = await this.chatroomService.create(room, Chatroom);
 
             if (!roomCreated) {
                 ctx.throw(400, { message: 'Failed to create room' });
@@ -22,7 +23,7 @@ export default class ChatroomController {
 
     public async getAll(ctx: Context): Promise<void> {
         try {
-            const chatroom = await this.chatroomService.getAll();
+            const chatroom = await this.chatroomService.getAll(Chatroom);
             ctx.body = chatroom;
         } catch (e) {
             console.error(e);
@@ -32,7 +33,7 @@ export default class ChatroomController {
     public async get(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
-            const room = await this.chatroomService.get(id);
+            const room = await this.chatroomService.get(id, Chatroom);
 
             ctx.body = room;
         } catch (e) {
@@ -43,7 +44,7 @@ export default class ChatroomController {
     public async remove(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;        
-            const roomDeleted = await this.chatroomService.delete(id);
+            const roomDeleted = await this.chatroomService.delete(id, Chatroom);
             
             if (!roomDeleted) {
                 ctx.throw(400, { message: 'Failed to delete room' });
@@ -66,7 +67,7 @@ export default class ChatroomController {
             }
             
             console.log(room);        
-            const roomUpdated = await this.chatroomService.update(room, id, newID);
+            const roomUpdated = await this.chatroomService.update(room, id, newID, Chatroom);
             
             if (!roomUpdated) {
                 ctx.throw(400, { message: 'Failed to update room' });
