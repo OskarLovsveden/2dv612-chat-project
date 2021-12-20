@@ -10,7 +10,7 @@ postgres_user: postgres
 postgres_password: test
 
 # PGadmin vars
-pgadmin_port: 30790
+pgadmin_port: 4000
 pgadmin_name: pgadmin
 pgadmin_svc: pgadmin-svc
 pgadmin_default_user: test@test.com
@@ -33,7 +33,7 @@ server_svc: koa-backend-svc
 # Proxy vars
 proxy_name: proxy
 proxy_svc: proxy-svc
-proxy_port: 32162
+proxy_port: 32162 # NODEPORT
 
 # Misc vars
 storageclass_name: nfs-sc

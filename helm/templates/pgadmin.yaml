@@ -38,11 +38,9 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: http
-      nodePort: {{.Values.pgadmin_port}}
+      targetPort: {{.Values.pgadmin_port}}
   selector:
     app: {{.Values.pgadmin_name}}
-  type: NodePort
 ---
 apiVersion: apps/v1
 kind: StatefulSet
