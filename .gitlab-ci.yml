@@ -1,12 +1,11 @@
 include:
-  - local: '.gitlab-ci/vars.gitlab-ci.yml'
-  - local: '.gitlab-ci/rules.gitlab-ci.yml'
-  - local: '.gitlab-ci/install_dependencies.gitlab-ci.yml'
-  - local: '.gitlab-ci/test.gitlab-ci.yml'
-  - local: '.gitlab-ci/build.gitlab-ci.yml'
+  - local: ".gitlab-ci/vars.gitlab-ci.yml"
+  - local: ".gitlab-ci/rules.gitlab-ci.yml"
+  - local: ".gitlab-ci/install_dependencies.gitlab-ci.yml"
+  - local: ".gitlab-ci/test.gitlab-ci.yml"
+  - local: ".gitlab-ci/build.gitlab-ci.yml"
   #- local: '.gitlab-ci/acceptance.gitlab-ci.yml'
-  - local: '.gitlab-ci/deploy.gitlab-ci.yml'
-
+  - local: ".gitlab-ci/deploy.gitlab-ci.yml"
 
 stages:
   - install-dependencies
@@ -19,7 +18,6 @@ stages:
 #   extends: .npm-install
 #   variables:
 #     CI_APP_PATH: $CI_CLIENT_PATH
-
 
 # npm-install-server:
 #   extends: .npm-install
@@ -35,6 +33,11 @@ stages:
 #   extends: .eslint
 #   variables:
 #     CI_APP_PATH: $CI_SERVER_PATH
+
+test-unit-server:
+  extends: .unit-test
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
 
 # build-npm-client:
 #   extends: .build-npm
@@ -67,5 +70,3 @@ deploy-all:
   extends: .deploy
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
-
-
