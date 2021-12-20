@@ -23,6 +23,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -48,6 +49,9 @@
     "@types/jest": "^26.0.24",
     "autoprefixer": "^9.8.8",
     "babel-jest": "^26.6.3",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^8.3.0",
     "postcss": "^7.0.39",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
   }
