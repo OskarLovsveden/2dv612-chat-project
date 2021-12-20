@@ -14,7 +14,7 @@
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
     - cd helm
-    - helm template . --output-dir manifests --set server_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_SERVER_PATH}:${CI_SERVER_PATH} --set client_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_CLIENT_PATH}:${CI_CLIENT_PATH} --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_POSTGRES_PATH}:${CI_POSTGRES_PATH}
+    - helm template . --output-dir manifests -f prod.yaml --set server_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_SERVER_PATH}:${CI_SERVER_PATH} --set client_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_CLIENT_PATH}:${CI_CLIENT_PATH} --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_POSTGRES_PATH}:${CI_POSTGRES_PATH}
   artifacts:
     paths:
       - helm/manifests
@@ -50,4 +50,5 @@
     # - kubectl apply -k k8s/
   tags:
     - $CI_RUNNER_TAG
+
 
