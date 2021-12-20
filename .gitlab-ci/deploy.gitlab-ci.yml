@@ -28,9 +28,9 @@
     - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN"
     - kubectl create namespace development --dry-run=client -o yaml > k8s/dev-ns.yaml
     - kubectl create namespace production --dry-run=client -o yaml > k8s/prod-ns.yaml
-    - sed -i --expression "s@client-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_CLIENT_PATH}:${tag}@" k8s/client.yaml
-    - sed -i --expression "s@server-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_SERVER_PATH}:${tag}@" k8s/koa.yaml
-    - sed -i --expression "s@postgres-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_POSTGRES_PATH}:${tag}@" k8s/postgres.yaml
+    - sed -i --expression "s@client-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_CLIENT_PATH}:$tag@" k8s/client.yaml
+    - sed -i --expression "s@server-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_SERVER_PATH}:$tag@" k8s/koa.yaml
+    - sed -i --expression "s@postgres-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_POSTGRES_PATH}:$tag@" k8s/postgres.yaml
     - kubectl apply -f k8s/
   tags:
     - $CI_RUNNER_TAG
