@@ -73,3 +73,4 @@
     - kubectl delete -f ./ --ignore-not-found
   tags:
     - $CI_RUNNER_TAG
+    
