@@ -37,4 +37,5 @@ proxy_port: 32162 # NODEPORT
 
 # Misc vars
 storageclass_name: nfs-sc
+lb_port: 80
 lb_ip: http://localhost/

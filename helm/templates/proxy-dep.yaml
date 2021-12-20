@@ -63,7 +63,7 @@ data:
     }
 
     server {
-        listen      80;
+        listen      {{.Values.lb_port}};
         server_name {{.Values.lb_ip}};
 
         location / {
