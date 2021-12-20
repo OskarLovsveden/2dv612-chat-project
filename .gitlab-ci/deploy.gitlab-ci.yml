@@ -10,8 +10,11 @@
   before_script:
     - touch /.kube/config
     - echo "$K8_CONFIG" > /.kube/config
-    - curl -L https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest/helm-linux-amd64 -o /usr/local/bin/helm
-    - chmod +x /usr/local/bin/helm
+    - apt-get install gnupg
+    - curl https://baltocdn.com/helm/signing.asc | apt-key add -
+    - apt-get install apt-transport-https --yes
+    - echo "deb https://baltocdn.com/helm/stable/debian/ all main" | tee /etc/apt/sources.list.d/helm-stable-debian.list
+    - apt-get install helm
     # - cat /.kube/config
   script:
     - |
