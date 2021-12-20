@@ -35,17 +35,16 @@
     - apk upgrade --update-cache --available
     - apk add openssl
     - rm -rf /var/cache/apk/*
-  # Default branch leaves tag empty (= latest tag)
-  # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
-    - |
-      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
-        tag="latest"
-        echo "Running on default branch '$CI_DEFAULT_BRANCH'"
-      else
-        tag="$CI_COMMIT_SHORT_SHA"
-        echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
-      fi
+    # - |
+    #   if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+    #     tag="latest"
+    #     echo "Running on default branch '$CI_DEFAULT_BRANCH'"
+    #   else
+    #     tag="$CI_COMMIT_SHORT_SHA"
+    #     echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
+    #   fi
+    # - tag="latest"
     - echo $CI_REGISTRY_IMAGE
     - cd $CI_APP_PATH
     - openssl genrsa -out private.pem 2048
@@ -54,16 +53,16 @@
     - >
       docker build
       --pull
-      --cache-from $IMAGE_REG_NAME:$tag
+      --cache-from $IMAGE_REG_NAME:$CI_COMMIT_SHORT_SHA
       --label "org.opencontainers.image.title=$CI_PROJECT_TITLE"
       --label "org.opencontainers.image.url=$CI_PROJECT_URL"
       --label "org.opencontainers.image.created=$CI_JOB_STARTED_AT"
       --label "org.opencontainers.image.revision=$CI_COMMIT_SHA"
       --label "org.opencontainers.image.version=$CI_COMMIT_REF_NAME"
-      --tag $IMAGE_REG_NAME:$tag
+      --tag $IMAGE_REG_NAME:$CI_COMMIT_SHORT_SHA
       .
     - ls -la
-    - docker push $IMAGE_REG_NAME:$tag
+    - docker push $IMAGE_REG_NAME:$CI_COMMIT_SHORT_SHA
   cache:
     key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
     paths:
