@@ -15,9 +15,9 @@
       fi
     - cd helm
     - helm template . --output-dir manifests \
-      --set server_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/CI_SERVER_PATH:$tag@ \
-      --set client_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/CI_CLIENT_PATH:$tag@ \
-      --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/CI_POSTGRES_PATH:$tag@
+      --set server_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_SERVER_PATH}:${tag} \
+      --set client_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_CLIENT_PATH}:${tag} \
+      --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_POSTGRES_PATH}:${tag}
   artifacts:
     paths:
       - helm/manifests
