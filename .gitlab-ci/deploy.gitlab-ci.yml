@@ -9,7 +9,7 @@
     test: $IMG_REGISTRY:$CI_COMMIT_BRANCH
   environment:
     name: development
-    url: http://194.47.177.79/
+    url: https://194.47.177.25:6443
     kubernetes:
       namespace: development
   before_script:
