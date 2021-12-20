@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+commonLabels:
+  app: helloweb
+
+namespace: dev
+
+resources:
+- dev-ns.yaml
+- client.yaml
+- koa.yaml
+- pgadmin.yaml
+- postgres.yaml
+- proxy-dep.yaml
+- vars.yaml
