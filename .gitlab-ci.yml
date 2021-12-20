@@ -69,8 +69,8 @@ build-image-postgres:
 
 deploy-all:
   extends: .deploy
-  variables:
-    CI_APP_PATH: $CI_SERVER_PATH
+    
+    
 
 test-acceptance-server:
   extends: .acc-test
