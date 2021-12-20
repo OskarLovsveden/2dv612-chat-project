@@ -1,4 +1,5 @@
 .eslint:
+  image: node:16-alpine
   stage: test
   script:
     - echo test $CI_APP_PATH eslint here
@@ -7,6 +8,7 @@
     - $CI_RUNNER_TAG
 
 .unit-test:
+  image: node:16-alpine
   stage: test
   script:
     - echo unit-test $CI_APP_PATH here
