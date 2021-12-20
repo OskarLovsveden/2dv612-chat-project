@@ -10,5 +10,6 @@
   stage: test
   script:
     - echo unit-test $CI_APP_PATH here
+    - npm test
   tags:
-    - $CI_RUNNER_TAG   
+    - $CI_RUNNER_TAG

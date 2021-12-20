@@ -19,10 +19,10 @@ stages:
 #   variables:
 #     CI_APP_PATH: $CI_CLIENT_PATH
 
-# npm-install-server:
-#   extends: .npm-install
-#   variables:
-#     CI_APP_PATH: $CI_SERVER_PATH
+npm-install-server:
+  extends: .npm-install
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
 
 # test-eslint-client:
 #   extends: .eslint
