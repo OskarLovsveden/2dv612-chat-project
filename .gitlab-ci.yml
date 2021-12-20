@@ -15,16 +15,16 @@ stages:
   - acceptance
   - deploy
 
-compile-client:
-  extends: .compile-npm
-  variables:
-    CI_APP_PATH: $CI_CLIENT_PATH
+# compile-client:
+#   extends: .compile-npm
+#   variables:
+#     CI_APP_PATH: $CI_CLIENT_PATH
 
 
-compile-server:
-  extends: .compile-npm
-  variables:
-    CI_APP_PATH: $CI_SERVER_PATH
+# compile-server:
+#   extends: .compile-npm
+#   variables:
+#     CI_APP_PATH: $CI_SERVER_PATH
 
 test-eslint-client:
   extends: .eslint
