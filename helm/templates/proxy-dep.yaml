@@ -61,7 +61,7 @@ data:
     upstream pgadmin {
         server {{.Values.pgadmin_svc}}.{{.Values.env_name}}.svc.cluster.local:{{.Values.pgadmin_port}} fail_timeout=0;
     }
-
+    
     server {
         listen      {{.Values.lb_port}};
         server_name {{.Values.lb_ip}};
@@ -70,7 +70,7 @@ data:
             proxy_pass http://svc;
         }
 
-        location / {
+        location /pgadmin {
             proxy_pass http://pgadmin;
         }
 
