@@ -1,19 +1,15 @@
 .compile-npm:
-  rules:
-    - !reference [.rules-compile-npm, rules]
+  # rules:
+  #   - !reference [.rules-compile-npm, rules]
   stage: compile
   image: node:16-alpine
   variables:
     CI: "false" # Must be added to allow for warnings during build using craco
   script:
     - cd $CI_APP_PATH
-    - |
-      if [[ -d node_modules ]]; then
-        exit 10
-      fi
     - echo $CI_APP_PATH
     - ls -la
-    - npm ci --legacy-peer-deps && npm cache clean --force
+    - npm install --legacy-peer-deps --force
     - npm run build
     - ls -la
   cache:
