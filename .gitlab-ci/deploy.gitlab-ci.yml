@@ -10,7 +10,7 @@
   before_script:
     - touch /.kube/config
     - echo "$K8_CONFIG" > /.kube/config
-    - cat /.kube/config
+    # - cat /.kube/config
   script:
     - |
       if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
@@ -20,18 +20,22 @@
         tag="$CI_APP_PATH"
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
-    - echo $CI_REGISTRY
-    - echo $GIT_USERNAME
-    - echo $GIT_TOKEN
-    - kubectl delete -f k8s/ --ignore-not-found
+    # - echo $CI_REGISTRY
+    # - echo $GIT_USERNAME
+    # - echo $GIT_TOKEN
+    # - kubectl delete -f k8s/ --ignore-not-found
     - kubectl delete secret regcred  --ignore-not-found
     - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN"
-    - kubectl create namespace development --dry-run=client -o yaml > k8s/dev-ns.yaml
-    - kubectl create namespace production --dry-run=client -o yaml > k8s/prod-ns.yaml
-    - sed -i --expression "s@client-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/client:$tag@" k8s/client.yaml
-    - sed -i --expression "s@server-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/server:$tag@" k8s/koa.yaml
-    - sed -i --expression "s@postgres-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/postgres:$tag@" k8s/postgres.yaml
-    - kubectl apply -k k8s/
+    - cd helm
+    - helm template . --output-dir manifests \
+      --set server_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/CI_SERVER_PATH:$tag@ \
+      --set client_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/CI_CLIENT_PATH:$tag@ \
+      --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/CI_POSTGRES_PATH:$tag@
+    - kubectl apply -f manifests
+    # - sed -i --expression "s@client-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/client:$tag@" k8s/client.yaml
+    # - sed -i --expression "s@server-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/server:$tag@" k8s/koa.yaml
+    # - sed -i --expression "s@postgres-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/postgres:$tag@" k8s/postgres.yaml
+    # - kubectl apply -k k8s/
   tags:
     - $CI_RUNNER_TAG
 
