@@ -67,7 +67,11 @@ build-image-postgres:
   variables:
     CI_APP_PATH: $CI_POSTGRES_PATH
 
+create-manifests:
+  extends: .create-manifests
+
 deploy-all:
+  needs: ["create-manifests"]
   extends: .deploy
     
     

@@ -1,3 +1,28 @@
+.create-manifests:
+  stage: deploy
+  rules:
+    - !reference [.rules-deploy, rules]
+  image:
+    name: alpine/helm
+  script:
+    - |
+      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+        tag="latest"
+        env="production"
+        echo "Running on default branch '$CI_DEFAULT_BRANCH'"
+      else
+        tag="$CI_COMMIT_SHORT_SHA"
+        env="development"
+        echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
+      fi
+    - cd helm
+    - helm template . --output-dir manifests --set lb_ip="194.47.177.79" --set env_name=${env} --set server_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_SERVER_PATH}:${CI_SERVER_PATH} --set client_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_CLIENT_PATH}:${CI_CLIENT_PATH} --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_POSTGRES_PATH}:${CI_POSTGRES_PATH}
+  artifacts:
+    paths:
+      - helm/manifests
+  tags:
+    - $CI_RUNNER_TAG
+
 .deploy:
   stage: deploy
   rules:
@@ -14,23 +39,27 @@
   script:
     - |
       if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
-        tag="latest"
+        env="production"
         echo "Running on default branch '$CI_DEFAULT_BRANCH'"
       else
-        tag="$CI_APP_PATH"
+        env="development"
         echo "Running on branch '$CI_COMMIT_BRANCH': tag = $tag"
       fi
-    - echo $CI_REGISTRY
-    - echo $GIT_USERNAME
-    - echo $GIT_TOKEN
-    - kubectl delete -f k8s/ --ignore-not-found
-    - kubectl delete secret regcred  --ignore-not-found
-    - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN"
-    - kubectl create namespace development --dry-run=client -o yaml > k8s/dev-ns.yaml
-    - kubectl create namespace production --dry-run=client -o yaml > k8s/prod-ns.yaml
-    - sed -i --expression "s@client-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_CLIENT_PATH}:$tag@" k8s/client.yaml
-    - sed -i --expression "s@server-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_SERVER_PATH}:$tag@" k8s/koa.yaml
-    - sed -i --expression "s@postgres-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_POSTGRES_PATH}:$tag@" k8s/postgres.yaml
-    - kubectl apply -f k8s/
+    # - echo $CI_REGISTRY
+    # - echo $GIT_USERNAME
+    # - echo $GIT_TOKEN
+    # - kubectl delete -f k8s/ --ignore-not-found
+    # - kubectl delete secret regcred  --ignore-not-found
+    # - kubectl create secret docker-registry regcred --docker-server=$CI_REGISTRY --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN"
+    - cd helm/manifests/ChattApp/templates
+    - ls -la
+    - kubectl create secret docker-registry regcred --namespace="$env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > regcred.yaml
+    - kubectl apply -f ./
+    # - sed -i --expression "s@client-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/client:$tag@" k8s/client.yaml
+    # - sed -i --expression "s@server-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/server:$tag@" k8s/koa.yaml
+    # - sed -i --expression "s@postgres-img@${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/postgres:$tag@" k8s/postgres.yaml
+    # - kubectl apply -k k8s/
   tags:
     - $CI_RUNNER_TAG
+
+
