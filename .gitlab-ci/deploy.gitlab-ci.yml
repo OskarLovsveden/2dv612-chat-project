@@ -10,7 +10,8 @@
   before_script:
     - touch /.kube/config
     - echo "$K8_CONFIG" > /.kube/config
-    - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+    - curl -L https://mirror.openshift.com/pub/openshift-v4/clients/helm/latest/helm-linux-amd64 -o /usr/local/bin/helm
+    - chmod +x /usr/local/bin/helm
     # - cat /.kube/config
   script:
     - |
