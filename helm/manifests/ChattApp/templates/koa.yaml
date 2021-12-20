@@ -30,7 +30,7 @@ spec:
         runAsUser: 1000
       containers:
       - name: koa-backend
-        image: testasta
+        image: poiaskdaps
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
