@@ -3,4 +3,6 @@ gitops:
   - id: "2dv612/student/team-1---ht21/project"
     paths:
     - glob: '/**/*.{yaml,yml,json}'
-
+ci_access:
+  projects:
+  - id: "2dv612/student/team-1---ht21/project"
