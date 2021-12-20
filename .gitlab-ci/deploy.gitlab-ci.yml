@@ -10,6 +10,8 @@
   before_script:
     - touch /.kube/config
     - echo "$K8_CONFIG" > /.kube/config
+    - adduser helmuser
+    - su helmuser
     - curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
     # - cat /.kube/config
   script:
