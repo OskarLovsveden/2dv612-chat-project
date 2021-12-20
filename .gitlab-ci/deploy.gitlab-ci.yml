@@ -10,9 +10,10 @@
   before_script:
     - touch /.kube/config
     - echo "$K8_CONFIG" > /.kube/config
-    - curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-    - chmod 700 get_helm.sh
-    - bash ./get_helm.sh
+    - curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+    - apt-get install apt-transport-https --yes
+    - echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+    - apt-get install helm
     # - cat /.kube/config
   script:
     - |
