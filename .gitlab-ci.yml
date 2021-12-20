@@ -4,15 +4,16 @@ include:
   - local: ".gitlab-ci/install_dependencies.gitlab-ci.yml"
   - local: ".gitlab-ci/test.gitlab-ci.yml"
   - local: ".gitlab-ci/build.gitlab-ci.yml"
-  #- local: '.gitlab-ci/acceptance.gitlab-ci.yml'
+  # - local: ".gitlab-ci/acceptance.gitlab-ci.yml"
+  - local: ".gitlab-ci/acceptance-test.gitlab-ci.yml"
   - local: ".gitlab-ci/deploy.gitlab-ci.yml"
 
 stages:
   - install-dependencies
   - test
   - build
-  - acceptance
   - deploy
+  - acceptance
 
 npm-install-client:
   extends: .npm-install
@@ -39,34 +40,39 @@ test-unit-server:
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
-# build-npm-client:
-#   extends: .build-npm
-#   variables:
-#     CI_APP_PATH: $CI_CLIENT_PATH
+build-npm-client:
+  extends: .build-npm
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
 
-# build-npm-server:
-#   extends: .build-npm
-#   variables:
-#     CI_APP_PATH: $CI_SERVER_PATH
+build-npm-server:
+  extends: .build-npm
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
 
-# build-image-client:
-#   needs: ["build-npm-client"]
-#   extends: .build-image
-#   variables:
-#     CI_APP_PATH: $CI_CLIENT_PATH
+build-image-client:
+  needs: ["build-npm-client"]
+  extends: .build-image
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
 
-# build-image-server:
-#   needs: ["build-npm-server"]
-#   extends: .build-image
-#   variables:
-#     CI_APP_PATH: $CI_SERVER_PATH
+build-image-server:
+  needs: ["build-npm-server"]
+  extends: .build-image
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
 
-# build-image-postgres:
-#   extends: .build-image
-#   variables:
-#     CI_APP_PATH: $CI_POSTGRES_PATH
+build-image-postgres:
+  extends: .build-image
+  variables:
+    CI_APP_PATH: $CI_POSTGRES_PATH
 
 deploy-all:
   extends: .deploy
   variables:
+    CI_APP_PATH: $CI_SERVER_PATH
+
+test-acceptance-server:
+  extends: .acc-test
+  varibles:
     CI_APP_PATH: $CI_SERVER_PATH
