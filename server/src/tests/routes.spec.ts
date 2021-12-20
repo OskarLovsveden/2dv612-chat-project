@@ -23,20 +23,7 @@ describe('Login Endpoints', () => {
 });
 
 describe('User Endpoints', () => {
-    it('GET /api/user should show all users', (done: any) => {
+    it('GET /api/user should return status code 200', (done: any) => {
         request(API).get('/api/user').set('Authorization', 'Bearer ' + token).expect(200, done);
-    });
-
-    it('GET /api/user/:id should get user with ID 13', async () => {
-        await request(API).get('/api/user/13').set('Authorization', 'Bearer ' + token).expect((res: any) => {
-            const expected = {
-                id: 13,
-                username: 'user',
-                role: 'user',
-                active: true
-            };
-
-            expect(res.body).to.deep.equal(expected);
-        });
     });
 });

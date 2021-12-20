@@ -1,0 +1,73 @@
+.create-test-manifests:
+  stage: staging
+  rules:
+    - !reference [.rules-deploy, rules]
+  image:
+    name: alpine/helm
+  script:
+    - env="development"
+    - port="32163"
+    - listen_port="443"
+    - listen_ip="kubernetes.default.svc.cluster.local"
+    - cd helm
+    - helm template . --output-dir test_manifests --set lb_ip=${listen_ip} --set lb_port=${listen_port} --set proxy_port=${port} --set env_name=${env} --set server_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_SERVER_PATH}:${CI_COMMIT_SHORT_SHA} --set client_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_CLIENT_PATH}:${CI_COMMIT_SHORT_SHA} --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_POSTGRES_PATH}:${CI_COMMIT_SHORT_SHA}
+  artifacts:
+    paths:
+      - helm/test_manifests
+  tags:
+    - $CI_RUNNER_TAG
+
+.deploy-test-env:
+  stage: staging
+  rules:
+    - !reference [.rules-deploy, rules]
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
+  before_script:
+    - touch /.kube/config
+    - echo "$K8_CONFIG" > /.kube/config
+    - cat /.kube/config
+  script:
+    - env="development"
+    - cd helm/test_manifests/ChattApp/templates
+    - ls -la
+    - kubectl create secret docker-registry regcred --namespace="$env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > regcred.yaml
+    - kubectl delete -f ./ --ignore-not-found
+    - kubectl apply -f ./
+  tags:
+    - $CI_RUNNER_TAG
+
+
+.acc-test:
+  image: node:16-alpine
+  stage: staging
+  script:
+    - cd $CI_APP_PATH
+    - ls -la
+    - npm run test:acc
+  cache:
+    key: "$CI_APP_PATH-test-$CI_COMMIT_REF_SLUG"
+    paths:
+      - $CI_APP_PATH/node_modules
+  tags:
+    - $CI_RUNNER_TAG
+
+
+.cleanup:
+  stage: staging
+  rules:
+    - !reference [.rules-deploy, rules]
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
+  before_script:
+    - touch /.kube/config
+    - echo "$K8_CONFIG" > /.kube/config
+    - cat /.kube/config
+  script:
+    - cd helm/test_manifests/ChattApp/templates
+    - ls -la
+    - kubectl delete -f ./ --ignore-not-found
+  tags:
+    - $CI_RUNNER_TAG
