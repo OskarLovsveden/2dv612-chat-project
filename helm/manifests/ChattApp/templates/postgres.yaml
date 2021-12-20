@@ -5,7 +5,7 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: development
-  name: 
+  name: pg-svc
 spec:
   selector:
     app: postgres
@@ -21,7 +21,7 @@ metadata:
   namespace: development
   name: postgres
 spec:
-  serviceName: 
+  serviceName: pg-svc
   selector:
     matchLabels:
       app: postgres

@@ -17,7 +17,7 @@ data:
 
     server {
         listen      80;
-        server_name http://localhost/;
+        server_name 194.47.177.79;
 
         location / {
             proxy_pass http://svc;
