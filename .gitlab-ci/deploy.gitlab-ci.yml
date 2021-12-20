@@ -9,7 +9,7 @@
     test: $IMG_REGISTRY:$CI_COMMIT_BRANCH
   environment:
     name: development
-    url: https://194.47.177.25:6443
+    url: $DYNAMIC_ENVIRONMENT_URL
     kubernetes:
       namespace: development
   before_script:
