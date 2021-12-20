@@ -95,5 +95,4 @@ cleanup-staging-env:
 #   extends: .create-manifests
 
 deploy-production:
-  needs: ["build-production-env"]
   extends: .deploy  
