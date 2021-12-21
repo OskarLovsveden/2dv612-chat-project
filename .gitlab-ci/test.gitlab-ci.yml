@@ -23,7 +23,6 @@
     - cd $CI_APP_PATH
     - ls -la
     - npm run ci
-    - ls -la
   cache:
     key: "$CI_APP_PATH-test-$CI_COMMIT_REF_SLUG"
     paths:
