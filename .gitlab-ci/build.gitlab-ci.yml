@@ -88,7 +88,6 @@
       --set server_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_SERVER_PATH}:${CI_COMMIT_SHORT_SHA} 
       --set client_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_CLIENT_PATH}:${CI_COMMIT_SHORT_SHA} 
       --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_POSTGRES_PATH}:${CI_COMMIT_SHORT_SHA}
-      --set docker_conf='{"auths":{"${$CI_REGISTRY}":{"username":"${$GIT_USERNAME}","password":"${$GIT_TOKEN}","auth":"YW0yMjN5ZEBzdHVkZW50LmxudS5zZTpTRlVmeWZtUXZwd1FhTm8ycXNGQw=="}}}'
     - > # Create production manifests
       helm template . --output-dir manifests/prod 
       --set lb_ip=${prod_listen_ip} 
@@ -98,7 +97,6 @@
       --set server_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_SERVER_PATH}:${CI_COMMIT_SHORT_SHA} 
       --set client_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_CLIENT_PATH}:${CI_COMMIT_SHORT_SHA} 
       --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_POSTGRES_PATH}:${CI_COMMIT_SHORT_SHA}
-      --set docker_conf='{"auths":{"${$CI_REGISTRY}":{"username":"${$GIT_USERNAME}","password":"${$GIT_TOKEN}","auth":"YW0yMjN5ZEBzdHVkZW50LmxudS5zZTpTRlVmeWZtUXZwd1FhTm8ycXNGQw=="}}}'
   artifacts:
     paths:
       - helm/manifests

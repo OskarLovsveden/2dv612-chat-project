@@ -12,7 +12,7 @@
   script:
     - dep_env="development"
     - cd helm/manifests/dev/ChattApp/templates
-    # - kubectl create secret docker-registry regcred --namespace="$dev_env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > regcred.yaml
+    - kubectl create secret docker-registry regcred --namespace="$dev_env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > regcred.yaml
     - kubectl delete -f ./ --ignore-not-found
     - kubectl apply -f ./
   artifacts:
