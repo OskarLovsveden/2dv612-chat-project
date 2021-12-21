@@ -8,6 +8,11 @@ include:
   # - local: ".gitlab-ci/acceptance-test.gitlab-ci.yml"
   - local: ".gitlab-ci/deploy.gitlab-ci.yml"
 
+artifacts:
+  paths:
+    - helm/manifests/dev
+    - helm/manifests/prod
+
 stages:
   - install-dependencies
   - test

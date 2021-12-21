@@ -17,10 +17,6 @@
     - ls -la
     - kubectl delete -f ./ --ignore-not-found
     - kubectl apply -f ./
-  artifacts:
-    paths:
-      - helm/manifests/dev
-      - helm/manifests/prod
   tags:
     - $CI_RUNNER_TAG
 
