@@ -17,7 +17,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: chatapp; Type: DATABASE; Schema: -; Owner: postgres
+-- Name: chatapp; Type: DATABASE; Schema: -; Owner: postgres 
 --
 
 ALTER DATABASE chatapp OWNER TO postgres;
