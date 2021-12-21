@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "ci": "NODE_ENV=test ts-mocha -r dotenv/config src/**/*.test.ts",
+    "ci-test": "NODE_ENV=test ts-mocha -r dotenv/config src/**/*.test.ts",
+    "ci-lint": "eslint -f ./node_modules/eslint-junit-gitlab/index.js --ignore-path .eslintignore --ext .js,.ts .",
     "production": "node build/app.js",
     "build": "tsc -p .",
     "dev": "ts-node-dev -r dotenv/config src/app.ts",
@@ -19,6 +20,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^10.0.0",
+    "eslint-junit-gitlab": "^1.0.2",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.14",
     "koa": "^2.13.4",
