@@ -14,7 +14,7 @@
         - $CI_APP_PATH/package.json
 
 .rules-test:
-  -rules:
+  rules:
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
       allow_failure: true
 
