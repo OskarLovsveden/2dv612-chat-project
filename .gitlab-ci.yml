@@ -17,6 +17,7 @@ stages:
 # Install dependencies 
 npm-install-client:
   rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
     - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
       changes:
         - $CI_CLIENT_PATH/**/*
@@ -26,6 +27,7 @@ npm-install-client:
 
 npm-install-server:
   rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
     - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
       changes:
         - $CI_SERVER_PATH/**/*
@@ -36,6 +38,7 @@ npm-install-server:
 # Unit tests
 test-eslint-client:
   rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
     - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
       changes:
         - $CI_CLIENT_PATH/**/*
@@ -51,6 +54,7 @@ test-eslint-client:
 
 test-eslint-server:
   rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
     - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
       changes:
         - $CI_SERVER_PATH/**/*
@@ -66,6 +70,7 @@ test-eslint-server:
 
 test-unit-server:
   rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
     - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
       changes:
         - $CI_SERVER_PATH/**/*
@@ -81,6 +86,7 @@ test-unit-server:
 
 test-unit-client:
   rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
     - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
       changes:
         - $CI_CLIENT_PATH/**/*
@@ -141,5 +147,5 @@ cleanup-staging-env:
   extends: .cleanup
 # Deploy to production
 
-# deploy-production:
-#   extends: .deploy
+deploy-production:
+  extends: .deploy
