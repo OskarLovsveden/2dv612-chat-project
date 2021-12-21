@@ -1,12 +1,13 @@
 # Eslint test
 .eslint:
+  # rules:
+  #   - !reference [.rules-test, rules]
   image: node:16-alpine
   stage: test
-  allow_failure: true
   script:
     - echo test $CI_APP_PATH eslint here
     - cd $CI_APP_PATH
-    - ls -la # Stefan
+    - ls -la
     - npm run lint
   cache:
     key: "$CI_APP_PATH-test-$CI_COMMIT_REF_SLUG"

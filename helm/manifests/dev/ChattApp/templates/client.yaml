@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: podakwdpwoka
+          image: client-img
           imagePullPolicy: Always
           envFrom:
           - configMapRef:

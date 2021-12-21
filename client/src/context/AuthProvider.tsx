@@ -6,6 +6,7 @@ import type { LoginUser } from '../types/User';
 import ROLE from '../types/Role';
 import authService from '../utils/http/auth-service';
 
+
 const initialState: AuthContextState = {
     isAuthenticated: false,
     login: (): void => {}

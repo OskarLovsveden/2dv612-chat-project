@@ -8,6 +8,7 @@ postgres_port: 5432
 postgres_db_name: chatapp
 postgres_user: postgres
 postgres_password: test
+db_env_name: data
 
 # PGadmin vars
 pgadmin_port: 4000
@@ -39,3 +40,4 @@ proxy_port: 32162 # NODEPORT
 storageclass_name: nfs-sc
 lb_port: 80
 lb_ip: http://localhost/
+

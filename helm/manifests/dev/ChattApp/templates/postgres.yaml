@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: pbowiakbdpaowkb
+          image: postgres-img
           imagePullPolicy: Always
           volumeMounts:
             - name: postgresql-db-disk

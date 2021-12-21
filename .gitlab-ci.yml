@@ -5,7 +5,6 @@ include:
   - local: ".gitlab-ci/test.gitlab-ci.yml"
   - local: ".gitlab-ci/build.gitlab-ci.yml"
   - local: ".gitlab-ci/staging.gitlab-ci.yml"
-  # - local: ".gitlab-ci/acceptance-test.gitlab-ci.yml"
   - local: ".gitlab-ci/deploy.gitlab-ci.yml"
 
 stages:
@@ -15,7 +14,7 @@ stages:
   - staging
   - deploy
 
-# Install dependencies
+# Install dependencies 
 npm-install-client:
   extends: .npm-install
   variables:
@@ -28,21 +27,29 @@ npm-install-server:
 
 # Unit tests
 test-eslint-client:
+  needs: ["npm-install-client"]
   extends: .eslint
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
 test-eslint-server:
+  needs: ["npm-install-server"]
   extends: .eslint
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
 test-unit-server:
+  needs: ["npm-install-server"]
   extends: .unit-test
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
-# Build
+test-unit-client:
+  needs: ["npm-install-client"]
+  script:
+    - echo "todo"
+
+## Build
 build-npm-client:
   extends: .build-npm
   variables:
@@ -71,18 +78,12 @@ build-image-postgres:
   variables:
     CI_APP_PATH: $CI_POSTGRES_PATH
 
+build-manifests:
+  extends: .create-manifests
 
 # == Deploy to staging and run acceptance/smoke tests ==
-build-staging-env:
-  extends: .create-test-manifests
-  variables:
-    CI_APP_PATH: $CI_SERVER_PATH
-
 deploy-staging-env:
-  needs: ["build-staging-env"]
   extends: .deploy-test-env
-  variables:
-    CI_APP_PATH: $CI_SERVER_PATH
 
 run-staging-tests:
   needs: ["deploy-staging-env"]
@@ -93,13 +94,8 @@ run-staging-tests:
 cleanup-staging-env:
   needs: ["run-staging-tests"]
   extends: .cleanup
-  variables:
-    CI_APP_PATH: $CI_SERVER_PATH
 
 # Deploy to production
-build-production-env:
-  extends: .create-manifests
 
 deploy-production:
-  needs: ["build-production-env"]
   extends: .deploy  

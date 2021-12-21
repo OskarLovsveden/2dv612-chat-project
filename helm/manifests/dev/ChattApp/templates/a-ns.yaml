@@ -1,5 +1,5 @@
 ---
-# Source: ChattApp/templates/dev-ns.yaml
+# Source: ChattApp/templates/a-ns.yaml
 apiVersion: v1
 kind: Namespace
 metadata:

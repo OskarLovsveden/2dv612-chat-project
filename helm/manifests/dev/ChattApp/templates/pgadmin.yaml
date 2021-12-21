@@ -42,11 +42,9 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: http
-      nodePort: 30790
+      targetPort: 4000
   selector:
     app: pgadmin
-  type: NodePort
 ---
 # Source: ChattApp/templates/pgadmin.yaml
 apiVersion: apps/v1

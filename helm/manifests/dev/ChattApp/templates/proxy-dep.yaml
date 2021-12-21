@@ -8,19 +8,27 @@ metadata:
 data:
   nginx.conf: |
     upstream svc {
-        server client-frontend-svc.default.svc.cluster.local:3001 fail_timeout=0;
+        server client-frontend-svc.development.svc.cluster.local:3001 fail_timeout=0;
     }
 
     upstream koa {
-        server koa-backend-svc.default.svc.cluster.local:5000 fail_timeout=0;
+        server koa-backend-svc.development.svc.cluster.local:5000 fail_timeout=0;
     }
 
+    upstream pgadmin {
+        server pgadmin-svc.development.svc.cluster.local:4000 fail_timeout=0;
+    }
+    
     server {
         listen      80;
-        server_name 194.47.177.79;
+        server_name http://localhost/;
 
         location / {
             proxy_pass http://svc;
+        }
+
+        location /pgadmin {
+            proxy_pass http://pgadmin;
         }
 
         
