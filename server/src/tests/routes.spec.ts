@@ -7,11 +7,16 @@ chai.use(chaiHttp);
 
 let token;
 const API = 'koa-backend-svc.development.svc.cluster.local:5000';
-// const API = process.env.API;
+// const API = 'localhost:5000';
 const loginData = {
-    username: process.env.DEV_ADMIN_USERNAME,
-    password: process.env.DEV_ADMIN_PASS
+    username: process.env.DEV_USERNAME,
+    password: process.env.DEV_PASS
 };
+
+// const loginData = {
+//     username: 'useradmin',
+//     password: 'admin123'
+// };
 
 describe('Auth Endpoints', () => {
     it('POST /api/auth/login should respond with a token', async () => {
