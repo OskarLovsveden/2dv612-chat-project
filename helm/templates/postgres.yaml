@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  namespace: {{.Values.env_name}}
+  namespace: {{.Values.db_env_name}}
   name: {{.Values.postgres_name}}
 spec:
   serviceName: {{.Values.postgres_svc}}
@@ -55,7 +55,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: {{.Values.env_name}}
+  namespace: {{.Values.db_env_name}}
   name: {{.Values.postgres_svc}}
 spec:
   selector:

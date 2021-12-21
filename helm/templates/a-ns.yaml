@@ -5,3 +5,11 @@ metadata:
   name: {{.Values.env_name}}
 spec: {}
 status: {}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: {{.Values.db_env_name}}
+spec: {}
+status: {}
