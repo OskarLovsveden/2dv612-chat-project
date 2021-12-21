@@ -139,8 +139,7 @@ run-staging-tests:
 cleanup-staging-env:
   needs: ["run-staging-tests"]
   extends: .cleanup
-
 # Deploy to production
 
-deploy-production:
-  extends: .deploy  
+# deploy-production:
+#   extends: .deploy
