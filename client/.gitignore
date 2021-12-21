@@ -11,7 +11,8 @@
 # production
 /build
 
-/**/*junit.xml
+junit.xml
+eslint-junit.xml
 
 # misc
 .DS_Store

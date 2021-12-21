@@ -43,6 +43,11 @@ test-eslint-client:
   extends: .eslint
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - eslint-junit.xml
 
 test-eslint-server:
   rules:
@@ -53,6 +58,11 @@ test-eslint-server:
   extends: .eslint
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - eslint-junit.xml
 
 test-unit-server:
   rules:
