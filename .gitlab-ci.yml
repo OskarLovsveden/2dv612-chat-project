@@ -55,7 +55,7 @@ build-npm-client:
   rules:
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
       changes:
-        - $CI_CLIENT_PATH/*
+        - $CI_CLIENT_PATH/**/*
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
@@ -64,7 +64,7 @@ build-npm-server:
   rules:
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
       changes:
-        - server/*
+        - server/**/*
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
@@ -74,7 +74,7 @@ build-image-client:
   rules:
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
       changes:
-        - $CI_CLIENT_PATH/*
+        - $CI_CLIENT_PATH/**/*
   extends: .build-image
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
@@ -84,7 +84,7 @@ build-image-server:
   rules:
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
       changes:
-        - $CI_SERVER_PATH/*
+        - $CI_SERVER_PATH/**/*
   extends: .build-image
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
@@ -94,7 +94,7 @@ build-image-postgres:
   rules:
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
       changes:
-        - $CI_POSTGRES_PATH/*
+        - $CI_POSTGRES_PATH/**/*
   variables:
     CI_APP_PATH: $CI_POSTGRES_PATH
 

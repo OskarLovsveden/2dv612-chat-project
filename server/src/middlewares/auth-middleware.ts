@@ -3,6 +3,7 @@ import * as jwt from 'jsonwebtoken';
 import fs from 'fs';
 import { TokenPayload } from '../types/token-payload';
 
+
 export default class AuthMiddleware {
     public async requestIncludesUsername(ctx: Context, next: Next) {
         // console.log(ctx.request.body);
