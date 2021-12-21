@@ -13,4 +13,4 @@ ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
 # CMD npm run $NODE_ENV
-ENTRYPOINT ["node", "build/app.js"]
+ENTRYPOINT ["node", "app.js"]
