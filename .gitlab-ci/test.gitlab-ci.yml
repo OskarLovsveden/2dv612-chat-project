@@ -5,8 +5,8 @@
   script:
     - echo test $CI_APP_PATH eslint here
     - cd $CI_APP_PATH
-    - ls -la
     - npm run lint
+    - ls -la
   cache:
     key: "$CI_APP_PATH-test-$CI_COMMIT_REF_SLUG"
     paths:
@@ -21,8 +21,8 @@
   script:
     - echo unit-test $CI_APP_PATH here
     - cd $CI_APP_PATH
-    - ls -la
     - npm run ci
+    - ls -la
   cache:
     key: "$CI_APP_PATH-test-$CI_COMMIT_REF_SLUG"
     paths:

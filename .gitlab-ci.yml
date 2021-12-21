@@ -47,7 +47,7 @@ test-eslint-client:
     when: always
     reports:
       junit:
-        - eslint-junit.xml
+        - $CI_CLIENT_PATH/eslint-junit.xml
 
 test-eslint-server:
   rules:
@@ -88,6 +88,7 @@ test-unit-client:
     reports:
       junit:
         - junit.xml
+        - eslint-junit.xml
 
 ## Build
 build-npm-client:
