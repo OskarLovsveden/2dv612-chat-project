@@ -15,61 +15,64 @@ stages:
   - staging
   - deploy
 
-# # Install dependencies
-# npm-install-client:
-#   extends: .npm-install
-#   variables:
-#     CI_APP_PATH: $CI_CLIENT_PATH
+# Install dependencies
+npm-install-client:
+  extends: .npm-install
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
 
-# npm-install-server:
-#   extends: .npm-install
-#   variables:
-#     CI_APP_PATH: $CI_SERVER_PATH
+npm-install-server:
+  extends: .npm-install
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
 
-# # Unit tests
-# test-eslint-client:
-#   extends: .eslint
-#   variables:
-#     CI_APP_PATH: $CI_CLIENT_PATH
+# Unit tests
+test-eslint-client:
+  needs: ["npm-install-client"]
+  extends: .eslint
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
 
-# test-eslint-server:
-#   extends: .eslint
-#   variables:
-#     CI_APP_PATH: $CI_SERVER_PATH
+test-eslint-server:
+  needs: ["npm-install-server"]
+  extends: .eslint
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
 
-# test-unit-server:
-#   extends: .unit-test
-#   variables:
-#     CI_APP_PATH: $CI_SERVER_PATH
+test-unit-server:
+  needs: ["npm-install-server"]
+  extends: .unit-test
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
 
-# Build
-# build-npm-client:
-#   extends: .build-npm
-#   variables:
-#     CI_APP_PATH: $CI_CLIENT_PATH
+## Build
+build-npm-client:
+  extends: .build-npm
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
 
-# build-npm-server:
-#   extends: .build-npm
-#   variables:
-#     CI_APP_PATH: $CI_SERVER_PATH
+build-npm-server:
+  extends: .build-npm
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
 
 # Images
-# build-image-client:
-#   needs: ["build-npm-client"]
-#   extends: .build-image
-#   variables:
-#     CI_APP_PATH: $CI_CLIENT_PATH
+build-image-client:
+  needs: ["build-npm-client"]
+  extends: .build-image
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
 
-# build-image-server:
-#   needs: ["build-npm-server"]
-#   extends: .build-image
-#   variables:
-#     CI_APP_PATH: $CI_SERVER_PATH
+build-image-server:
+  needs: ["build-npm-server"]
+  extends: .build-image
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
 
-# build-image-postgres:
-#   extends: .build-image
-#   variables:
-#     CI_APP_PATH: $CI_POSTGRES_PATH
+build-image-postgres:
+  extends: .build-image
+  variables:
+    CI_APP_PATH: $CI_POSTGRES_PATH
 
 build-manifests:
   extends: .create-manifests
