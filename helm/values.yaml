@@ -31,8 +31,8 @@ server_name: koa-backend
 server_svc: koa-backend-svc
 
 # For testing the endpoints
-dev_username: useradmin
-dev_password: admin123
+dev_username: "useradmin"
+dev_password: "admin123"
 
 # Proxy vars
 proxy_name: proxy
