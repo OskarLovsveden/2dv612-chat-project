@@ -62,7 +62,7 @@ test-eslint-server:
     when: always
     reports:
       junit:
-        - eslint-junit.xml
+        - $CI_SERVER_PATH/eslint-junit.xml
 
 test-unit-server:
   rules:
@@ -73,6 +73,11 @@ test-unit-server:
   extends: .unit-test
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - $CI_SERVER_PATH/junit.xml
 
 test-unit-client:
   rules:
@@ -87,8 +92,7 @@ test-unit-client:
     when: always
     reports:
       junit:
-        - junit.xml
-        - eslint-junit.xml
+        - $CI_CLIENT_PATH/junit.xml
 
 ## Build
 build-npm-client:

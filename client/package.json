@@ -20,7 +20,8 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "ci": "jest --coverage --ci --reporters=default --reporters=jest-junit && eslint -f ./node_modules/eslint-junit-gitlab/index.js --ignore-path .eslintignore --ext .js,.ts .",
+    "ci-test": "jest --coverage --ci --reporters=default --reporters=jest-junit",
+    "ci-lint": "eslint -f ./node_modules/eslint-junit-gitlab/index.js --ignore-path .eslintignore --ext .js,.ts .",
     "start": "craco start",
     "build": "craco build",
     "test": "jest --coverage",
