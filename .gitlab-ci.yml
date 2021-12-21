@@ -14,7 +14,7 @@ stages:
   - staging
   - deploy
 
-# Install dependencies
+# Install dependencies 
 npm-install-client:
   extends: .npm-install
   variables:
