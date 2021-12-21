@@ -7,6 +7,8 @@ include:
   - local: ".gitlab-ci/staging.gitlab-ci.yml"
   - local: ".gitlab-ci/deploy.gitlab-ci.yml"
 
+# Ändring
+
 stages:
   - install-dependencies
   - test
