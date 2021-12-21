@@ -93,6 +93,8 @@ build-image-postgres:
   extends: .build-image
   rules:
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_POSTGRES_PATH/*
   variables:
     CI_APP_PATH: $CI_POSTGRES_PATH
 
