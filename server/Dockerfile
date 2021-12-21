@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:alpine
 
 USER node
 RUN mkdir /home/node/app
