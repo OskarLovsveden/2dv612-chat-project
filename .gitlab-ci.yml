@@ -45,6 +45,11 @@ test-unit-server:
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
+test-unit-client:
+  needs: ["npm-install-client"]
+  script:
+    - echo "todo"
+
 ## Build
 build-npm-client:
   extends: .build-npm
