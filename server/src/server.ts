@@ -6,7 +6,6 @@ import IndexRouter from './routes/index-router';
 import { Server as ServerCreate, createServer } from 'http'; // ServerCreate är hittepå bara för att inte krocka med server
 import SocketEvents from './utils/socket-events';
 
-
 export default class Server {
     private app: Koa;
     private socketEvents: SocketEvents;

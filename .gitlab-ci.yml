@@ -16,38 +16,83 @@ stages:
 
 # Install dependencies 
 npm-install-client:
+  rules:
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_CLIENT_PATH/**/*
   extends: .npm-install
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
 npm-install-server:
+  rules:
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_SERVER_PATH/**/*
   extends: .npm-install
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
 # Unit tests
 test-eslint-client:
+  rules:
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_CLIENT_PATH/**/*
   needs: ["npm-install-client"]
   extends: .eslint
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - $CI_CLIENT_PATH/eslint-junit.xml
 
 test-eslint-server:
+  rules:
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_SERVER_PATH/**/*
   needs: ["npm-install-server"]
   extends: .eslint
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - $CI_SERVER_PATH/eslint-junit.xml
 
 test-unit-server:
+  rules:
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_SERVER_PATH/**/*
   needs: ["npm-install-server"]
   extends: .unit-test
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - $CI_SERVER_PATH/junit.xml
 
 test-unit-client:
+  rules:
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_CLIENT_PATH/**/*
   needs: ["npm-install-client"]
-  script:
-    - echo "todo"
+  extends: .unit-test
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - $CI_CLIENT_PATH/junit.xml
 
 ## Build
 build-npm-client:
