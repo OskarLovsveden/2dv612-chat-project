@@ -64,7 +64,7 @@ build-npm-server:
   rules:
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
       changes:
-        - $CI_SERVER_PATH/*
+        - server/*
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
