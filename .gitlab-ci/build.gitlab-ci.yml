@@ -99,7 +99,6 @@
       --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_POSTGRES_PATH}:${CI_COMMIT_SHORT_SHA}
   artifacts:
     paths:
-      - helm/manifests/dev
-      - helm/manifests/prod
+      - helm/manifests
   tags:
     - $CI_RUNNER_TAG
