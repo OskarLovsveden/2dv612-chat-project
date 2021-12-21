@@ -1,6 +1,7 @@
 # Eslint test
 .eslint:
-  extends: .rules-ci-only
+  rules:
+    - !reference [.rules-ci-only, rules]
   image: node:16-alpine
   stage: test
   script:
@@ -17,7 +18,8 @@
 
 # Unit test
 .unit-test:
-  extends: .rules-ci-only
+  rules:
+    - !reference [.rules-ci-only, rules]
   image: node:16-alpine
   stage: test
   script:
