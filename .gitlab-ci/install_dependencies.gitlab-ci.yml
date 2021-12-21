@@ -1,6 +1,5 @@
 .npm-install:
-  rules:
-    - !reference [.rules-ci-only, rules]
+  extends: .rules-ci-only
   stage: install-dependencies
   image: node:16-alpine
   variables:
