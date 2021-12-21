@@ -19,7 +19,8 @@
     - kubectl apply -f ./
   artifacts:
     paths:
-      - helm/manifests
+      - helm/manifests/dev
+      - helm/manifests/prod
   tags:
     - $CI_RUNNER_TAG
 
