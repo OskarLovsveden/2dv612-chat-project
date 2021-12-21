@@ -16,47 +16,35 @@ stages:
 
 # Install dependencies 
 npm-install-client:
-  rules:
-    - !reference [.rules-ci-only, rules]
   extends: .npm-install
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
 npm-install-server:
-  rules:
-    - !reference [.rules-ci-only, rules]
   extends: .npm-install
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
 # Unit tests
 test-eslint-client:
-  rules:
-    - !reference [.rules-ci-only, rules]
   needs: ["npm-install-client"]
   extends: .eslint
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
 test-eslint-server:
-  rules:
-    - !reference [.rules-ci-only, rules]
   needs: ["npm-install-server"]
   extends: .eslint
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
 test-unit-server:
-  rules:
-    - !reference [.rules-ci-only, rules]
   needs: ["npm-install-server"]
   extends: .unit-test
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
 test-unit-client:
-  rules:
-    - !reference [.rules-ci-only, rules]
   needs: ["npm-install-client"]
   extends: .unit-test
   variables:
