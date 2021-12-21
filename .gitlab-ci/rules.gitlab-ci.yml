@@ -1,6 +1,7 @@
 .rules-deploy:
   rules:
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+    - if: "$CI_COMMIT_BRANCH == 'pipeline-acc-test'"
 
 .rules-build:
   rules:
@@ -12,11 +13,10 @@
   rules:
     - changes: # Run the job if the package.json file has been modified.
         - $CI_APP_PATH/package.json
-        
+
 .rules-test:
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
+    - if: "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH"
       allow_failure: true
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
+    - if: "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH"
       allow_failure: false
-      
