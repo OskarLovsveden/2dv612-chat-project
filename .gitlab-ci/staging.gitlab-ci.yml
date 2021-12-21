@@ -15,7 +15,6 @@
     - kubectl create secret docker-registry regcred --namespace="$dev_env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > regcred.yaml
     - kubectl delete -f ./ --ignore-not-found
     - kubectl apply -f ./
-  allow_failure: true
   artifacts:
     paths:
       - helm/manifests
@@ -30,6 +29,7 @@
   script:
     - cd $CI_APP_PATH
     - ls -la
+    - kubectl wait --for=condition=ready pod -l app=proxy -n production # Wait for database to run
     - npm run test:acc
     # - echo "Hurra testerna lyckades!"
   cache:
