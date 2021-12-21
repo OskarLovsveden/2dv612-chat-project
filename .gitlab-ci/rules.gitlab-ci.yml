@@ -15,7 +15,7 @@
         
 .rules-test:
   rules:
-    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
       allow_failure: true
-    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
       allow_failure: false
