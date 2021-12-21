@@ -23,7 +23,7 @@
 .build-image:
   rules:
     - !reference [.rules-deploy, rules]
-    - !reference [.rules-build, rules]
+    - !reference [.rules-build, changes]
   stage: build
   image: docker:18.09.7-dind
   services:
