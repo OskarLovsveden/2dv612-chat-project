@@ -2,6 +2,10 @@
   rules:
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
 
+# .rules-build:
+#   rules:
+#     - !reference [.rules-deploy, rules]
+
 .rules-compile-npm:
   rules:
     - changes: # Run the job if the package.json file has been modified.

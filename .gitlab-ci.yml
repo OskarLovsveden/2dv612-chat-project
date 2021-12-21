@@ -5,7 +5,6 @@ include:
   - local: ".gitlab-ci/test.gitlab-ci.yml"
   - local: ".gitlab-ci/build.gitlab-ci.yml"
   - local: ".gitlab-ci/staging.gitlab-ci.yml"
-  # - local: ".gitlab-ci/acceptance-test.gitlab-ci.yml"
   - local: ".gitlab-ci/deploy.gitlab-ci.yml"
 
 stages:
@@ -97,8 +96,6 @@ cleanup-staging-env:
   extends: .cleanup
 
 # Deploy to production
-# build-production-env:
-#   extends: .create-manifests
 
 deploy-production:
   extends: .deploy  
