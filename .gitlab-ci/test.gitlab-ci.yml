@@ -22,7 +22,7 @@
     - echo unit-test $CI_APP_PATH here
     - cd $CI_APP_PATH
     - ls -la
-    - npm test
+    - npm run ci
   cache:
     key: "$CI_APP_PATH-test-$CI_COMMIT_REF_SLUG"
     paths:

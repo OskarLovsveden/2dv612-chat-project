@@ -11,6 +11,8 @@
 # production
 /build
 
+/**/*junit.xml
+
 # misc
 .DS_Store
 .env.local

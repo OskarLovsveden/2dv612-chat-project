@@ -73,6 +73,11 @@ test-unit-client:
   extends: .unit-test
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - junit.xml
 
 ## Build
 build-npm-client:

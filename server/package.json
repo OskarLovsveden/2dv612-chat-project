@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "ci": "NODE_ENV=test ts-mocha -r dotenv/config src/**/*.test.ts",
     "production": "node build/app.js",
     "build": "tsc -p .",
     "dev": "ts-node-dev -r dotenv/config src/app.ts",

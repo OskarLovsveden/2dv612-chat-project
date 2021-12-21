@@ -19,6 +19,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
+    "ci": "jest --coverage --ci --reporters=default --reporters=jest-junit",
     "start": "craco start",
     "build": "craco build",
     "test": "jest --coverage",
@@ -50,6 +51,7 @@
     "@typescript-eslint/parser": "^5.4.0",
     "autoprefixer": "^9.8.8",
     "eslint": "^7.11.0",
+    "jest-junit": "^13.0.0",
     "postcss": "^7.0.39",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
     "ts-jest": "^27.1.2",
