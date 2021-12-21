@@ -24,6 +24,8 @@
 
 .acc-test:
   image: node:16-alpine
+  rules:
+    - !reference [.rules-deploy, rules]
   stage: staging
   script:
     # - cd $CI_APP_PATH
