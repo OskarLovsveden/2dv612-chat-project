@@ -12,15 +12,18 @@ class UserService {
     }
     
     create(data: NewUser) {
-        return http.post<any>('/user', data);
+        // eslint-disable-next-line
+        return http.post<any>('/user', data); // TODO: Set type
     }
     
     update(data: User, id: number) {
-        return http.put<any>(`/user/${id}`, data);
+        // eslint-disable-next-line
+        return http.put<any>(`/user/${id}`, data); // TODO: Set type
     }
   
     delete(id: number) {
-        return http.delete<any>(`/user/${id}`);
+        // eslint-disable-next-line
+        return http.delete<any>(`/user/${id}`); // TODO: Set type
     }
 }
   

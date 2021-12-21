@@ -9,17 +9,18 @@ class ChatroomService {
     get(id: number) {
         return http.get<Chatroom>(`/room/${id}`);
     }
-    
-    create(data: NewChatroom) {
-        return http.post<any>('/room', data);
-    }
 
-    update(data: Chatroom, id: number) {
-        return http.put<any>(`/room/${id}`, data);
+    create(data: NewChatroom) {
+    // eslint-disable-next-line
+        return http.post<any>('/room', data); // TODO: Set type
     }
-  
+    update(data: Chatroom, id: number) {
+    // eslint-disable-next-line
+        return http.put<any>(`/room/${id}`, data); // TODO: Set type
+    }
     delete(id: number) {
-        return http.delete<any>(`/room/${id}`);
+    // eslint-disable-next-line
+        return http.delete<any>(`/room/${id}`); // TODO: Set type
     }
 }
   
