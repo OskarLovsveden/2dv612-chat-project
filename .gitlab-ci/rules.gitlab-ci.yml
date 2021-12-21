@@ -2,9 +2,9 @@
   rules:
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
 
-# .rules-build:
-#   rules:
-#     - !reference [.rules-deploy, rules]
+.rules-build:
+  changes:
+    - $CI_APP_PATH/*
 
 .rules-compile-npm:
   rules:

@@ -1,6 +1,7 @@
 .build-npm:
   rules:
     - !reference [.rules-deploy, rules]
+    - !reference [.rules-build, rules]
   stage: build
   image: node:16-alpine
   variables:
@@ -22,6 +23,7 @@
 .build-image:
   rules:
     - !reference [.rules-deploy, rules]
+    - !reference [.rules-build, rules]
   stage: build
   image: docker:18.09.7-dind
   services:
@@ -68,6 +70,7 @@
   stage: build
   rules:
     - !reference [.rules-deploy, rules]
+    - !reference [.rules-build, rules]
   image:
     name: alpine/helm
   script:
