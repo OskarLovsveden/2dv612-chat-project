@@ -4,9 +4,9 @@
 
 .rules-build:
   rules:
-    - changes:
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+      changes:
         - $CI_APP_PATH/*
-      when: never
 
 .rules-compile-npm:
   rules:
