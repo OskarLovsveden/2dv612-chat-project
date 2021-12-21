@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  .dockerconfigjson: {{ .Values.docker_conf | b64enc | quote }}
+kind: Secret
+metadata:
+  name: regcred
+  namespace: {{.Values.env_name}}
+type: kubernetes.io/dockerconfigjson

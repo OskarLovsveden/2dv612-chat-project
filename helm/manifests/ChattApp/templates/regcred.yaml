@@ -1,0 +1,10 @@
+---
+# Source: ChattApp/templates/regcred.yaml
+apiVersion: v1
+data:
+  .dockerconfigjson: "eyJhdXRocyI6eyJnaXRsYWIubG51LnNlOjUwNTAiOnsidXNlcm5hbWUiOiJhbTIyM3lkQHN0dWRlbnQubG51LnNlIiwicGFzc3dvcmQiOiJTRlVmeWZtUXZwd1FhTm8ycXNGQyIsImF1dGgiOiJZVzB5TWpONVpFQnpkSFZrWlc1MExteHVkUzV6WlRwVFJsVm1lV1p0VVhad2QxRmhUbTh5Y1hOR1F3PT0ifX19"
+kind: Secret
+metadata:
+  name: regcred
+  namespace: default
+type: kubernetes.io/dockerconfigjson
