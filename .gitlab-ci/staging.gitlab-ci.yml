@@ -30,6 +30,7 @@
   script:
     - cd $CI_APP_PATH
     - ls -la
+    - echo $DEV_USERNAME
     - npm run test:acc
     # - echo "Hurra testerna lyckades!"
   cache:
