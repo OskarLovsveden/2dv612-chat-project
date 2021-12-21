@@ -1,14 +1,12 @@
 # Eslint test
 .eslint:
-  # rules:
-  #   - !reference [.rules-test, rules]
   image: node:16-alpine
   stage: test
   script:
     - echo test $CI_APP_PATH eslint here
     - cd $CI_APP_PATH
+    - npm run ci-lint
     - ls -la
-    - npm run lint
   cache:
     key: "$CI_APP_PATH-test-$CI_COMMIT_REF_SLUG"
     paths:
@@ -23,8 +21,8 @@
   script:
     - echo unit-test $CI_APP_PATH here
     - cd $CI_APP_PATH
+    - npm run ci-test
     - ls -la
-    - npm test
   cache:
     key: "$CI_APP_PATH-test-$CI_COMMIT_REF_SLUG"
     paths:
