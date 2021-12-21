@@ -18,6 +18,8 @@
     - $CI_RUNNER_TAG
 
 .build-image:
+  rules:
+    - !reference [.rules-build, rules]
   stage: build
   image: docker:18.09.7-dind
   services:
