@@ -1,7 +1,7 @@
 # Eslint test
 .eslint:
-  rules:
-    - !reference [.rules-test, rules]
+  # rules:
+  #   - !reference [.rules-test, rules]
   image: node:16-alpine
   stage: test
   script:
