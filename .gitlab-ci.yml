@@ -55,10 +55,10 @@ test-unit-server:
     CI_APP_PATH: $CI_SERVER_PATH
 
 test-unit-client:
-  rules:
-    - !reference [.rules-ci-only, rules]
   needs: ["npm-install-client"]
-  extends: .unit-test
+  extends: 
+    - .unit-test
+    - .rules-ci-only
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
