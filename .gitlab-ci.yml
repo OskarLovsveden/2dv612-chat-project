@@ -17,14 +17,18 @@ stages:
 # Install dependencies 
 npm-install-client:
   rules:
-    - !reference [.rules-ci-only, rules]
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_CLIENT_PATH/**/*
   extends: .npm-install
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
 npm-install-server:
   rules:
-    - !reference [.rules-ci-only, rules]
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_SERVER_PATH/**/*
   extends: .npm-install
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
@@ -32,7 +36,9 @@ npm-install-server:
 # Unit tests
 test-eslint-client:
   rules:
-    - !reference [.rules-ci-only, rules]
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_CLIENT_PATH/**/*
   needs: ["npm-install-client"]
   extends: .eslint
   variables:
@@ -40,7 +46,9 @@ test-eslint-client:
 
 test-eslint-server:
   rules:
-    - !reference [.rules-ci-only, rules]
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_SERVER_PATH/**/*
   needs: ["npm-install-server"]
   extends: .eslint
   variables:
@@ -48,17 +56,21 @@ test-eslint-server:
 
 test-unit-server:
   rules:
-    - !reference [.rules-ci-only, rules]
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_SERVER_PATH/**/*
   needs: ["npm-install-server"]
   extends: .unit-test
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
 test-unit-client:
+  rules:
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_CLIENT_PATH/**/*
   needs: ["npm-install-client"]
-  extends: 
-    - .unit-test
-    - .rules-ci-only
+  extends: .unit-test
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
