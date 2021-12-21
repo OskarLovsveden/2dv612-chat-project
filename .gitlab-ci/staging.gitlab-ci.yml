@@ -11,6 +11,8 @@
     - cat /.kube/config
   script:
     - dep_env="development"
+    - ls -la
+    - cd /helm/manifests/dev/ChattApp/templates
     - kubectl create secret docker-registry regcred --namespace="$dev_env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > /helm/manifests/dev/ChattApp/templates/regcred.yaml
     - kubectl create secret docker-registry regcred --namespace="$prod_env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > /helm/manifests/prod/ChattApp/templates/regcred.yaml
     - cd /helm/manifests/dev/ChattApp/templates
