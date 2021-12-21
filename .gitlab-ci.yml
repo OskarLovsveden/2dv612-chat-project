@@ -28,7 +28,7 @@ npm-install-server:
 # Unit tests
 test-eslint-client:
   needs: ["npm-install-client"]
-  extends: .eslint
+  # extends: .eslint
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
 
