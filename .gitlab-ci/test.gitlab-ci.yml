@@ -1,8 +1,9 @@
 # Eslint test
 .eslint:
+  rules:
+    - !reference [.rules-test, rules]
   image: node:16-alpine
   stage: test
-  allow_failure: true
   script:
     - echo test $CI_APP_PATH eslint here
     - cd $CI_APP_PATH
