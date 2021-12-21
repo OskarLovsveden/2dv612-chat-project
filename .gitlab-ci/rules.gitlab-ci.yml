@@ -6,6 +6,7 @@
   rules:
     - changes:
         - $CI_APP_PATH/*
+      when: never
 
 .rules-compile-npm:
   rules:
