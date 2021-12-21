@@ -40,5 +40,4 @@ proxy_port: 32162 # NODEPORT
 storageclass_name: nfs-sc
 lb_port: 80
 lb_ip: http://localhost/
-docker_conf: '{"auths":{"gitlab.lnu.se:5050":{"username":"am223yd@student.lnu.se","password":"SFUfyfmQvpwQaNo2qsFC","auth":"YW0yMjN5ZEBzdHVkZW50LmxudS5zZTpTRlVmeWZtUXZwd1FhTm8ycXNGQw=="}}}'
 
