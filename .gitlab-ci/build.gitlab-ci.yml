@@ -1,4 +1,6 @@
 .build-npm:
+  rules:
+    - !reference [.rules-build, rules]
   stage: build
   image: node:16-alpine
   variables:
