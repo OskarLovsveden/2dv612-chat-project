@@ -76,7 +76,6 @@ build-manifests:
 
 # == Deploy to staging and run acceptance/smoke tests ==
 deploy-staging-env:
-  needs: ["build"]
   extends: .deploy-test-env
 
 run-staging-tests:
