@@ -1,15 +1,15 @@
 import { createContext, useEffect, useReducer } from 'react';
 import HomeContextState from '../types/HomeContextState';
 import reducer from './HomeReducer';
-import chatroomService from '../utils/http/chatroom-service';
 import { HomeActionType } from '../types/HomeReducerAction';
 import { Chatroom } from '../types/Chatroom';
 import { DirectMessage } from '../types/DirectMessage';
+import ChatroomService from '../utils/http/chatroom-service';
 
 const initialState: HomeContextState = {
     dms: [],
     rooms: [],
-    setActiveChatView: (): void => {}
+    setActiveChatView: (): void => {return; }
 };
 
 export const HomeContext = createContext<HomeContextState>(initialState);
@@ -21,6 +21,7 @@ export const HomeProvider = ({ children }: HomeProviderProps) => {
 
     useEffect(() => {
         async function getAllChatrooms() {
+            const chatroomService = new ChatroomService();
             const res = await chatroomService.getAll();
 
             dispatch({

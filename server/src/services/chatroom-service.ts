@@ -1,53 +1,45 @@
-import { RequestRoomCreate } from '../types/request-types';
-import { Model } from 'sequelize';
-import dbConfig from '../db/postgres';
+import sequelize from '../db/postgres';
+import Chatroom, { ChatroomCreationAttributes } from '../models/chatroom';
 
 export default class ChatRoomService {
-    public async create(clientRoom: RequestRoomCreate, Chatroom: any): Promise<boolean> {
-        const roomCreated = await Chatroom.create(clientRoom);
-
-        if (!roomCreated) {
-            return false;
-        }
-
-        return true;
+    public async create(chatroom: ChatroomCreationAttributes): Promise<Chatroom> {
+        return Chatroom.create(chatroom);
     }
 
-    public async get(roomID: number, Chatroom: any): Promise<Model> {
-        const room = await Chatroom.findOne({ where: { id: roomID } });
-
-        return room;
+    public async get(id: number): Promise<Chatroom> {
+        return Chatroom.findByPk(id);
     }
 
-    public async getAll(Chatroom: any): Promise<Model[]> {
-        const rooms = await Chatroom.findAll();
-
-        if (!rooms) {
-            return [];
-        }
-
-        return rooms;
+    public async getAll(): Promise<Chatroom[]> {
+        return Chatroom.findAll();
     }
 
-    public async delete(roomID: number, Chatroom: any): Promise<boolean> {
-        const roomDeleted = await Chatroom.destroy({ where: { id: roomID } });
-
-        if (!roomDeleted) {
-            return false;
-        }
-
-        return true;
+    public async delete(roomID: number): Promise<number> {
+        return Chatroom.destroy({ where: { id: roomID } });
     }
 
-    public async update(room: any, roomID: number, newID: number, Chatroom: any) {
-        const updatedRoom = await Chatroom.update({
-            name: room.name,
-            public: room.public,
-            tag: room.tag,
-            usersid: dbConfig.fn('array_append', dbConfig.col('usersid'), newID)
-        }, { where: { id: roomID } 
+    public async update(roomID: number, updates: Chatroom) {
+        const room = await this.get(roomID);
+
+        return room.update({
+            ...room,
+            ...updates
         });
+    }
 
-        return updatedRoom;
+    public async addTag(roomID: number, newTag: string): Promise<Chatroom> {
+        const room = await this.get(roomID);
+        return room.update({
+            ...room,
+            user_ids: sequelize.fn('array_append', sequelize.col('tag'), newTag)
+        });
+    }
+
+    public async addUser(roomID: number, userID: number): Promise<Chatroom> {
+        const room = await this.get(roomID);
+        return room.update({
+            ...room,
+            user_ids: sequelize.fn('array_append', sequelize.col('user_ids'), userID)
+        });
     }
 }

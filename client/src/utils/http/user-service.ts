@@ -1,30 +1,30 @@
-import http from './axios';
+import { instance } from './axios';
 import type { User } from '../../types/User';
 import type { NewUser } from '../../types/User';
 
 class UserService {
+    private http = instance()
+
+
     getAll() {
-        return http.get<Array<User>>('/user');
+        return this.http.get<Array<User>>('/user');
     }
     
     get(id: number) {
-        return http.get<User>(`/user/${id}`);
+        return this.http.get<User>(`/user/${id}`);
     }
     
     create(data: NewUser) {
-        // eslint-disable-next-line
-        return http.post<any>('/user', data); // TODO: Set type
+        return this.http.post<any>('/user', data);
     }
     
     update(data: User, id: number) {
-        // eslint-disable-next-line
-        return http.put<any>(`/user/${id}`, data); // TODO: Set type
+        return this.http.put<any>(`/user/${id}`, data);
     }
   
     delete(id: number) {
-        // eslint-disable-next-line
-        return http.delete<any>(`/user/${id}`); // TODO: Set type
+        return this.http.delete<any>(`/user/${id}`);
     }
 }
   
-export default new UserService();
+export default UserService;

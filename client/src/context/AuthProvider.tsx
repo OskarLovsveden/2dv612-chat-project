@@ -4,12 +4,11 @@ import reducer from './AuthReducer';
 import { AuthActionType } from '../types/AuthReducerAction';
 import type { LoginUser } from '../types/User';
 import ROLE from '../types/Role';
-import authService from '../utils/http/auth-service';
-
+import AuthService from '../utils/http/auth-service';
 
 const initialState: AuthContextState = {
     isAuthenticated: false,
-    login: (): void => {}
+    login: (): void => {return;}
 };
 
 export const AuthContext = createContext<AuthContextState>(initialState);
@@ -21,9 +20,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     useEffect(() => {
         async function checkUserAuthenticated() {
+            const authService = new AuthService();
             const authResponse = await authService.checkIsAuthenticated();
 
-            if (authResponse === null) {
+            if (!authResponse) {
                 return;
             }
 
@@ -49,6 +49,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }, []);
 
     const login = async (user: LoginUser): Promise<void> => {
+        const authService = new AuthService();
         const res = await authService.login(user);
 
         const { username, id, role, token } = res.data;

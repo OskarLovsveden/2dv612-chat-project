@@ -46,8 +46,8 @@ SET default_table_access_method = heap;
 CREATE TABLE public.chatroom (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
-    public boolean NOT NULL,
-    tag character varying(255) NOT NULL,
+    is_public boolean NOT NULL,
+    tag text[] NOT NULL,
     user_ids integer[]
 );
 
@@ -131,7 +131,7 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: chatroom; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.chatroom (id, name, public, tag) FROM stdin;
+COPY public.chatroom (id, name, is_public, tag, user_ids) FROM stdin;
 \.
 
 

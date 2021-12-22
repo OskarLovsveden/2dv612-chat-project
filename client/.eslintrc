@@ -20,7 +20,8 @@
             "type"
         ],
         "@typescript-eslint/typedef": [
-            "error", {
+            "error",
+            {
                 "arrowParameter": true,
                 "parameter": true
             }

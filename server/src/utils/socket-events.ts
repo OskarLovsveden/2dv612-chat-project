@@ -1,6 +1,10 @@
 import { Server as ServerCreate } from 'http'; // ServerCreate är hittepå bara för att inte krocka med server
 import { Server as SocketServer, Socket } from 'socket.io';
-import { EventChatMessage, EventJoinRoom, EventLogin } from '../types/event-data-types';
+import {
+    EventChatMessage,
+    EventJoinRoom,
+    EventLogin
+} from '../types/event-data-types';
 import SocketServices from './socket-services';
 
 export default class SocketEvents {
@@ -21,17 +25,27 @@ export default class SocketEvents {
         });
 
         this.io.attach(this.createServer);
-        this.io.on('connection', (socket: Socket) => this.initializeEvents(socket));
+        this.io.on('connection', async (socket: Socket) => {
+            await this.socketServices.populateRooms();
+            this.initializeEvents(socket);
+        });
     }
 
     private initializeEvents(socket: Socket) {
         console.log('Socket is online :)..');
-        socket.emit('userConnected', { connected: true });
 
-        socket.on('user-connect', (data: EventLogin) => this.socketServices.handleUserConnect(data, socket));
-        socket.on('user-disconnect', () => this.socketServices.handleUserDisconnect(socket));
-        socket.on('join-room', (data: EventJoinRoom) => this.socketServices.handleJoinRoom(data, socket));
-        socket.on('chat-message', (data: EventChatMessage) => this.socketServices.handleChatMessage(data, socket, this.io));
+        socket.on('user-connect', (data: EventLogin) =>
+            this.socketServices.handleUserConnect(data, socket)
+        );
+        socket.on('disconnect', () =>
+            this.socketServices.handleUserDisconnect(socket)
+        );
+        socket.on('join-room', (data: EventJoinRoom) =>
+            this.socketServices.handleJoinRoom(data, socket)
+        );
+        socket.on('chat-message', (data: EventChatMessage) =>
+            this.socketServices.handleChatMessage(data, socket, this.io)
+        );
         socket.on('room-message', () => console.log('rooom'));
     }
 }

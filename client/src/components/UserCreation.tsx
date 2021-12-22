@@ -1,6 +1,6 @@
 import { SetStateAction, useState } from 'react';
 import '../App.css';
-import userService from '../utils/http/user-service';
+import UserService from '../utils/http/user-service';
 import userImg from '../images/user.png';
 import ROLE from '../types/Role';
 import { useNavigate } from 'react-router';
@@ -13,6 +13,7 @@ const UserCreation = () => {
     const [username, setUserName] = useState<string>('');
     const [userPassword, setUserPassword] = useState<string>('');
     const [userRole, setUserRole] = useState<string>(ROLE.USER);
+
     const navigate = useNavigate();
 
     const options = [
@@ -31,24 +32,25 @@ const UserCreation = () => {
     ];
 
     const handleUserName = (Event: {
-    target: { value: SetStateAction<string> };
-  }) => {
+        target: { value: SetStateAction<string> };
+    }) => {
         setUserName(Event.target.value);
     };
 
     const handleUserPassword = (Event: {
-    target: { value: SetStateAction<string> };
-  }) => {
+        target: { value: SetStateAction<string> };
+    }) => {
         setUserPassword(Event.target.value);
     };
     const handleUserRole = (Event: {
-    target: { value: SetStateAction<string> };
-  }) => {
+        target: { value: SetStateAction<string> };
+    }) => {
         setUserRole(Event.target.value);
     };
 
     const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const userService = new UserService();
         const data = {
             username: username,
             password: userPassword,
@@ -56,9 +58,11 @@ const UserCreation = () => {
             active: true
         };
 
+
         await userService.create(data);
         navigate('/admin');
     };
+
 
     return (
         <div className="bg-indigo-600 h-screen">
@@ -69,7 +73,7 @@ const UserCreation = () => {
                 <form onSubmit={handleOnSubmit}>
                     <div>
                         <label className="block mb-2 text-indigo-500" htmlFor="Username">
-              Username
+                            Username
                         </label>
                         <input
                             onChange={handleUserName}
@@ -83,7 +87,7 @@ const UserCreation = () => {
                             className="block mb-2 text-indigo-500"
                             htmlFor="UserPassword"
                         >
-              Password
+                            Password
                         </label>
                         <input
                             onChange={handleUserPassword}
@@ -94,13 +98,13 @@ const UserCreation = () => {
                     </div>
                     <div>
                         <label className="block mb-2 text-indigo-500" htmlFor="UserRole">
-              Role
+                            Role
                         </label>
                         <select
                             onChange={handleUserRole}
                             className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
                         >
-                            {options.map((option) => (
+                            {options.map((option: any) => (
                                 <option value={option.value}>{option.label}</option>
                             ))}
                         </select>

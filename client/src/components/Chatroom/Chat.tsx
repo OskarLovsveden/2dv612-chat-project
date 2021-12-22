@@ -1,60 +1,41 @@
-import { io } from 'socket.io-client';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Message from './Message';
 import { HomeContext } from '../../context/HomeProvider';
+import { AuthContext } from '../../context/AuthProvider';
+import { SocketContext } from '../../context/SocketProvider';
 
 type MessageEvent = {
-  name: string;
-  text: string;
-  isUser: boolean;
+    user_id: number, username: string, message: string, room_id: number
 };
 
-type ChatProps = {
-  // toggle: () => void;
-  username: string;
-};
-
-// export default function ChatRoom({ toggle, username }: ChatProps) {
-export default function ChatRoom({ username }: ChatProps) {
+export default function ChatRoom() {
     const [messages, setMessages] = useState<MessageEvent[]>([]);
+    const { connectUser, sendMessage, socket } = useContext(SocketContext);
     const { activeChat } = useContext(HomeContext);
-
+    const { user } = useContext(AuthContext);
     const enterPressRef = useRef<any>();
     const messageRef = useRef<any>();
 
-    let apiURL = '';
-    process.env.NODE_ENV === 'production' ? apiURL=process.env.PUBLIC_URL : apiURL='http://localhost:5000';
-
-    console.log(apiURL);
-    const [socket] = useState(() =>
-        io(apiURL, { path: '/socket.io' })
-    );
-
     useEffect(() => {
-        const handleNewMessage = (newMessage: MessageEvent) => {
-            setMessages((messages: MessageEvent[]) => [...messages, newMessage]);
-        };
+        console.log('useEffect fires!');
+        connectUser(user?.id || '');
 
-        socket.on('connect', () => {
-            console.log('Socket connected! ID: ' + socket.id);
+        socket?.on('room-message', (data: MessageEvent) => {
+            console.log(data.room_id, activeChat?.id);
+            const shouldAddNewMessage = data.room_id === activeChat?.id;
+
+            if (shouldAddNewMessage) {
+                setMessages((messages: MessageEvent[]) => [...messages, data]);
+            }
+            
         });
 
-        if (activeChat) {
-            socket.emit('join-room', {
-                room_id: activeChat?.name,
-                user_id: username
-            });
-
-            socket.on('room-message', (data: any) => {
-                const isUser = data.username === username;
-                handleNewMessage({ isUser, name: data.username, text: data.message });
-            });
-        }
-
         return () => {
-            socket.emit('user-disconnect');
+            console.log('useEffect cleanup!');
+            socket?.off('room-message');
+            setMessages([]);
         };
-    }, [activeChat, activeChat?.name, socket, username]);
+    }, [connectUser, socket, user, activeChat]);
 
     const handleEnter = (e: any) => {
         if (e.code === 'Enter' && e.shiftKey === false) {
@@ -65,13 +46,11 @@ export default function ChatRoom({ username }: ChatProps) {
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        socket.emit('chat-message', {
-            room_id: activeChat?.name,
-            user_id: username,
-            message: messageRef.current?.value
-        });
 
-        messageRef.current.value = '';
+        if (activeChat && user) {
+            sendMessage(activeChat?.id, user?.id, messageRef.current.value, user?.username);
+            messageRef.current.value = '';
+        }
     };
 
     return (
@@ -79,11 +58,11 @@ export default function ChatRoom({ username }: ChatProps) {
             <div className="h-3/4 overflow-y-scroll">
                 <ul>
                     {messages &&
-            messages.map((messageText: MessageEvent, index: number) => (
-                <li>
+            messages.map((msg: MessageEvent, index: number) => (
+                <li key={index}>
                     <Message
-                        name={messageText.name}
-                        message={messageText.text}
+                        name={msg.username}
+                        message={msg.message}
                         key={index}
                     />
                 </li>
