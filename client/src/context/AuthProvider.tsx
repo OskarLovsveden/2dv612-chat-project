@@ -7,7 +7,8 @@ import ROLE from '../types/Role';
 import AuthService from '../utils/http/auth-service';
 
 const initialState: AuthContextState = {
-    isAuthenticated: false,
+    user: { id:100, username:'admin', role:ROLE.ADMIN },
+    isAuthenticated: true,
     login: (): void => {return;}
 };
 
