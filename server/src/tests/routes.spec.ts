@@ -6,17 +6,24 @@ import request from 'supertest';
 chai.use(chaiHttp);
 
 let token;
-const API = 'koa-backend-svc.development.svc.cluster.local:5000';
-// const API = 'localhost:5000';
-// const loginData = {
-//     username: process.env.DEV_USERNAME,
-//     password: process.env.DEV_PASS
-// };
+let API;
+let loginData;
 
-const loginData = {
-    username: 'useradmin',
-    password: 'admin123'
-};
+if (process.env.NODE_ENV === 'production') {
+    API = 'koa-backend-svc.development.svc.cluster.local:5000';
+
+    loginData = {
+        username: 'useradmin',
+        password: 'admin123'
+    };
+} else {
+    API = 'localhost:5000';
+
+    loginData = {
+        username: process.env.DEV_USERNAME,
+        password: process.env.DEV_PASS
+    };
+}
 
 describe('Auth Endpoints', () => {
     it('POST /api/auth/login should respond with a token', async () => {

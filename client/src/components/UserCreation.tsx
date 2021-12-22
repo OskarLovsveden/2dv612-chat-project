@@ -1,19 +1,20 @@
-import { SetStateAction, useState } from 'react';
-import '../App.css';
-import userService from '../utils/http/user-service';
-import userImg from '../images/user.png';
-import ROLE from '../types/Role';
-import { useNavigate } from 'react-router';
+import { SetStateAction, useState } from "react";
+import "../App.css";
+import UserService from "../utils/http/user-service";
+import userImg from "../images/user.png";
+import ROLE from "../types/Role";
+import { useNavigate } from "react-router";
 
 /**
  * Makes Admin able to create users.
  * @returns HTML for creating a user.
  */
 const UserCreation = () => {
-    const [username, setUserName] = useState<string>('');
-    const [userPassword, setUserPassword] = useState<string>('');
-    const [userRole, setUserRole] = useState<string>(ROLE.USER);
-    const navigate = useNavigate();
+  const [username, setUserName] = useState<string>("");
+  const [userPassword, setUserPassword] = useState<string>("");
+  const [userRole, setUserRole] = useState<string>(ROLE.USER);
+
+  const navigate = useNavigate();
 
     const options = [
         {
@@ -44,7 +45,17 @@ const UserCreation = () => {
     const handleUserRole = (Event: {
     target: { value: SetStateAction<string> };
   }) => {
-        setUserRole(Event.target.value);
+    setUserRole(Event.target.value);
+  };
+
+  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const userService = new UserService();
+    const data = {
+      username: username,
+      password: userPassword,
+      role: userRole,
+      active: true,
     };
 
     const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

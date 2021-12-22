@@ -1,60 +1,64 @@
-import { io } from 'socket.io-client';
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import Message from './Message';
-import { HomeContext } from '../../context/HomeProvider';
+import { io } from "socket.io-client";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import Message from "./Message";
+import { HomeContext } from "../../context/HomeProvider";
+import { AuthContext } from "../../context/AuthProvider";
+import { SocketContext } from "../../context/SocketProvider";
 
 type MessageEvent = {
   name: string;
   text: string;
   isUser: boolean;
+  roomID: string;
 };
 
 type ChatProps = {
   // toggle: () => void;
   username: string;
+  id: number | string;
 };
 
+// let apiURL = '';
+// process.env.NODE_ENV === 'production' ? apiURL=process.env.PUBLIC_URL : apiURL='http://localhost:5000'; # REMOVE
+
 // export default function ChatRoom({ toggle, username }: ChatProps) {
-export default function ChatRoom({ username }: ChatProps) {
-    const [messages, setMessages] = useState<MessageEvent[]>([]);
-    const { activeChat } = useContext(HomeContext);
+export default function ChatRoom({ username, id }: ChatProps) {
+  const [messages, setMessages] = useState<MessageEvent[]>([]);
+  const { connectUser, sendMessage, socket } = useContext(SocketContext);
+  const { activeChat } = useContext(HomeContext);
+  const { user } = useContext(AuthContext);
+  const enterPressRef = useRef<any>();
+  const messageRef = useRef<any>();
 
-    const enterPressRef = useRef<any>();
-    const messageRef = useRef<any>();
+  useEffect(() => {
+    const handleNewMessage = (newMessage: MessageEvent) => {
+      console.log("haha new message", activeChat);
 
-    let apiURL = '';
-    process.env.NODE_ENV === 'production' ? apiURL=process.env.PUBLIC_URL : apiURL='http://localhost:5000';
+      const shouldAddNewMessage =
+        newMessage.roomID == activeChat?.id.toString();
 
-    console.log(apiURL);
-    const [socket] = useState(() =>
-        io(apiURL, { path: '/socket.io' })
-    );
+      console.log(newMessage.roomID, activeChat?.id.toString());
 
-    useEffect(() => {
-        const handleNewMessage = (newMessage: MessageEvent) => {
-            setMessages((messages: MessageEvent[]) => [...messages, newMessage]);
-        };
+      if (shouldAddNewMessage) {
+        console.log("Adding message");
+        setMessages((messages: MessageEvent[]) => [...messages, newMessage]);
+      }
+    };
+    connectUser(user?.id || "");
 
-        socket.on('connect', () => {
-            console.log('Socket connected! ID: ' + socket.id);
-        });
+    socket?.on("room-message", (data) => {
+      console.log("haha in room");
+      console.log(data);
 
-        if (activeChat) {
-            socket.emit('join-room', {
-                room_id: activeChat?.name,
-                user_id: username
-            });
-
-            socket.on('room-message', (data: any) => {
-                const isUser = data.username === username;
-                handleNewMessage({ isUser, name: data.username, text: data.message });
-            });
-        }
-
-        return () => {
-            socket.emit('user-disconnect');
-        };
-    }, [activeChat, activeChat?.name, socket, username]);
+      const isUser = data.username === username;
+      handleNewMessage({
+        isUser,
+        name: data.username,
+        text: data.message,
+        roomID: data.room_id,
+      });
+    });
+  }, [connectUser, socket, user, username, activeChat]);
 
     const handleEnter = (e: any) => {
         if (e.code === 'Enter' && e.shiftKey === false) {
@@ -63,16 +67,12 @@ export default function ChatRoom({ username }: ChatProps) {
         }
     };
 
-    const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        socket.emit('chat-message', {
-            room_id: activeChat?.name,
-            user_id: username,
-            message: messageRef.current?.value
-        });
+  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-        messageRef.current.value = '';
-    };
+    sendMessage(activeChat?.id || 0, user?.id || -1, messageRef.current.value);
+    messageRef.current.value = "";
+  };
 
     return (
         <div className="max-w-auto h-screen w-full m-auto bg-indigo-300 rounded p-5">

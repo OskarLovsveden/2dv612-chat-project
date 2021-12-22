@@ -1,5 +1,5 @@
 export type EventLogin = {
-    user_id: string | number;
+    user_id: number;
 };
 
 export type EventChatMessage = {
