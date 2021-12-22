@@ -22,14 +22,17 @@ client_img: client-img
 client_name: client-frontend
 client_svc: client-frontend-svc
 client_port: 3001
-public_url: '194.47.177.79:80'
-
+public_url: "194.47.177.79:80"
 
 # Server vars
 server_img: server-img
 server_port: 5000
 server_name: koa-backend
 server_svc: koa-backend-svc
+
+# For testing the endpoints
+dev_username: "useradmin"
+dev_password: "admin123"
 
 # Proxy vars
 proxy_name: proxy
@@ -40,4 +43,3 @@ proxy_port: 32162 # NODEPORT
 storageclass_name: nfs-sc
 lb_port: 80
 lb_ip: http://localhost/
-

@@ -1,27 +1,23 @@
 import { Context } from 'koa';
-import User from '../models/user';
+import UserService from '../services/user-service';
+import User from '../models/User';
 
 export default class UserController {
     readonly table = 'users'; 
-    private userModel = new User();
-    // private testService: TestService = new TestService();
+    private userService = new UserService();
 
     public async getAll(ctx: Context): Promise<void> {
         try {
-            /* const users = await db.from(this.table).select('*'); */
-            const users = await this.userModel.getAll();
+            const users = await this.userService.getAll(User);
             ctx.body = users;
         } catch (e) {
             console.error(e);
         }
     }
-
-    // TODO Knex implementation?
+    
     public async add(ctx: Context): Promise<void> {
-        try {
-            /* await db(this.table).insert(user); */
-            
-            const userCreated = await this.userModel.create(ctx.userCreate);
+        try {            
+            const userCreated = await this.userService.create(ctx.userCreate, User);
 
             if (!userCreated) {
                 ctx.throw(400, { message: 'failed to create user' });
@@ -36,7 +32,7 @@ export default class UserController {
     public async get(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;            
-            const user = await this.userModel.get(id);
+            const user = await this.userService.get(id, User);
 
             if (!user) {
                 ctx.throw(400,{ message: 'Username was missing in the request' });
@@ -58,7 +54,7 @@ export default class UserController {
             const id = ctx.params.id;
             /* await db.from(this.table).select('*').where({ id: id }).del(); */
 
-            const user = await this.userModel.delete(id);
+            const user = await this.userService.delete(id, User);
 
             if (!user) {
                 ctx.throw(400, { message: 'Could not delete user...' });
@@ -76,15 +72,15 @@ export default class UserController {
     public async update(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
-            const active = ctx.request.body.active;
+            const user = ctx.body;
 
-            const userIsUpdated = await this.userModel.update(id, active);
+            const userIsUpdated = await this.userService.update(id, user, User);
             
             if (!userIsUpdated) {
                 ctx.throw(400, { message: 'Could not update user' });
             }
 
-            ctx.body = { message: 'Success' };
+            ctx.body = { message: 'User updated' };
         } catch (e) {
             // TODO proper error response, and handling
             const id = ctx.params.id;

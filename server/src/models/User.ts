@@ -1,33 +1,33 @@
 import { DataTypes } from 'sequelize';
-import dbConfig from '../../db/postgres';
+import dbConfig from '../db/postgres';
 
-const Chatroom = dbConfig.define('Chatroom', {
+const User = dbConfig.define('User', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    name: {
+    username: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    public: {
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    active: {
         type: DataTypes.BOOLEAN,
         allowNull: false
     },
-    tag: {
+    role: {
         type: DataTypes.STRING,
-        allowNull: false
-    },
-    user_ids: {
-        type: DataTypes.ARRAY(DataTypes.INTEGER),
         allowNull: true
     }
 }, {
-    tableName: 'chatroom',
+    tableName: 'users',
     timestamps: false,
     createdAt: false,
     updatedAt: false
 });
 
-export default Chatroom;
+export default User;

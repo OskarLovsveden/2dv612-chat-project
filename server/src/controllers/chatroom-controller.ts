@@ -1,6 +1,6 @@
 import { Context } from 'koa';
 import ChatRoomService from '../services/chatroom-service';
-import Chatroom from '../models/sequelizeModels/Chatroom';
+import Chatroom from '../models/Chatroom';
 
 export default class ChatroomController {
     readonly table = 'chatroom';
@@ -75,7 +75,9 @@ export default class ChatroomController {
             
             ctx.body = { message: 'Room updated' };
         } catch (e) {
-            console.error(e);
+            const id = ctx.params.id;
+            ctx.status = 404;
+            ctx.body = { message: 'No chatroom with id ' + id + ' found' };
         }
     }
 }
