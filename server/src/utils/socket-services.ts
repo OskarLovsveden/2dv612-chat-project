@@ -1,5 +1,6 @@
 import { Server as SocketServer, Socket } from 'socket.io';
-import User from '../models/user';
+import Chatroom from '../models/Chatroom';
+import User from '../models/User';
 import ChatRoom from '../services/chatroom-service';
 import { EventChatMessage, EventJoinRoom, EventLogin } from '../types/event-data-types';
 /* import { rooms, users } from './fake-data'; */
@@ -18,7 +19,7 @@ export default class SocketServices {
 
     public async populateRooms() {
         // Fetch rooms with user from db
-        const rooms = await this.chatRooms.getAll();
+        const rooms = await this.chatRooms.getAll(Chatroom);
         const users = await this.users.getAll();
 
         

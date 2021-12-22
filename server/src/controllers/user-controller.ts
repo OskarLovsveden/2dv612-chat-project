@@ -1,13 +1,14 @@
 import { Context } from 'koa';
 import UserService from '../services/user-service';
 import SocketServices from '../utils/socket-services';
-import ChatRoom from '../services/chatroom-service';
-import User from '../models/user';
+import ChatRoomService from '../services/chatroom-service';
+import User from '../models/User';
+import Chatroom from '../models/Chatroom';
 
 export default class UserController {
     private userService = new UserService();
     private socketServices = new SocketServices();
-    private chatroom = new ChatRoom();
+    private chatroom = new ChatRoomService();
 
 
     public async getAll(ctx: Context): Promise<void> {
@@ -28,11 +29,14 @@ export default class UserController {
                 ctx.throw(400, { message: 'failed to create user' });
             } */
 
-            const rooms = await this.chatroom.getAll();
+            const rooms = await this.chatroom.getAll(Chatroom);
             console.log(userCreated);
             for (const room of rooms) {
-                await this.chatroom.update(room, room.id, userCreated);
+                const chatroom = room.toJSON();
+                await this.chatroom.update(room, chatroom.id, null, Chatroom);
             }
+
+            // rooms.every(room => await this.chatroom.update(room, room.id, null, Chatroom));
 
             this.socketServices.populateRooms();
 

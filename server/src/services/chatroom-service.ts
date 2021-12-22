@@ -40,13 +40,24 @@ export default class ChatRoomService {
     }
 
     public async update(room: any, roomID: number, newID: number, Chatroom: any) {
-        const updatedRoom = await Chatroom.update({
-            name: room.name,
-            public: room.public,
-            tag: room.tag,
-            user_ids: dbConfig.fn('array_append', dbConfig.col('user_ids'), newID)
-        }, { where: { id: roomID } 
-        });
+        let updatedRoom;
+        
+        if (newID) {
+            updatedRoom = await Chatroom.update({
+                name: room.name,
+                public: room.public,
+                tag: room.tag,
+                user_ids: dbConfig.fn('array_append', dbConfig.col('user_ids'), newID)
+            }, { where: { id: roomID } 
+            });
+        } else {
+            updatedRoom = await Chatroom.update({
+                name: room.name,
+                public: room.public,
+                tag: room.tag
+            }, { where: { id: roomID } 
+            });
+        }
 
         return updatedRoom;
     }
