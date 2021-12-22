@@ -1,11 +1,9 @@
 import { FormEvent, SetStateAction, useRef, useState } from 'react';
 import '../App.css';
-import chatroomService from '../utils/http/chatroom-service';
 import chatImg from '../images/chat.png';
 import { useNavigate } from 'react-router';
 import { Chatroom as ChatroomType } from '../types/Chatroom';
-
-
+import ChatroomService from '../utils/http/chatroom-service';
 
 type ChatroomProps = {
   chatroom?: ChatroomType
@@ -35,6 +33,7 @@ const Chatroom = ({ chatroom }: ChatroomProps) => {
 
     const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const chatroomService = new ChatroomService();
     
         if (chatroom === undefined) {
             const data = {

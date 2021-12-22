@@ -1,6 +1,5 @@
 import {
     Key,
-    MouseEvent,
     useEffect,
     useState
 } from 'react';
@@ -12,10 +11,10 @@ import deleteImg from '../images/delete.png';
 import editUserImg from '../images/edit.png';
 import type { User } from '../types/User';
 import { Chatroom as ChatroomType } from '../types/Chatroom';
-import userService from '../utils/http/user-service';
-import chatroomService from '../utils/http/chatroom-service';
 import ROLE from '../types/Role';
 import Chatroom from '../components/Chatroom';
+import UserService from '../utils/http/user-service';
+import ChatroomService from '../utils/http/chatroom-service';
 
 enum ModalState {
   UPDATE,
@@ -31,6 +30,8 @@ const AdminPanel = () => {
 
     useEffect(() => {
         (async () => {
+            const userService = new UserService();
+            const chatroomService = new ChatroomService();
             const resUser = await userService.getAll();
             const resChatRoom = await chatroomService.getAll();
             setUserData(resUser.data);
@@ -38,22 +39,16 @@ const AdminPanel = () => {
         })();
     }, []);
 
-    const removeUser = async (
-        event: MouseEvent<HTMLButtonElement>,
-        id: number
-    ) => {
-        event.preventDefault();
+    const removeUser = async (id: number) => {
+        const userService = new UserService();
         await userService.delete(id);
-        setUserData(userData.filter((ud) => ud.id !== id));
+        setUserData(userData.filter((ud: User) => ud.id !== id));
     };
 
-    const removeChatroom = async (
-        event: MouseEvent<HTMLImageElement>,
-        id: number
-    ) => {
-        event.preventDefault();
+    const removeChatroom = async (id: number) => {
+        const chatroomService = new ChatroomService();
         await chatroomService.delete(id);
-        setChatRoomData(chatRoomData.filter((cr) => cr.id !== id));
+        setChatRoomData(chatRoomData.filter((cr: ChatroomType) => cr.id !== id));
     };
 
     return (
@@ -89,15 +84,13 @@ const AdminPanel = () => {
                                                         className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
                                                         src={deleteImg}
                                                         alt="Delete"
-                                                        onClick={(e) => {
-                                                            removeChatroom(e, u.id);
-                                                        }}
+                                                        onClick={() => removeChatroom(u.id)}
                                                     />
                                                     <img
                                                         className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
                                                         src={editUserImg}
                                                         alt="Edit"
-                                                        onClick={(e) => {
+                                                        onClick={() => {
                                                             setActiveChatroom(chatroom);
                                                             if (modalState === ModalState.UPDATE) {
                                                                 setModalState(ModalState.NONE);
@@ -120,7 +113,7 @@ const AdminPanel = () => {
                                 {chatRoomData.map(
                                     (
                                         u: {
-                    public: boolean;
+                        public: boolean;
                     name: string;
                     tag: string;
                     id: number;
@@ -145,7 +138,7 @@ const AdminPanel = () => {
                               className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
                               src={editUserImg}
                               alt="Edit"
-                              onClick={(e) => {
+                              onClick={() => {
                                   setActiveChatroom(chatroom);
                                   if (modalState === ModalState.UPDATE) {
                                       setModalState(ModalState.NONE);
@@ -169,14 +162,14 @@ const AdminPanel = () => {
                         <div className="font-bold text-xl mb-2">Moderator</div>
                         <ul>
                             {userData.map(
-                                (u, i) =>
+                                (u: User, i: number) =>
                                     u.role === ROLE.MOD && (
                                         <li key={i}>
                                             <div className="inline-flex space-x-4 ">
                                                 <h3>{u.username} </h3>
                                                 <button
-                                                    onClick={(e) => {
-                                                        removeUser(e, u.id);
+                                                    onClick={() => {
+                                                        removeUser(u.id);
                                                     }}
                                                     className="btn btn-red btn-red:hover"
                                                 >
@@ -203,14 +196,14 @@ const AdminPanel = () => {
                         <div className="font-bold text-xl mb-2">Chattare</div>
                         <ul>
                             {userData.map(
-                                (u, i) =>
+                                (u: User, i: number) =>
                                     u.role === ROLE.USER && (
                                         <li key={i}>
                                             <div className="inline-flex space-x-4 ">
                                                 <h3>{u.username} </h3>
                                                 <button
-                                                    onClick={(e) => {
-                                                        removeUser(e, u.id);
+                                                    onClick={() => {
+                                                        removeUser(u.id);
                                                     }}
                                                     className="btn btn-red btn-red:hover"
                                                 >

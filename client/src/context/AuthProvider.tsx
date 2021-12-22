@@ -1,14 +1,14 @@
-import { createContext, useEffect, useReducer } from "react";
-import AuthContextState from "../types/AuthContextState";
-import reducer from "./AuthReducer";
-import { AuthActionType } from "../types/AuthReducerAction";
-import type { LoginUser } from "../types/User";
-import ROLE from "../types/Role";
-import AuthService from "../utils/http/auth-service";
+import { createContext, useEffect, useReducer } from 'react';
+import AuthContextState from '../types/AuthContextState';
+import reducer from './AuthReducer';
+import { AuthActionType } from '../types/AuthReducerAction';
+import type { LoginUser } from '../types/User';
+import ROLE from '../types/Role';
+import AuthService from '../utils/http/auth-service';
 
 const initialState: AuthContextState = {
     isAuthenticated: false,
-    login: (): void => {}
+    login: (): void => {return;}
 };
 
 export const AuthContext = createContext<AuthContextState>(initialState);
@@ -18,12 +18,12 @@ type AuthProviderProps = { children: React.ReactChild[] | React.ReactChild };
 export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
-  useEffect(() => {
-    async function checkUserAuthenticated() {
-      const authService = new AuthService();
-      let authResponse = await authService.checkIsAuthenticated();
+    useEffect(() => {
+        async function checkUserAuthenticated() {
+            const authService = new AuthService();
+            const authResponse = await authService.checkIsAuthenticated();
 
-            if (authResponse === null) {
+            if (!authResponse) {
                 return;
             }
 
@@ -48,9 +48,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         checkUserAuthenticated();
     }, []);
 
-  const login = async (user: LoginUser): Promise<void> => {
-    const authService = new AuthService();
-    const res = await authService.login(user);
+    const login = async (user: LoginUser): Promise<void> => {
+        const authService = new AuthService();
+        const res = await authService.login(user);
 
         const { username, id, role, token } = res.data;
         localStorage.setItem('token', token);

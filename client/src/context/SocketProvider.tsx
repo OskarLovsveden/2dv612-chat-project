@@ -1,5 +1,8 @@
-import { io, Socket } from "socket.io-client";
-import { createContext, useEffect, useReducer, useState } from "react";
+import { io, Socket } from 'socket.io-client';
+import { createContext, useEffect, useState } from 'react';
+
+const URL = 'http://localhost:5000';
+const PATH = '/socket.io';
 
 type SocketContextState = {
   socket?: Socket;
@@ -8,8 +11,8 @@ type SocketContextState = {
 };
 
 const initialState: SocketContextState = {
-  connectUser: (): void => {},
-  sendMessage: (): void => {},
+    connectUser: (): void => {return;},
+    sendMessage: (): void => {return;}
 };
 
 export const SocketContext = createContext<SocketContextState>(initialState);
@@ -17,38 +20,38 @@ export const SocketContext = createContext<SocketContextState>(initialState);
 type SocketProviderProps = { children: React.ReactChild[] | React.ReactChild };
 
 export const SocketProvider = ({ children }: SocketProviderProps) => {
-  const [socket, setSocket] = useState(
-    io("http://localhost:5000", { path: "/socket.io" })
-  );
-
-  useEffect(() => {
-    socket.on("connect", () =>
-      console.log("Socket connected! ID: " + socket.id)
+    const [socket] = useState(
+        io(URL, { path: PATH })
     );
 
-    return () => {
-      console.log("Jag drar");
-      socket.disconnect();
+    useEffect(() => {
+        socket.on('connect', () =>
+            console.log('Socket connected! ID: ' + socket.id)
+        );
+
+        return () => {
+            console.log('Jag drar');
+            socket.disconnect();
+        };
+    }, [socket]);
+
+    const connectUser = (userID: number | string) => {
+        socket.emit('user-connect', { user_id: userID });
     };
-  }, [socket]);
 
-  const connectUser = (userID: number | string) => {
-    socket.emit("user-connect", { user_id: userID });
-  };
+    const sendMessage = (room_id: number, user_id: number, message: string) => {
+        socket.emit('chat-message', { room_id, user_id, message });
+    };
 
-  const sendMessage = (room_id: number, user_id: number, message: string) => {
-    socket.emit("chat-message", { room_id, user_id, message });
-  };
+    /* socket.emit("user-connect", { user_id: user?.id }); */
+    /* }); */
 
-  /* socket.emit("user-connect", { user_id: user?.id }); */
-  /* }); */
-
-  /* socket.emit("join-room", {
+    /* socket.emit("join-room", {
             room_id: activeChat?.name,
             user_id: username,
           }); */
 
-  /* socket.on("room-message", (data) => {
+    /* socket.on("room-message", (data) => {
           console.log(data);
     
           const isUser = data.username === username;
@@ -60,15 +63,15 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
           });
         }); */
 
-  return (
-    <SocketContext.Provider
-      value={{
-        socket: socket,
-        connectUser,
-        sendMessage,
-      }}
-    >
-      {children}
-    </SocketContext.Provider>
-  );
+    return (
+        <SocketContext.Provider
+            value={{
+                socket: socket,
+                connectUser,
+                sendMessage
+            }}
+        >
+            {children}
+        </SocketContext.Provider>
+    );
 };

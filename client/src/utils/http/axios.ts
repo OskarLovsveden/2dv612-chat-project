@@ -24,16 +24,16 @@ if(token) {
 /* export default axios; */
 
 export const instance = () => {
-  console.log("HAHA JAG ÄR HÄR")
-  const token = window.localStorage.getItem('token');
-  console.log(token)
-  const options = {
-    baseURL: 'http://localhost:5000/api',
-    headers: {
-      Authorization: token ? `Bearer ${token}` : ''
-    } 
-  }
+    console.log('HAHA JAG ÄR HÄR');
+    const token = window.localStorage.getItem('token');
+    console.log(token);
+    const options = {
+        baseURL: 'http://localhost:5000/api',
+        headers: {
+            Authorization: token ? `Bearer ${token}` : ''
+        } 
+    };
 
-  return axios.create(options)
+    return axios.create(options);
 
-}
+};
