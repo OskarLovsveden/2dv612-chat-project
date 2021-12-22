@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import SideBar from '../components/sidebar/SideBar';
 import { HomeProvider } from '../context/HomeProvider';
+import ChatroomUserList from '../components/sidebar/ChatroomUserList';
 
 const Home = () => {
     const { user } = useContext(AuthContext);
@@ -88,6 +89,7 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
+                    <ChatroomUserList />
                 </div>
             </div>
             {/* <button onClick={onChat}>open chat</button>
