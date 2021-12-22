@@ -5,6 +5,7 @@ export type EventLogin = {
 export type EventChatMessage = {
   room_id: number;
   message: string;
+  username: string;
   user_id: number;
 };
 

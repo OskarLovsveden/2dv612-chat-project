@@ -55,6 +55,7 @@ export default class SocketServices {
             console.log(`Sending message: ${data.message} to room: ${data.room_id}`);
             io.in(`${data.room_id}`).emit('room-message', {
                 user_id: data.user_id,
+                username: data.username,
                 message: data.message,
                 room_id: data.room_id
             });

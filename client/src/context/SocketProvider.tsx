@@ -7,7 +7,7 @@ const PATH = '/socket.io';
 type SocketContextState = {
   socket?: Socket;
   connectUser: (userID: number | string) => void;
-  sendMessage: (room_id: number, user_id: number, message: string) => void;
+  sendMessage: (room_id: number, user_id: number, message: string, username: string) => void;
 };
 
 const initialState: SocketContextState = {
@@ -39,8 +39,8 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
         socket.emit('user-connect', { user_id: userID });
     };
 
-    const sendMessage = (room_id: number, user_id: number, message: string) => {
-        socket.emit('chat-message', { room_id, user_id, message });
+    const sendMessage = (room_id: number, user_id: number, message: string, username: string) => {
+        socket.emit('chat-message', { room_id, user_id, message, username });
     };
 
     /* socket.emit("user-connect", { user_id: user?.id }); */

@@ -74,7 +74,7 @@ function App() {
                     <Route
                         path="/"
                         element={
-                            <Private roles={[ROLE.ADMIN, ROLE.USER]} component={Home} />
+                            <Private roles={[ROLE.ADMIN, ROLE.USER, ROLE.MOD]} component={Home} />
                         }
                     />
                 </Routes>

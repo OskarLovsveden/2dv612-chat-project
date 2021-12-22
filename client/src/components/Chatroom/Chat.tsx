@@ -5,13 +5,9 @@ import { AuthContext } from '../../context/AuthProvider';
 import { SocketContext } from '../../context/SocketProvider';
 
 type MessageEvent = {
-    user_id: number, message: string, room_id: number
+    user_id: number, username: string, message: string, room_id: number
 };
 
-// let apiURL = '';
-// process.env.NODE_ENV === 'production' ? apiURL=process.env.PUBLIC_URL : apiURL='http://localhost:5000'; # REMOVE
-
-// export default function ChatRoom({ toggle, username }: ChatProps) {
 export default function ChatRoom() {
     const [messages, setMessages] = useState<MessageEvent[]>([]);
     const { connectUser, sendMessage, socket } = useContext(SocketContext);
@@ -51,8 +47,10 @@ export default function ChatRoom() {
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        sendMessage(activeChat?.id || 0, user?.id || -1, messageRef.current.value);
-        messageRef.current.value = '';
+        if (activeChat && user) {
+            sendMessage(activeChat?.id, user?.id, messageRef.current.value, user?.username);
+            messageRef.current.value = '';
+        }
     };
 
     return (
@@ -63,7 +61,7 @@ export default function ChatRoom() {
             messages.map((msg: MessageEvent, index: number) => (
                 <li key={index}>
                     <Message
-                        name={'EN ANVÄNDARE'}
+                        name={msg.username}
                         message={msg.message}
                         key={index}
                     />
