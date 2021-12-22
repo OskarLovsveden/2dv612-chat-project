@@ -1,11 +1,13 @@
 import { Context } from 'koa';
+import SocketServices from '../utils/socket-services';
 import ChatRoomService from '../services/chatroom-service';
 import Chatroom from '../models/Chatroom';
 
 export default class ChatroomController {
     readonly table = 'chatroom';
     private chatroomService = new ChatRoomService();
-
+    private socketServices: SocketServices = new SocketServices();
+    
     public async add(ctx: Context): Promise<void> {
         try {
             const room = ctx.request.body;
@@ -14,6 +16,8 @@ export default class ChatroomController {
             if (!roomCreated) {
                 ctx.throw(400, { message: 'Failed to create room' });
             }
+
+            this.socketServices.populateRooms();
 
             ctx.body = { message: 'Room created', room };
         } catch (e) {

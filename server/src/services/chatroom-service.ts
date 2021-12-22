@@ -44,7 +44,7 @@ export default class ChatRoomService {
             name: room.name,
             public: room.public,
             tag: room.tag,
-            usersid: dbConfig.fn('array_append', dbConfig.col('usersid'), newID)
+            user_ids: dbConfig.fn('array_append', dbConfig.col('user_ids'), newID)
         }, { where: { id: roomID } 
         });
 

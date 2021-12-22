@@ -1,27 +1,26 @@
-import http from './axios';
-import type { Chatroom, NewChatroom } from '../../types/Chatroom';
+import { instance } from "./axios";
+import type { Chatroom, NewChatroom } from "../../types/Chatroom"
 
 class ChatroomService {
+    private http = instance()
+
     getAll() {
-        return http.get<Array<Chatroom>>('/room');
+      return this.http.get<Array<Chatroom>>("/room");
     }
     
     get(id: number) {
-        return http.get<Chatroom>(`/room/${id}`);
+      return this.http.get<Chatroom>(`/room/${id}`);
     }
 
     create(data: NewChatroom) {
-    // eslint-disable-next-line
-        return http.post<any>('/room', data); // TODO: Set type
+      return this.http.post<any>("/room", data);
     }
     update(data: Chatroom, id: number) {
-    // eslint-disable-next-line
-        return http.put<any>(`/room/${id}`, data); // TODO: Set type
+      return this.http.put<any>(`/room/${id}`, data);
     }
     delete(id: number) {
-    // eslint-disable-next-line
-        return http.delete<any>(`/room/${id}`); // TODO: Set type
+      return this.http.delete<any>(`/room/${id}`);
     }
 }
   
-export default new ChatroomService();
+  export default ChatroomService;

@@ -1,10 +1,14 @@
 import { Context } from 'koa';
 import UserService from '../services/user-service';
-import User from '../models/User';
+import SocketServices from '../utils/socket-services';
+import ChatRoom from '../services/chatroom-service';
+import User from '../models/user';
 
 export default class UserController {
-    readonly table = 'users'; 
     private userService = new UserService();
+    private socketServices = new SocketServices();
+    private chatroom = new ChatRoom();
+
 
     public async getAll(ctx: Context): Promise<void> {
         try {
@@ -19,9 +23,18 @@ export default class UserController {
         try {            
             const userCreated = await this.userService.create(ctx.userCreate, User);
 
-            if (!userCreated) {
+
+            /*  if (!userCreated) {
                 ctx.throw(400, { message: 'failed to create user' });
+            } */
+
+            const rooms = await this.chatroom.getAll();
+            console.log(userCreated);
+            for (const room of rooms) {
+                await this.chatroom.update(room, room.id, userCreated);
             }
+
+            this.socketServices.populateRooms();
 
             ctx.body = { message: 'User created' };
         } catch (e) {
