@@ -22,7 +22,6 @@
     "dotenv": "^10.0.0",
     "eslint-junit-gitlab": "^1.0.2",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^0.95.14",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
     "koa-compose": "^4.1.0",
