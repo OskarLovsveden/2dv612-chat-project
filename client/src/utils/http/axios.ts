@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from '../../config';
 
-const {BASE_URL} = config
+const { BASE_URL } = config;
 
 export const instance = () => {
     console.log('HAHA JAG ÄR HÄR');
