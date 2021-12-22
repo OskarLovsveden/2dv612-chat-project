@@ -1,12 +1,12 @@
 export type Chatroom = {
-    id: number;
-    name: string;
-    public: boolean;
-    tag: string;
+  id: number;
+  name: string;
+  is_public: boolean;
+  tag: string;
 };
 
 export type NewChatroom = {
-    name: string;
-    public: boolean;
-    tag: string;
+  name: string;
+  is_public: boolean;
+  tag: string;
 };

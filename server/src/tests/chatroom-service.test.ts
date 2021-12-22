@@ -8,10 +8,10 @@ const roomID = 1;
 
 describe('Chatroom service', () => {
     it('Should return chatroom', async () => {
-        const actual = await sut.get(roomID, Room);
-        
-        expect(actual).to.be.not.undefined
-            .to.have.key('id')
+        const actual = await sut.get(roomID);
+
+        expect(actual)
+            .to.be.not.undefined.to.have.key('id')
             .to.have.key('name')
             .to.have.key('public')
             .to.have.key('tag')
@@ -19,21 +19,19 @@ describe('Chatroom service', () => {
     });
 
     it('Should return array of rooms', async () => {
-        const actual = await sut.getAll(Room);
+        const actual = await sut.getAll();
 
-        expect(actual).to.be.lengthOf.greaterThan(0)
-            .to.have.an('array');
+        expect(actual).to.be.lengthOf.greaterThan(0).to.have.an('array');
     });
 
     it('Should return empty room array', async () => {
         Room.$queryInterface.$useHandler((query: string) => {
             if (query === 'findAll') {
-                return null; 
+                return null;
             }
         });
 
-        const actual = await sut.getAll(Room);
-        expect(actual).to.have.an('array')
-            .to.be.lengthOf(0);
+        const actual = await sut.getAll();
+        expect(actual).to.have.an('array').to.be.lengthOf(0);
     });
 });

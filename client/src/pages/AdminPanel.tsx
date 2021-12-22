@@ -65,7 +65,7 @@ const AdminPanel = () => {
                                 {chatRoomData.map(
                                     (
                                         u: {
-                    public: boolean;
+                    is_public: boolean;
                     name: string;
                     tag: string;
                     id: number;
@@ -73,7 +73,7 @@ const AdminPanel = () => {
                                         i: Key | null | undefined
                                     ) => {
                                         const chatroom = u;
-                                        return u.public === true && (
+                                        return u.is_public === true && (
                   
                                             <li key={i}>
                                                 <div className="inline-flex space-x-4">
@@ -113,7 +113,7 @@ const AdminPanel = () => {
                                 {chatRoomData.map(
                                     (
                                         u: {
-                        public: boolean;
+                        is_public: boolean;
                     name: string;
                     tag: string;
                     id: number;
@@ -123,7 +123,7 @@ const AdminPanel = () => {
                                     {
                                         const chatroom = u;
                                         return (
-                                            u.public === false && 
+                                            u.is_public === false && 
                   <li key={i}>
                       <div className="inline-flex space-x-4">
                           <h3>{u.name} </h3>

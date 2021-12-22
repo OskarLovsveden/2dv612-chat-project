@@ -20,7 +20,8 @@
             "type"
         ],
         "@typescript-eslint/typedef": [
-            "error", {
+            "error",
+            {
                 "arrowParameter": true,
                 "parameter": true
             }
@@ -56,6 +57,12 @@
         "object-curly-spacing": [
             "error",
             "always"
+        ],
+        "no-multiple-empty-lines": [
+            2,
+            {
+                "max": 1
+            }
         ]
     },
     "env": {

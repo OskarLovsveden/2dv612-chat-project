@@ -2,41 +2,37 @@ import { Context } from 'koa';
 import UserService from '../services/user-service';
 import SocketServices from '../utils/socket-services';
 import ChatRoomService from '../services/chatroom-service';
-import User from '../models/User';
-import Chatroom from '../models/Chatroom';
+import User from '../models/user';
 
 export default class UserController {
     private userService = new UserService();
     private socketServices = new SocketServices();
     private chatroom = new ChatRoomService();
 
-
     public async getAll(ctx: Context): Promise<void> {
         try {
-            const users = await this.userService.getAll(User);
+            const users = await this.userService.getAll();
             ctx.body = users;
         } catch (e) {
             console.error(e);
         }
     }
-    
+
     public async add(ctx: Context): Promise<void> {
-        try {            
-            const userCreated = await this.userService.create(ctx.userCreate, User);
+        try {
+            const userCreated = await this.userService.create(ctx.userCreate);
 
-
-            /*  if (!userCreated) {
+            if (!userCreated) {
                 ctx.throw(400, { message: 'failed to create user' });
-            } */
-
-            const rooms = await this.chatroom.getAll(Chatroom);
-            console.log(userCreated);
-            for (const room of rooms) {
-                const chatroom = room.toJSON();
-                await this.chatroom.update(room, chatroom.id, null, Chatroom);
             }
 
-            // rooms.every(room => await this.chatroom.update(room, room.id, null, Chatroom));
+            const rooms = await this.chatroom.getAll();
+
+            console.log(userCreated);
+
+            for (const room of rooms) {
+                await this.chatroom.addUser(room.id, userCreated.id);
+            }
 
             this.socketServices.populateRooms();
 
@@ -48,13 +44,13 @@ export default class UserController {
 
     public async get(ctx: Context): Promise<void> {
         try {
-            const id = ctx.params.id;            
-            const user = await this.userService.get(id, User);
+            const id = ctx.params.id;
+            const user = await this.userService.get(id);
 
             if (!user) {
-                ctx.throw(400,{ message: 'Username was missing in the request' });
+                ctx.throw(400, { message: 'Username was missing in the request' });
             }
-            
+
             ctx.body = {
                 id: user.id,
                 username: user.username,
@@ -65,13 +61,13 @@ export default class UserController {
             console.error(e);
         }
     }
-    
+
     public async remove(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
             /* await db.from(this.table).select('*').where({ id: id }).del(); */
 
-            const user = await this.userService.delete(id, User);
+            const user = await this.userService.delete(id);
 
             if (!user) {
                 ctx.throw(400, { message: 'Could not delete user...' });
@@ -89,10 +85,22 @@ export default class UserController {
     public async update(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
-            const user = ctx.body;
+            const { username, role, active } = ctx.request.body;
 
-            const userIsUpdated = await this.userService.update(id, user, User);
-            
+            let userIsUpdated: User;
+
+            if (username) {
+                userIsUpdated = await this.userService.updateUsername(id, username);
+            }
+
+            if (role) {
+                userIsUpdated = await this.userService.updateRole(id, role);
+            }
+
+            if (active) {
+                userIsUpdated = await this.userService.updateActive(id, active);
+            }
+
             if (!userIsUpdated) {
                 ctx.throw(400, { message: 'Could not update user' });
             }

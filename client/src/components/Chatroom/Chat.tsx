@@ -1,64 +1,45 @@
-import { io } from "socket.io-client";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import Message from "./Message";
-import { HomeContext } from "../../context/HomeProvider";
-import { AuthContext } from "../../context/AuthProvider";
-import { SocketContext } from "../../context/SocketProvider";
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import Message from './Message';
+import { HomeContext } from '../../context/HomeProvider';
+import { AuthContext } from '../../context/AuthProvider';
+import { SocketContext } from '../../context/SocketProvider';
 
 type MessageEvent = {
-  name: string;
-  text: string;
-  isUser: boolean;
-  roomID: string;
-};
-
-type ChatProps = {
-  // toggle: () => void;
-  username: string;
-  id: number | string;
+    user_id: number, message: string, room_id: number
 };
 
 // let apiURL = '';
 // process.env.NODE_ENV === 'production' ? apiURL=process.env.PUBLIC_URL : apiURL='http://localhost:5000'; # REMOVE
 
 // export default function ChatRoom({ toggle, username }: ChatProps) {
-export default function ChatRoom({ username, id }: ChatProps) {
-  const [messages, setMessages] = useState<MessageEvent[]>([]);
-  const { connectUser, sendMessage, socket } = useContext(SocketContext);
-  const { activeChat } = useContext(HomeContext);
-  const { user } = useContext(AuthContext);
-  const enterPressRef = useRef<any>();
-  const messageRef = useRef<any>();
+export default function ChatRoom() {
+    const [messages, setMessages] = useState<MessageEvent[]>([]);
+    const { connectUser, sendMessage, socket } = useContext(SocketContext);
+    const { activeChat } = useContext(HomeContext);
+    const { user } = useContext(AuthContext);
+    const enterPressRef = useRef<any>();
+    const messageRef = useRef<any>();
 
-  useEffect(() => {
-    const handleNewMessage = (newMessage: MessageEvent) => {
-      console.log("haha new message", activeChat);
+    useEffect(() => {
+        console.log('useEffect fires!');
+        connectUser(user?.id || '');
 
-      const shouldAddNewMessage =
-        newMessage.roomID == activeChat?.id.toString();
+        socket?.on('room-message', (data: MessageEvent) => {
+            console.log(data.room_id, activeChat?.id);
+            const shouldAddNewMessage = data.room_id === activeChat?.id;
 
-      console.log(newMessage.roomID, activeChat?.id.toString());
+            if (shouldAddNewMessage) {
+                setMessages((messages: MessageEvent[]) => [...messages, data]);
+            }
+            
+        });
 
-      if (shouldAddNewMessage) {
-        console.log("Adding message");
-        setMessages((messages: MessageEvent[]) => [...messages, newMessage]);
-      }
-    };
-    connectUser(user?.id || "");
-
-    socket?.on("room-message", (data) => {
-      console.log("haha in room");
-      console.log(data);
-
-      const isUser = data.username === username;
-      handleNewMessage({
-        isUser,
-        name: data.username,
-        text: data.message,
-        roomID: data.room_id,
-      });
-    });
-  }, [connectUser, socket, user, username, activeChat]);
+        return () => {
+            console.log('useEffect cleanup!');
+            socket?.off('room-message');
+            setMessages([]);
+        };
+    }, [connectUser, socket, user, activeChat]);
 
     const handleEnter = (e: any) => {
         if (e.code === 'Enter' && e.shiftKey === false) {
@@ -67,23 +48,23 @@ export default function ChatRoom({ username, id }: ChatProps) {
         }
     };
 
-  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
-    sendMessage(activeChat?.id || 0, user?.id || -1, messageRef.current.value);
-    messageRef.current.value = "";
-  };
+        sendMessage(activeChat?.id || 0, user?.id || -1, messageRef.current.value);
+        messageRef.current.value = '';
+    };
 
     return (
         <div className="max-w-auto h-screen w-full m-auto bg-indigo-300 rounded p-5">
             <div className="h-3/4 overflow-y-scroll">
                 <ul>
                     {messages &&
-            messages.map((messageText: MessageEvent, index: number) => (
-                <li>
+            messages.map((msg: MessageEvent, index: number) => (
+                <li key={index}>
                     <Message
-                        name={messageText.name}
-                        message={messageText.text}
+                        name={'EN ANVÄNDARE'}
+                        message={msg.message}
                         key={index}
                     />
                 </li>
