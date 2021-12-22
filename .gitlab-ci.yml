@@ -111,20 +111,12 @@ build-npm-client:
 #   variables:
 #     CI_APP_PATH: $CI_SERVER_PATH
 
-<<<<<<< HEAD
-# build-image-client:
-#   needs: ["build-npm-client"]
-#   extends: .build-image
-#   variables:
-#     CI_APP_PATH: $CI_CLIENT_PATH
-=======
 # Images
 build-image-client:
   needs: ["build-npm-client"]
   extends: .build-image
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
->>>>>>> b42341009b9e676ead2e4f8749bb4af35b4bdde6
 
 # build-image-server:
 #   needs: ["build-npm-server"]
@@ -137,13 +129,8 @@ build-image-client:
 #   variables:
 #     CI_APP_PATH: $CI_POSTGRES_PATH
 
-<<<<<<< HEAD
-# deploy-all:
-#   extends: .deploy
-=======
 build-manifests:
   extends: .create-manifests
->>>>>>> b42341009b9e676ead2e4f8749bb4af35b4bdde6
 
 # == Deploy to staging and run acceptance/smoke tests ==
 deploy-staging-env:
