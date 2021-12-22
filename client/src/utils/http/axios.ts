@@ -8,7 +8,7 @@ export const instance = () => {
     const token = window.localStorage.getItem('token');
     console.log(token);
     const options = {
-        baseURL: `${BASE_URL}/api`,
+        baseURL: `${BASE_URL}api`,
         headers: {
             Authorization: token ? `Bearer ${token}` : ''
         } 
