@@ -12,7 +12,7 @@ module.exports = function override(config) {
       'images': path.resolve(__dirname, 'src/images'),
       'pages': path.resolve(__dirname, 'src/pages'),
       'types': path.resolve(__dirname, 'src/types'),
-      'http': path.resolve(__dirname, 'src/utils/http'),
+      'http': path.resolve(__dirname, 'src/utils/http')
     },
   };
 
