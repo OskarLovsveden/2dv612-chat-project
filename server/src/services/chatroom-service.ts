@@ -1,5 +1,5 @@
-import Chatroom, { ChatroomCreationAttributes } from '../models/chatroom';
 import sequelize from '../db/postgres';
+import Chatroom, { ChatroomCreationAttributes } from '../models/chatroom';
 
 export default class ChatRoomService {
     public async create(chatroom: ChatroomCreationAttributes): Promise<Chatroom> {
