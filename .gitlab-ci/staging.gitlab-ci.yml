@@ -15,12 +15,12 @@
     - kubectl create secret docker-registry regcred --namespace="$dev_env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > regcred.yaml
     - kubectl delete -f ./ --ignore-not-found
     - kubectl apply -f ./
+    - kubectl wait --for=condition=ready pod -l app=postgres -n development # Wait for database to run
   artifacts:
     paths:
       - helm/manifests
   tags:
     - $CI_RUNNER_TAG
-
 
 .acc-test:
   image: node:16-alpine
@@ -28,17 +28,17 @@
     - !reference [.rules-deploy, rules]
   stage: staging
   script:
-    # - cd $CI_APP_PATH
-    # - ls -la
-    # - npm run test:acc
-    - echo "Hurra testerna lyckades!"
+    - cd $CI_APP_PATH
+    - ls -la
+    - echo $DEV_USERNAME
+    - npm run test:acc
+    # - echo "Hurra testerna lyckades!"
   cache:
     key: "$CI_APP_PATH-test-$CI_COMMIT_REF_SLUG"
     paths:
       - $CI_APP_PATH/node_modules
   tags:
     - $CI_RUNNER_TAG
-
 
 .cleanup:
   stage: staging
