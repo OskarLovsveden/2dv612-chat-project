@@ -9,8 +9,8 @@ let token;
 // const API = 'koa-backend-svc.development.svc.cluster.local:5000';
 const API = process.env.API;
 const loginData = {
-    username: process.env.DEV_ADMIN_USERNAME,
-    password: process.env.DEV_ADMIN_PASS
+    username: process.env.DEV_USERNAME,
+    password: process.env.DEV_PASS
 };
 
 describe('Auth Endpoints', () => {

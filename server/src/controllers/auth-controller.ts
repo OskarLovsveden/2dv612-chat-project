@@ -1,16 +1,17 @@
 import { Context } from 'koa';
-import User from '../models/user';
+import UserService from '../services/user-service';
 import { createToken } from '../utils/jwt-helper';
+import User from '../models/User';
 
 export default class AuthController {
-    private userModel: User = new User();
+    private userService: UserService = new UserService();
 
     public async login(ctx: Context): Promise<void> {
         try {
             
             const { username, password } = ctx.request.body;
 
-            const userModel = await this.userModel.validateLogin(username, password);
+            const userModel = await this.userService.validateLogin(username, password, User);
             const token = await createToken({
                 id: userModel.id,
                 role: userModel.role,
