@@ -1,11 +1,7 @@
 import { Server as SocketServer, Socket } from 'socket.io';
 import ChatRoom from '../services/chatroom-service';
 import UserService from '../services/user-service';
-import {
-    EventChatMessage,
-    EventJoinRoom,
-    EventLogin
-} from '../types/event-data-types';
+import { EventChatMessage, EventLogin } from '../types/event-data-types';
 import SocketRooms from './socket-rooms';
 import SocketUsers from './socket-users';
 
@@ -70,16 +66,16 @@ export default class SocketServices {
         this.logOnlineUsers();
     }
 
-    public handleJoinRoom(data: EventJoinRoom, socket: Socket): void {
-    /*  const room = this.rooms.find((r: any) => r.room_id === data.room_id);
-        console.log(room);
-        console.log(data);
-        if (room) {
-            console.log(`User: ${data.user_id} joined room: ${data.room_id}`);
-            socket.join(room.room_id);
-            socket.to(room.room_id).emit('room-message', { username: data.user_id, message: 'Welcome' });
-        } */
-    }
+    // public handleJoinRoom(data: EventJoinRoom, socket: Socket): void {
+    //     const room = this.rooms.find((r: any) => r.room_id === data.room_id);
+    //     console.log(room);
+    //     console.log(data);
+    //     if (room) {
+    //         console.log(`User: ${data.user_id} joined room: ${data.room_id}`);
+    //         socket.join(room.room_id);
+    //         socket.to(room.room_id).emit('room-message', { username: data.user_id, message: 'Welcome' });
+    //     } 
+    // }
 
     private logOnlineUsers() {
         console.log('All users online');
