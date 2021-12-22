@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import { dbConfig } from '../../db/postgres';
+import dbConfig from '../../db/postgres';
 
 const Chatroom = dbConfig.define('Chatroom', {
     id: {

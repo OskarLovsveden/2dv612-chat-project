@@ -1,20 +1,20 @@
-import { useNavigate } from "react-router-dom";
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../../context/AuthProvider";
+import { useNavigate } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { AuthContext } from '../../context/AuthProvider';
 
-interface PublicProps {
+type PublicProps = {
   component: React.ComponentType;
 }
 
 export const Public = ({ component: RouteComponent }: PublicProps) => {
-  const { isAuthenticated } = useContext(AuthContext);
-  const navigate = useNavigate();
+    const { isAuthenticated } = useContext(AuthContext);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isAuthenticated) navigate("/");
-  }, [isAuthenticated, navigate]);
+    useEffect(() => {
+        if (isAuthenticated) navigate('/');
+    }, [isAuthenticated, navigate]);
 
-  return <>{!isAuthenticated && <RouteComponent />}</>;
+    return <>{!isAuthenticated && <RouteComponent />}</>;
 };
 
 export default Public;

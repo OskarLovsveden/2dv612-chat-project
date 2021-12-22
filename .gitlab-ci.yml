@@ -1,4 +1,5 @@
 include:
+<<<<<<< HEAD
   - local: '.gitlab-ci/vars.gitlab-ci.yml'
   - local: '.gitlab-ci/rules.gitlab-ci.yml'
   - local: '.gitlab-ci/terraform.gitlab-ci.yml'
@@ -42,17 +43,134 @@ stages:
 #   extends: .build-npm
 #   variables:
 #     CI_APP_PATH: $CI_CLIENT_PATH
+=======
+  - local: ".gitlab-ci/vars.gitlab-ci.yml"
+  - local: ".gitlab-ci/rules.gitlab-ci.yml"
+  - local: ".gitlab-ci/install_dependencies.gitlab-ci.yml"
+  - local: ".gitlab-ci/test.gitlab-ci.yml"
+  - local: ".gitlab-ci/build.gitlab-ci.yml"
+  - local: ".gitlab-ci/staging.gitlab-ci.yml"
+  - local: ".gitlab-ci/deploy.gitlab-ci.yml"
+
+stages:
+  - install-dependencies
+  - test
+  - build
+  - staging
+  - deploy
+
+# Install dependencies 
+npm-install-client:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_CLIENT_PATH/**/*
+  extends: .npm-install
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
+
+npm-install-server:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_SERVER_PATH/**/*
+  extends: .npm-install
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
+
+# Unit tests
+test-eslint-client:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_CLIENT_PATH/**/*
+  needs: ["npm-install-client"]
+  extends: .eslint
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - $CI_CLIENT_PATH/eslint-junit.xml
+
+test-eslint-server:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_SERVER_PATH/**/*
+  needs: ["npm-install-server"]
+  extends: .eslint
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - $CI_SERVER_PATH/eslint-junit.xml
+
+test-unit-server:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_SERVER_PATH/**/*
+  needs: ["npm-install-server"]
+  extends: .unit-test
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - $CI_SERVER_PATH/junit.xml
+
+test-unit-client:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+      changes:
+        - $CI_CLIENT_PATH/**/*
+  needs: ["npm-install-client"]
+  extends: .unit-test
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - $CI_CLIENT_PATH/junit.xml
+
+## Build
+build-npm-client:
+  extends: .build-npm
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
+>>>>>>> b42341009b9e676ead2e4f8749bb4af35b4bdde6
 
 # build-npm-server:
 #   extends: .build-npm
 #   variables:
 #     CI_APP_PATH: $CI_SERVER_PATH
 
+<<<<<<< HEAD
 # build-image-client:
 #   needs: ["build-npm-client"]
 #   extends: .build-image
 #   variables:
 #     CI_APP_PATH: $CI_CLIENT_PATH
+=======
+# Images
+build-image-client:
+  needs: ["build-npm-client"]
+  extends: .build-image
+  variables:
+    CI_APP_PATH: $CI_CLIENT_PATH
+>>>>>>> b42341009b9e676ead2e4f8749bb4af35b4bdde6
 
 # build-image-server:
 #   needs: ["build-npm-server"]
@@ -65,7 +183,28 @@ stages:
 #   variables:
 #     CI_APP_PATH: $CI_POSTGRES_PATH
 
+<<<<<<< HEAD
 # deploy-all:
 #   extends: .deploy
+=======
+build-manifests:
+  extends: .create-manifests
+>>>>>>> b42341009b9e676ead2e4f8749bb4af35b4bdde6
 
+# == Deploy to staging and run acceptance/smoke tests ==
+deploy-staging-env:
+  extends: .deploy-test-env
 
+run-staging-tests:
+  needs: ["deploy-staging-env"]
+  extends: .acc-test
+  variables:
+    CI_APP_PATH: $CI_SERVER_PATH
+
+cleanup-staging-env:
+  needs: ["run-staging-tests"]
+  extends: .cleanup
+# Deploy to production
+
+deploy-production:
+  extends: .deploy

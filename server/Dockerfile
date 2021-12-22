@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:alpine
 
 USER node
 RUN mkdir /home/node/app
@@ -13,4 +13,4 @@ ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
 # CMD npm run $NODE_ENV
-CMD npm run dev
+ENTRYPOINT npm run $NODE_ENV

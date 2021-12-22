@@ -1,5 +1,5 @@
-import { Chatroom } from "./Chatroom";
-import { DirectMessage } from "./DirectMessage";
+import { Chatroom } from './Chatroom';
+import { DirectMessage } from './DirectMessage';
 
 type HomeContextState = {
   activeChat?: Chatroom | DirectMessage;

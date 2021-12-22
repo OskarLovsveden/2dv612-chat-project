@@ -290,3 +290,7 @@ $RECYCLE.BIN/
 */.vault/**
 infrastructure/cache/*
 **/clouds.yaml
+
+
+eslint-junit.xml
+junit.xml

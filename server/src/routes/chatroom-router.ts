@@ -25,7 +25,7 @@ export default class ChatroomRouter {
         );
             
         this._router.get('/',
-            // (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
+            (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
             (ctx: Context) => this.controller.getAll(ctx)
         );
 
