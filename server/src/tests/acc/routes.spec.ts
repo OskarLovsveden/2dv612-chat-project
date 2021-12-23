@@ -6,8 +6,7 @@ import UserService from '../../services/user-service';
 
 chai.use(chaiHttp);
 
-console.log(process.env)
-
+console.log(process.env);
 
 let token;
 const api = process.env.NODE_ENV && process.env.NODE_ENV === 'test' ? process.env.API_CLUSTER_IP : 'http://localhost:5000';
