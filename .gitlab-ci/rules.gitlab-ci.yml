@@ -1,27 +1,19 @@
-.rules-dev:
-  rules:
-    - if: $CI_COMMIT_BRANCH == 'dev'
-    
-.rules-dev-mr:
-  rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
-
-.rules-master:
-  rules:
-    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
-
-.rules-master-mr:
-  rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
-
 .rules-merge:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
-.rules-stage:
+.rules-deps-tests:
   rules:
-    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+    - if: $CI_COMMIT_BRANCH == 'dev'
+
+.rules-build-stage:
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
     - if: $CI_COMMIT_BRANCH == 'dev'
 
 .rules-deploy:
