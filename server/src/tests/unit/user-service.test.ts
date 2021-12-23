@@ -1,8 +1,8 @@
 // // Unit test the services.
 import { expect } from 'chai';
 import mockUser from './models/userMock';
-import UserService from '../services/chatroom-service';
-import User from '../models/chatroom';
+import UserService from '../../services/chatroom-service';
+import User from '../../models/chatroom';
 
 const sut = new UserService(mockUser);
 const userID = 1;

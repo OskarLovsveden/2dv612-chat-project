@@ -1,8 +1,8 @@
 // // Unit test the services.
 import { expect } from 'chai';
 import mockChatroom from './models/chatroomMock';
-import ChatRoomService from '../services/chatroom-service';
-import Chatroom from '../models/chatroom';
+import ChatRoomService from '../../services/chatroom-service';
+import Chatroom from '../../models/chatroom';
 
 const sut = new ChatRoomService(mockChatroom);
 const roomID = 1;

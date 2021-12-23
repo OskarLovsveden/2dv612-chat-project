@@ -32,7 +32,6 @@ describe('Auth Endpoints', () => {
         }).expect(200);
 
         token = res.body.token;
-        console.log(token);
     });
 
     it('POST /api/auth/login should return status code 400', (done: any) => {
