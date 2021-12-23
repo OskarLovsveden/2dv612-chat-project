@@ -8,7 +8,6 @@
   script:
     - echo $CI_APP_PATH
     - cd $CI_APP_PATH
-    - npm install --legacy-peer-deps --force
     - ls -la
     - npm run build
   cache:

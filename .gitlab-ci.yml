@@ -20,7 +20,7 @@ npm-install-client:
     - !reference [.rules-deps-tests, rules]
     - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
       changes:
-        - $CI_CLIENT_PATH/**/*
+        - $CI_CLIENT_PATH/package-lock.json
   extends: .npm-install
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
@@ -30,7 +30,7 @@ npm-install-server:
     - !reference [.rules-deps-tests, rules]
     - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
       changes:
-        - $CI_SERVER_PATH/**/*
+        - $CI_SERVER_PATH/package-lock.json
   extends: .npm-install
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
