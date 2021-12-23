@@ -10,7 +10,7 @@ console.log(process.env);
 console.log(process.env.POSTGRES_HOST)
 
 let token;
-const api = process.env.NODE_ENV && process.env.NODE_ENV === 'production' ? process.env.API_CLUSTER_IP : 'http://localhost:5000';
+const api = process.env.NODE_ENV && process.env.NODE_ENV === 'production' ? 'process.env.API_CLUSTER_IP' : 'http://localhost:5000';
 
 describe('Auth Endpoints', async () => {
     const testUserCreds = {

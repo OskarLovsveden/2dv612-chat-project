@@ -4,7 +4,7 @@ metadata:
   namespace: {{ .Values.env_name }}
   name: all-vars
 data:
-  POSTGRES_HOST: "{{.Values.postgres_svc}}.{{.Values.env_name}}.svc.cluster.local:{{.Values.postgres_port}}"
+  POSTGRES_HOST: "{{.Values.postgres_svc}}"
   POSTGRES_PORT: "{{.Values.postgres_port}}"
   POSTGRES_DB: {{ .Values.postgres_db_name }}
   POSTGRES_USER: {{ .Values.postgres_user }}
