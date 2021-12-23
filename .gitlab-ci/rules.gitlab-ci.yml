@@ -1,24 +1,43 @@
 .rules-dev:
   rules:
     - if: $CI_COMMIT_BRANCH == 'dev'
+    
+.rules-dev-mr:
+  rules:
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
 
 .rules-master:
   rules:
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+
+.rules-master-mr:
+  rules:
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
-    
 
-.rules-compile-npm:
+.rules-merge:
   rules:
-    - changes: # Run the job if the package.json file has been modified.
-        - $CI_APP_PATH/package.json
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
-.rules-ci-only:
+.rules-stage:
   rules:
-    - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
-      changes:
-        - $CI_APP_PATH/**/*
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
+    - if: $CI_COMMIT_BRANCH == 'dev'
+
+.rules-deploy:
+  rules:
+    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+
+# .rules-compile-npm:
+#   rules:
+#     - changes: # Run the job if the package.json file has been modified.
+#         - $CI_APP_PATH/package.json
+
+# .rules-ci-only:
+#   rules:
+#     - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
+#       changes:
+#         - $CI_APP_PATH/**/*
         
 # .rules-test:
 #   rules:

@@ -1,7 +1,7 @@
 .deploy:
   stage: deploy
   rules:
-    - !reference [.rules-master, rules]
+    - !reference [.rules-deploy, rules]
   image:
     name: bitnami/kubectl:latest
     entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.

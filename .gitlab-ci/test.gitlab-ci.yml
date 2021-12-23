@@ -1,5 +1,8 @@
 # Eslint test
 .eslint:
+  rules:
+    - !reference [.rules-stage, rules]
+    - !reference [.rules-merge, rules]
   image: node:16-alpine
   stage: test
   script:
@@ -16,6 +19,9 @@
 
 # Unit test
 .unit-test:
+  rules:
+    - !reference [.rules-stage, rules]
+    - !reference [.rules-merge, rules]
   image: node:16-alpine
   stage: test
   script:
