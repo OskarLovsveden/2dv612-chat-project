@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 let token;
 const api = process.env.NODE_ENV && process.env.NODE_ENV === 'ci' ? 'koa-backend-svc.development.svc.cluster.local:5000' : 'http://localhost:5000';
 
-console.log(api)
+console.log(api);
 
 describe('Auth Endpoints', async () => {
     const testUserCreds = {
