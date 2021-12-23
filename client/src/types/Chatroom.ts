@@ -5,6 +5,11 @@ export type Chatroom = {
   tag: string;
 };
 
+export type AdminPanelChatRooms = {
+  private: Chatroom[];
+  public: Chatroom[];
+}
+
 export type NewChatroom = {
   name: string;
   is_public: boolean;
