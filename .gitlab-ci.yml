@@ -124,8 +124,8 @@ stages:
 #   variables:
 #     CI_APP_PATH: $CI_POSTGRES_PATH
 
-# build-manifests:
-#   extends: .create-manifests
+build-manifests:
+  extends: .create-manifests
 
 # == Deploy to staging and run acceptance/smoke tests ==
 deploy-staging-env:
