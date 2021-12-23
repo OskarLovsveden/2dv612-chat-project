@@ -1,7 +1,8 @@
 .deploy-test-env:
   stage: staging
   rules:
-    - !reference [.rules-staging, rules]
+    - !reference [.rules-dev, rules]
+    - !reference [.rules-master, rules]
   image:
     name: bitnami/kubectl:latest
     entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
@@ -25,7 +26,8 @@
 .acc-test:
   image: node:16-alpine
   rules:
-    - !reference [.rules-deploy, rules]
+    - !reference [.rules-dev, rules]
+    - !reference [.rules-master, rules]
   stage: staging
   script:
     - cd $CI_APP_PATH
@@ -42,7 +44,8 @@
 .cleanup:
   stage: staging
   rules:
-    - !reference [.rules-deploy, rules]
+    - !reference [.rules-dev, rules]
+    - !reference [.rules-master, rules]
   image:
     name: bitnami/kubectl:latest
     entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.

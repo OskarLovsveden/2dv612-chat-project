@@ -1,11 +1,13 @@
-.rules-staging:
+.rules-dev:
   rules:
-    - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
     - if: $CI_COMMIT_BRANCH == 'dev'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
 
-.rules-deploy:
+.rules-master:
   rules:
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH'
+    
 
 .rules-compile-npm:
   rules:
