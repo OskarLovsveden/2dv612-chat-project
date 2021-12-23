@@ -29,7 +29,7 @@
   script:
     - cd $CI_APP_PATH
     - ls -la
-    - POSTGRES_PASSWORD=${pg_pass} npm run test:acc
+    - NODE_ENV=ci POSTGRES_PASSWORD=${pg_pass} npm run test:acc
   cache:
     key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
     paths:
