@@ -6,6 +6,8 @@ import UserService from '../../services/user-service';
 
 chai.use(chaiHttp);
 
+console.log(process.env.TEST)
+
 let token;
 const api = process.env.NODE_ENV && process.env.NODE_ENV === 'ci' ? 'koa-backend-svc.development.svc.cluster.local:5000' : 'http://localhost:5000';
 
