@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 console.log(process.env);
 
 let token;
-const api = process.env.NODE_ENV && process.env.NODE_ENV === 'test' ? process.env.API_CLUSTER_IP : 'http://localhost:5000';
+const api = process.env.NODE_ENV && process.env.NODE_ENV === 'production' ? process.env.API_CLUSTER_IP : 'http://localhost:5000';
 
 describe('Auth Endpoints', async () => {
     const testUserCreds = {

@@ -10,7 +10,7 @@
     "build": "tsc -p .",
     "dev": "ts-node-dev -r dotenv/config src/app.ts",
     "test": "NODE_ENV=test ts-mocha -r dotenv/config src/**/*.test.ts",
-    "test:acc": "NODE_ENV=test ts-mocha -r dotenv/config src/**/*.spec.ts",
+    "test:acc": "ts-mocha -r dotenv/config src/**/*.spec.ts",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "lint-fix": "eslint --fix --ignore-path .eslintignore --ext .js,.ts ."
   },
