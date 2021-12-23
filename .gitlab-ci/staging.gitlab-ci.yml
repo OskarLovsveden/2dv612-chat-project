@@ -1,7 +1,7 @@
 .deploy-test-env:
   stage: staging
   rules:
-    - !reference [.rules-deploy, rules]
+    - !reference [.rules-staging, rules]
   image:
     name: bitnami/kubectl:latest
     entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
@@ -32,7 +32,6 @@
     - ls -la
     - echo $DEV_USERNAME
     - npm run test:acc
-    # - echo "Hurra testerna lyckades!"
   cache:
     key: "$CI_APP_PATH-test-$CI_COMMIT_REF_SLUG"
     paths:

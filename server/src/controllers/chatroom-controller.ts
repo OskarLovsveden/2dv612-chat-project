@@ -1,9 +1,9 @@
 import { Context } from 'koa';
 import SocketServices from '../utils/socket-services';
 import ChatRoomService from '../services/chatroom-service';
-import Chatroom, { ChatroomCreationAttributes } from '../models/chatroom';
 import UserService from '../services/user-service';
 import User from '../models/user';
+import Chatroom, { ChatroomCreationAttributes } from '../models/chatroom';
 
 export default class ChatroomController {
     readonly table = 'chatroom';

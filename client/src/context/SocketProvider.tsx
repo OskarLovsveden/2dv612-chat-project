@@ -1,8 +1,8 @@
 import { io, Socket } from 'socket.io-client';
 import { createContext, useEffect, useState } from 'react';
+import config from '../config'
 
-const URL = 'http://localhost:5000';
-const PATH = '/socket.io';
+const {BASE_URL, SOCKET_PATH} = config
 
 type SocketContextState = {
   socket?: Socket;
@@ -21,7 +21,7 @@ type SocketProviderProps = { children: React.ReactChild[] | React.ReactChild };
 
 export const SocketProvider = ({ children }: SocketProviderProps) => {
     const [socket] = useState(
-        io(URL, { path: PATH })
+        io(BASE_URL, { path: SOCKET_PATH })
     );
 
     useEffect(() => {
