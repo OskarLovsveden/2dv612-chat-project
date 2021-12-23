@@ -6,31 +6,24 @@ import UserService from '../../services/user-service';
 
 chai.use(chaiHttp);
 
-
-
 let token;
-let api = process.env.NODE_ENV && process.env.NODE_ENV === 'test' ? process.env.API_CLUSTER_IP : 'http://localhost:5000'
-const loginData = {
-    username: process.env.DEV_USERNAME,
-    password: process.env.DEV_PASS
-};
-
+const api = process.env.NODE_ENV && process.env.NODE_ENV === 'test' ? process.env.API_CLUSTER_IP : 'http://localhost:5000';
 
 describe('Auth Endpoints', async () => {
     const testUserCreds = {
-        username: "Bertil",
-        password: "Bertil1",
-        role: "admin",
+        username: 'Bertil',
+        password: 'Bertil1',
+        role: 'admin',
         active: true
-    }
+    };
 
     it('Create test user', async () => {
         const testUser = await new UserService().create(testUserCreds);
-        console.log(testUser)
-    })
+        console.log(testUser);
+    });
     
     it('POST /api/auth/login should respond with a token', async () => {
-        const res = await request(api).post('/api/auth/login').send({username: testUserCreds.username, password: testUserCreds.password}).expect((res: any) => {
+        const res = await request(api).post('/api/auth/login').send({ username: testUserCreds.username, password: testUserCreds.password }).expect((res: any) => {
             res.body.token.length;
         }).expect(200);
 
