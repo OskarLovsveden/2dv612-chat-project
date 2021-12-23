@@ -24,3 +24,10 @@ export type SequelizeConfig = {
         database: string,
         port: number
 }
+
+export type DBMessage = {
+    user_id: number;
+    message: string;
+    id: number;
+    room_id: number; 
+}
