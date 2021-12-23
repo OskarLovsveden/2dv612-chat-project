@@ -42,7 +42,6 @@ test-eslint-client:
     - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
       changes:
         - $CI_CLIENT_PATH/**/*
-  needs: ["npm-install-client"]
   extends: .eslint
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
@@ -58,7 +57,6 @@ test-eslint-server:
     - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
       changes:
         - $CI_SERVER_PATH/**/*
-  needs: ["npm-install-server"]
   extends: .eslint
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
@@ -74,7 +72,6 @@ test-unit-server:
     - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
       changes:
         - $CI_SERVER_PATH/**/*
-  needs: ["npm-install-server"]
   extends: .unit-test
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
@@ -90,7 +87,6 @@ test-unit-client:
     - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
       changes:
         - $CI_CLIENT_PATH/**/*
-  needs: ["npm-install-client"]
   extends: .unit-test
   variables:
     CI_APP_PATH: $CI_CLIENT_PATH
