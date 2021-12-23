@@ -14,4 +14,4 @@ data:
   PUBLIC_URL: "{{.Values.public_url}}"
   DEV_USERNAME: "{{.Values.dev_username}}"
   DEV_PASS: "{{.Values.dev_password}}"
-  API_IP: "{{.Values.server_svc}}.{{.Values.env_name}}.svc.cluster.local:{{.Values.server_port}}"
+  API_CLUSTER_IP: "{{.Values.server_svc}}.{{.Values.env_name}}.svc.cluster.local:{{.Values.server_port}}"
