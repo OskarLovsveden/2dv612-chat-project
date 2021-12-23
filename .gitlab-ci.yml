@@ -66,8 +66,6 @@ test-eslint-server:
 
 test-unit-server:
   rules:
-    - !reference [.rules-master, rules]
-    - !reference [.rules-master-mr, rules]
     - if: "$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH"
       changes:
         - $CI_SERVER_PATH/**/*
