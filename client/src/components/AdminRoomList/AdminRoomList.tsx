@@ -1,24 +1,22 @@
 import {
-    Key,
     useEffect,
     useState
 } from 'react';
 import adminImg from '../../images/admin.png';
-import deleteImg from '../../images/delete.png';
 import ChatroomService from '../../utils/http/chatroom-service';
 import { Chatroom as ChatroomType, AdminPanelChatRooms } from '../../types/Chatroom';
 import Chatroom from '../Chatroom';
 import ListItem from './ListItem';
 
 
-
-type AdminRoomListProps = {
-    editUserImg: string
+enum ModalState {
+  UPDATE,
+  CREATE,
+  NONE
 }
 
-const AdminRoomList = ({ editUserImg }: AdminRoomListProps) => {
-    /*  const [chatRoomData, setChatRoomData] = useState<ChatroomType[]>([]); */
-    const [chatrooms, setChatrooms] = useState<AdminPanelChatRooms>({ private: [], public: [] });
+const AdminRoomList = () => {
+    const [chatrooms, setChatrooms] = useState<AdminPanelChatRooms>({ private_rooms: [], public_rooms: [] });
     const [modalState, setModalState] = useState<ModalState>(ModalState.NONE);
     const [activeChatroom, setActiveChatroom] = useState<ChatroomType>();
 
@@ -30,18 +28,37 @@ const AdminRoomList = ({ editUserImg }: AdminRoomListProps) => {
             const privateRooms = resChatRoom.data.filter((pr: any) => pr.is_public === false);
             const publicRooms = resChatRoom.data.filter((pr:any) => pr.is_public === true);
             setChatrooms({
-                private: [...chatrooms?.private, ...privateRooms],
-                public: [...chatrooms?.public, ...publicRooms]
+                private_rooms: [...chatrooms?.private_rooms, ...privateRooms],
+                public_rooms: [...chatrooms?.public_rooms, ...publicRooms]
 
             });
-            /* setChatRoomData(resChatRoom.data); */
         })();
     }, []);
 
-    const removeChatroom = async (id: number) => {
+    const updateChatroom = async (chatroom: ChatroomType) => {
+        setActiveChatroom(chatroom);
+        if (modalState === ModalState.UPDATE) {
+            setModalState(ModalState.NONE);
+        } else {
+            setModalState(ModalState.UPDATE);
+        }
+    };
+
+    const removeChatroom = async (id: number, isPublicRoom: boolean) => {
         const chatroomService = new ChatroomService();
         await chatroomService.delete(id);
-        setChatRoomData(chatRoomData.filter((cr: ChatroomType) => cr.id !== id));
+
+        if(isPublicRoom) {
+            setChatrooms({
+                public_rooms: [...chatrooms.public_rooms.filter((pr: any) => pr.id != id)],
+                private_rooms: [...chatrooms.private_rooms]
+            });
+        } else {
+            setChatrooms({
+                private_rooms: [...chatrooms.private_rooms.filter((pr: any) => pr.id != id)],
+                public_rooms: [...chatrooms.public_rooms]
+            });
+        }
     };
 
     return (
@@ -51,12 +68,17 @@ const AdminRoomList = ({ editUserImg }: AdminRoomListProps) => {
                 <div className="px-6 py-4">
                     <img className="w-1/4 h-1/4" src={adminImg} alt="Admin" />
                     <div className="font-bold text-xl mb-2">Admin</div>
-                    {}
                     <ListItem 
-                        rooms={chatrooms.public}
+                        chatrooms={chatrooms.public_rooms}
+                        removeChatroom={(id: number) => removeChatroom(id, true)}
+                        updateChatroom={updateChatroom}
+                        title='Public rooms'
                     />
                     <ListItem 
-                        rooms={chatrooms.private}
+                        chatrooms={chatrooms.private_rooms}
+                        removeChatroom={(id: number) => removeChatroom(id, false)}
+                        updateChatroom={updateChatroom}
+                        title='Private rooms'
                     />
                 </div>
             </div>

@@ -6,8 +6,8 @@ export type Chatroom = {
 };
 
 export type AdminPanelChatRooms = {
-  private: Chatroom[];
-  public: Chatroom[];
+  private_rooms: Chatroom[];
+  public_rooms: Chatroom[];
 }
 
 export type NewChatroom = {
