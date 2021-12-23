@@ -23,6 +23,4 @@ export default class IndexRouter {
         this._router.use('/api/auth', this.authRouter.router);
     }
 
-
-
 }

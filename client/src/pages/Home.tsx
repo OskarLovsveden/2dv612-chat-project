@@ -1,5 +1,4 @@
 import Chat from '../components/Chatroom/Chat';
-
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import SideBar from '../components/sidebar/SideBar';
@@ -7,7 +6,7 @@ import { HomeProvider } from '../context/HomeProvider';
 import { SocketProvider } from '../context/SocketProvider';
 
 const Home = () => {
-    const { user } = useContext(AuthContext);
+    const { isAuthenticated } = useContext(AuthContext);
 
     return (
         <HomeProvider>
@@ -84,7 +83,7 @@ const Home = () => {
                                                 </svg>
                                             </span>
                                         </span>
-                                        {user && <Chat username={user.username} id={user.id} />}
+                                        {isAuthenticated && <Chat/>}
                                         {/* {user && <Chat Toggle={onChat} username={user.username} />} */}
                                     </div>
                                 </div>

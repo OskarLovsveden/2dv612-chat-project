@@ -19,34 +19,44 @@ export default class UserRouter {
     }
 
     private initializeRoutes(): void {
-        this._router.get('/:id',
-            
-            (ctx: Context, next: Next) => this.authMiddleware.requestHasValidToken(ctx, next), 
+        this._router.get(
+            '/:id',
+
+            (ctx: Context, next: Next) =>
+                this.authMiddleware.requestHasValidToken(ctx, next),
             (ctx: Context) => this.controller.get(ctx)
         );
-        
-        this._router.get('/',
-            (ctx: Context, next: Next) => this.authMiddleware.requestHasValidToken(ctx, next), 
+
+        this._router.get(
+            '/',
+            (ctx: Context, next: Next) =>
+                this.authMiddleware.requestHasValidToken(ctx, next),
             (ctx: Context) => this.controller.getAll(ctx)
         );
-        
-        this._router.post('/',
-            (ctx: Context, next: Next) => this.userMiddleware.requestHasValidParams(ctx, next),
+
+        this._router.post(
+            '/',
+            (ctx: Context, next: Next) =>
+                this.userMiddleware.requestHasValidParams(ctx, next),
             /*  (ctx: Context, next: Next) => this.authMiddleware.requestHasValidToken(ctx, next),
             (ctx: Context, next: Next) => this.authMiddleware.requesterHasAdminRights(ctx, next), */
             (ctx: Context) => this.controller.add(ctx)
         );
-        
-        this._router.delete('/:id',
-            (ctx: Context, next: Next) => this.authMiddleware.requestHasValidToken(ctx, next),
+
+        this._router.delete(
+            '/:id',
+            (ctx: Context, next: Next) =>
+                this.authMiddleware.requestHasValidToken(ctx, next),
             // (ctx: Context, next: Next) => this.authMiddleware.requesterHasAdminRights(ctx, next),
             (ctx: Context) => this.controller.remove(ctx)
         );
-        this._router.put('/:id',
-            (ctx: Context, next: Next) => this.authMiddleware.requestHasValidToken(ctx, next),
-            (ctx: Context, next: Next) => this.authMiddleware.requesterHasAdminRights(ctx, next),
+        this._router.put(
+            '/:id',
+            (ctx: Context, next: Next) =>
+                this.authMiddleware.requestHasValidToken(ctx, next),
+            (ctx: Context, next: Next) =>
+                this.authMiddleware.requesterHasAdminRights(ctx, next),
             (ctx: Context) => this.controller.update(ctx)
         );
-        
     }
 }

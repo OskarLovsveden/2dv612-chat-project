@@ -1,13 +1,13 @@
 import { io, Socket } from 'socket.io-client';
 import { createContext, useEffect, useState } from 'react';
+import config from '../config'
 
-const URL = 'http://localhost:5000';
-const PATH = '/socket.io';
+const {BASE_URL, SOCKET_PATH} = config
 
 type SocketContextState = {
   socket?: Socket;
   connectUser: (userID: number | string) => void;
-  sendMessage: (room_id: number, user_id: number, message: string) => void;
+  sendMessage: (room_id: number, user_id: number, message: string, username: string) => void;
 };
 
 const initialState: SocketContextState = {
@@ -21,7 +21,7 @@ type SocketProviderProps = { children: React.ReactChild[] | React.ReactChild };
 
 export const SocketProvider = ({ children }: SocketProviderProps) => {
     const [socket] = useState(
-        io(URL, { path: PATH })
+        io(BASE_URL, { path: SOCKET_PATH })
     );
 
     useEffect(() => {
@@ -39,8 +39,8 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
         socket.emit('user-connect', { user_id: userID });
     };
 
-    const sendMessage = (room_id: number, user_id: number, message: string) => {
-        socket.emit('chat-message', { room_id, user_id, message });
+    const sendMessage = (room_id: number, user_id: number, message: string, username: string) => {
+        socket.emit('chat-message', { room_id, user_id, message, username });
     };
 
     /* socket.emit("user-connect", { user_id: user?.id }); */

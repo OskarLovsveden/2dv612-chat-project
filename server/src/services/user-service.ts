@@ -1,74 +1,71 @@
-import { RequestUserCreate } from '../types/request-types';
 import { DBUser } from '../types/db-types';
 import bcrypt from 'bcryptjs';
-import { RespondUser } from '../types/respond-types';
-import { Model } from 'sequelize';
+import User, { UserCreationAttributes } from '../models/user';
 
 export default class UserService {
     private SALT_ROUNDS = 10;
 
-    public async getAll(User: any): Promise<RespondUser[]> {
-        const users = await User.findAll();
-
-        if (!users) {
-            return [];
-        }
-
-        return users;
+    public async getAll(): Promise<User[]> {
+        return User.findAll();
     }
 
-    public async validateLogin(username: string, password: string, User: any): Promise<DBUser> {
-        const user = await User.findOne({ username });
+    public async validateLogin(
+        username: string,
+        password: string
+    ): Promise<DBUser> {
+        const user = await User.findOne({ where: { username: username } });
 
-        if(!user || !(await bcrypt.compare(password, user.password))) {
+        if (!user || !(await bcrypt.compare(password, user.password))) {
             throw new Error('Invalid email or password');
         }
-        
-        return user;
-    } 
-
-    public async get(userID: number, User: any): Promise<RespondUser> {
-        const user = await User.findOne({ id: userID });
 
         return user;
     }
 
-    public async create(clientUser: RequestUserCreate, User: any): Promise<boolean> {
-        const hashedPassword = await bcrypt.hash(clientUser.password, this.SALT_ROUNDS);
+    public async get(id: number): Promise<User> {
+        const user = await User.findByPk(id);
+        return user;
+    }
 
-        const userCreated = await User.create({ 
+    public async create(clientUser: UserCreationAttributes): Promise<User> {
+        const hashedPassword = await bcrypt.hash(
+            clientUser.password,
+            this.SALT_ROUNDS
+        );
+
+        return User.create({
             username: clientUser.username,
-            password: hashedPassword, 
+            password: hashedPassword,
             role: clientUser.role,
-            active: clientUser.active 
+            active: clientUser.active
         });
-
-        console.log(userCreated);
-        if (!userCreated) {
-            return false;
-        }
-
-        return true;
     }
 
-    public async delete(userID: number, User: any): Promise<boolean> {
-        const userDeleted = await User.destroy({ id: userID });
-
-        if (!userDeleted) {
-            return false;
-        }
-
-        return true;
+    public async delete(id: number): Promise<number> {
+        return User.destroy({ where: { id: id } });
     }
 
-    public async update(userID: number, user: any, User: Model) {
-        const updatedUser = await User.update({
-            username: user.username,
-            active: user.active,
-            role: user.role
-        }, { where: { id: userID }
+    public async updateUsername(id: number, username: string): Promise<User> {
+        const user = await this.get(id);
+        return user.update({
+            ...user,
+            username
         });
+    }
 
-        return updatedUser;
+    public async updateRole(id: number, role: string): Promise<User> {
+        const user = await this.get(id);
+        return user.update({
+            ...user,
+            role
+        });
+    }
+
+    public async updateActive(id: number, active: boolean): Promise<User> {
+        const user = await this.get(id);
+        return user.update({
+            ...user,
+            active
+        });
     }
 }
