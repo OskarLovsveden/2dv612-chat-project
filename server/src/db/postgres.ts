@@ -1,11 +1,11 @@
 import { Sequelize } from 'sequelize';
 import * as pg from 'pg';
 
-const database = process.env.POSTGRES_DB;
-const host = process.env.POSTGRES_HOST;
-const password = process.env.POSTGRES_PASSWORD;
-const username = process.env.POSTGRES_USER;
-const port = parseInt(process.env.POSTGRES_PORT);
+const database = process.env.POSTGRES_DB || 'localhost';
+const host = process.env.POSTGRES_HOST || 'pg-svc.development.svc.cluster.local:5000';
+const password = process.env.POSTGRES_PASSWORD || 'chatapp';
+const username = process.env.POSTGRES_USER || 'postgres';
+const port = parseInt(process.env.POSTGRES_PORT || '5432');
 
 const sequelize = new Sequelize(database, username, password, {
     host: host,
