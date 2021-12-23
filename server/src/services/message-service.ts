@@ -1,9 +1,4 @@
-
-// import { RequestMessageCreate } from '../types/request-types';
-import sequelize from '../db/postgres';
-import Message, {MessageCreationAttributes} from '../models/message';
-// import { Model } from 'sequelize';
-
+import Message, { MessageCreationAttributes } from '../models/message';
 
 export default class MessageService {
     public async create(msg: MessageCreationAttributes): Promise<Message> {
@@ -22,13 +17,13 @@ export default class MessageService {
         return Message.findAll({ where: { room_id: roomID } });
     }
 
-    public async updateMsg( msgId: number, newMsg: string) {
+    public async updateMsg(msgId: number, newMsg: string) {
         const msgUpdate = await this.get(msgId);
 
         return msgUpdate.update({
             ...msgUpdate,
             message: newMsg
-        })
+        });
     }
 
     public async delete(messageID: number): Promise<number> {

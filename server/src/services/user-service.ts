@@ -1,4 +1,3 @@
-import { DBUser } from '../types/db-types';
 import bcrypt from 'bcryptjs';
 import User, { UserCreationAttributes } from '../models/user';
 
@@ -12,7 +11,7 @@ export default class UserService {
     public async validateLogin(
         username: string,
         password: string
-    ): Promise<DBUser> {
+    ): Promise<User> {
         const user = await User.findOne({ where: { username: username } });
 
         if (!user || !(await bcrypt.compare(password, user.password))) {

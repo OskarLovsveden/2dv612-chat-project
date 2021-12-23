@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.paths.json",
   "compilerOptions": {
-    "outDir": "./build", // where to put the compiled JS files
+    "outDir": "./build",
     "rootDir": "./src",
     "target": "es5",
     "lib": [

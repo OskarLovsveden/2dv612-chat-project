@@ -1,7 +1,7 @@
 
 import { Context } from 'koa';
 import MessageService from '../services/message-service';
-import Message, { MessageCreationAttributes } from '../models/message';
+import { MessageCreationAttributes } from '../models/message';
 
 export default class MessageController {
     readonly table = 'message';
@@ -9,22 +9,18 @@ export default class MessageController {
 
     public async add(ctx: Context): Promise<void> {
         try {
-            // const msg = ctx.request.body;
-            const { id, name, message, user_id , room_id }  = ctx.request.body;
-
-            console.log('Namn: '+ name + ' Message: '+ message + ' room id ' + room_id )
+            const { name, message, user_id , room_id }: MessageCreationAttributes = ctx.request.body;
 
             if (!name || !message || !room_id || !user_id) {
-                console.log('Can not create message, faulty body')
+                console.log('Can not create message, faulty body');
             }
 
             const msg: MessageCreationAttributes = {
-                // id: id,
                 name: name,
                 message: message,
                 user_id: user_id,
                 room_id: room_id
-            }
+            };
 
             const messageCreated = await this.messageService.create(msg);
 
@@ -92,7 +88,6 @@ export default class MessageController {
             console.error(e);
         }
     }
-
 
     // remove one message
     public async remove(ctx: Context): Promise<void> {

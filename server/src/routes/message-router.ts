@@ -18,8 +18,7 @@ export default class MessageRouter {
 
     private initializeRoutes(): void {
         this._router.post('/',
-            (ctx: Context, next: Next) => 
-                this.middleware.requestHasValidToken(ctx, next),
+            (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
             (ctx: Context) => this.controller.add(ctx)
         );
         this._router.get('/room/:id', 
