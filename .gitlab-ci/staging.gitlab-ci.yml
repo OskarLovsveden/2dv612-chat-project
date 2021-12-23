@@ -1,7 +1,7 @@
 .deploy-test-env:
   stage: staging
   rules:
-    - !reference [.rules-deploy, rules]
+    - !reference [.rules-build-stage, rules]
   image:
     name: bitnami/kubectl:latest
     entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
@@ -10,12 +10,11 @@
     - echo "$K8_CONFIG" > /.kube/config
     - cat /.kube/config
   script:
-    - dep_env="development"
     - cd helm/manifests/dev/ChattApp/templates
     - kubectl create secret docker-registry regcred --namespace="$dev_env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > regcred.yaml
     - kubectl delete -f ./ --ignore-not-found
     - kubectl apply -f ./
-    - kubectl wait --for=condition=ready pod -l app=postgres -n development # Wait for database to run
+    - kubectl wait --for=condition=Ready pods --all -n "$dev_env" --timeout=60s # Wait for all pods to be ready
   artifacts:
     paths:
       - helm/manifests
@@ -25,16 +24,14 @@
 .acc-test:
   image: node:16-alpine
   rules:
-    - !reference [.rules-deploy, rules]
+    - !reference [.rules-build-stage, rules]
   stage: staging
   script:
     - cd $CI_APP_PATH
     - ls -la
-    - echo $DEV_USERNAME
-    - npm run test:acc
-    # - echo "Hurra testerna lyckades!"
+    - NODE_ENV=ci POSTGRES_PASSWORD=${pg_pass} npm run test:acc
   cache:
-    key: "$CI_APP_PATH-test-$CI_COMMIT_REF_SLUG"
+    key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
     paths:
       - $CI_APP_PATH/node_modules
   tags:
@@ -43,7 +40,7 @@
 .cleanup:
   stage: staging
   rules:
-    - !reference [.rules-deploy, rules]
+    - !reference [.rules-build-stage, rules]
   image:
     name: bitnami/kubectl:latest
     entrypoint: [""] # default entry point is kubectl but we want to create the kubeconf first.
