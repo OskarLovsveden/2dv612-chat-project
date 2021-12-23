@@ -2,20 +2,26 @@ import sequelize from '../db/postgres';
 import Chatroom, { ChatroomCreationAttributes } from '../models/chatroom';
 
 export default class ChatRoomService {
+    private chatroom;
+
+    constructor(R?: Chatroom) {
+        this.chatroom = R ? R : Chatroom;
+    }
+    
     public async create(chatroom: ChatroomCreationAttributes): Promise<Chatroom> {
-        return Chatroom.create(chatroom);
+        return this.chatroom.create(chatroom);
     }
 
     public async get(id: number): Promise<Chatroom> {
-        return Chatroom.findByPk(id);
+        return this.chatroom.findOne({ where: { id: id } });
     }
 
     public async getAll(): Promise<Chatroom[]> {
-        return Chatroom.findAll();
+        return this.chatroom.findAll();
     }
 
     public async delete(roomID: number): Promise<number> {
-        return Chatroom.destroy({ where: { id: roomID } });
+        return this.chatroom.destroy({ where: { id: roomID } });
     }
 
     public async update(roomID: number, updates: Chatroom) {
