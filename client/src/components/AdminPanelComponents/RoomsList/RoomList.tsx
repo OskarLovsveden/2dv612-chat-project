@@ -2,11 +2,11 @@ import {
     useEffect,
     useState
 } from 'react';
-import adminImg from '../../images/admin.png';
-import ChatroomService from '../../utils/http/chatroom-service';
-import { Chatroom as ChatroomType, AdminPanelChatRooms } from '../../types/Chatroom';
-import Chatroom from '../Chatroom';
-import ListItem from './ListItem';
+import adminImg from '../../../images/admin.png';
+import ChatroomService from '../../../utils/http/chatroom-service';
+import { Chatroom as ChatroomType, AdminPanelChatRooms } from '../../../types/Chatroom';
+import Chatroom from '../../Chatroom';
+import ListItems from './ListItems';
 
 
 enum ModalState {
@@ -15,7 +15,7 @@ enum ModalState {
   NONE
 }
 
-const AdminRoomList = () => {
+const RoomList = () => {
     const [chatrooms, setChatrooms] = useState<AdminPanelChatRooms>({ private_rooms: [], public_rooms: [] });
     const [modalState, setModalState] = useState<ModalState>(ModalState.NONE);
     const [activeChatroom, setActiveChatroom] = useState<ChatroomType>();
@@ -68,13 +68,13 @@ const AdminRoomList = () => {
                 <div className="px-6 py-4">
                     <img className="w-1/4 h-1/4" src={adminImg} alt="Admin" />
                     <div className="font-bold text-xl mb-2">Admin</div>
-                    <ListItem 
+                    <ListItems 
                         chatrooms={chatrooms.public_rooms}
                         removeChatroom={(id: number) => removeChatroom(id, true)}
                         updateChatroom={updateChatroom}
                         title='Public rooms'
                     />
-                    <ListItem 
+                    <ListItems 
                         chatrooms={chatrooms.private_rooms}
                         removeChatroom={(id: number) => removeChatroom(id, false)}
                         updateChatroom={updateChatroom}
@@ -86,4 +86,4 @@ const AdminRoomList = () => {
     );
 };
 
-export default AdminRoomList;
+export default RoomList;
