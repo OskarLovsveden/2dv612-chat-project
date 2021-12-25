@@ -15,15 +15,15 @@ const UsersList = ({ users, title, listRoleImg, removeUser }: UsersListProps) =>
                 <img className="w-1/4 h-1/4" src={listRoleImg} alt={title} />
                 <div className="font-bold text-xl mb-2">{title}</div>
                 <ul>
-                    {users.map(
-                        (u: User, i: number) => (
+                    {
+                        users.map((user: User, i: number) => (
                             <ListItem
-                                user={u}
+                                user={user}
                                 key={i}
                                 removeUser={(id: number) => removeUser(id)}
                             />
-                        )
-                    )}
+                        ))
+                    }
                 </ul>
             </div>
         </div>

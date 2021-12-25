@@ -14,12 +14,10 @@ const ListItem = ({ user, removeUser }: ListItemProps) => {
             <div className="inline-flex space-x-4 ">
                 <h3>{user.username} </h3>
                 <button
-                    onClick={() => {
-                        removeUser(user.id);
-                    }}
+                    onClick={() => { removeUser(user.id); }}
                     className="btn btn-red btn-red:hover"
-                >
-                        REMOVE
+                > 
+                    REMOVE 
                 </button>
                 <Link to="/create-user">
                     <img

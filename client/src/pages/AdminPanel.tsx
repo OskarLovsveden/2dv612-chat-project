@@ -11,7 +11,6 @@ import RoomList from '../components/AdminPanelComponents/RoomsList/RoomList';
 import UsersList from '../components/AdminPanelComponents/UsersList/UsersList';
 
 const AdminPanel = () => {
-    /* const [userData, setUserData] = useState<User[]>([]); */
     const [users, setUsers] = useState<AdminPanelUsers>({ chatters: [], moderators: [] });
 
     useEffect(() => {
@@ -45,23 +44,21 @@ const AdminPanel = () => {
 
 
     return (
-        <>
-            <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 bg-indigo-600 h-screen">
-                <RoomList />
-                <UsersList 
-                    title="Moderator"
-                    listRoleImg={moderatorImg}
-                    users={users.moderators}
-                    removeUser={(id: number) => removeUser(id, ROLE.MOD)}
-                />
-                <UsersList 
-                    title="Chattare"
-                    listRoleImg={chattareImg}
-                    users={users.chatters}
-                    removeUser={(id: number) => removeUser(id, ROLE.USER)}
-                />
-            </div>
-        </>
+        <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 bg-indigo-600 h-screen">
+            <RoomList />
+            <UsersList 
+                title="Moderator"
+                listRoleImg={moderatorImg}
+                users={users.moderators}
+                removeUser={(id: number) => removeUser(id, ROLE.MOD)}
+            />
+            <UsersList 
+                title="Chattare"
+                listRoleImg={chattareImg}
+                users={users.chatters}
+                removeUser={(id: number) => removeUser(id, ROLE.USER)}
+            />
+        </div>
     );
 };
 
