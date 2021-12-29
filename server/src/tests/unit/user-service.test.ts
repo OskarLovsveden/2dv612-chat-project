@@ -44,7 +44,7 @@ describe('User service', () => {
             .to.be.lengthOf(0);
     });
 
-    it('Should create new user', async () => {
+    it('Should create new user with hashed password', async () => {
         const user = await (await sut.create(newUser)).toJSON();
         
         expect(user)
