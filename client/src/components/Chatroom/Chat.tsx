@@ -3,6 +3,7 @@ import Message from './Message';
 import { HomeContext } from '../../context/HomeProvider';
 import { AuthContext } from '../../context/AuthProvider';
 import { SocketContext } from '../../context/SocketProvider';
+import ChatroomUserList from '../sidebar/ChatroomUserList';
 
 type MessageEvent = {
     user_id: number, username: string, message: string, room_id: number
@@ -136,6 +137,7 @@ export default function ChatRoom() {
                                         </span>
                                     </button>
                                 </div>
+                                { activeChat && <ChatroomUserList /> }
                             </div>
                         </div>
                     </div>

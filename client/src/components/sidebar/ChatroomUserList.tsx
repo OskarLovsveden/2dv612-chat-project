@@ -1,18 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import chattare from '../../images/chattare.png';
 import moderator from '../../images/moderator.png';
-import type { User } from '../../types/User';
+import type { User, ChatroomUser } from '../../types/User';
 import UserService from '../../utils/http/user-service';
+import ChatroomService from '../../utils/http/chatroom-service';
+import { HomeContext } from '../../context/HomeProvider';
 
 const ChatroomUserList = () => {
     const [chatroomUsers, setChatroomUsers] = useState<User[]>([]);
 
+    const { activeChat } = useContext(HomeContext);
+
+
     useEffect(() => {
         (async () => {
-            // TODO get correct users from chatroom
-            const userService = new UserService();
-            const resChatroomUsers = await userService.getAll();
-            setChatroomUsers(resChatroomUsers.data);
+            if(activeChat ) {
+                console.log('kommer vi hit elelr')
+                // TODO get correct users from chatroom
+                const chatroomService = new ChatroomService();
+                const resChatroomUsers = await chatroomService.getChatroomUsers( activeChat.id);
+                console.log( 'hshdasd ' + resChatroomUsers);
+                setChatroomUsers(resChatroomUsers.data);
+            }
         })();
     }, []);
 
