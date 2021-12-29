@@ -1,6 +1,5 @@
 import sequelize from '../db/postgres';
 import Chatroom, { ChatroomCreationAttributes } from '../models/chatroom';
-import User from '../models/user';
 import { RespondUser } from '../types/respond-types';
 import UserService from './user-service';
 
@@ -26,11 +25,11 @@ export default class ChatRoomService {
     }
 
     public async getChatroomUsers(id: number): Promise<RespondUser[]> {
-        const room = await this.chatroom.findOne({ where: { id: id} });
-        const user = []
+        const room = await this.chatroom.findOne({ where: { id: id } });
+        const user = [];
         for (const userId of room.user_ids) {
-            let foundUser = await this.userService.get(userId);
-            user.push( {
+            const foundUser = await this.userService.get(userId);
+            user.push({
                 id: foundUser.id,
                 username: foundUser.username,
                 active: foundUser.active,
