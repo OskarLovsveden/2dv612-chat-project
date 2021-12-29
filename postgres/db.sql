@@ -173,6 +173,73 @@ ALTER TABLE ONLY public.users
 ALTER TABLE ONLY public.chatroom
     ADD CONSTRAINT chatroom_pkey PRIMARY KEY (id);
 
+
+
+--
+-- Name: message; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.message (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    message character varying(255) NOT NULL,
+    user_id integer,
+    room_id integer
+);
+
+
+ALTER TABLE public.message OWNER TO postgres;
+
+--
+-- Name: messages_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.message_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.message_id_seq OWNER TO postgres;
+
+--
+-- Name: messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.message_id_seq OWNED BY public.message.id;
+
+
+
+--
+-- Name: message id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.message ALTER COLUMN id SET DEFAULT nextval('public.message_id_seq'::regclass);
+
+--
+-- Data for Name: message; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.message (id, name, message, user_id, room_id) FROM stdin;
+\.
+
+--
+-- Name: message_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.message_id_seq', 1, false);
+
+--
+-- Name: message message_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.message
+    ADD CONSTRAINT message_pkey PRIMARY KEY (id);
+
+
 --
 -- PostgreSQL database dump complete
 --
