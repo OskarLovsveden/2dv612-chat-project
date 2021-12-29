@@ -1,15 +1,15 @@
 // // Unit test the user service.
 import { expect } from 'chai';
 import mockUser from './models/userMock';
-import UserService from '../../services/user-service';
-import User from '../../models/user';
+import UserService from '../../services/chatroom-service';
+import User from '../../models/chatroom';
 
 const sut = new UserService(mockUser);
 const userID = 1;
 
 describe('User service', () => {
     it('Should return a user', async () => {
-        const actual = (await sut.get(userID)).toJSON();
+        const actual = await (await sut.get(userID)).toJSON();
 
         expect(actual)
             .to.be.an('object')
@@ -18,7 +18,7 @@ describe('User service', () => {
     });
 
     it('Should return array of users', async () => {
-        const actual = (await sut.getAll()).map((a: User) => a.toJSON());
+        const actual = await (await sut.getAll()).map((a: User) => a.toJSON());
 
         expect(actual).to.be.lengthOf.greaterThan(0).to.have.an('array');
     });

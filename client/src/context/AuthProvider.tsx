@@ -52,7 +52,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const authService = new AuthService();
         const res = await authService.login(user);
 
-        const { username, id, role, token } = res;
+        const { username, id, role, token } = res.data;
         localStorage.setItem('token', token);
 
         dispatch({

@@ -26,9 +26,9 @@
     "start": "craco start",
     "build": "craco build",
     "test": "jest --coverage",
-    "lint": "eslint --ignore-path .eslintignore --ext .tsx,.ts .",
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts . ",
     "eject": "react-scripts eject",
-    "lint-fix": "eslint --fix --ignore-path .eslintignore --ext .tsx,.ts ."
+    "lint-fix": "eslint --fix --ignore-path .eslintignore --ext .js,.ts ."
   },
   "eslintConfig": {
     "extends": [
