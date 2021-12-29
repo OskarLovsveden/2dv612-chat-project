@@ -4,8 +4,14 @@ import User, { UserCreationAttributes } from '../models/user';
 export default class UserService {
     private SALT_ROUNDS = 10;
 
+    private user;
+
+    constructor(U?: User) {
+        this.user = U ? U : User;
+    }
+    
     public async getAll(): Promise<User[]> {
-        return User.findAll();
+        return this.user.findAll();
     }
 
     public async validateLogin(
@@ -22,7 +28,7 @@ export default class UserService {
     }
 
     public async get(id: number): Promise<User> {
-        const user = await User.findByPk(id);
+        const user = await this.user.findOne({ where: { id: id } });
         return user;
     }
 
@@ -32,7 +38,7 @@ export default class UserService {
             this.SALT_ROUNDS
         );
 
-        return User.create({
+        return this.user.create({
             username: clientUser.username,
             password: hashedPassword,
             role: clientUser.role,
@@ -41,7 +47,7 @@ export default class UserService {
     }
 
     public async delete(id: number): Promise<number> {
-        return User.destroy({ where: { id: id } });
+        return this.user.destroy({ where: { id: id } });
     }
 
     public async updateUsername(id: number, username: string): Promise<User> {
