@@ -27,18 +27,16 @@ export default class ChatRoomService {
 
     public async getChatroomUsers(id: number): Promise<RespondUser[]> {
         const room = await this.chatroom.findOne({ where: { id: id} });
-        // const user = []
-        const users = await this.userService.getAll();
-        const user = users.filter(us => room.user_ids.includes(us.id))
-        // for (const userId of room.user_ids) {
-        //     let foundUser = await this.userService.get(userId);
-        //     user.push( {
-        //         id: foundUser.id,
-        //         username: foundUser.username,
-        //         active: foundUser.active,
-        //         role: foundUser.role
-        //     });
-        // }
+        const user = []
+        for (const userId of room.user_ids) {
+            let foundUser = await this.userService.get(userId);
+            user.push( {
+                id: foundUser.id,
+                username: foundUser.username,
+                active: foundUser.active,
+                role: foundUser.role
+            });
+        }
         return user;
     }
 

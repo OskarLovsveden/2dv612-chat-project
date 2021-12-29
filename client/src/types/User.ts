@@ -37,10 +37,3 @@ export type AuthResponse = {
     role: string,
     status: boolean
 }
-
-export type ChatroomUser = {
-    username: string,
-    id: number,
-    active: string,
-    role: string
-}
