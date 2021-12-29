@@ -16,6 +16,7 @@
     - kubectl delete -f ./ --ignore-not-found
     - kubectl apply -f ./
     - kubectl wait --for=condition=ready pod -l app=postgres -n development # Wait for database to run
+    - kubectl wait --for=condition=ready pod -l app=koa-backend -n development # Wait for backend server to run
   artifacts:
     paths:
       - helm/manifests
