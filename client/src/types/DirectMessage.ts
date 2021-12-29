@@ -1,4 +1,4 @@
 export type DirectMessage = {
-  name: string;
-  id: number;
+    name: string;
+    id: number;
 };

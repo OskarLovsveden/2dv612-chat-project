@@ -6,6 +6,11 @@ export type User = {
     role: ROLE;
 };
 
+export type AdminPanelUsers = {
+    moderators: User[];
+    chatters: User[];
+};
+
 export type NewUser = {
     username: string;
     password: string;
@@ -26,9 +31,9 @@ export type LoginResponse = {
 };
 
 export type AuthResponse = {
-    token: string
-    id: number,
-    username: string,
-    role: string,
-    status: boolean
-}
+    token: string;
+    id: number;
+    username: string;
+    role: string;
+    status: boolean;
+};

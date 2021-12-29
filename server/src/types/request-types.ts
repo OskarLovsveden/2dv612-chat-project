@@ -11,3 +11,10 @@ export type RequestRoomCreate = {
     tag: string;
     user_ids: number[];
 }
+
+export type RequestMessageCreate = {
+    name: string;
+    message: string;
+    userID: number;
+    roomID: number
+}
