@@ -1,11 +1,11 @@
-import Chat from '../components/Chatroom/Chat';
 import { useContext } from 'react';
+import Chat from '../components/Chatroom/Chat';
 import { AuthContext } from '../context/AuthProvider';
 import SideBar from '../components/sidebar/SideBar';
 import { HomeProvider } from '../context/HomeProvider';
 import { SocketProvider } from '../context/SocketProvider';
 
-const Home = () => {
+const Home: React.FC = () => {
     const { isAuthenticated } = useContext(AuthContext);
 
     return (
@@ -28,7 +28,7 @@ const Home = () => {
                                                 stroke="currentColor"
                                                 viewBox="0 0 24 24"
                                             >
-                                                <path d="M4 6h16M4 12h16M4 18h16"></path>
+                                                <path d="M4 6h16M4 12h16M4 18h16" />
                                             </svg>
                                         </span>
                                     </span>
@@ -43,7 +43,7 @@ const Home = () => {
                                                 stroke="currentColor"
                                                 viewBox="0 0 24 24"
                                             >
-                                                <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                                <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                             </svg>
                                         </span>
                                     </span>
@@ -51,8 +51,8 @@ const Home = () => {
                                 <div className="flex-1 bg-indigo-500">
                                     <div className="flex-1 text-right">
                                         <span className="inline-block text-gray-700">
-                      Status:{' '}
-                                            <span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white"></span>{' '}
+                                            Status:{' '}
+                                            <span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white" />{' '}
                                             <b>Online</b>
                                             <span className="inline-block align-text-bottom">
                                                 <svg
@@ -64,7 +64,7 @@ const Home = () => {
                                                     viewBox="0 0 24 24"
                                                     className="w-4 h-4"
                                                 >
-                                                    <path d="M19 9l-7 7-7-7"></path>
+                                                    <path d="M19 9l-7 7-7-7" />
                                                 </svg>
                                             </span>
                                         </span>
@@ -79,20 +79,17 @@ const Home = () => {
                                                     viewBox="0 0 24 24"
                                                     className="w-4 h-4"
                                                 >
-                                                    <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                                                    <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                                                 </svg>
                                             </span>
                                         </span>
-                                        {isAuthenticated && <Chat/>}
-                                        {/* {user && <Chat Toggle={onChat} username={user.username} />} */}
+                                        {isAuthenticated && <Chat />}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/* <button onClick={onChat}>open chat</button>
-        {chatOpen && <Chat Toggle={ onChat } />} */}
             </SocketProvider>
         </HomeProvider>
     );
