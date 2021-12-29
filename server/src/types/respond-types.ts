@@ -11,3 +11,10 @@ export type RespondRoom = {
     public: boolean;
     tag: string;
 }
+
+export type RespondMessage = {
+    userID: number;
+    message: string;
+    id: number;
+    roomID: number;
+}

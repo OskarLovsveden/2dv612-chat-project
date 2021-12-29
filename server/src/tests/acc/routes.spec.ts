@@ -2,32 +2,30 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import request from 'supertest';
+import UserService from '../../services/user-service';
 
 chai.use(chaiHttp);
 
 let token;
-let API;
-let loginData;
+const api = process.env.NODE_ENV && process.env.NODE_ENV === 'ci' ? 'koa-backend-svc.development.svc.cluster.local:5000' : 'http://localhost:5000';
 
-if (process.env.NODE_ENV === 'production') {
-    API = 'koa-backend-svc.development.svc.cluster.local:5000';
+console.log(api);
 
-    loginData = {
-        username: 'useradmin',
-        password: 'admin123'
+describe('Auth Endpoints', async () => {
+    const testUserCreds = {
+        username: 'Bertil',
+        password: 'Bertil1',
+        role: 'admin',
+        active: true
     };
-} else {
-    API = 'localhost:5000';
 
-    loginData = {
-        username: process.env.DEV_USERNAME,
-        password: process.env.DEV_PASS
-    };
-}
-
-describe('Auth Endpoints', () => {
+    it('Create test user', async () => {
+        const testUser = await new UserService().create(testUserCreds);
+        console.log(testUser);
+    });
+    
     it('POST /api/auth/login should respond with a token', async () => {
-        const res = await request(API).post('/api/auth/login').send(loginData).expect((res: any) => {
+        const res = await request(api).post('/api/auth/login').send({ username: testUserCreds.username, password: testUserCreds.password }).expect((res: any) => {
             res.body.token.length;
         }).expect(200);
 
@@ -35,24 +33,24 @@ describe('Auth Endpoints', () => {
     });
 
     it('POST /api/auth/login should return status code 400', (done: any) => {
-        request(API).post('/api/auth/login').expect(400, done);
+        request(api).post('/api/auth/login').expect(400, done);
     });
 });
 
 describe('Application Endpoints', () => {
     it('GET /api/user should return status code 200', (done: any) => {
-        request(API).get('/api/user').set('Authorization', 'Bearer ' + token).expect(200, done);
+        request(api).get('/api/user').set('Authorization', 'Bearer ' + token).expect(200, done);
     });
 
     it('GET /api/user should return status code 401', (done: any) => {
-        request(API).get('/api/user').expect(401, done);
+        request(api).get('/api/user').expect(401, done);
     });
 
     it('GET /api/room should return status code 200', (done: any) => {
-        request(API).get('/api/room').set('Authorization', 'Bearer ' + token).expect(200, done);
+        request(api).get('/api/room').set('Authorization', 'Bearer ' + token).expect(200, done);
     });
 
     it('GET /api/room should return status code 401', (done: any) => {
-        request(API).get('/api/room').expect(401, done);
+        request(api).get('/api/room').expect(401, done);
     });
 });

@@ -6,6 +6,11 @@ export type User = {
     role: ROLE;
 };
 
+export type AdminPanelUsers = {
+    moderators: User[];
+    chatters: User[];
+}
+
 export type NewUser = {
     username: string;
     password: string;

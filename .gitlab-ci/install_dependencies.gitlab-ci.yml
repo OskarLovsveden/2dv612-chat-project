@@ -7,11 +7,13 @@
     - cd $CI_APP_PATH
     - echo $CI_APP_PATH
     - ls -la
-    - npm install --only=dev
+    - npm set cache .npm
+    - npm ci
     - ls -la
   cache:
-    key: "$CI_APP_PATH-test-$CI_COMMIT_REF_SLUG"
+    key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
     paths:
       - $CI_APP_PATH/node_modules
+      - $CI_APP_PATH/.npm
   tags:
     - $CI_RUNNER_TAG
