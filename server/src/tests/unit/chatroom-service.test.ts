@@ -15,7 +15,7 @@ const newRoom = {
 
 describe('Chatroom service', () => {
     it('Should return chatroom', async () => {
-        const actual = await (await sut.get(roomID)).toJSON();
+        const actual = (await sut.get(roomID)).toJSON();
 
         expect(actual)
             .to.be.an('object')
@@ -24,7 +24,7 @@ describe('Chatroom service', () => {
     });
 
     it('Should return array of rooms', async () => {
-        const actual = await (await sut.getAll()).map((a: Chatroom) => a.toJSON());
+        const actual = (await sut.getAll()).map((a: Chatroom) => a.toJSON());
         
         expect(actual).to.be.lengthOf.greaterThan(0).to.be.an('array');
     });

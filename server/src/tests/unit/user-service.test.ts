@@ -15,7 +15,7 @@ const newUser = {
 
 describe('User service', () => {
     it('Should return a user', async () => {
-        const actual = await (await sut.get(userID)).toJSON();
+        const actual = (await sut.get(userID)).toJSON();
 
         expect(actual)
             .to.be.an('object')
@@ -24,7 +24,7 @@ describe('User service', () => {
     });
 
     it('Should return array of users', async () => {
-        const actual = await (await sut.getAll()).map((a: User) => a.toJSON());
+        const actual = (await sut.getAll()).map((a: User) => a.toJSON());
 
         expect(actual)
             .to.be.lengthOf.greaterThan(0)

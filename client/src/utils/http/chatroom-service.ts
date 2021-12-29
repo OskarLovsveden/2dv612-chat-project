@@ -1,28 +1,27 @@
-import { AxiosResponse } from 'axios';
 import { instance } from './axios';
 import type { Chatroom, NewChatroom } from '../../types/Chatroom';
 
 class ChatroomService {
     private http = instance();
 
-    getAll(): Promise<AxiosResponse<Chatroom[], any>> {
-        return this.http.get<Array<Chatroom>>('/room');
+    async getAll(): Promise<Chatroom[]> {
+        return (await this.http.get<Chatroom[]>('/room')).data;
     }
 
-    get(id: number): Promise<AxiosResponse<Chatroom, any>> {
-        return this.http.get<Chatroom>(`/room/${id}`);
+    async get(id: number): Promise<Chatroom> {
+        return (await this.http.get<Chatroom>(`/room/${id}`)).data;
     }
 
-    create(data: NewChatroom): Promise<AxiosResponse<any, any>> {
-        return this.http.post<any>('/room', data);
+    async create(data: NewChatroom): Promise<any> {
+        return (await this.http.post<any>('/room', data)).data;
     }
 
-    update(data: Chatroom, id: number): Promise<AxiosResponse<any, any>> {
-        return this.http.put<any>(`/room/${id}`, data);
+    async update(data: Chatroom, id: number): Promise<any> {
+        return (await this.http.put<any>(`/room/${id}`, data)).data;
     }
 
-    delete(id: number): Promise<AxiosResponse<any, any>> {
-        return this.http.delete<any>(`/room/${id}`);
+    async delete(id: number): Promise<any> {
+        return (await this.http.delete<any>(`/room/${id}`)).data;
     }
 }
 

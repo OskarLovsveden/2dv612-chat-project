@@ -1,27 +1,26 @@
-import { AxiosResponse } from 'axios';
 import { instance } from './axios';
 import type { User, NewUser } from '../../types/User';
 
 class UserService {
     private http = instance();
 
-    getAll(): Promise<AxiosResponse<User[], any>> {
-        return this.http.get<Array<User>>('/user');
+    async getAll(): Promise<User[]> {
+        return (await this.http.get<User[]>('/user')).data;
     }
 
-    get(id: number): Promise<AxiosResponse<User, any>> {
-        return this.http.get<User>(`/user/${id}`);
+    async get(id: number): Promise<User> {
+        return (await this.http.get<User>(`/user/${id}`)).data;
     }
 
-    create(data: NewUser): Promise<AxiosResponse<any, any>> {
-        return this.http.post<any>('/user', data);
+    async create(data: NewUser): Promise<any> {
+        return (await this.http.post<any>('/user', data)).data;
     }
 
-    update(data: User, id: number): Promise<AxiosResponse<any, any>> {
+    async update(data: User, id: number): Promise<any> {
         return this.http.put<any>(`/user/${id}`, data);
     }
 
-    delete(id: number): Promise<AxiosResponse<any, any>> {
+    async delete(id: number): Promise<any> {
         return this.http.delete<any>(`/user/${id}`);
     }
 }

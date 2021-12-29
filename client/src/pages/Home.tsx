@@ -6,7 +6,7 @@ import { HomeProvider } from '../context/HomeProvider';
 import { SocketProvider } from '../context/SocketProvider';
 import Logout from '../components/Logout';
 
-const Home = () => {
+const Home: React.FC = () => {
     const { isAuthenticated } = useContext(AuthContext);
 
     return (
@@ -44,15 +44,12 @@ const Home = () => {
                                         </span>
                                         <span className="inline-block ml-10 text-gray-700 hover:text-gray-900 align-bottom" />
                                         {isAuthenticated && <Chat />}
-                                        {/* {user && <Chat Toggle={onChat} username={user.username} />} */}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/* <button onClick={onChat}>open chat</button>
-        {chatOpen && <Chat Toggle={ onChat } />} */}
             </SocketProvider>
         </HomeProvider>
     );
