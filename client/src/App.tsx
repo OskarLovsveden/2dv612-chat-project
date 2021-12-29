@@ -12,7 +12,7 @@ import UserCreation from './components/UserCreation';
 import { AuthContext } from './context/AuthProvider';
 
 function App(): JSX.Element {
-    const { user, isAuthenticated } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     return (
         <div className="App">
@@ -28,25 +28,6 @@ function App(): JSX.Element {
                         >
                             Admin
                         </Link>
-
-                        {isAuthenticated ? (
-                            <a
-                                className="no-underline hover:underline"
-                                onClick={() => {
-                                    localStorage.removeItem('token');
-                                }}
-                                href="/"
-                            >
-                                Logout
-                            </a>
-                        ) : (
-                            <Link
-                                className="no-underline hover:underline"
-                                to="/login"
-                            >
-                                Login
-                            </Link>
-                        )}
 
                         <Link
                             className="no-underline hover:underline"

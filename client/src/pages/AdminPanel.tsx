@@ -1,71 +1,113 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import moderatorImg from '../images/moderator.png';
 import chattareImg from '../images/chattare.png';
-import { AdminPanelUsers, User } from '../types/User';
+import editUserImg from '../images/edit.png';
+import type { User } from '../types/User';
 import ROLE from '../types/Role';
 import UserService from '../utils/http/user-service';
-import UsersList from '../components/AdminPanelComponents/UsersList/UsersList';
-import RoomList from '../components/AdminPanelComponents/RoomsList/RoomList';
+import AdminRoomList from '../components/AdminPanelComponents/RoomsList/RoomList';
 
 const AdminPanel: React.FC = () => {
-    const [users, setUsers] = useState<AdminPanelUsers>({
-        chatters: [],
-        moderators: [],
-    });
+    const [userData, setUserData] = useState<User[]>([]);
 
     useEffect(() => {
         (async () => {
             const userService = new UserService();
             const resUser = await userService.getAll();
-
-            const moderators = resUser.filter(
-                (user: User) => user.role === ROLE.MOD
-            );
-            const chatters = resUser.filter(
-                (user: User) => user.role === ROLE.USER
-            );
-
-            setUsers({ chatters: [...chatters], moderators: [...moderators] });
+            setUserData(resUser);
         })();
     }, []);
 
-    const removeUser = async (id: number, userType: ROLE): Promise<void> => {
+    const removeUser = async (id: number): Promise<void> => {
         const userService = new UserService();
         await userService.delete(id);
-
-        if (userType === ROLE.MOD) {
-            setUsers({
-                chatters: [...users.chatters],
-                moderators: [
-                    ...users.moderators.filter((user: User) => user.id !== id),
-                ],
-            });
-        } else if (userType === ROLE.USER) {
-            setUsers({
-                chatters: [
-                    ...users.chatters.filter((user: User) => user.id !== id),
-                ],
-                moderators: [...users.moderators],
-            });
-        }
+        setUserData(userData.filter((ud: User) => ud.id !== id));
     };
 
     return (
-        <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 bg-indigo-600 h-screen">
-            <RoomList />
-            <UsersList
-                title="Moderator"
-                listRoleImg={moderatorImg}
-                users={users.moderators}
-                removeUser={(id: number) => removeUser(id, ROLE.MOD)}
-            />
-            <UsersList
-                title="Chattare"
-                listRoleImg={chattareImg}
-                users={users.chatters}
-                removeUser={(id: number) => removeUser(id, ROLE.USER)}
-            />
-        </div>
+        <>
+            <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 bg-indigo-600 h-screen">
+                <AdminRoomList />
+
+                <div className="rounded overflow-hidden shadow-lg">
+                    <div className="px-6 py-4">
+                        <img
+                            className="w-1/4 h-1/4"
+                            src={moderatorImg}
+                            alt="Moderator"
+                        />
+                        <div className="font-bold text-xl mb-2">Moderator</div>
+                        <ul>
+                            {userData.map(
+                                (user: User) =>
+                                    user.role === ROLE.MOD && (
+                                        <li key={user.id}>
+                                            <div className="inline-flex space-x-4 ">
+                                                <h3>{user.username} </h3>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        removeUser(user.id);
+                                                    }}
+                                                    className="btn btn-red btn-red:hover"
+                                                >
+                                                    REMOVE
+                                                </button>
+                                                <Link to="/create-user">
+                                                    <img
+                                                        className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                                                        src={editUserImg}
+                                                        alt="Edit"
+                                                    />
+                                                </Link>
+                                            </div>
+                                        </li>
+                                    )
+                            )}
+                        </ul>
+                    </div>
+                </div>
+                <div className="rounded overflow-hidden shadow-lg">
+                    <div className="px-6 py-4">
+                        <img
+                            className="w-1/4 h-1/4"
+                            src={chattareImg}
+                            alt="Chattare"
+                        />
+                        <div className="font-bold text-xl mb-2">Chattare</div>
+                        <ul>
+                            {userData.map(
+                                (user: User) =>
+                                    user.role === ROLE.USER && (
+                                        <li key={user.id}>
+                                            <div className="inline-flex space-x-4 ">
+                                                <h3>{user.username} </h3>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        removeUser(user.id);
+                                                    }}
+                                                    className="btn btn-red btn-red:hover"
+                                                >
+                                                    REMOVE
+                                                </button>
+                                                <Link to="/create-user">
+                                                    <img
+                                                        className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                                                        src={editUserImg}
+                                                        alt="Edit"
+                                                    />
+                                                </Link>
+                                            </div>
+                                        </li>
+                                    )
+                            )}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </>
     );
 };
 
