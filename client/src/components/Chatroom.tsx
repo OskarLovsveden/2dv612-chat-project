@@ -97,13 +97,6 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom }) => {
                         defaultValue={chatroom?.tag || ''}
                     />
                 </label>
-                <input
-                    onChange={handleChatroomTag}
-                    className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
-                    type="text"
-                    name="ChatroomTag"
-                    defaultValue={chatroom?.tag || ''}
-                />
                 <label
                     className="block mb-2 text-indigo-500"
                     htmlFor="ChatroomPublic"
@@ -117,19 +110,12 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom }) => {
                         id="ChatroomPublic"
                     />
                 </label>
-                <input
-                    ref={publicRef}
-                    className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
-                    type="checkbox"
-                    defaultChecked={chatroom?.is_public || true}
-                    name="ChatroomPublic"
-                />
-
-                <input
-                    className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded"
+                <button
                     type="submit"
-                    value="Submit"
-                />
+                    className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded"
+                >
+                    Submit
+                </button>
             </form>
         </div>
     );
