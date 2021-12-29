@@ -16,7 +16,6 @@
 #    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev"'
     - if: "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
     - if: $CI_COMMIT_BRANCH == 'dev'
-    - if: $CI_COMMIT_BRANCH == 'unit-test'
 
 .rules-deploy:
   rules:
