@@ -127,7 +127,7 @@ build-image-postgres:
 build-manifests:
   extends: .create-manifests
 
-# == Deploy to staging and run acceptance/smoke tests ==
+# == Deploy to staging and run acceptance/smoke/load tests ==
 deploy-staging-env:
   extends: .deploy-test-env
 
@@ -137,8 +137,12 @@ run-staging-tests:
   variables:
     CI_APP_PATH: $CI_SERVER_PATH
 
+run-load-test:
+  needs: ["deploy-staging-env"]
+  extends: .load-test
+
 cleanup-staging-env:
-  needs: ["run-staging-tests"]
+  needs: ["run-load-test"]
   extends: .cleanup
 # Deploy to production
 
