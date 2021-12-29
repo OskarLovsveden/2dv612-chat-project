@@ -42,7 +42,7 @@
     name: justb4/jmeter:latest
     entrypoint: [""]
   rules:
-    - !reference [.rules-staging, rules]
+    - !reference [.rules-build-stage, rules]
   stage: staging
   script:
     - mkdir testresults
