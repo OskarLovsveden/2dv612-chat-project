@@ -3,28 +3,30 @@ import type { Chatroom, NewChatroom } from '../../types/Chatroom';
 import type { User } from '../../types/User';
 
 class ChatroomService {
-    private http = instance()
+    private http = instance();
 
-    getAll() {
-        return this.http.get<Array<Chatroom>>('/room');
+    async getAll(): Promise<Chatroom[]> {
+        return (await this.http.get<Chatroom[]>('/room')).data;
     }
-    
-    get(id: number) {
-        return this.http.get<Chatroom>(`/room/${id}`);
+
+    async get(id: number): Promise<Chatroom> {
+        return (await this.http.get<Chatroom>(`/room/${id}`)).data;
     }
     getChatroomUsers(id: number) {
         return this.http.get<User[]>(`room/${id}/user`);
     }
 
-    create(data: NewChatroom) {
-        return this.http.post<any>('/room', data);
+    async create(data: NewChatroom): Promise<any> {
+        return (await this.http.post<any>('/room', data)).data;
     }
-    update(data: Chatroom, id: number) {
-        return this.http.put<any>(`/room/${id}`, data);
+
+    async update(data: Chatroom, id: number): Promise<any> {
+        return (await this.http.put<any>(`/room/${id}`, data)).data;
     }
-    delete(id: number) {
-        return this.http.delete<any>(`/room/${id}`);
+
+    async delete(id: number): Promise<any> {
+        return (await this.http.delete<any>(`/room/${id}`)).data;
     }
 }
-  
+
 export default ChatroomService;

@@ -1,30 +1,28 @@
 import { instance } from './axios';
-import type { User } from '../../types/User';
-import type { NewUser } from '../../types/User';
+import type { User, NewUser } from '../../types/User';
 
 class UserService {
-    private http = instance()
+    private http = instance();
 
+    async getAll(): Promise<User[]> {
+        return (await this.http.get<User[]>('/user')).data;
+    }
 
-    getAll() {
-        return this.http.get<Array<User>>('/user');
+    async get(id: number): Promise<User> {
+        return (await this.http.get<User>(`/user/${id}`)).data;
     }
-    
-    get(id: number) {
-        return this.http.get<User>(`/user/${id}`);
+
+    async create(data: NewUser): Promise<any> {
+        return (await this.http.post<any>('/user', data)).data;
     }
-    
-    create(data: NewUser) {
-        return this.http.post<any>('/user', data);
-    }
-    
-    update(data: User, id: number) {
+
+    async update(data: User, id: number): Promise<any> {
         return this.http.put<any>(`/user/${id}`, data);
     }
-  
-    delete(id: number) {
+
+    async delete(id: number): Promise<any> {
         return this.http.delete<any>(`/user/${id}`);
     }
 }
-  
+
 export default UserService;

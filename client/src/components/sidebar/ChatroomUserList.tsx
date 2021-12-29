@@ -5,7 +5,7 @@ import type { User } from '../../types/User';
 import ChatroomService from '../../utils/http/chatroom-service';
 import { HomeContext } from '../../context/HomeProvider';
 
-const ChatroomUserList = () => {
+const ChatroomUserList: React.FC = () => {
     const [chatroomUsers, setChatroomUsers] = useState<User[]>([]);
 
     const { activeChat } = useContext(HomeContext);
@@ -28,12 +28,16 @@ const ChatroomUserList = () => {
                 <div className="inline-flex w-full">
                     <ul>
                         {chatroomUsers.map(
-                            (user: User, i: number) =>
+                            (user: User) =>
                                 user.role === 'user' && (
-                                    <li key={i}>
-                                        <div className="inline-flex space-x-2 space-y-1 ">
-                                            <h3 >{user.username} </h3>
-                                            <img className="w-6 h-6" src={chattare} alt="chattare" />
+                                    <li key={user.id}>
+                                        <div className="inline-flex space-x-2 space-y-1">
+                                            <h3>{user.username} </h3>
+                                            <img
+                                                className="w-6 h-6"
+                                                src={chattare}
+                                                alt="chattare"
+                                            />
                                         </div>
                                     </li>
                                 )
@@ -44,9 +48,9 @@ const ChatroomUserList = () => {
                 <div className="inline-flex w-full">
                     <ul>
                         {chatroomUsers.map(
-                            (user: User, i: number) =>
+                            (user: User) =>
                                 user.role === 'moderator' && (
-                                    <li key={i}>
+                                    <li key={user.id}>
                                         <div className="inline-flex space-x-2 space-y-1">
                                             <h3>{user.username} </h3>
                                             <img
@@ -61,7 +65,7 @@ const ChatroomUserList = () => {
                     </ul>
                 </div>
                 <div>
-                    <div className="sidebar hidden lg:flex w-full flex-2 flex-col pr-6"></div>
+                    <div className="sidebar hidden lg:flex w-full flex-2 flex-col pr-6" />
                 </div>
             </div>
         </div>

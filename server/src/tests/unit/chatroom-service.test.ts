@@ -6,19 +6,25 @@ import Chatroom from '../../models/chatroom';
 
 const sut = new ChatRoomService(mockChatroom);
 const roomID = 1;
+const newRoom = {
+    name: 'room2',
+    is_public: true,
+    tag: ['computers', 'somethingelse'],
+    user_ids: [3, 1, 4]
+};
 
 describe('Chatroom service', () => {
     it('Should return chatroom', async () => {
-        const actual = await (await sut.get(roomID)).toJSON();
+        const actual = (await sut.get(roomID)).toJSON();
 
         expect(actual)
             .to.be.an('object')
-            .to.have.deep.property('name')
+            .to.have.keys(['name', 'is_public', 'tag', 'user_ids', 'id'])
             .not.to.be.undefined;
     });
 
     it('Should return array of rooms', async () => {
-        const actual = await (await sut.getAll()).map((a: Chatroom) => a.toJSON());
+        const actual = (await sut.getAll()).map((a: Chatroom) => a.toJSON());
         
         expect(actual).to.be.lengthOf.greaterThan(0).to.be.an('array');
     });
@@ -32,5 +38,14 @@ describe('Chatroom service', () => {
 
         const actual = await sut.getAll();
         expect(actual).to.be.an('array').to.be.lengthOf(0);
+    });
+
+    it('Should create new chatroom', async () => {
+        const chatroom = await (await sut.create(newRoom)).toJSON();
+        
+        expect(chatroom)
+            .to.be.an('object')
+            .to.have.keys(['name', 'is_public', 'tag', 'user_ids', 'id'])
+            .not.to.be.undefined;
     });
 });

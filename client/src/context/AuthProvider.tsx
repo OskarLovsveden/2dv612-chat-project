@@ -8,18 +8,18 @@ import AuthService from '../utils/http/auth-service';
 
 const initialState: AuthContextState = {
     isAuthenticated: false,
-    login: (): void => {return;}
+    login: (): void => {},
 };
 
 export const AuthContext = createContext<AuthContextState>(initialState);
 
 type AuthProviderProps = { children: React.ReactChild[] | React.ReactChild };
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        async function checkUserAuthenticated() {
+        async function checkUserAuthenticated(): Promise<void> {
             const authService = new AuthService();
             const authResponse = await authService.checkIsAuthenticated();
 
@@ -41,8 +41,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 payload: {
                     id: authResponse.id,
                     role: userRole,
-                    username: authResponse.username
-                }
+                    username: authResponse.username,
+                },
             });
         }
         checkUserAuthenticated();
@@ -52,12 +52,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         const authService = new AuthService();
         const res = await authService.login(user);
 
-        const { username, id, role, token } = res.data;
+        const { username, id, role, token } = res;
         localStorage.setItem('token', token);
 
         dispatch({
             type: AuthActionType.USER_LOGIN,
-            payload: { username, id, role }
+            payload: { username, id, role },
         });
     };
 
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             value={{
                 user: state.user,
                 isAuthenticated: state.isAuthenticated,
-                login
+                login,
             }}
         >
             {children}
