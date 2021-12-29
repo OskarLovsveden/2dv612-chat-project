@@ -1,5 +1,6 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import './App.css';
+import { useContext } from 'react';
 import AdminPanel from './pages/AdminPanel';
 import Home from './pages/Home';
 import Login from './components/Login';
@@ -8,49 +9,38 @@ import Private from './components/routes/Private';
 import Public from './components/routes/Public';
 import ROLE from './types/Role';
 import UserCreation from './components/UserCreation';
-import { useContext } from 'react';
 import { AuthContext } from './context/AuthProvider';
 
 function App() {
     const { user, isAuthenticated } = useContext(AuthContext);
-  
+
     return (
         <div className="App">
             {user?.role === ROLE.ADMIN && (
                 <header className="App-header">
                     <nav className="pb-4 border-b-2 border-fuchsia-600 space-x-2 text-center">
                         <Link className="no-underline hover:underline" to="/">
-              Home
+                            Home
                         </Link>
-                        <Link className="no-underline hover:underline" to="/admin">
-              Admin
+                        <Link
+                            className="no-underline hover:underline"
+                            to="/admin"
+                        >
+                            Admin
                         </Link>
-
-                        {isAuthenticated ? (
-                            <a
-                                className="no-underline hover:underline"
-                                onClick={() => {
-                                    localStorage.removeItem('token');
-                                }}
-                                href="/"
-                            >
-                Logout
-                            </a>
-                        ) : (
-                            <Link className="no-underline hover:underline" to="/login">
-                Login
-                            </Link>
-                        )}
 
                         <Link
                             className="no-underline hover:underline"
                             to="/create-chatroom"
                         >
-              Create Chatroom
+                            Create Chatroom
                         </Link>
 
-                        <Link className="no-underline hover:underline" to="/create-user">
-              Create user
+                        <Link
+                            className="no-underline hover:underline"
+                            to="/create-user"
+                        >
+                            Create user
                         </Link>
                     </nav>
                 </header>
@@ -58,23 +48,46 @@ function App() {
 
             <main>
                 <Routes>
-                    <Route path="login" element={<Public component={Login} />} />
+                    <Route
+                        path="login"
+                        element={<Public component={Login} />}
+                    />
                     <Route
                         path="create-chatroom"
-                        element={<Private roles={[ROLE.ADMIN]} component={() => <Chatroom chatroom={undefined} />} />}
+                        element={
+                            <Private
+                                roles={[ROLE.ADMIN]}
+                                component={() => (
+                                    <Chatroom chatroom={undefined} />
+                                )}
+                            />
+                        }
                     />
                     <Route
                         path="create-user"
-                        element={<Private roles={[ROLE.ADMIN]} component={UserCreation} />}
+                        element={
+                            <Private
+                                roles={[ROLE.ADMIN]}
+                                component={UserCreation}
+                            />
+                        }
                     />
                     <Route
                         path="admin"
-                        element={<Private roles={[ROLE.ADMIN]} component={AdminPanel} />}
+                        element={
+                            <Private
+                                roles={[ROLE.ADMIN]}
+                                component={AdminPanel}
+                            />
+                        }
                     />
                     <Route
                         path="/"
                         element={
-                            <Private roles={[ROLE.ADMIN, ROLE.USER, ROLE.MOD]} component={Home} />
+                            <Private
+                                roles={[ROLE.ADMIN, ROLE.USER, ROLE.MOD]}
+                                component={Home}
+                            />
                         }
                     />
                 </Routes>
@@ -84,4 +97,3 @@ function App() {
 }
 
 export default App;
-
