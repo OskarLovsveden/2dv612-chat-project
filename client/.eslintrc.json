@@ -44,6 +44,7 @@
                 "tsx": "never"
             }
         ],
+        "camelcase": "off",
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": [
             "error"
@@ -70,6 +71,10 @@
             {
                 "ignoreFunctionalComponents": true
             }
+        ],
+        "no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": [
+            "warn"
         ],
         "prettier/prettier": [
             "error",
