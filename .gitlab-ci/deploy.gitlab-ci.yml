@@ -12,12 +12,12 @@
     - echo "$K8_CONFIG" > /.kube/config
     - cat /.kube/config
   script:
-    # - dep_env="production"
     - cd helm/manifests/prod/ChattApp/templates
     - ls -la
     - kubectl create secret docker-registry regcred --namespace="$prod_env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > regcred.yaml
     - kubectl delete -f ./ --ignore-not-found
     - kubectl apply -f ./
+    - kubectl wait --for=condition=Ready pods --all -n "$prod_env" --timeout=60s
   artifacts:
     paths:
       - helm/manifests
