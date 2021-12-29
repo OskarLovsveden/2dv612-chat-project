@@ -1,4 +1,4 @@
-// // Unit test the services.
+// // Unit test the user service.
 import { expect } from 'chai';
 import mockUser from './models/userMock';
 import UserService from '../../services/chatroom-service';
@@ -12,12 +12,9 @@ describe('User service', () => {
         const actual = await (await sut.get(userID)).toJSON();
 
         expect(actual)
-            .to.be.not.undefined.to.have.key('id')
-            .to.have.key('name')
-            .to.have.key('is_ublic')
-            .to.have.key('tag')
-            .to.have.key('user_ids')
-            .not.to.be.an('array');
+            .to.be.an('object')
+            .to.have.deep.property('username')
+            .not.to.be.undefined;
     });
 
     it('Should return array of users', async () => {

@@ -37,6 +37,20 @@
   tags:
     - $CI_RUNNER_TAG
 
+.load-test:
+  image: 
+    name: justb4/jmeter:latest
+    entrypoint: [""]
+  rules:
+    - !reference [.rules-build-stage, rules]
+  stage: staging
+  script:
+    - mkdir testresults
+    - /entrypoint.sh -n -t ./test_plan.jmx -l ./testresults.log -e -o ./testresults
+  artifacts:
+    paths:
+      - testresults  
+
 .cleanup:
   stage: staging
   rules:
