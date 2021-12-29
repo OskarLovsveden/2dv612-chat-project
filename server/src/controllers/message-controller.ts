@@ -11,7 +11,7 @@ export default class MessageController {
         try {
             const { name, message, user_id , room_id }: MessageCreationAttributes = ctx.request.body;
 
-            if (!name || !message || !room_id || !user_id) {
+            if (!name || !message || !user_id || !room_id) {
                 console.log('Can not create message, faulty body');
             }
 
