@@ -1,10 +1,10 @@
 import { DirectMessage } from '../../types/DirectMessage';
 
 type DirectMessageListProps = {
-  messages: DirectMessage[];
+    messages: DirectMessage[];
 };
 
-const DirectMessageList = ({ messages }: DirectMessageListProps) => {
+const DirectMessageList: React.FC<DirectMessageListProps> = ({ messages }) => {
     return (
         <ul>
             {messages.map((directMessage: DirectMessage) => (
