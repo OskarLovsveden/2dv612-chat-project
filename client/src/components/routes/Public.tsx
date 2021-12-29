@@ -3,10 +3,10 @@ import { useContext, useEffect } from 'react';
 import { AuthContext } from '../../context/AuthProvider';
 
 type PublicProps = {
-    component: React.ComponentType;
-};
+  component: React.ComponentType;
+}
 
-const Public: React.FC<PublicProps> = ({ component: RouteComponent }) => {
+export const Public = ({ component: RouteComponent }: PublicProps) => {
     const { isAuthenticated } = useContext(AuthContext);
     const navigate = useNavigate();
 

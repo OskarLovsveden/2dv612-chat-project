@@ -4,7 +4,7 @@ import moderator from '../../images/moderator.png';
 import type { User } from '../../types/User';
 import UserService from '../../utils/http/user-service';
 
-const ChatroomUserList: React.FC = () => {
+const ChatroomUserList = () => {
     const [chatroomUsers, setChatroomUsers] = useState<User[]>([]);
 
     useEffect(() => {
@@ -12,7 +12,7 @@ const ChatroomUserList: React.FC = () => {
             // TODO get correct users from chatroom
             const userService = new UserService();
             const resChatroomUsers = await userService.getAll();
-            setChatroomUsers(resChatroomUsers);
+            setChatroomUsers(resChatroomUsers.data);
         })();
     }, []);
 
@@ -23,16 +23,12 @@ const ChatroomUserList: React.FC = () => {
                 <div className="inline-flex w-full">
                     <ul>
                         {chatroomUsers.map(
-                            (user: User) =>
+                            (user: User, i: number) =>
                                 user.role === 'user' && (
-                                    <li key={user.id}>
+                                    <li key={i}>
                                         <div className="inline-flex space-x-2 space-y-1">
                                             <h3>{user.username} </h3>
-                                            <img
-                                                className="w-6 h-6"
-                                                src={chattare}
-                                                alt="chattare"
-                                            />
+                                            <img className="w-6 h-6" src={chattare} alt="chattare" />
                                         </div>
                                     </li>
                                 )
@@ -43,9 +39,9 @@ const ChatroomUserList: React.FC = () => {
                 <div className="inline-flex w-full">
                     <ul>
                         {chatroomUsers.map(
-                            (user: User) =>
+                            (user: User, i: number) =>
                                 user.role === 'moderator' && (
-                                    <li key={user.id}>
+                                    <li key={i}>
                                         <div className="inline-flex space-x-2 space-y-1">
                                             <h3>{user.username} </h3>
                                             <img
@@ -60,7 +56,7 @@ const ChatroomUserList: React.FC = () => {
                     </ul>
                 </div>
                 <div>
-                    <div className="sidebar hidden lg:flex w-full flex-2 flex-col pr-6" />
+                    <div className="sidebar hidden lg:flex w-full flex-2 flex-col pr-6"></div>
                 </div>
             </div>
         </div>

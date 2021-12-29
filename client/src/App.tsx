@@ -11,8 +11,8 @@ import ROLE from './types/Role';
 import UserCreation from './components/UserCreation';
 import { AuthContext } from './context/AuthProvider';
 
-function App(): JSX.Element {
-    const { user } = useContext(AuthContext);
+function App() {
+    const { user, isAuthenticated } = useContext(AuthContext);
 
     return (
         <div className="App">

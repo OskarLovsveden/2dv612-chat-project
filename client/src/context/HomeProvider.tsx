@@ -9,35 +9,35 @@ import ChatroomService from '../utils/http/chatroom-service';
 const initialState: HomeContextState = {
     dms: [],
     rooms: [],
-    setActiveChatView: (): void => {},
+    setActiveChatView: (): void => {return; }
 };
 
 export const HomeContext = createContext<HomeContextState>(initialState);
 
 type HomeProviderProps = { children: React.ReactChild[] | React.ReactChild };
 
-export const HomeProvider: React.FC<HomeProviderProps> = ({ children }) => {
+export const HomeProvider = ({ children }: HomeProviderProps) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        const getAllChatrooms = async (): Promise<void> => {
+        async function getAllChatrooms() {
             const chatroomService = new ChatroomService();
-            const chatrooms = await chatroomService.getAll();
+            const res = await chatroomService.getAll();
 
             dispatch({
                 type: HomeActionType.SET_CHATROOMS,
-                payload: [...chatrooms],
+                payload: [...res.data]
             });
-        };
+        }
         getAllChatrooms();
     }, []);
 
     const setActiveChatView = (
         chatroomOrDirectMessage: Chatroom | DirectMessage
-    ): void => {
+    ) => {
         dispatch({
             type: HomeActionType.SET_ACTIVE_CHAT,
-            payload: chatroomOrDirectMessage,
+            payload: chatroomOrDirectMessage
         });
     };
 
@@ -47,7 +47,7 @@ export const HomeProvider: React.FC<HomeProviderProps> = ({ children }) => {
                 activeChat: state.activeChat,
                 dms: state.dms,
                 rooms: state.rooms,
-                setActiveChatView,
+                setActiveChatView
             }}
         >
             {children}

@@ -1,11 +1,12 @@
+import { AxiosResponse } from 'axios';
 import { instance } from './axios';
 import { AuthResponse, LoginResponse, LoginUser } from '../../types/User';
 
 class AuthService {
     private http = instance();
 
-    async login(user: LoginUser): Promise<LoginResponse> {
-        return (await this.http.post<LoginResponse>('/auth/login', user)).data;
+    login(user: LoginUser): Promise<AxiosResponse<LoginResponse, any>> {
+        return this.http.post<LoginResponse>('/auth/login', user);
     }
 
     async checkIsAuthenticated(): Promise<AuthResponse | null> {
