@@ -3,6 +3,7 @@ import Message from './Message';
 import { HomeContext } from '../../context/HomeProvider';
 import { AuthContext } from '../../context/AuthProvider';
 import { SocketContext } from '../../context/SocketProvider';
+import ChatroomUserList from '../sidebar/ChatroomUserList';
 
 type MessageEvent = {
     id: number;
@@ -60,6 +61,7 @@ const ChatRoom: React.FC = () => {
 
     return (
         <div className="max-w-auto h-screen w-full m-auto bg-indigo-300 rounded p-5">
+            {activeChat && <ChatroomUserList />}
             <div className="h-3/4 overflow-y-scroll">
                 <ul>
                     {messages &&

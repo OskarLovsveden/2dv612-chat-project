@@ -1,5 +1,6 @@
 import { instance } from './axios';
 import type { Chatroom, NewChatroom } from '../../types/Chatroom';
+import type { User } from '../../types/User';
 
 class ChatroomService {
     private http = instance();
@@ -10,6 +11,10 @@ class ChatroomService {
 
     async get(id: number): Promise<Chatroom> {
         return (await this.http.get<Chatroom>(`/room/${id}`)).data;
+    }
+
+    async getChatroomUsers(id: number): Promise<User[]> {
+        return (await this.http.get<User[]>(`room/${id}/user`)).data;
     }
 
     async create(data: NewChatroom): Promise<any> {

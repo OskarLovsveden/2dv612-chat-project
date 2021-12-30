@@ -64,6 +64,16 @@ export default class ChatroomController {
         }
     }
 
+    public async getChatroomUsers(ctx: Context): Promise<void> {
+        try{
+            const id = ctx.params.id;
+            const usersInRoom = await this.chatroomService.getChatroomUsers(id);
+            ctx.body = usersInRoom;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     public async remove(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;

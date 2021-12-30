@@ -57,5 +57,12 @@ export default class ChatroomRouter {
                 this.middleware.requesterHasAdminRights(ctx, next),
             (ctx: Context) => this.controller.update(ctx)
         );
+
+        this._router.get(
+            '/:id/user',
+            (ctx: Context, next: Next) =>
+                this.middleware.requestHasValidToken(ctx, next),
+            (ctx: Context) => this.controller.getChatroomUsers(ctx)
+        );
     }
 }
