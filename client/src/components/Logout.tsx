@@ -6,7 +6,7 @@ import '../App.css';
  */
 const Logout = () => {
     return (
-        <div>
+        <div className='relative top-3'>
             <a
                 className="btn btn-red btn-red:hover"
                 onClick={() => {
