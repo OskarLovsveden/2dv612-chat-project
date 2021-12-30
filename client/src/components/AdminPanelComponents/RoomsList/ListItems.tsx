@@ -25,7 +25,15 @@ const ListItems: React.FC<ListItemsProps> = ({
                             <li key={chatroom.id}>
                                 <div className="inline-flex space-x-4">
                                     <h3>{chatroom.name}</h3>
-                                    <h3>{chatroom.tag}</h3>
+                                    {chatroom.tag.map((item: string) => {
+                                        return (
+                                            <div className="outerTag">
+                                                <div className="innerTag">
+                                                    {item}
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
                                     <span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white " />
                                     <button
                                         type="button"

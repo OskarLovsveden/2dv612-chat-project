@@ -16,7 +16,6 @@ class Chatroom
     is_public: boolean;
     id!: number;
     name: string;
-    public: boolean;
     tag: string[];
     user_ids: number[];
 }

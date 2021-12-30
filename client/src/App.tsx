@@ -58,7 +58,10 @@ function App(): JSX.Element {
                             <Private
                                 roles={[ROLE.ADMIN]}
                                 component={() => (
-                                    <Chatroom chatroom={undefined} />
+                                    <Chatroom
+                                        chatroom={undefined}
+                                        updateModal={() => {}}
+                                    />
                                 )}
                             />
                         }

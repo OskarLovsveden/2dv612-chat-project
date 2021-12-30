@@ -2,7 +2,7 @@ export type Chatroom = {
     id: number;
     name: string;
     is_public: boolean;
-    tag: string;
+    tag: string[];
 };
 
 export type AdminPanelChatRooms = {
@@ -13,5 +13,5 @@ export type AdminPanelChatRooms = {
 export type NewChatroom = {
     name: string;
     is_public: boolean;
-    tag: string;
+    tag: string[];
 };
