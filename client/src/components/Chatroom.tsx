@@ -7,13 +7,14 @@ import ChatroomService from '../utils/http/chatroom-service';
 
 type ChatroomProps = {
     chatroom?: ChatroomType;
+    updateModal: () => void;
 };
 
 /**
  * Makes Admin able to create chat rooms for users.
  * @returns HTML for creating a chatroom.
  */
-const Chatroom: React.FC<ChatroomProps> = ({ chatroom }) => {
+const Chatroom: React.FC<ChatroomProps> = ({ chatroom, updateModal }) => {
     const [chatroomName, setChatroomName] = useState<string>(
         chatroom?.name || ''
     );
@@ -55,10 +56,7 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom }) => {
             };
             await chatroomService.update(data, data.id);
 
-            navigate(
-                '/temporary-adress-which-just-makes-sure-to-reload-admin-page'
-            );
-            navigate('/admin');
+            updateModal();
         }
     };
 

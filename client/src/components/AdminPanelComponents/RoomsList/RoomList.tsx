@@ -22,21 +22,23 @@ const RoomList: React.FC = () => {
     const [modalState, setModalState] = useState<ModalState>(ModalState.NONE);
     const [activeChatroom, setActiveChatroom] = useState<ChatroomType>();
 
+    const getAllChatrooms = async (): Promise<void> => {
+        const chatroomService = new ChatroomService();
+        const resChatRoom = await chatroomService.getAll();
+        const privateRooms = resChatRoom.filter(
+            (pr: ChatroomType) => pr.is_public === false
+        );
+        const publicRooms = resChatRoom.filter(
+            (pr: ChatroomType) => pr.is_public === true
+        );
+        setChatrooms({
+            private_rooms: privateRooms,
+            public_rooms: publicRooms,
+        });
+    };
+
     useEffect(() => {
-        (async () => {
-            const chatroomService = new ChatroomService();
-            const resChatRoom = await chatroomService.getAll();
-            const privateRooms = resChatRoom.filter(
-                (pr: ChatroomType) => pr.is_public === false
-            );
-            const publicRooms = resChatRoom.filter(
-                (pr: ChatroomType) => pr.is_public === true
-            );
-            setChatrooms({
-                private_rooms: [...chatrooms?.private_rooms, ...privateRooms],
-                public_rooms: [...chatrooms?.public_rooms, ...publicRooms],
-            });
-        })();
+        getAllChatrooms();
     }, []);
 
     const updateChatroom = async (chatroom: ChatroomType): Promise<void> => {
@@ -46,6 +48,11 @@ const RoomList: React.FC = () => {
         } else {
             setModalState(ModalState.UPDATE);
         }
+    };
+
+    const updateModal = async (): Promise<void> => {
+        setModalState(ModalState.NONE);
+        getAllChatrooms();
     };
 
     const removeChatroom = async (
@@ -79,7 +86,10 @@ const RoomList: React.FC = () => {
     return (
         <>
             {modalState === ModalState.UPDATE && (
-                <Chatroom chatroom={activeChatroom} />
+                <Chatroom
+                    chatroom={activeChatroom}
+                    updateModal={() => updateModal()}
+                />
             )}
             <div className="rounded overflow-hidden shadow-lg">
                 <div className="px-6 py-4">
