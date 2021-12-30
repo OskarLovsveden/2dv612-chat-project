@@ -10,13 +10,14 @@ const ChatroomUserList: React.FC = () => {
 
     const { activeChat } = useContext(HomeContext);
 
-
     useEffect(() => {
         (async () => {
-            if(activeChat ) {
+            if (activeChat) {
                 const chatroomService = new ChatroomService();
-                const resChatroomUsers = await chatroomService.getChatroomUsers( activeChat.id);
-                setChatroomUsers(resChatroomUsers.data);
+                const resChatroomUsers = await chatroomService.getChatroomUsers(
+                    activeChat.id
+                );
+                setChatroomUsers(resChatroomUsers);
             }
         })();
     }, []);

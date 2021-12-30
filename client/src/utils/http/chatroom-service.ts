@@ -12,8 +12,9 @@ class ChatroomService {
     async get(id: number): Promise<Chatroom> {
         return (await this.http.get<Chatroom>(`/room/${id}`)).data;
     }
-    getChatroomUsers(id: number) {
-        return this.http.get<User[]>(`room/${id}/user`);
+
+    async getChatroomUsers(id: number): Promise<User[]> {
+        return (await this.http.get<User[]>(`room/${id}/user`)).data;
     }
 
     async create(data: NewChatroom): Promise<any> {

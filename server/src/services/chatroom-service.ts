@@ -1,5 +1,6 @@
 import sequelize from '../db/postgres';
 import Chatroom, { ChatroomCreationAttributes } from '../models/chatroom';
+import User from '../models/user';
 import { RespondUser } from '../types/respond-types';
 import UserService from './user-service';
 
@@ -27,7 +28,7 @@ export default class ChatRoomService {
     public async getChatroomUsers(id: number): Promise<RespondUser[]> {
         const room = await this.chatroom.findOne({ where: { id: id } });
         const users = await this.userService.getAll();
-        const user = users.filter(user => room.user_ids.includes(user.id))
+        const user = users.filter((user: User) => room.user_ids.includes(user.id));
         return user;
     }
 

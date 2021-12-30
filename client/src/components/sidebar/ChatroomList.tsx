@@ -18,8 +18,8 @@ const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
                         'bg-black text-white'
                     }`}
                 >
-                    <button 
-                        className='inline-flex'
+                    <button
+                        className="inline-flex"
                         type="button"
                         onClick={() => {
                             setActiveChatView(chatroom);
@@ -38,7 +38,7 @@ const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
                             />
                         </svg>
                         {chatroom.name}
-                    </button>   
+                    </button>
                 </li>
             ))}
         </ul>
