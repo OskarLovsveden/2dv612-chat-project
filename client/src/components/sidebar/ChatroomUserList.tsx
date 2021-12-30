@@ -22,29 +22,9 @@ const ChatroomUserList: React.FC = () => {
     }, []);
 
     return (
-        <div className="hidden absolute right-5 xl:block sm:flex-2 w-32 bg-indigo-500 border-solid border-2 border-indigo-800 ">
+        <div className="hidden absolute right-5 xl:block sm:flex-2 w-32 h-96 bg-indigo-500 border-solid border-2 border-indigo-800 overflow-y-auto h-96 ">
             <h2 className="mx-8">Chatroom members</h2>
             <div className="menu mt-8">
-                <div className="inline-flex w-full">
-                    <ul>
-                        {chatroomUsers.map(
-                            (user: User) =>
-                                user.role === 'user' && (
-                                    <li key={user.id}>
-                                        <div className="inline-flex space-x-2 space-y-1">
-                                            <h3>{user.username} </h3>
-                                            <img
-                                                className="w-6 h-6"
-                                                src={chattare}
-                                                alt="chattare"
-                                            />
-                                        </div>
-                                    </li>
-                                )
-                        )}
-                    </ul>
-                </div>
-
                 <div className="inline-flex w-full">
                     <ul>
                         {chatroomUsers.map(
@@ -57,6 +37,26 @@ const ChatroomUserList: React.FC = () => {
                                                 className="w-6 h-6"
                                                 src={moderator}
                                                 alt="moderator"
+                                            />
+                                        </div>
+                                    </li>
+                                )
+                        )}
+                    </ul>
+                </div>
+
+                <div className="inline-flex w-full">
+                    <ul>
+                        {chatroomUsers.map(
+                            (user: User) =>
+                                user.role === 'user' && (
+                                    <li key={user.id}>
+                                        <div className="inline-flex space-x-2 space-y-1">
+                                            <h3>{user.username} </h3>
+                                            <img
+                                                className="w-6 h-6"
+                                                src={chattare}
+                                                alt="chattare"
                                             />
                                         </div>
                                     </li>
