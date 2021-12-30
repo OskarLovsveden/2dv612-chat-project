@@ -4,6 +4,8 @@ import moderator from '../../images/moderator.png';
 import type { User } from '../../types/User';
 import ChatroomService from '../../utils/http/chatroom-service';
 import { HomeContext } from '../../context/HomeProvider';
+import ROLE from '../../types/Role';
+
 
 const ChatroomUserList: React.FC = () => {
     const [chatroomUsers, setChatroomUsers] = useState<User[]>([]);
@@ -30,7 +32,7 @@ const ChatroomUserList: React.FC = () => {
                     <ul>
                         {chatroomUsers.map(
                             (user: User) =>
-                                user.role === 'moderator' && (
+                                user.role === ROLE.MOD && (
                                     <li key={user.id}>
                                         <div className="inline-flex space-x-2 space-y-1">
                                             <h3>{user.username} </h3>
@@ -50,7 +52,7 @@ const ChatroomUserList: React.FC = () => {
                     <ul>
                         {chatroomUsers.map(
                             (user: User) =>
-                                user.role === 'user' && (
+                                user.role === ROLE.USER && (
                                     <li key={user.id}>
                                         <div className="inline-flex space-x-2 space-y-1">
                                             <h3>{user.username} </h3>
