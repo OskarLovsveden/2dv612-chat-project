@@ -8,7 +8,6 @@ type ChatroomListProps = {
 
 const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
     const { setActiveChatView, activeChat } = useContext(HomeContext);
-
     return (
         <ul>
             {chatrooms.map((chatroom: Chatroom) => (
@@ -19,7 +18,8 @@ const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
                         'bg-black text-white'
                     }`}
                 >
-                    <button
+                    <button 
+                        className='inline-flex'
                         type="button"
                         onClick={() => {
                             setActiveChatView(chatroom);
@@ -37,8 +37,8 @@ const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
                                 clipRule="evenodd"
                             />
                         </svg>
-                    </button>
-                    {chatroom.name}
+                        {chatroom.name}
+                    </button>   
                 </li>
             ))}
         </ul>
