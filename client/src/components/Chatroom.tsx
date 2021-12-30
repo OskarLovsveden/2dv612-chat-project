@@ -17,7 +17,9 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom }) => {
     const [chatroomName, setChatroomName] = useState<string>(
         chatroom?.name || ''
     );
-    const [chatroomTag, setChatroomTag] = useState<string>(chatroom?.tag || '');
+    const [chatroomTag, setChatroomTag] = useState<string[]>(
+        chatroom?.tag || []
+    );
     const navigate = useNavigate();
     const publicRef = useRef<any>();
 
@@ -26,7 +28,7 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom }) => {
     };
 
     const handleChatroomTag = (e: ChangeEvent<HTMLInputElement>): void => {
-        setChatroomTag(e.target.value);
+        setChatroomTag(e.target.value.split(','));
     };
 
     const handleOnSubmit = async (
@@ -86,15 +88,15 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom }) => {
                 </label>
                 <label
                     className="block mb-2 text-indigo-500"
-                    htmlFor="ChatroomTag"
+                    htmlFor="ChatroomTags"
                 >
-                    Chatroom Tag
+                    Chatroom Tags
                     <input
                         onChange={handleChatroomTag}
                         className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
                         type="text"
                         id="ChatroomTag"
-                        defaultValue={chatroom?.tag || ''}
+                        defaultValue={chatroom?.tag || []}
                     />
                 </label>
                 <label

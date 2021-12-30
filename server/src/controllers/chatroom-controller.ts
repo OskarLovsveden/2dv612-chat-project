@@ -82,17 +82,18 @@ export default class ChatroomController {
     public async update(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
-            const { newTag, userID } = ctx.request.body;
+            // const { newTag, userID } = ctx.request.body;
+            // const { name, is_public, tag } = ctx.request.body;
 
-            let updatedRoom: Chatroom;
+            const updatedRoom = await this.chatroomService.update(id, ctx.request.body);
+            
+            // if (newTag) {
+            //     updatedRoom = await this.chatroomService.addTag(id, newTag);
+            // }
 
-            if (newTag) {
-                updatedRoom = await this.chatroomService.addTag(id, newTag);
-            }
-
-            if (userID) {
-                updatedRoom = await this.chatroomService.addUser(id, userID);
-            }
+            // if (userID) {
+            //     updatedRoom = await this.chatroomService.addUser(id, userID);
+            // }
 
             if (!updatedRoom) {
                 ctx.throw(400, { message: 'Failed to update room' });
