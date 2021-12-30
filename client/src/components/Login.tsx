@@ -1,6 +1,6 @@
 import '../App.css';
-import chatImg from '../images/chat.png';
 import { useContext, useRef } from 'react';
+import chatImg from '../images/chat.png';
 import { AuthContext } from '../context/AuthProvider';
 import { LoginUser } from '../types/User';
 
@@ -19,7 +19,7 @@ const Login = () => {
 
         const loginUser: LoginUser = {
             password: password.current.value,
-            username: username.current.value
+            username: username.current.value,
         };
 
         login(loginUser);
@@ -29,13 +29,20 @@ const Login = () => {
         <div className="bg-indigo-600 h-screen">
             <div className="max-w-xs w-full m-auto bg-indigo-100 rounded p-5">
                 <header>
-                    <img className="w-20 mx-auto mb-5" alt={chatImg} src={chatImg} />
+                    <img
+                        className="w-20 mx-auto mb-5"
+                        alt={chatImg}
+                        src={chatImg}
+                    />
                     <h3 className="block mb-2 text-indigo-800">Login</h3>
                 </header>
                 <form>
                     <div>
-                        <label className="block mb-2 text-indigo-500" htmlFor="Username">
-              Username
+                        <label
+                            className="block mb-2 text-indigo-500"
+                            htmlFor="Username"
+                        >
+                            Username
                         </label>
                         <input
                             ref={username}
@@ -46,8 +53,11 @@ const Login = () => {
                         />
                     </div>
                     <div>
-                        <label className="block mb-2 text-indigo-500" htmlFor="Password">
-              Password
+                        <label
+                            className="block mb-2 text-indigo-500"
+                            htmlFor="Password"
+                        >
+                            Password
                         </label>
                         <input
                             ref={password}
@@ -55,7 +65,7 @@ const Login = () => {
                             className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
                             type="password"
                             name="Password"
-                        ></input>
+                        />
                     </div>
                     <div>
                         <input
