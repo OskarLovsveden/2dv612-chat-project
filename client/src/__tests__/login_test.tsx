@@ -1,5 +1,6 @@
 // __tests__/hello_world.test.js
 import { shallow } from 'enzyme';
+// import renderer from 'react-test-renderer';
 import Login from '../components/Login';
 
 const wrapper = shallow(<Login />);
@@ -24,6 +25,11 @@ describe('Login Component', () => {
             'Enter Password'
         );
     });
+
+    /* it('renders correctly', () => {
+        const tree = renderer.create(<Login />).toJSON();
+        expect(tree).toMatchSnapshot();
+    }); */
 
     /**
     it('on change of value in the field, the state of that field in the component should be updated', () => {
