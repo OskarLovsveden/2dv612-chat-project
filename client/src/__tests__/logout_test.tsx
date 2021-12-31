@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import Logout from '../components/Logout';
 
 const wrapper = shallow(<Logout />);
-describe('Login Component', () => {
+describe('Logout Component', () => {
     it('should render a a', () => {
         expect(wrapper.find('a').exists()).toBe(true);
     });
