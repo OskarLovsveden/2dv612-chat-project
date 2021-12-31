@@ -6,6 +6,12 @@ import Chatroom from '../../models/chatroom';
 
 const sut = new ChatRoomService(mockChatroom);
 const roomID = 1;
+const newRoom = {
+    name: 'room2',
+    is_public: true,
+    tag: ['computers', 'somethingelse'],
+    user_ids: [3, 1, 4]
+};
 
 describe('Chatroom service', () => {
     it('Should return chatroom', async () => {
@@ -13,7 +19,7 @@ describe('Chatroom service', () => {
 
         expect(actual)
             .to.be.an('object')
-            .to.have.deep.property('name')
+            .to.have.keys(['name', 'is_public', 'tag', 'user_ids', 'id'])
             .not.to.be.undefined;
     });
 
@@ -32,5 +38,14 @@ describe('Chatroom service', () => {
 
         const actual = await sut.getAll();
         expect(actual).to.be.an('array').to.be.lengthOf(0);
+    });
+
+    it('Should create new chatroom', async () => {
+        const chatroom = await (await sut.create(newRoom)).toJSON();
+        
+        expect(chatroom)
+            .to.be.an('object')
+            .to.have.keys(['name', 'is_public', 'tag', 'user_ids', 'id'])
+            .not.to.be.undefined;
     });
 });

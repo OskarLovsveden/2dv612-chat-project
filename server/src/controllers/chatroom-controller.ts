@@ -3,7 +3,7 @@ import SocketServices from '../utils/socket-services';
 import ChatRoomService from '../services/chatroom-service';
 import UserService from '../services/user-service';
 import User from '../models/user';
-import Chatroom, { ChatroomCreationAttributes } from '../models/chatroom';
+import { ChatroomCreationAttributes } from '../models/chatroom';
 
 export default class ChatroomController {
     readonly table = 'chatroom';
@@ -64,6 +64,16 @@ export default class ChatroomController {
         }
     }
 
+    public async getChatroomUsers(ctx: Context): Promise<void> {
+        try{
+            const id = ctx.params.id;
+            const usersInRoom = await this.chatroomService.getChatroomUsers(id);
+            ctx.body = usersInRoom;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     public async remove(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
@@ -82,17 +92,18 @@ export default class ChatroomController {
     public async update(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
-            const { newTag, userID } = ctx.request.body;
+            // const { newTag, userID } = ctx.request.body;
+            // const { name, is_public, tag } = ctx.request.body;
 
-            let updatedRoom: Chatroom;
+            const updatedRoom = await this.chatroomService.update(id, ctx.request.body);
+            
+            // if (newTag) {
+            //     updatedRoom = await this.chatroomService.addTag(id, newTag);
+            // }
 
-            if (newTag) {
-                updatedRoom = await this.chatroomService.addTag(id, newTag);
-            }
-
-            if (userID) {
-                updatedRoom = await this.chatroomService.addUser(id, userID);
-            }
+            // if (userID) {
+            //     updatedRoom = await this.chatroomService.addUser(id, userID);
+            // }
 
             if (!updatedRoom) {
                 ctx.throw(400, { message: 'Failed to update room' });

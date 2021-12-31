@@ -36,7 +36,6 @@ const Home = () => {
                                     </span>
                                 </div>
                                 <div className="flex-1 bg-indigo-500">
-                                    <span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white" />
                                     <div className="flex-1 text-right">
                                         <span className="inline-block text-gray-700">
                                             <Logout />

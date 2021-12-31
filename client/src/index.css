@@ -3,13 +3,36 @@
 @tailwind utilities;
 
 @layer base {
-  .btn {
-    @apply font-bold py-2 px-4 rounded;
-  }
-  .btn-red {
-    @apply bg-red-500 text-white;
-  }
-  .btn-red:hover {
-    @apply bg-red-700;
-  }
+    .btn {
+        @apply font-bold py-2 px-4 rounded;
+    }
+    .btn-red {
+        @apply bg-red-500 text-white;
+    }
+    .btn-red:hover {
+        @apply bg-red-700;
+    }
+
+    .outerTag {
+        background-color: blue;
+        padding-left:0.3rem;
+        padding-right:0.3rem;
+        padding-top:0.2rem;
+        padding-bottom:0.2rem;
+        border-radius: 1rem;
+        
+    }
+
+    .innerTag {
+        font-size: small;
+        background-color: white;
+        color:black;
+        display:inline-block;
+        padding-left:0.2rem;
+        padding-right:0.2rem;
+        text-align:center;
+        border-radius: 0.5rem;
+        border: dotted;
+        border-color:blue; 
+    }
 }

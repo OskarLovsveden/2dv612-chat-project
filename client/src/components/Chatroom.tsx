@@ -7,17 +7,20 @@ import ChatroomService from '../utils/http/chatroom-service';
 
 type ChatroomProps = {
     chatroom?: ChatroomType;
+    updateModal: () => void;
 };
 
 /**
  * Makes Admin able to create chat rooms for users.
  * @returns HTML for creating a chatroom.
  */
-const Chatroom = ({ chatroom }: ChatroomProps) => {
+const Chatroom: React.FC<ChatroomProps> = ({ chatroom, updateModal }) => {
     const [chatroomName, setChatroomName] = useState<string>(
         chatroom?.name || ''
     );
-    const [chatroomTag, setChatroomTag] = useState<string>(chatroom?.tag || '');
+    const [chatroomTag, setChatroomTag] = useState<string[]>(
+        chatroom?.tag || []
+    );
     const navigate = useNavigate();
     const publicRef = useRef<any>();
 
@@ -27,10 +30,8 @@ const Chatroom = ({ chatroom }: ChatroomProps) => {
         setChatroomName(Event.target.value);
     };
 
-    const handleChatroomTag = (Event: {
-        target: { value: SetStateAction<string> };
-    }) => {
-        setChatroomTag(Event.target.value);
+    const handleChatroomTag = (e: ChangeEvent<HTMLInputElement>): void => {
+        setChatroomTag(e.target.value.split(','));
     };
 
     const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -55,10 +56,7 @@ const Chatroom = ({ chatroom }: ChatroomProps) => {
             };
             await chatroomService.update(data, data.id);
 
-            navigate(
-                '/temporary-adress-which-just-makes-sure-to-reload-admin-page'
-            );
-            navigate('/admin');
+            updateModal();
         }
     };
 
@@ -87,6 +85,7 @@ const Chatroom = ({ chatroom }: ChatroomProps) => {
                         name="ChatroomName"
                         defaultValue={chatroom?.name || ''}
                     />
+<<<<<<< HEAD
                 </div>
                 <div>
                     <label
@@ -95,12 +94,25 @@ const Chatroom = ({ chatroom }: ChatroomProps) => {
                     >
                         Chatroom Tag
                     </label>
+=======
+                </label>
+                <label
+                    className="block mb-2 text-indigo-500"
+                    htmlFor="ChatroomTags"
+                >
+                    Chatroom Tags
+>>>>>>> 2695f7ea455415f3a8e7b271f4f215fcb9d35e34
                     <input
                         onChange={handleChatroomTag}
                         className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
                         type="text"
+<<<<<<< HEAD
                         name="ChatroomTag"
                         defaultValue={chatroom?.tag || ''}
+=======
+                        id="ChatroomTag"
+                        defaultValue={chatroom?.tag || []}
+>>>>>>> 2695f7ea455415f3a8e7b271f4f215fcb9d35e34
                     />
                 </div>
                 <div>

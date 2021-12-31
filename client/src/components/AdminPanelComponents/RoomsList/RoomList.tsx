@@ -20,19 +20,23 @@ const RoomList = () => {
     const [modalState, setModalState] = useState<ModalState>(ModalState.NONE);
     const [activeChatroom, setActiveChatroom] = useState<ChatroomType>();
 
+    const getAllChatrooms = async (): Promise<void> => {
+        const chatroomService = new ChatroomService();
+        const resChatRoom = await chatroomService.getAll();
+        const privateRooms = resChatRoom.filter(
+            (pr: ChatroomType) => pr.is_public === false
+        );
+        const publicRooms = resChatRoom.filter(
+            (pr: ChatroomType) => pr.is_public === true
+        );
+        setChatrooms({
+            private_rooms: privateRooms,
+            public_rooms: publicRooms,
+        });
+    };
 
-    useEffect(() => { 
-        (async () => {
-            const chatroomService = new ChatroomService();
-            const resChatRoom = await chatroomService.getAll();
-            const privateRooms = resChatRoom.data.filter((pr: any) => pr.is_public === false);
-            const publicRooms = resChatRoom.data.filter((pr:any) => pr.is_public === true);
-            setChatrooms({
-                private_rooms: [...chatrooms?.private_rooms, ...privateRooms],
-                public_rooms: [...chatrooms?.public_rooms, ...publicRooms]
-
-            });
-        })();
+    useEffect(() => {
+        getAllChatrooms();
     }, []);
 
     const updateChatroom = async (chatroom: ChatroomType) => {
@@ -44,7 +48,19 @@ const RoomList = () => {
         }
     };
 
+<<<<<<< HEAD
     const removeChatroom = async (id: number, isPublicRoom: boolean) => {
+=======
+    const updateModal = async (): Promise<void> => {
+        setModalState(ModalState.NONE);
+        getAllChatrooms();
+    };
+
+    const removeChatroom = async (
+        id: number,
+        isPublicRoom: boolean
+    ): Promise<void> => {
+>>>>>>> 2695f7ea455415f3a8e7b271f4f215fcb9d35e34
         const chatroomService = new ChatroomService();
         await chatroomService.delete(id);
 
@@ -63,7 +79,16 @@ const RoomList = () => {
 
     return (
         <>
-            {modalState === ModalState.UPDATE && <Chatroom chatroom={activeChatroom}/>}
+<<<<<<< HEAD
+            {}
+=======
+            {modalState === ModalState.UPDATE && (
+                <Chatroom
+                    chatroom={activeChatroom}
+                    updateModal={() => updateModal()}
+                />
+            )}
+>>>>>>> 2695f7ea455415f3a8e7b271f4f215fcb9d35e34
             <div className="rounded overflow-hidden shadow-lg">
                 <div className="px-6 py-4">
                     <img className="w-1/4 h-1/4" src={adminImg} alt="Admin" />
