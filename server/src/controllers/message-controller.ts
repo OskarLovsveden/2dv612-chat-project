@@ -9,17 +9,16 @@ export default class MessageController {
 
     public async add(ctx: Context): Promise<void> {
         try {
-            const { name, message, user_id , room_id }: MessageCreationAttributes = ctx.request.body;
+            const { name, message, user_id }: MessageCreationAttributes = ctx.request.body;
 
-            if (!name || !message || !user_id || !room_id) {
+            if (!name || !message || !user_id) {
                 console.log('Can not create message, faulty body');
             }
 
             const msg: MessageCreationAttributes = {
                 name: name,
                 message: message,
-                user_id: user_id,
-                room_id: room_id
+                user_id: user_id
             };
 
             const messageCreated = await this.messageService.create(msg);

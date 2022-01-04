@@ -7,11 +7,14 @@ const password = process.env.POSTGRES_PASSWORD;
 const username = process.env.POSTGRES_USER || 'postgres';
 const port = parseInt(process.env.POSTGRES_PORT || '5432');
 
-const sequelize = new Sequelize(database, username, password, {
-    host: host,
-    port: port,
-    dialect: 'postgres',
-    dialectModule: pg
-});
-
-export default sequelize;
+export default new Sequelize(
+    database, 
+    username, 
+    password, 
+    {
+        host: host,
+        port: port,
+        dialect: 'postgres',
+        dialectModule: pg
+    }
+);

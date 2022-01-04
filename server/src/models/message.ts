@@ -7,7 +7,6 @@ type MessageAttributes = {
     name: string;
     message: string;
     user_id: number;
-    room_id: number
 }
 
 export type MessageCreationAttributes = Optional<MessageAttributes, 'id'>;
@@ -19,7 +18,9 @@ class Message
     name: string;
     message: string;
     user_id: number;
-    room_id: number;
+
+    // public readonly createdAt!: Date;
+    // public readonly updatedAt!: Date;
 }
 
 Message.init(
@@ -40,10 +41,6 @@ Message.init(
         user_id: {
             type: DataTypes.INTEGER,
             allowNull: true
-        },
-        room_id: {
-            type: DataTypes.STRING,
-            allowNull: false
         }
     },
     {

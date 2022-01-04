@@ -1,5 +1,6 @@
-import { DataTypes, Model, Optional } from 'sequelize';
+import { Association, DataTypes, HasManyAddAssociationMixin, HasManyCreateAssociationMixin, HasManyGetAssociationsMixin, Model, Optional } from 'sequelize';
 import sequelize from '../db/postgres';
+import Message from './message';
 
 type ChatroomAttributes = {
   id: number;
@@ -19,6 +20,16 @@ class Chatroom
     public: boolean;
     tag: string[];
     user_ids: number[];
+
+    // public getMessages!: HasManyGetAssociationsMixin<Message>;
+    // public addMessage!: HasManyAddAssociationMixin<Message, number>;
+    // public createMessage!: HasManyCreateAssociationMixin<Message>;
+
+    // public readonly messages?: Message[];
+
+    // public static associations: {
+    //     messages: Association<Chatroom, Message>;
+    // };
 }
 
 export type ChatroomCreationAttributes = Optional<ChatroomAttributes, 'id'>;
@@ -54,5 +65,11 @@ Chatroom.init(
         sequelize
     }
 );
+
+// Chatroom.hasMany(Message, {
+//     sourceKey: 'id',
+//     foreignKey: 'id',
+//     as: 'messages'
+// });
 
 export default Chatroom;

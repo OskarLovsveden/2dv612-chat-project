@@ -14,7 +14,7 @@ export default class MessageService {
     }
 
     public async getRoomsMessages(roomID: number): Promise<Message[]> {
-        return Message.findAll({ where: { room_id: roomID } });
+        return Message.findAll({ where: { id: roomID } });
     }
 
     public async updateMsg(msgId: number, newMsg: string) {

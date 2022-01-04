@@ -17,7 +17,7 @@ export default class ChatroomController {
             console.log(name, is_public, tag);
 
             if (!name || !is_public || !tag) {
-                console.log('Can not create chatroom, faulty body.');
+                console.log('Can not create chatroom, faulty boy.');
             }
 
             const userService = new UserService();
