@@ -50,8 +50,8 @@
   artifacts:
     paths:
       - testresults  
-  # tags:
-  #   - $CI_RUNNER_TAG
+  tags:
+    - $CI_RUNNER_TAG
 
 .cleanup:
   stage: staging
