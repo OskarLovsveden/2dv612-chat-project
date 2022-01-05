@@ -51,11 +51,6 @@ export default class MessageController {
         try {
             const id = ctx.params.id;
             const newMsg = ctx.request.body;
-
-            // let newMsg;
-            // if(ctx.request.body.length) {
-            //     newMsg = ctx.request.body.message;
-            // }
             const messageUpdate = await this.messageService.updateMsg(id, newMsg);
 
             if(!messageUpdate) {

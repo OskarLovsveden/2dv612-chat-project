@@ -33,7 +33,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
         );
 
         return () => {
-            console.log('Jag drar');
+            console.log(`Socket disconnected! ID: ${socket.id}`);
             socket.disconnect();
         };
     }, [socket]);
