@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Only prints to console if NODE_ENV is not production!
  * Handy for debug console.logs!
