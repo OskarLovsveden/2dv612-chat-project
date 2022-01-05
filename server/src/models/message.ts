@@ -4,7 +4,7 @@ import sequelize from '../db/postgres';
 
 type MessageAttributes = {
     id: number;
-    name: string;
+    username: string;
     message: string;
     user_id: number;
     room_id: number
@@ -16,7 +16,7 @@ class Message
     implements MessageAttributes
 {
     id!: number;
-    name: string;
+    username: string;
     message: string;
     user_id: number;
     room_id: number;
@@ -29,7 +29,7 @@ Message.init(
             autoIncrement: true,
             primaryKey: true
         },
-        name: {
+        username: {
             type: DataTypes.STRING,
             allowNull: false
         },

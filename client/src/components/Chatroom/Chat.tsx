@@ -4,6 +4,7 @@ import { HomeContext } from '../../context/HomeProvider';
 import { AuthContext } from '../../context/AuthProvider';
 import { SocketContext } from '../../context/SocketProvider';
 import ChatroomUserList from '../sidebar/ChatroomUserList';
+import MessageService from '../../utils/http/message-service';
 
 type MessageEvent = {
     id: number;
@@ -23,6 +24,18 @@ const ChatRoom: React.FC = () => {
     const messagesEndRef = useRef<any>();
 
     useEffect(() => {
+        (async () => {
+            if (activeChat) {
+                const messageService = new MessageService();
+                const resMessages = await messageService.getAllForRoom(
+                    activeChat.id
+                );
+                setMessages(resMessages);
+            }
+        })();
+    }, [activeChat]);
+
+    useEffect(() => {
         connectUser(user?.id || '');
 
         socket?.on('room-message', (data: MessageEvent) => {
@@ -34,13 +47,17 @@ const ChatRoom: React.FC = () => {
             scrollToBottom();
         });
 
+
         return () => {
             socket?.off('room-message');
             setMessages([]);
         };
     }, [connectUser, socket, user, activeChat]);
 
-    const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+
+    const handleOnSubmit = async (
+        e: React.FormEvent<HTMLFormElement>
+        ): Promise<void> => {
         e.preventDefault();
 
         if (activeChat && user) {
@@ -50,8 +67,18 @@ const ChatRoom: React.FC = () => {
                 messageRef.current.value,
                 user?.username
             );
+            
+            const messageService = new MessageService();
+            const data = {
+                room_id: activeChat?.id,
+                user_id: user?.id,
+                username: user?.username,
+                message: messageRef.current.value,
+            };
+            await messageService.create(data);
+            
             messageRef.current.value = '';
-        }
+        };
     };
 
     const handleEnter = (e: any): void => {
