@@ -1,11 +1,8 @@
 import { Reducer } from 'react';
 import HomeContextState from '../types/HomeContextState';
 import { HomeActionType, HomeReducerAction } from '../types/HomeReducerAction';
-
-const reducer: Reducer<HomeContextState, HomeReducerAction> = (
-    state,
-    action
-) => {
+// eslint-disable-next-line
+const reducer: Reducer<HomeContextState, HomeReducerAction> = (state,action) => { // TODO: Fix lint
     switch (action.type) {
         case HomeActionType.SET_ACTIVE_CHAT:
             return {

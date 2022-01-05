@@ -10,26 +10,26 @@ import ConversationService from '../utils/http/conversation-service';
 const initialState: HomeContextState = {
     conversations: [],
     rooms: [],
-    setActiveChatView: (): void => {},
+    setActiveChatView: (): void => {return; }
 };
 
 export const HomeContext = createContext<HomeContextState>(initialState);
 
 type HomeProviderProps = { children: React.ReactChild[] | React.ReactChild };
 
-export const HomeProvider: React.FC<HomeProviderProps> = ({ children }) => {
+export const HomeProvider = ({ children }: HomeProviderProps) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
-        const getAllChatrooms = async (): Promise<void> => {
+        async function getAllChatrooms() {
             const chatroomService = new ChatroomService();
-            const chatrooms = await chatroomService.getAll();
+            const res = await chatroomService.getAll();
 
             dispatch({
                 type: HomeActionType.SET_CHATROOMS,
-                payload: [...chatrooms],
+                payload: [...res.data]
             });
-        };
+        }
         getAllChatrooms();
 
         const getAllConversations = async (): Promise<void> => {
@@ -45,11 +45,19 @@ export const HomeProvider: React.FC<HomeProviderProps> = ({ children }) => {
     }, []);
 
     const setActiveChatView = (
+<<<<<<< HEAD
         chatroomOrConversation: Chatroom | Conversation
     ): void => {
         dispatch({
             type: HomeActionType.SET_ACTIVE_CHAT,
             payload: chatroomOrConversation,
+=======
+        chatroomOrDirectMessage: Chatroom | DirectMessage
+    ) => {
+        dispatch({
+            type: HomeActionType.SET_ACTIVE_CHAT,
+            payload: chatroomOrDirectMessage
+>>>>>>> ed2f8089be711c755a89f9ca4a1469e8a3a2674e
         });
     };
 
@@ -59,7 +67,7 @@ export const HomeProvider: React.FC<HomeProviderProps> = ({ children }) => {
                 activeChat: state.activeChat,
                 conversations: state.conversations,
                 rooms: state.rooms,
-                setActiveChatView,
+                setActiveChatView
             }}
         >
             {children}

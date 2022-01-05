@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+<<<<<<< HEAD
     .btn {
         @apply font-bold py-2 px-4 rounded;
     }
@@ -35,4 +36,15 @@
         border: dotted;
         border-color:blue; 
     }
+=======
+  .btn {
+    @apply font-bold py-2 px-4 rounded;
+  }
+  .btn-red {
+    @apply bg-red-500 text-white;
+  }
+  .btn-red:hover {
+    @apply bg-red-700;
+  }
+>>>>>>> ed2f8089be711c755a89f9ca4a1469e8a3a2674e
 }

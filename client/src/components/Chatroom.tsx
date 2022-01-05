@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { FormEvent, SetStateAction, useRef, useState } from 'react';
 import '../App.css';
 import { useNavigate } from 'react-router';
 import chatImg from '../images/chat.png';
@@ -14,7 +14,11 @@ type ChatroomProps = {
  * Makes Admin able to create chat rooms for users.
  * @returns HTML for creating a chatroom.
  */
+<<<<<<< HEAD
 const Chatroom: React.FC<ChatroomProps> = ({ chatroom, updateModal }) => {
+=======
+const Chatroom = ({ chatroom }: ChatroomProps) => {
+>>>>>>> ed2f8089be711c755a89f9ca4a1469e8a3a2674e
     const [chatroomName, setChatroomName] = useState<string>(
         chatroom?.name || ''
     );
@@ -24,17 +28,24 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom, updateModal }) => {
     const navigate = useNavigate();
     const publicRef = useRef<any>();
 
-    const handleChatroomName = (e: ChangeEvent<HTMLInputElement>): void => {
-        setChatroomName(e.target.value);
+    const handleChatroomName = (Event: {
+        target: { value: SetStateAction<string> };
+    }) => {
+        setChatroomName(Event.target.value);
     };
 
+<<<<<<< HEAD
     const handleChatroomTag = (e: ChangeEvent<HTMLInputElement>): void => {
         setChatroomTag(e.target.value.split(','));
+=======
+    const handleChatroomTag = (Event: {
+        target: { value: SetStateAction<string> };
+    }) => {
+        setChatroomTag(Event.target.value);
+>>>>>>> ed2f8089be711c755a89f9ca4a1469e8a3a2674e
     };
 
-    const handleOnSubmit = async (
-        e: FormEvent<HTMLFormElement>
-    ): Promise<void> => {
+    const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const chatroomService = new ChatroomService();
 
@@ -71,51 +82,73 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom, updateModal }) => {
             </header>
 
             <form onSubmit={handleOnSubmit}>
-                <label
-                    className="block mb-2 text-indigo-500"
-                    htmlFor="ChatroomName"
-                >
-                    Chatroom Name
+                <div>
+                    <label
+                        className="block mb-2 text-indigo-500"
+                        htmlFor="ChatroomName"
+                    >
+                        Chatroom Name
+                    </label>
                     <input
                         onChange={handleChatroomName}
                         className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
                         type="text"
-                        id="ChatroomName"
+                        name="ChatroomName"
                         defaultValue={chatroom?.name || ''}
                     />
+<<<<<<< HEAD
                 </label>
                 <label
                     className="block mb-2 text-indigo-500"
                     htmlFor="ChatroomTags"
                 >
                     Chatroom Tags
+=======
+                </div>
+                <div>
+                    <label
+                        className="block mb-2 text-indigo-500"
+                        htmlFor="ChatroomTag"
+                    >
+                        Chatroom Tag
+                    </label>
+>>>>>>> ed2f8089be711c755a89f9ca4a1469e8a3a2674e
                     <input
                         onChange={handleChatroomTag}
                         className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
                         type="text"
+<<<<<<< HEAD
                         id="ChatroomTag"
                         defaultValue={chatroom?.tags || []}
+=======
+                        name="ChatroomTag"
+                        defaultValue={chatroom?.tag || ''}
+>>>>>>> ed2f8089be711c755a89f9ca4a1469e8a3a2674e
                     />
-                </label>
-                <label
-                    className="block mb-2 text-indigo-500"
-                    htmlFor="ChatroomPublic"
-                >
-                    Chatroom Public
+                </div>
+                <div>
+                    <label
+                        className="block mb-2 text-indigo-500"
+                        htmlFor="ChatroomPublic"
+                    >
+                        Chatroom Public
+                    </label>
                     <input
                         ref={publicRef}
                         className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
                         type="checkbox"
                         defaultChecked={chatroom?.is_public || true}
-                        id="ChatroomPublic"
+                        name="ChatroomPublic"
                     />
-                </label>
-                <button
-                    type="submit"
-                    className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded"
-                >
-                    Submit
-                </button>
+                </div>
+
+                <div>
+                    <input
+                        className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded"
+                        type="submit"
+                        value="Submit"
+                    />
+                </div>
             </form>
         </div>
     );

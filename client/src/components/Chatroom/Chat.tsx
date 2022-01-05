@@ -7,14 +7,10 @@ import ChatroomUserList from '../sidebar/ChatroomUserList';
 import MessageService from '../../utils/http/message-service';
 
 type MessageEvent = {
-    id: number;
-    user_id: number;
-    username: string;
-    message: string;
-    room_id: number;
+    user_id: number, username: string, message: string, room_id: number
 };
 
-const ChatRoom: React.FC = () => {
+export default function ChatRoom() {
     const [messages, setMessages] = useState<MessageEvent[]>([]);
     const { connectUser, sendMessage, socket } = useContext(SocketContext);
     const { activeChat } = useContext(HomeContext);
@@ -36,24 +32,32 @@ const ChatRoom: React.FC = () => {
     }, [activeChat]);
 
     useEffect(() => {
+        console.log('useEffect fires!');
         connectUser(user?.id || '');
 
         socket?.on('room-message', (data: MessageEvent) => {
+            console.log(data.room_id, activeChat?.id);
             const shouldAddNewMessage = data.room_id === activeChat?.id;
 
             if (shouldAddNewMessage) {
-                setMessages((msgs) => [...msgs, data]);
+                setMessages((messages: MessageEvent[]) => [...messages, data]);
             }
+<<<<<<< HEAD
             scrollToBottom();
+=======
+            
+>>>>>>> ed2f8089be711c755a89f9ca4a1469e8a3a2674e
         });
 
 
         return () => {
+            console.log('useEffect cleanup!');
             socket?.off('room-message');
             setMessages([]);
         };
     }, [connectUser, socket, user, activeChat]);
 
+<<<<<<< HEAD
 
     const handleOnSubmit = async (
         e: React.FormEvent<HTMLFormElement>
@@ -77,10 +81,25 @@ const ChatRoom: React.FC = () => {
             };
             await messageService.create(data);
             
+=======
+    const handleEnter = (e: any) => {
+        if (e.code === 'Enter' && e.shiftKey === false) {
+            e.preventDefault();
+            handleOnSubmit(e);
+        }
+    };
+
+    const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (activeChat && user) {
+            sendMessage(activeChat?.id, user?.id, messageRef.current.value, user?.username);
+>>>>>>> ed2f8089be711c755a89f9ca4a1469e8a3a2674e
             messageRef.current.value = '';
         };
     };
 
+<<<<<<< HEAD
     const handleEnter = (e: any): void => {
         if (e.code === 'Enter' && e.shiftKey === false) {
             e.preventDefault();
@@ -95,12 +114,15 @@ const ChatRoom: React.FC = () => {
         });
     };
 
+=======
+>>>>>>> ed2f8089be711c755a89f9ca4a1469e8a3a2674e
     return (
         <div className="max-w-auto h-screen w-full m-auto bg-indigo-300 rounded p-5">
             {activeChat && <ChatroomUserList />}
             <div className="h-3/4 overflow-y-scroll">
                 <ul>
                     {messages &&
+<<<<<<< HEAD
                         messages.map((msg: MessageEvent) => (
                             <li key={msg.id}>
                                 <Message
@@ -110,14 +132,23 @@ const ChatRoom: React.FC = () => {
                             </li>
                         ))}
                     <li ref={messagesEndRef} key="bottomscrollreference">{/* I am here to make the chat scroll down! */}</li>
+=======
+            messages.map((msg: MessageEvent, index: number) => (
+                <li key={index}>
+                    <Message
+                        name={msg.username}
+                        message={msg.message}
+                        key={index}
+                    />
+                </li>
+            ))}
+>>>>>>> ed2f8089be711c755a89f9ca4a1469e8a3a2674e
                 </ul>
             </div>
             <div className="mb-6 mx-4">
                 <form
                     onSubmit={handleOnSubmit}
-                    ref={(el: HTMLFormElement) => {
-                        enterPressRef.current = el;
-                    }}
+                    ref={(el: HTMLFormElement) => (enterPressRef.current = el)}
                 >
                     <div className="pt-4 absolute pb-0 w-3/4 bottom-0">
                         <div className="write bg-white shadow flex rounded-lg">
@@ -132,20 +163,19 @@ const ChatRoom: React.FC = () => {
                                         viewBox="0 0 24 24"
                                         className="h-6 w-6"
                                     >
-                                        <path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        <path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                     </svg>
                                 </span>
                             </div>
                             <div className="flex-1">
                                 <textarea
-                                    onKeyDown={(e: React.KeyboardEvent) =>
-                                        handleEnter(e)
-                                    }
+                                    onKeyDown={(e: React.KeyboardEvent) => handleEnter(e)}
                                     ref={messageRef}
                                     name="message"
                                     className="w-full block outline-none py-4 px-4 bg-transparent"
                                     placeholder="Type a message..."
-                                />
+                                    autoFocus
+                                ></textarea>
                             </div>
                             <div className="flex-2 w-32 p-2 flex content-center items-center">
                                 <div className="flex-1 text-center">
@@ -160,16 +190,13 @@ const ChatRoom: React.FC = () => {
                                                 viewBox="0 0 24 24"
                                                 className="w-6 h-6"
                                             >
-                                                <path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                                                <path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
                                             </svg>
                                         </span>
                                     </span>
                                 </div>
                                 <div className="flex-1">
-                                    <button
-                                        type="button"
-                                        className="bg-blue-400 w-10 h-10 rounded-full inline-block"
-                                    >
+                                    <button className="bg-blue-400 w-10 h-10 rounded-full inline-block">
                                         <span className="inline-block align-text-bottom">
                                             <svg
                                                 fill="none"
@@ -180,7 +207,7 @@ const ChatRoom: React.FC = () => {
                                                 viewBox="0 0 24 24"
                                                 className="w-4 h-4 text-white"
                                             >
-                                                <path d="M5 13l4 4L19 7" />
+                                                <path d="M5 13l4 4L19 7"></path>
                                             </svg>
                                         </span>
                                     </button>
@@ -192,6 +219,4 @@ const ChatRoom: React.FC = () => {
             </div>
         </div>
     );
-};
-
-export default ChatRoom;
+}

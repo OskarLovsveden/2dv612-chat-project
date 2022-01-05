@@ -4,22 +4,20 @@ import editUserImg from '../../../images/edit.png';
 
 type ListItemProps = {
     user: User;
-    removeUser: (id: number) => void;
-};
+    removeUser: (id: number) => void
+}
 
-const ListItem: React.FC<ListItemProps> = ({ user, removeUser }) => {
+
+const ListItem = ({ user, removeUser }: ListItemProps) => {
     return (
         <li>
             <div className="inline-flex space-x-4 ">
                 <h3>{user.username} </h3>
                 <button
-                    type="button"
-                    onClick={() => {
-                        removeUser(user.id);
-                    }}
+                    onClick={() => { removeUser(user.id); }}
                     className="btn btn-red btn-red:hover"
-                >
-                    REMOVE
+                > 
+                    REMOVE 
                 </button>
                 <Link to="/create-user">
                     <img
