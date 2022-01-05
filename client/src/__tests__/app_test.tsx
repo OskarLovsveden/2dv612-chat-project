@@ -8,4 +8,3 @@ describe('App', () => {
         expect(wrapper.find('div').hasClass('App')).toBe(true);
     });
 });
-
