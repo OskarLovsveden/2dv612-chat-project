@@ -6,7 +6,6 @@ import ChatroomService from '../../utils/http/chatroom-service';
 import { HomeContext } from '../../context/HomeProvider';
 import ROLE from '../../types/Role';
 
-
 const ChatroomUserList: React.FC = () => {
     const [chatroomUsers, setChatroomUsers] = useState<User[]>([]);
 
