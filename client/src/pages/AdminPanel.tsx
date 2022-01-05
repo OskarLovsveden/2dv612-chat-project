@@ -8,18 +8,18 @@ import ROLE from '../types/Role';
 import UserService from '../utils/http/user-service';
 import AdminRoomList from '../components/AdminPanelComponents/RoomsList/RoomList';
 
-const AdminPanel = () => {
+const AdminPanel: React.FC = () => {
     const [userData, setUserData] = useState<User[]>([]);
 
     useEffect(() => {
         (async () => {
             const userService = new UserService();
             const resUser = await userService.getAll();
-            setUserData(resUser.data);
+            setUserData(resUser);
         })();
     }, []);
 
-    const removeUser = async (id: number) => {
+    const removeUser = async (id: number): Promise<void> => {
         const userService = new UserService();
         await userService.delete(id);
         setUserData(userData.filter((ud: User) => ud.id !== id));
@@ -40,14 +40,15 @@ const AdminPanel = () => {
                         <div className="font-bold text-xl mb-2">Moderator</div>
                         <ul>
                             {userData.map(
-                                (u: User, i: number) =>
-                                    u.role === ROLE.MOD && (
-                                        <li key={i}>
+                                (user: User) =>
+                                    user.role === ROLE.MOD && (
+                                        <li key={user.id}>
                                             <div className="inline-flex space-x-4 ">
-                                                <h3>{u.username} </h3>
+                                                <h3>{user.username} </h3>
                                                 <button
+                                                    type="button"
                                                     onClick={() => {
-                                                        removeUser(u.id);
+                                                        removeUser(user.id);
                                                     }}
                                                     className="btn btn-red btn-red:hover"
                                                 >
@@ -77,14 +78,15 @@ const AdminPanel = () => {
                         <div className="font-bold text-xl mb-2">Chattare</div>
                         <ul>
                             {userData.map(
-                                (u: User, i: number) =>
-                                    u.role === ROLE.USER && (
-                                        <li key={i}>
+                                (user: User) =>
+                                    user.role === ROLE.USER && (
+                                        <li key={user.id}>
                                             <div className="inline-flex space-x-4 ">
-                                                <h3>{u.username} </h3>
+                                                <h3>{user.username} </h3>
                                                 <button
+                                                    type="button"
                                                     onClick={() => {
-                                                        removeUser(u.id);
+                                                        removeUser(user.id);
                                                     }}
                                                     className="btn btn-red btn-red:hover"
                                                 >

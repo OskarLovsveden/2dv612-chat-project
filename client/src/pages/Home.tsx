@@ -7,7 +7,7 @@ import { SocketProvider } from '../context/SocketProvider';
 import Logout from '../components/Logout';
 import RenderChat from '../components/RenderChat';
 
-const Home = () => {
+const Home: React.FC = () => {
     const { isAuthenticated } = useContext(AuthContext);
 
     return (
@@ -43,20 +43,13 @@ const Home = () => {
                                             <span className="inline-block align-text-bottom" />
                                         </span>
                                         <span className="inline-block ml-10 text-gray-700 hover:text-gray-900 align-bottom" />
-<<<<<<< HEAD
                                         <RenderChat />
-=======
-                                        {isAuthenticated && <Chat />}
-                                        {/* {user && <Chat Toggle={onChat} username={user.username} />} */}
->>>>>>> ed2f8089be711c755a89f9ca4a1469e8a3a2674e
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/* <button onClick={onChat}>open chat</button>
-        {chatOpen && <Chat Toggle={ onChat } />} */}
             </SocketProvider>
         </HomeProvider>
     );

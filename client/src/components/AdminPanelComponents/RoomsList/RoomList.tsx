@@ -1,26 +1,27 @@
-import {
-    useEffect,
-    useState
-} from 'react';
+import { useEffect, useState } from 'react';
 import adminImg from '../../../images/admin.png';
 import ChatroomService from '../../../utils/http/chatroom-service';
-import { Chatroom as ChatroomType, AdminPanelChatRooms } from '../../../types/Chatroom';
+import {
+    Chatroom as ChatroomType,
+    AdminPanelChatRooms,
+} from '../../../types/Chatroom';
 import Chatroom from '../../Chatroom';
 import ListItems from './ListItems';
 
-
 enum ModalState {
-  UPDATE,
-  CREATE,
-  NONE
+    UPDATE,
+    CREATE,
+    NONE,
 }
 
-const RoomList = () => {
-    const [chatrooms, setChatrooms] = useState<AdminPanelChatRooms>({ private_rooms: [], public_rooms: [] });
+const RoomList: React.FC = () => {
+    const [chatrooms, setChatrooms] = useState<AdminPanelChatRooms>({
+        private_rooms: [],
+        public_rooms: [],
+    });
     const [modalState, setModalState] = useState<ModalState>(ModalState.NONE);
     const [activeChatroom, setActiveChatroom] = useState<ChatroomType>();
 
-<<<<<<< HEAD
     const getAllChatrooms = async (): Promise<void> => {
         const chatroomService = new ChatroomService();
         const resChatRoom = await chatroomService.getAll();
@@ -38,24 +39,9 @@ const RoomList = () => {
 
     useEffect(() => {
         getAllChatrooms();
-=======
-
-    useEffect(() => { 
-        (async () => {
-            const chatroomService = new ChatroomService();
-            const resChatRoom = await chatroomService.getAll();
-            const privateRooms = resChatRoom.data.filter((pr: any) => pr.is_public === false);
-            const publicRooms = resChatRoom.data.filter((pr:any) => pr.is_public === true);
-            setChatrooms({
-                private_rooms: [...chatrooms?.private_rooms, ...privateRooms],
-                public_rooms: [...chatrooms?.public_rooms, ...publicRooms]
-
-            });
-        })();
->>>>>>> ed2f8089be711c755a89f9ca4a1469e8a3a2674e
     }, []);
 
-    const updateChatroom = async (chatroom: ChatroomType) => {
+    const updateChatroom = async (chatroom: ChatroomType): Promise<void> => {
         setActiveChatroom(chatroom);
         if (modalState === ModalState.UPDATE) {
             setModalState(ModalState.NONE);
@@ -64,7 +50,6 @@ const RoomList = () => {
         }
     };
 
-<<<<<<< HEAD
     const updateModal = async (): Promise<void> => {
         setModalState(ModalState.NONE);
         getAllChatrooms();
@@ -74,52 +59,57 @@ const RoomList = () => {
         id: number,
         isPublicRoom: boolean
     ): Promise<void> => {
-=======
-    const removeChatroom = async (id: number, isPublicRoom: boolean) => {
->>>>>>> ed2f8089be711c755a89f9ca4a1469e8a3a2674e
         const chatroomService = new ChatroomService();
         await chatroomService.delete(id);
 
-        if(isPublicRoom) {
+        if (isPublicRoom) {
             setChatrooms({
-                public_rooms: [...chatrooms.public_rooms.filter((pr: any) => pr.id != id)],
-                private_rooms: [...chatrooms.private_rooms]
+                public_rooms: [
+                    ...chatrooms.public_rooms.filter(
+                        (pr: ChatroomType) => pr.id !== id
+                    ),
+                ],
+                private_rooms: [...chatrooms.private_rooms],
             });
         } else {
             setChatrooms({
-                private_rooms: [...chatrooms.private_rooms.filter((pr: any) => pr.id != id)],
-                public_rooms: [...chatrooms.public_rooms]
+                private_rooms: [
+                    ...chatrooms.private_rooms.filter(
+                        (pr: ChatroomType) => pr.id !== id
+                    ),
+                ],
+                public_rooms: [...chatrooms.public_rooms],
             });
         }
     };
 
     return (
         <>
-<<<<<<< HEAD
             {modalState === ModalState.UPDATE && (
                 <Chatroom
                     chatroom={activeChatroom}
                     updateModal={() => updateModal()}
                 />
             )}
-=======
-            {modalState === ModalState.UPDATE && <Chatroom chatroom={activeChatroom}/>}
->>>>>>> ed2f8089be711c755a89f9ca4a1469e8a3a2674e
             <div className="rounded overflow-hidden shadow-lg">
                 <div className="px-6 py-4">
                     <img className="w-1/4 h-1/4" src={adminImg} alt="Admin" />
                     <div className="font-bold text-xl mb-2">Admin</div>
-                    <ListItems 
+                    <ListItems
                         chatrooms={chatrooms.public_rooms}
-                        removeChatroom={(id: number) => removeChatroom(id, true)}
+                        removeChatroom={(id: number) =>
+                            removeChatroom(id, true)
+                        }
                         updateChatroom={updateChatroom}
-                        title='Public rooms'
+                        title="Public rooms"
                     />
-                    <ListItems 
+                    <ListItems
                         chatrooms={chatrooms.private_rooms}
-                        removeChatroom={(id: number) => removeChatroom(id, false)}
+                        removeChatroom={(id: number) =>
+                            removeChatroom(id, false)
+                        }
                         updateChatroom={updateChatroom}
-                        title='Private rooms'
+                        title="Private rooms"
                     />
                 </div>
             </div>

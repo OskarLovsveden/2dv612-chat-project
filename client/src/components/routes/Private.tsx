@@ -4,11 +4,14 @@ import { AuthContext } from '../../context/AuthProvider';
 import ROLE from '../../types/Role';
 
 type PrivateProps = {
-  component: React.ComponentType;
-  roles: Array<ROLE>;
-}
+    component: React.ComponentType;
+    roles: Array<ROLE>;
+};
 
-export const Private = ({ component: RouteComponent, roles }: PrivateProps) => {
+const Private: React.FC<PrivateProps> = ({
+    component: RouteComponent,
+    roles,
+}) => {
     const { user, isAuthenticated } = useContext(AuthContext);
     const userHasRequiredRole = user && roles.includes(user.role);
     const navigate = useNavigate();
