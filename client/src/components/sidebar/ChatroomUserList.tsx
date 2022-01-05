@@ -5,6 +5,7 @@ import type { User } from '../../types/User';
 import ChatroomService from '../../utils/http/chatroom-service';
 import { HomeContext } from '../../context/HomeProvider';
 import ROLE from '../../types/Role';
+import LeaveChat from '../Chatroom/LeaveChat';
 
 const ChatroomUserList: React.FC = () => {
     const [chatroomUsers, setChatroomUsers] = useState<User[]>([]);
@@ -70,6 +71,7 @@ const ChatroomUserList: React.FC = () => {
                     <div className="sidebar hidden lg:flex w-full flex-2 flex-col pr-6" />
                 </div>
             </div>
+            <LeaveChat />
         </div>
     );
 };
