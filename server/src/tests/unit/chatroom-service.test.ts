@@ -20,7 +20,7 @@ describe('Chatroom service', () => {
 
         expect(actual)
             .to.be.an('object')
-            .to.have.keys(['name', 'is_public', 'tag', 'user_ids', 'id'])
+            .to.have.keys(['name', 'is_public', 'tags', 'user_ids', 'id', 'message_ids'])
             .not.to.be.undefined;
     });
 
@@ -46,7 +46,7 @@ describe('Chatroom service', () => {
         
         expect(chatroom)
             .to.be.an('object')
-            .to.have.keys(['name', 'is_public', 'tag', 'user_ids', 'id'])
+            .to.have.keys(['name', 'is_public', 'tags', 'user_ids', 'id', 'message_ids'])
             .not.to.be.undefined;
     });
 });
