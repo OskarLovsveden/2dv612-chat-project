@@ -1,45 +1,54 @@
 import { io, Socket } from 'socket.io-client';
 import { createContext, useEffect, useState } from 'react';
-import config from '../config'
+import config from '../config';
+import { printToConsole } from '../utils/console-printer';
 
-const {BASE_URL, SOCKET_PATH} = config
+const { BASE_URL, SOCKET_PATH } = config;
 
 type SocketContextState = {
-  socket?: Socket;
-  connectUser: (userID: number | string) => void;
-  sendMessage: (room_id: number, user_id: number, message: string, username: string) => void;
+    socket?: Socket;
+    connectUser: (userID: number | string) => void;
+    sendMessage: (
+        room_id: number,
+        user_id: number,
+        message: string,
+        username: string
+    ) => void;
 };
 
 const initialState: SocketContextState = {
-    connectUser: (): void => {return;},
-    sendMessage: (): void => {return;}
+    connectUser: (): void => {},
+    sendMessage: (): void => {},
 };
 
 export const SocketContext = createContext<SocketContextState>(initialState);
 
 type SocketProviderProps = { children: React.ReactChild[] | React.ReactChild };
 
-export const SocketProvider = ({ children }: SocketProviderProps) => {
-    const [socket] = useState(
-        io(BASE_URL, { path: SOCKET_PATH })
-    );
+export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
+    const [socket] = useState(io(BASE_URL, { path: SOCKET_PATH }));
 
     useEffect(() => {
         socket.on('connect', () =>
-            console.log('Socket connected! ID: ' + socket.id)
+            printToConsole(`Socket connected! ID: ${socket.id}`)
         );
 
         return () => {
-            console.log('Jag drar');
+            printToConsole(`Socket disconnected! ID: ${socket.id}`);
             socket.disconnect();
         };
     }, [socket]);
 
-    const connectUser = (userID: number | string) => {
+    const connectUser = (userID: number | string): void => {
         socket.emit('user-connect', { user_id: userID });
     };
 
-    const sendMessage = (room_id: number, user_id: number, message: string, username: string) => {
+    const sendMessage = (
+        room_id: number,
+        user_id: number,
+        message: string,
+        username: string
+    ): void => {
         socket.emit('chat-message', { room_id, user_id, message, username });
     };
 
@@ -52,7 +61,7 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
           }); */
 
     /* socket.on("room-message", (data) => {
-          console.log(data);
+          printToConsole(data);
     
           const isUser = data.username === username;
           handleNewMessage({
@@ -66,9 +75,9 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
     return (
         <SocketContext.Provider
             value={{
-                socket: socket,
+                socket,
                 connectUser,
-                sendMessage
+                sendMessage,
             }}
         >
             {children}

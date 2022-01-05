@@ -11,8 +11,8 @@ import ROLE from './types/Role';
 import UserCreation from './components/UserCreation';
 import { AuthContext } from './context/AuthProvider';
 
-function App() {
-    const { user, isAuthenticated } = useContext(AuthContext);
+function App(): JSX.Element {
+    const { user } = useContext(AuthContext);
 
     return (
         <div className="App">
@@ -58,7 +58,10 @@ function App() {
                             <Private
                                 roles={[ROLE.ADMIN]}
                                 component={() => (
-                                    <Chatroom chatroom={undefined} />
+                                    <Chatroom
+                                        chatroom={undefined}
+                                        updateModal={() => {}}
+                                    />
                                 )}
                             />
                         }

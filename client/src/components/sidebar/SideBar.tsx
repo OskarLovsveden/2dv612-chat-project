@@ -1,23 +1,23 @@
+import { useState, MouseEvent, useContext } from 'react';
 import Searchbar from './Searchbar';
 import chatImg from '../../images/chat.png';
-import { useState, MouseEvent, useContext } from 'react';
 import ChatroomList from './ChatroomList';
 import { HomeContext } from '../../context/HomeProvider';
-import DirectMessageList from './DirectMessageList';
+import DirectMessageList from './ConversationList';
 
 const MESSAGES = 'messages';
 const CHAT_ROOMS = 'chat-rooms';
 
-const SideBar = () => {
+const SideBar: React.FC = () => {
     const [activeList, setActiveList] = useState<string>(MESSAGES);
-    const { rooms, dms } = useContext(HomeContext);
+    const { rooms, conversations } = useContext(HomeContext);
 
-    const showMessages = (e: MouseEvent<HTMLButtonElement>) => {
+    const showMessages = (e: MouseEvent<HTMLButtonElement>): void => {
         e.preventDefault();
         setActiveList(MESSAGES);
     };
 
-    const showRooms = (e: MouseEvent<HTMLButtonElement>) => {
+    const showRooms = (e: MouseEvent<HTMLButtonElement>): void => {
         e.preventDefault();
         setActiveList(CHAT_ROOMS);
     };
@@ -31,23 +31,25 @@ const SideBar = () => {
             <div className="menu mt-8">
                 <div className="inline-flex w-full">
                     <button
+                        type="button"
                         onClick={showMessages}
                         className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l mx-auto"
                     >
-            Messages
+                        Messages
                     </button>
                     <button
+                        type="button"
                         onClick={showRooms}
                         className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r mx-auto"
                     >
-            Rooms
+                        Rooms
                     </button>
                 </div>
                 <div>
                     <div className="sidebar hidden lg:flex w-full flex-2 flex-col pr-6">
                         <Searchbar />
-                        {activeList === MESSAGES && dms && (
-                            <DirectMessageList messages={dms} />
+                        {activeList === MESSAGES && conversations && (
+                            <DirectMessageList messages={conversations} />
                         )}
                         {activeList === CHAT_ROOMS && rooms && (
                             <ChatroomList chatrooms={rooms} />

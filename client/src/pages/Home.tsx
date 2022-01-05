@@ -5,8 +5,9 @@ import SideBar from '../components/sidebar/SideBar';
 import { HomeProvider } from '../context/HomeProvider';
 import { SocketProvider } from '../context/SocketProvider';
 import Logout from '../components/Logout';
+import RenderChat from '../components/RenderChat';
 
-const Home = () => {
+const Home: React.FC = () => {
     const { isAuthenticated } = useContext(AuthContext);
 
     return (
@@ -36,23 +37,19 @@ const Home = () => {
                                     </span>
                                 </div>
                                 <div className="flex-1 bg-indigo-500">
-                                    <span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white" />
                                     <div className="flex-1 text-right">
                                         <span className="inline-block text-gray-700">
                                             <Logout />
                                             <span className="inline-block align-text-bottom" />
                                         </span>
                                         <span className="inline-block ml-10 text-gray-700 hover:text-gray-900 align-bottom" />
-                                        {isAuthenticated && <Chat />}
-                                        {/* {user && <Chat Toggle={onChat} username={user.username} />} */}
+                                        <RenderChat />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/* <button onClick={onChat}>open chat</button>
-        {chatOpen && <Chat Toggle={ onChat } />} */}
             </SocketProvider>
         </HomeProvider>
     );

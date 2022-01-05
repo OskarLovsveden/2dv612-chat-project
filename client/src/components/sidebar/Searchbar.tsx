@@ -1,4 +1,4 @@
-const Searchbar = () => {
+const Searchbar: React.FC = () => {
     return (
         <div className="search flex-2 pb-6 px-2">
             <input
