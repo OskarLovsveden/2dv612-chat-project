@@ -2,11 +2,10 @@ import { useContext } from 'react';
 import Chat from '../components/Chatroom/Chat';
 import { AuthContext } from '../context/AuthProvider';
 import SideBar from '../components/sidebar/SideBar';
-import { HomeProvider} from '../context/HomeProvider';
+import { HomeProvider } from '../context/HomeProvider';
 import { SocketProvider } from '../context/SocketProvider';
 import Logout from '../components/Logout';
 import RenderChat from '../components/RenderChat';
-
 
 const Home: React.FC = () => {
     const { isAuthenticated } = useContext(AuthContext);
@@ -44,7 +43,7 @@ const Home: React.FC = () => {
                                             <span className="inline-block align-text-bottom" />
                                         </span>
                                         <span className="inline-block ml-10 text-gray-700 hover:text-gray-900 align-bottom" />
-                                        <RenderChat/>
+                                        <RenderChat />
                                     </div>
                                 </div>
                             </div>
