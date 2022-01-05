@@ -28,9 +28,8 @@ const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
                         />
                     )}
                     <button
-                        className="inline-flex"
                         type="button"
-                        className="w-full h-full flex justify-left"
+                        className="flex w-full h-full justify-left"
                         onClick={() => {
                             setJoin(true);
                         }}

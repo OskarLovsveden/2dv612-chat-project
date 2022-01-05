@@ -21,7 +21,7 @@ const ConversationList: React.FC<ConversationListProps> = ({ messages }) => {
                 >
                     <button
                         type="button"
-                        className="w-full h-full flex justify-left"
+                        className="flex w-full h-full justify-left"
                         onClick={() => {
                             setActiveChatView(conversation);
                         }}
