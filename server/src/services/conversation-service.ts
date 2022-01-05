@@ -14,6 +14,7 @@ export default class ConversationService {
 
     public async addMessage(convoID: number, messageID: number): Promise<Conversation> {
         const conversation = await this.get(convoID);
+
         return conversation.update({
             ...conversation,
             message_ids: sequelize.fn('array_append', sequelize.col('message_ids'), messageID)
@@ -21,19 +22,11 @@ export default class ConversationService {
     }
 
     public async get(conID: number): Promise<Conversation> {
-        return this.conversation.findOne({ 
-            where: { id: conID }, 
-            include: [Conversation.associations.messages],
-            rejectOnEmpty: true 
-        });
+        return this.conversation.findOne({ where: { id: conID } });
     }
 
     public async getAll(userID: number): Promise<Conversation[]> {
-        const allConversations: Conversation[] = await this.conversation.findAll({
-            include: [Conversation.associations.messages],
-            rejectOnEmpty: true
-        });
-
+        const allConversations: Conversation[] = await this.conversation.findAll();
         return allConversations.filter((con: Conversation) => con.user_ids.includes(userID));
 
         /* return this.conversation.findAll({ where: { user_id: userID } }); */

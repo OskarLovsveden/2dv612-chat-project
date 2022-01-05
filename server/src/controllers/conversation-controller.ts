@@ -3,7 +3,7 @@ import { Context } from 'koa';
 import ConversationService from '../services/conversation-service';
 import { ConversationCreationAttributes } from '../models/conversation';
 import MessageService from '../services/message-service';
-import { RespondMessage } from '../types/respond-types';
+import { RespondConversation, RespondMessage, RespondUser } from '../types/respond-types';
 import UserService from '../services/user-service';
 import { MessageCreationAttributes } from '../models/message';
 
@@ -14,17 +14,14 @@ export default class ConversationController {
 
     public async add(ctx: Context): Promise<void> {
         try {
-            const conversation: ConversationCreationAttributes = ctx.request.body;
+            const { user_ids } = ctx.request.body;
 
-            console.log(conversation);
-
-            if (!conversation) {
+            if (!user_ids) {
                 console.log('Can not create message, faulty body');
             }
 
+            const conversation: ConversationCreationAttributes = { user_ids: user_ids, message_ids: [] };
             const conversationCreated = await this.conversationService.createConversation(conversation);
-
-            console.log(conversationCreated);
 
             if (!conversationCreated) {
                 ctx.throw(400, { message: 'Failed to create message' });
@@ -76,8 +73,28 @@ export default class ConversationController {
             const userID = ctx.user.id;
             const conversations = await this.conversationService.getAll(userID);
 
-            console.log(conversations);
-            ctx.body = conversations;
+            const res: RespondConversation[] = [];
+
+            for (const convo of conversations) {
+                const users: RespondUser[] = [];
+
+                for (const userID of convo.user_ids) {
+                    const { id,username,active,role } = await this.userService.get(userID);
+                    users.push({ id, username, active, role });
+                }
+
+                const name = users.length > 2 ? 
+                    users.filter((u: RespondUser) => u.id !== userID).map((u: RespondUser) => u.username).join(', ') : 
+                    users.find((u: RespondUser) => u.id !== userID).username;
+
+                res.push({
+                    id: convo.id,
+                    name: name,
+                    users: users
+                });
+            }
+
+            ctx.body = res;
         } catch (e) {
             console.error(e);
         }
@@ -149,16 +166,16 @@ export default class ConversationController {
         try {
             const id = ctx.params.id;
             const { message, user_id }: MessageCreationAttributes = ctx.request.body;
-
+            
             if (!message || !user_id) {
                 console.log('Can not create message, faulty body');
             }
-
+            
             const msg: MessageCreationAttributes = {
                 message: message,
                 user_id: user_id
             };
-
+            
             const messageCreated = await this.messageService.create(msg);
 
             if (!messageCreated) {

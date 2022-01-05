@@ -20,39 +20,39 @@ const ListItems: React.FC<ListItemsProps> = ({
             <div className="font-bold text-xl mb-2">{title}</div>
             <ul>
                 {chatrooms &&
-                    chatrooms.map((chatroom: ChatroomType) => {
-                        return (
-                            <li key={chatroom.id}>
-                                <div className="inline-flex space-x-4">
-                                    <h3>{chatroom.name}</h3>
-                                    <h3>{chatroom.tag}</h3>
-                                    <span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white " />
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            removeChatroom(chatroom.id)
-                                        }
-                                    >
-                                        <img
-                                            className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-                                            src={deleteImg}
-                                            alt="Delete"
-                                        />
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => updateChatroom(chatroom)}
-                                    >
-                                        <img
-                                            className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-                                            src={editUserImg}
-                                            alt="Edit"
-                                        />
-                                    </button>
-                                </div>
-                            </li>
-                        );
-                    })}
+                    chatrooms.map((chatroom: ChatroomType) => (
+                        <li key={chatroom.id}>
+                            <div className="inline-flex space-x-4">
+                                <h3>{chatroom.name}</h3>
+                                <h3>
+                                    {chatroom.tags.map((t) => (
+                                        <span key={t}>{t}</span>
+                                    ))}
+                                </h3>
+                                <span className="inline-block align-text-bottom w-4 h-4 bg-green-400 rounded-full border-2 border-white " />
+                                <button
+                                    type="button"
+                                    onClick={() => removeChatroom(chatroom.id)}
+                                >
+                                    <img
+                                        className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                                        src={deleteImg}
+                                        alt="Delete"
+                                    />
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => updateChatroom(chatroom)}
+                                >
+                                    <img
+                                        className="w-6 h-6 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                                        src={editUserImg}
+                                        alt="Edit"
+                                    />
+                                </button>
+                            </div>
+                        </li>
+                    ))}
             </ul>
         </div>
     );

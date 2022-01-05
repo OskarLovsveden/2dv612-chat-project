@@ -1,21 +1,21 @@
 import { useContext } from 'react';
 import { HomeContext } from '../../context/HomeProvider';
-import { Chatroom } from '../../types/Chatroom';
+import { Conversation } from '../../types/Conversation';
 
-type ChatroomListProps = {
-    chatrooms: Chatroom[];
+type ConversationListProps = {
+    messages: Conversation[];
 };
 
-const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
+const ConversationList: React.FC<ConversationListProps> = ({ messages }) => {
     const { setActiveChatView, activeChat } = useContext(HomeContext);
 
     return (
         <ul>
-            {chatrooms.map((chatroom: Chatroom) => (
+            {messages.map((conversation: Conversation) => (
                 <li
-                    key={chatroom.id}
+                    key={conversation.id}
                     className={`flex cursor-pointer hover:bg-black hover:bg-opacity-50 hover:text-white ${
-                        activeChat?.name === chatroom.name &&
+                        activeChat?.name === conversation.name &&
                         'bg-black text-white'
                     }`}
                 >
@@ -23,7 +23,7 @@ const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
                         type="button"
                         className="w-full h-full flex justify-left"
                         onClick={() => {
-                            setActiveChatView(chatroom);
+                            setActiveChatView(conversation);
                         }}
                     >
                         <svg
@@ -38,7 +38,7 @@ const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
                                 clipRule="evenodd"
                             />
                         </svg>
-                        {chatroom.name}
+                        {conversation.name}
                     </button>
                 </li>
             ))}
@@ -46,4 +46,4 @@ const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
     );
 };
 
-export default ChatroomList;
+export default ConversationList;

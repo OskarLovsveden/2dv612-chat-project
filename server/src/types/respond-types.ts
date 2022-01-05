@@ -19,3 +19,9 @@ export type RespondMessage = {
     id: number;
     createdAt: Date;
 }
+
+export type RespondConversation = {
+    id: number;
+    name: string;
+    users: RespondUser[];
+}

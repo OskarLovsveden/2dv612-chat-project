@@ -3,14 +3,14 @@ import Searchbar from './Searchbar';
 import chatImg from '../../images/chat.png';
 import ChatroomList from './ChatroomList';
 import { HomeContext } from '../../context/HomeProvider';
-import DirectMessageList from './DirectMessageList';
+import DirectMessageList from './ConversationList';
 
 const MESSAGES = 'messages';
 const CHAT_ROOMS = 'chat-rooms';
 
 const SideBar: React.FC = () => {
     const [activeList, setActiveList] = useState<string>(MESSAGES);
-    const { rooms, dms } = useContext(HomeContext);
+    const { rooms, conversations } = useContext(HomeContext);
 
     const showMessages = (e: MouseEvent<HTMLButtonElement>): void => {
         e.preventDefault();
@@ -48,8 +48,8 @@ const SideBar: React.FC = () => {
                 <div>
                     <div className="sidebar hidden lg:flex w-full flex-2 flex-col pr-6">
                         <Searchbar />
-                        {activeList === MESSAGES && dms && (
-                            <DirectMessageList messages={dms} />
+                        {activeList === MESSAGES && conversations && (
+                            <DirectMessageList messages={conversations} />
                         )}
                         {activeList === CHAT_ROOMS && rooms && (
                             <ChatroomList chatrooms={rooms} />

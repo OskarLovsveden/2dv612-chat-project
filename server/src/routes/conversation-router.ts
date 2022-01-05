@@ -17,7 +17,7 @@ export default class ConversationRouter {
     }
 
     private initializeRoutes(): void {
-        // Chatroom specific
+        // Conversation specific
         this._router.get('/',
             (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
             (ctx: Context) => this.controller.getAll(ctx)
@@ -34,9 +34,9 @@ export default class ConversationRouter {
         );
 
         // Message specific
-        this._router.get('/:id/messages',
+        this._router.get('/:id/message',
             (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
-            (ctx: Context) => this.controller.get(ctx)
+            (ctx: Context) => this.controller.getAllMessages(ctx)
         );
 
         this._router.post('/:id/message',

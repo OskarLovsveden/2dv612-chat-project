@@ -4,7 +4,7 @@ import '../App.css';
  * Logout button for everybody
  * @returns HTML for logout button.
  */
-const Logout = () => {
+const Logout: React.FC = () => {
     return (
         <div>
             <a
