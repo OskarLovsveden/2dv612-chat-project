@@ -59,7 +59,7 @@ export default class ChatroomRouter {
         );
 
         // Message specific
-        this._router.get('/:id/messages',
+        this._router.get('/:id/message',
             (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
             (ctx: Context) => this.controller.getAllMessages(ctx)
         );

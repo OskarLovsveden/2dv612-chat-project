@@ -15,6 +15,8 @@ class Message
     id!: number;
     message: string;
     user_id: number;
+
+    public readonly createdAt!: Date;
 }
 
 Message.init(
@@ -35,7 +37,6 @@ Message.init(
     },
     {
         tableName: 'message',
-        createdAt: false,
         updatedAt: false,
         sequelize
     }

@@ -99,7 +99,8 @@ export default class ConversationController {
                     id: msg.id,
                     message: msg.message,
                     user_id: msg.user_id,
-                    username: (await this.userService.get(msg.user_id)).username
+                    username: (await this.userService.get(msg.user_id)).username,
+                    createdAt: msg.createdAt
                 });
             }
             

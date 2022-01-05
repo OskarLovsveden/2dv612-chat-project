@@ -17,4 +17,5 @@ export type RespondMessage = {
     username: string;
     message: string;
     id: number;
+    createdAt: Date;
 }

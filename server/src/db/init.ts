@@ -13,12 +13,12 @@ export const dbInit = async () => {
     await User.sync({ alter: isDev });
     
     /* const user = User.findOrCreate({ where: { username: 'admin' } }, ); */
+
     const userService = new UserService();
-    const admin =await User.findOne({ where: { username: 'admin' } });
-    const user =await User.findOne({ where: { username: 'user' } });
+    const admin = await User.findOne({ where: { username: 'admin' } });
+    const user = await User.findOne({ where: { username: 'user' } });
 
     if(!admin) {
-
         await userService.create({ username: 'admin',
             password: 'password',
             role: 'admin',
@@ -33,5 +33,4 @@ export const dbInit = async () => {
             active: true
         });
     }
-
 };
