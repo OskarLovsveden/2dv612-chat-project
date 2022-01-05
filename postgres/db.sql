@@ -181,7 +181,7 @@ ALTER TABLE ONLY public.chatroom
 
 CREATE TABLE public.message (
     id integer NOT NULL,
-    name character varying(255) NOT NULL,
+    username character varying(255) NOT NULL,
     message character varying(255) NOT NULL,
     user_id integer,
     room_id integer
@@ -223,7 +223,7 @@ ALTER TABLE ONLY public.message ALTER COLUMN id SET DEFAULT nextval('public.mess
 -- Data for Name: message; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.message (id, name, message, user_id, room_id) FROM stdin;
+COPY public.message (id, username, message, user_id, room_id) FROM stdin;
 \.
 
 --
