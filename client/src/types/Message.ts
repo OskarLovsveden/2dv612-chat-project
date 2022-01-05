@@ -11,4 +11,4 @@ export type NewMessage = {
     user_id: number;
     username: string;
     message: string;
-}
+};
