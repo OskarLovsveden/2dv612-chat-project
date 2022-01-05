@@ -60,4 +60,21 @@ export default class ChatRoomService {
             user_ids: sequelize.fn('array_append', sequelize.col('user_ids'), userID)
         });
     }
+
+    public async addMessage(roomID: number, messageID: number): Promise<Chatroom> {
+        const room = await this.get(roomID);
+        return room.update({
+            ...room,
+            message_ids: sequelize.fn('array_append', sequelize.col('message_ids'), messageID)
+        });
+    }
+    
+    public async removeMessage(roomID: number, messageID: number): Promise<Chatroom> {
+        const room = await this.get(roomID);
+
+        return room.update({
+            ...room,
+            message_ids: sequelize.fn('array_remove', sequelize.col('message_ids'), messageID)
+        });
+    }
 }

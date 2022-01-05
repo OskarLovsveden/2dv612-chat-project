@@ -1,12 +1,12 @@
 import { Chatroom } from './Chatroom';
-import { DirectMessage } from './DirectMessage';
+import { Conversation } from './Conversation';
 
 type HomeContextState = {
-    activeChat?: Chatroom | DirectMessage;
-    dms: DirectMessage[];
+    activeChat?: Chatroom | Conversation;
+    conversations: Conversation[];
     rooms: Chatroom[];
     setActiveChatView: (
-        chatroomOrDirectMessage: Chatroom | DirectMessage
+        chatroomOrConversation: Chatroom | Conversation
     ) => void;
 };
 

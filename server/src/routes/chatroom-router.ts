@@ -58,6 +58,28 @@ export default class ChatroomRouter {
             (ctx: Context) => this.controller.update(ctx)
         );
 
+        // Message specific
+        this._router.get('/:id/message',
+            (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
+            (ctx: Context) => this.controller.getAllMessages(ctx)
+        );
+    
+        this._router.post('/:id/message',
+            (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
+            (ctx: Context) => this.controller.addMessage(ctx)
+        );
+    
+        this._router.delete('/:id/message/:msg_id',
+            (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
+            (ctx: Context) => this.controller.removeMessage(ctx)
+        );
+            
+        this._router.put('/:id/message/:msg_id',
+            (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
+            (ctx: Context) => this.controller.updateMessage(ctx)
+        );
+        
+        // Users in chatroom
         this._router.get(
             '/:id/user',
             (ctx: Context, next: Next) =>

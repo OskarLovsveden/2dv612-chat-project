@@ -13,8 +13,15 @@ export type RespondRoom = {
 }
 
 export type RespondMessage = {
-    userID: number;
+    user_id: number;
+    username: string;
     message: string;
     id: number;
-    roomID: number;
+    createdAt: Date;
+}
+
+export type RespondConversation = {
+    id: number;
+    name: string;
+    users: RespondUser[];
 }

@@ -5,19 +5,21 @@ type ChatroomAttributes = {
   id: number;
   name: string;
   is_public: boolean;
-  tag: string[];
-  user_ids: Array<number>;
+  tags: string[];
+  user_ids: number[];
+  message_ids: number[]
 };
 
 class Chatroom
     extends Model<ChatroomAttributes, ChatroomCreationAttributes>
     implements ChatroomAttributes
 {
-    is_public: boolean;
     id!: number;
     name: string;
-    tag: string[];
+    is_public: boolean;
+    tags: string[];
     user_ids: number[];
+    message_ids: number[];
 }
 
 export type ChatroomCreationAttributes = Optional<ChatroomAttributes, 'id'>;
@@ -37,11 +39,15 @@ Chatroom.init(
             type: DataTypes.BOOLEAN,
             allowNull: false
         },
-        tag: {
+        tags: {
             type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false
         },
         user_ids: {
+            type: DataTypes.ARRAY(DataTypes.INTEGER),
+            allowNull: true
+        },
+        message_ids: {
             type: DataTypes.ARRAY(DataTypes.INTEGER),
             allowNull: true
         }

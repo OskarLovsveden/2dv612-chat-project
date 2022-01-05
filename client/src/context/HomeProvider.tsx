@@ -3,11 +3,12 @@ import HomeContextState from '../types/HomeContextState';
 import reducer from './HomeReducer';
 import { HomeActionType } from '../types/HomeReducerAction';
 import { Chatroom } from '../types/Chatroom';
-import { DirectMessage } from '../types/DirectMessage';
+import { Conversation } from '../types/Conversation';
 import ChatroomService from '../utils/http/chatroom-service';
+import ConversationService from '../utils/http/conversation-service';
 
 const initialState: HomeContextState = {
-    dms: [],
+    conversations: [],
     rooms: [],
     setActiveChatView: (): void => {},
 };
@@ -30,14 +31,25 @@ export const HomeProvider: React.FC<HomeProviderProps> = ({ children }) => {
             });
         };
         getAllChatrooms();
+
+        const getAllConversations = async (): Promise<void> => {
+            const conversationService = new ConversationService();
+            const conversations = await conversationService.getAll();
+
+            dispatch({
+                type: HomeActionType.SET_CONVERSATIONS,
+                payload: [...conversations],
+            });
+        };
+        getAllConversations();
     }, []);
 
     const setActiveChatView = (
-        chatroomOrDirectMessage: Chatroom | DirectMessage
+        chatroomOrConversation: Chatroom | Conversation
     ): void => {
         dispatch({
             type: HomeActionType.SET_ACTIVE_CHAT,
-            payload: chatroomOrDirectMessage,
+            payload: chatroomOrConversation,
         });
     };
 
@@ -45,7 +57,7 @@ export const HomeProvider: React.FC<HomeProviderProps> = ({ children }) => {
         <HomeContext.Provider
             value={{
                 activeChat: state.activeChat,
-                dms: state.dms,
+                conversations: state.conversations,
                 rooms: state.rooms,
                 setActiveChatView,
             }}

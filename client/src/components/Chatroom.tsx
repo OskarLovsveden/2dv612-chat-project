@@ -19,7 +19,7 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom, updateModal }) => {
         chatroom?.name || ''
     );
     const [chatroomTag, setChatroomTag] = useState<string[]>(
-        chatroom?.tag || []
+        chatroom?.tags || []
     );
     const navigate = useNavigate();
     const publicRef = useRef<any>();
@@ -42,7 +42,7 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom, updateModal }) => {
             const data = {
                 name: chatroomName,
                 is_public: publicRef.current?.checked,
-                tag: chatroomTag,
+                tags: chatroomTag,
             };
             await chatroomService.create(data);
 
@@ -52,7 +52,7 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom, updateModal }) => {
                 id: chatroom.id,
                 name: chatroomName,
                 is_public: publicRef.current?.checked,
-                tag: chatroomTag,
+                tags: chatroomTag,
             };
             await chatroomService.update(data, data.id);
 
@@ -94,7 +94,7 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom, updateModal }) => {
                         className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
                         type="text"
                         id="ChatroomTag"
-                        defaultValue={chatroom?.tag || []}
+                        defaultValue={chatroom?.tags || []}
                     />
                 </label>
                 <label
