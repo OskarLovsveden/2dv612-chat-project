@@ -8,7 +8,7 @@ const sut = new MessageService(mockMessage);
 // const userID = 1;
 const msgID = 1;
 const newMsg = {
-    name: 'a new message',
+    username: 'a new message',
     message: 'testing new message',
     user_id: 1,
     room_id: 1
