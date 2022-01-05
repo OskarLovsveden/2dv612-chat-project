@@ -13,8 +13,8 @@ export type RespondRoom = {
 }
 
 export type RespondMessage = {
-    userID: number;
+    user_id: number;
+    username: string;
     message: string;
     id: number;
-    roomID: number;
 }

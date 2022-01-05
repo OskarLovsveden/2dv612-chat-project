@@ -1,13 +1,17 @@
-import { config } from './config/config';
 import Server from './server';
-const PORT = config.port;
 import dotenv from 'dotenv';
-import dbConfig from './db/postgres';
+import sequelize from './db/postgres';
+import { dbInit } from './db/init';
+
+import { config } from './config/config';
+const PORT = config.port;
 
 dotenv.config();
+console.log(process.env);
 const main = async () => {
     try {
-        await dbConfig.authenticate();
+        await sequelize.authenticate();
+        await dbInit();
         console.log('Database connected');
         const server = new Server(PORT || 5000);
         server.run();

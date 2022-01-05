@@ -15,14 +15,6 @@ export default class MessageService {
         return this.message.findOne({ where: { id: msgID } });
     }
 
-    public async getAll(userID: number): Promise<Message[]> {
-        return this.message.findAll({ where: { user_id: userID } });
-    }
-
-    public async getRoomsMessages(roomID: number): Promise<Message[]> {
-        return this.message.findAll({ where: { room_id: roomID } });
-    }
-
     public async updateMsg(msgId: number, newMsg: string) {
         const msgUpdate = await this.get(msgId);
 
