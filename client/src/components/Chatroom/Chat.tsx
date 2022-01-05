@@ -20,7 +20,7 @@ const ChatRoom: React.FC = () => {
     const { user } = useContext(AuthContext);
     const enterPressRef = useRef<any>();
     const messageRef = useRef<any>();
-    const messagesEndRef = useRef<any>(); // Steffe
+    const messagesEndRef = useRef<any>();
 
     useEffect(() => {
         connectUser(user?.id || '');
@@ -82,7 +82,7 @@ const ChatRoom: React.FC = () => {
                                 />
                             </li>
                         ))}
-                    <li ref={messagesEndRef} key="steffelol">{/* I am here to make the chat scroll down! */}</li>
+                    <li ref={messagesEndRef} key="bottomscrollreference">{/* I am here to make the chat scroll down! */}</li>
                 </ul>
             </div>
             <div className="mb-6 mx-4">
