@@ -1,14 +1,11 @@
-import {useContext} from 'react';
-import Chat from '../components/Chatroom/Chat';
+import { useContext } from 'react';
+import Chat from './Chatroom/Chat';
 import NoChat from './Chatroom/NoChat';
-import {HomeContext } from '../context/HomeProvider';
-const RenderChat = () => {
-    const {activeChat} = useContext(HomeContext)
-    return (
-        <div>
-            {activeChat ? <Chat/> : <NoChat/>}
-        </div>
-    )
-}
+import { HomeContext } from '../context/HomeProvider';
 
-export default RenderChat
+const RenderChat: React.FC = () => {
+    const { activeChat } = useContext(HomeContext);
+    return <div>{activeChat ? <Chat /> : <NoChat />}</div>;
+};
+
+export default RenderChat;
