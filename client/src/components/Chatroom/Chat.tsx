@@ -64,7 +64,7 @@ const ChatRoom: React.FC = () => {
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ 
             behavior: 'smooth',
-            block: 'start'
+            block: 'nearest'
         });
     };
 
