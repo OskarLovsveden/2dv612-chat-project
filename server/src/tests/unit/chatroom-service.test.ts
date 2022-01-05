@@ -9,8 +9,9 @@ const roomID = 1;
 const newRoom = {
     name: 'room2',
     is_public: true,
-    tag: ['computers', 'somethingelse'],
-    user_ids: [3, 1, 4]
+    tags: ['computers', 'somethingelse'],
+    user_ids: [3, 1, 4],
+    message_ids: [1]
 };
 
 describe('Chatroom service', () => {
