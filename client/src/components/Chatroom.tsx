@@ -7,13 +7,14 @@ import ChatroomService from '../utils/http/chatroom-service';
 
 type ChatroomProps = {
     chatroom?: ChatroomType;
+    updateModal: () => void;
 };
 
 /**
  * Makes Admin able to create chat rooms for users.
  * @returns HTML for creating a chatroom.
  */
-const Chatroom: React.FC<ChatroomProps> = ({ chatroom }) => {
+const Chatroom: React.FC<ChatroomProps> = ({ chatroom, updateModal }) => {
     const [chatroomName, setChatroomName] = useState<string>(
         chatroom?.name || ''
     );
@@ -28,7 +29,7 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom }) => {
     };
 
     const handleChatroomTag = (e: ChangeEvent<HTMLInputElement>): void => {
-        setChatroomTag([e.target.value]);
+        setChatroomTag(e.target.value.split(','));
     };
 
     const handleOnSubmit = async (
@@ -55,10 +56,7 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom }) => {
             };
             await chatroomService.update(data, data.id);
 
-            navigate(
-                '/temporary-adress-which-just-makes-sure-to-reload-admin-page'
-            );
-            navigate('/admin');
+            updateModal();
         }
     };
 
@@ -88,9 +86,9 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom }) => {
                 </label>
                 <label
                     className="block mb-2 text-indigo-500"
-                    htmlFor="ChatroomTag"
+                    htmlFor="ChatroomTags"
                 >
-                    Chatroom Tag
+                    Chatroom Tags
                     <input
                         onChange={handleChatroomTag}
                         className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"

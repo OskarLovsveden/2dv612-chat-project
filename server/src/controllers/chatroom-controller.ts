@@ -69,7 +69,17 @@ export default class ChatroomController {
             console.error(e);
         }
     }
-    
+
+    public async getChatroomUsers(ctx: Context): Promise<void> {
+        try{
+            const id = ctx.params.id;
+            const usersInRoom = await this.chatroomService.getChatroomUsers(id);
+            ctx.body = usersInRoom;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     public async remove(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
@@ -99,7 +109,7 @@ export default class ChatroomController {
             if (userID) {
                 updatedRoom = await this.chatroomService.addUser(id, userID);
             }
-            
+
             if (!updatedRoom) {
                 ctx.throw(400, { message: 'Failed to update room' });
             }

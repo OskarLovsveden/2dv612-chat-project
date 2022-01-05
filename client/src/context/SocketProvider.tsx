@@ -1,6 +1,7 @@
 import { io, Socket } from 'socket.io-client';
 import { createContext, useEffect, useState } from 'react';
 import config from '../config';
+import { printToConsole } from '../utils/console-printer';
 
 const { BASE_URL, SOCKET_PATH } = config;
 
@@ -29,11 +30,11 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
 
     useEffect(() => {
         socket.on('connect', () =>
-            console.log(`Socket connected! ID: ${socket.id}`)
+            printToConsole(`Socket connected! ID: ${socket.id}`)
         );
 
         return () => {
-            console.log('Jag drar');
+            printToConsole(`Socket disconnected! ID: ${socket.id}`);
             socket.disconnect();
         };
     }, [socket]);
@@ -60,7 +61,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
           }); */
 
     /* socket.on("room-message", (data) => {
-          console.log(data);
+          printToConsole(data);
     
           const isUser = data.username === username;
           handleNewMessage({

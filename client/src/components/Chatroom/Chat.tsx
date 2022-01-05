@@ -3,6 +3,8 @@ import Message from './Message';
 import { HomeContext } from '../../context/HomeProvider';
 import { AuthContext } from '../../context/AuthProvider';
 import { SocketContext } from '../../context/SocketProvider';
+import ChatroomUserList from '../sidebar/ChatroomUserList';
+import MessageService from '../../utils/http/message-service';
 
 type MessageEvent = {
     id: number;
@@ -19,6 +21,19 @@ const ChatRoom: React.FC = () => {
     const { user } = useContext(AuthContext);
     const enterPressRef = useRef<any>();
     const messageRef = useRef<any>();
+    const messagesEndRef = useRef<any>();
+
+    useEffect(() => {
+        (async () => {
+            if (activeChat) {
+                const messageService = new MessageService();
+                const resMessages = await messageService.getAllForRoom(
+                    activeChat.id
+                );
+                setMessages(resMessages);
+            }
+        })();
+    }, [activeChat]);
 
     useEffect(() => {
         connectUser(user?.id || '');
@@ -29,7 +44,9 @@ const ChatRoom: React.FC = () => {
             if (shouldAddNewMessage) {
                 setMessages((msgs) => [...msgs, data]);
             }
+            scrollToBottom();
         });
+
 
         return () => {
             socket?.off('room-message');
@@ -37,7 +54,10 @@ const ChatRoom: React.FC = () => {
         };
     }, [connectUser, socket, user, activeChat]);
 
-    const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+
+    const handleOnSubmit = async (
+        e: React.FormEvent<HTMLFormElement>
+        ): Promise<void> => {
         e.preventDefault();
 
         if (activeChat && user) {
@@ -47,8 +67,18 @@ const ChatRoom: React.FC = () => {
                 messageRef.current.value,
                 user?.username
             );
+            
+            const messageService = new MessageService();
+            const data = {
+                room_id: activeChat?.id,
+                user_id: user?.id,
+                username: user?.username,
+                message: messageRef.current.value,
+            };
+            await messageService.create(data);
+            
             messageRef.current.value = '';
-        }
+        };
     };
 
     const handleEnter = (e: any): void => {
@@ -58,8 +88,16 @@ const ChatRoom: React.FC = () => {
         }
     };
 
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'nearest'
+        });
+    };
+
     return (
         <div className="max-w-auto h-screen w-full m-auto bg-indigo-300 rounded p-5">
+            {activeChat && <ChatroomUserList />}
             <div className="h-3/4 overflow-y-scroll">
                 <ul>
                     {messages &&
@@ -71,6 +109,7 @@ const ChatRoom: React.FC = () => {
                                 />
                             </li>
                         ))}
+                    <li ref={messagesEndRef} key="bottomscrollreference">{/* I am here to make the chat scroll down! */}</li>
                 </ul>
             </div>
             <div className="mb-6 mx-4">

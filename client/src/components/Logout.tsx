@@ -6,7 +6,7 @@ import '../App.css';
  */
 const Logout: React.FC = () => {
     return (
-        <div>
+        <div className="relative top-3">
             <a
                 className="btn btn-red btn-red:hover"
                 onClick={() => {

@@ -4,13 +4,15 @@ module.exports = {
     roots: ['<rootDir>/src'],
     preset: 'ts-jest',
     testEnvironment: 'node',
-
-    coverageThreshold: {
-        global: {
-            branches: 50,
-            functions: 50,
-            lines: 50,
-            statements: 10
-        }
+    setupFiles: ['<rootDir>/src/setupTests.ts'],
+    //alias list to integrate swiftly nested directories
+    //this can be skipped if not needed
+    moduleNameMapper: {
+        '^@constants(.*)$': '<rootDir>/ts/constants',
+        '^@containers(.*)$': '<rootDir>/ts/containers',
+        '^@store(.*)$': '<rootDir>/ts/store',
+         //identity-obj-proxy to integrate styles/images etc.
+         //this can be skipped if not needed
+        '\\.(css|less|scss|jpg|jpeg|png)$': 'identity-obj-proxy'
     }
 };

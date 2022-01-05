@@ -237,14 +237,13 @@ ALTER TABLE public.users_id_seq OWNER TO postgres; */
 -- Name: message; Type: TABLE; Schema: public; Owner: postgres
 --
 
--- CREATE TABLE public.message (
---     id integer NOT NULL,
---     name character varying(255) NOT NULL,
---     message character varying(255) NOT NULL,
---     user_id integer,
---     room_id integer,
---     foreign_id integer
--- );
+CREATE TABLE public.message (
+    id integer NOT NULL,
+    username character varying(255) NOT NULL,
+    message character varying(255) NOT NULL,
+    user_id integer,
+    room_id integer
+);
 
 
 -- ALTER TABLE public.message OWNER TO postgres;
@@ -280,8 +279,8 @@ ALTER TABLE public.users_id_seq OWNER TO postgres; */
 -- Data for Name: message; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
--- COPY public.message (id, name, message, user_id, room_id, foreign_id) FROM stdin;
--- \.
+COPY public.message (id, username, message, user_id, room_id) FROM stdin;
+\.
 
 --
 -- Name: message_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
