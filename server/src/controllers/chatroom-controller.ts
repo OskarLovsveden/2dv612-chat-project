@@ -3,7 +3,7 @@ import SocketServices from '../utils/socket-services';
 import ChatRoomService from '../services/chatroom-service';
 import UserService from '../services/user-service';
 import User from '../models/user';
-import Chatroom, { ChatroomCreationAttributes } from '../models/chatroom';
+import { ChatroomCreationAttributes } from '../models/chatroom';
 
 export default class ChatroomController {
     readonly table = 'chatroom';
@@ -92,17 +92,7 @@ export default class ChatroomController {
     public async update(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
-            const { newTag, userID } = ctx.request.body;
-
-            let updatedRoom: Chatroom;
-
-            if (newTag) {
-                updatedRoom = await this.chatroomService.addTag(id, newTag);
-            }
-
-            if (userID) {
-                updatedRoom = await this.chatroomService.addUser(id, userID);
-            }
+            const updatedRoom = await this.chatroomService.update(id, ctx.request.body);
 
             if (!updatedRoom) {
                 ctx.throw(400, { message: 'Failed to update room' });

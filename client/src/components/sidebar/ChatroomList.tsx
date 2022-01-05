@@ -15,7 +15,8 @@ const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
             {chatrooms.map((chatroom: Chatroom) => (
                 <li
                     key={chatroom.id}
-                    className={`flex cursor-pointer hover:bg-black hover:bg-opacity-50 hover:text-white ${
+                    className={`flex cursor-pointer 
+                    hover:bg-black hover:bg-opacity-50 hover:text-white ${
                         activeChat?.name === chatroom.name &&
                         'bg-black text-white'
                     }`}
