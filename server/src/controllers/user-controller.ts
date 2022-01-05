@@ -65,8 +65,6 @@ export default class UserController {
     public async remove(ctx: Context): Promise<void> {
         try {
             const id = ctx.params.id;
-            /* await db.from(this.table).select('*').where({ id: id }).del(); */
-
             const user = await this.userService.delete(id);
 
             if (!user) {
