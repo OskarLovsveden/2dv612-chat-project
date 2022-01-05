@@ -20,6 +20,7 @@ const ChatRoom: React.FC = () => {
     const { user } = useContext(AuthContext);
     const enterPressRef = useRef<any>();
     const messageRef = useRef<any>();
+    const messagesEndRef = useRef<any>(); // Steffe
 
     useEffect(() => {
         connectUser(user?.id || '');
@@ -30,6 +31,7 @@ const ChatRoom: React.FC = () => {
             if (shouldAddNewMessage) {
                 setMessages((msgs) => [...msgs, data]);
             }
+            scrollToBottom();
         });
 
         return () => {
@@ -59,6 +61,13 @@ const ChatRoom: React.FC = () => {
         }
     };
 
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+    };
+
     return (
         <div className="max-w-auto h-screen w-full m-auto bg-indigo-300 rounded p-5">
             {activeChat && <ChatroomUserList />}
@@ -73,6 +82,7 @@ const ChatRoom: React.FC = () => {
                                 />
                             </li>
                         ))}
+                    <li ref={messagesEndRef} key="steffelol">{/* I am here to make the chat scroll down! */}</li>
                 </ul>
             </div>
             <div className="mb-6 mx-4">
