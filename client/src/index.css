@@ -4,13 +4,22 @@
 
 @layer base {
     .btn {
-        @apply font-bold py-2 px-4 rounded;
+        border: solid;
+        border-color: black;
+        border-radius: 1em;
+        border-width: thin;
+        background-color: red;
+        font-size: 0.7em;
     }
     .btn-red {
-        @apply bg-red-500 text-white;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
     }
     .btn-red:hover {
-        @apply bg-red-700;
+        background-color: crimson;
+        color: white;
     }
 
     .outerTag {
@@ -34,5 +43,13 @@
         border-radius: 0.5rem;
         border: dotted;
         border-color:blue; 
+    }
+
+    .hideScroll {
+        overflow: scroll;
+        scrollbar-color: transparent transparent;
+    }
+    ::-webkit-scrollbar {
+        display: none;
     }
 }

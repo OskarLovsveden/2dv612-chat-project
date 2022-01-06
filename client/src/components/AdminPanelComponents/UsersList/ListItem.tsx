@@ -12,6 +12,13 @@ const ListItem: React.FC<ListItemProps> = ({ user, removeUser }) => {
         <li>
             <div className="inline-flex space-x-4 ">
                 <h3>{user.username} </h3>
+                <Link to="/create-user">
+                    <img
+                        className="w-8 h-8 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                        src={editUserImg}
+                        alt="Edit"
+                    />
+                </Link>
                 <button
                     type="button"
                     onClick={() => {
@@ -21,13 +28,6 @@ const ListItem: React.FC<ListItemProps> = ({ user, removeUser }) => {
                 >
                     REMOVE
                 </button>
-                <Link to="/create-user">
-                    <img
-                        className="w-12 h-12 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-                        src={editUserImg}
-                        alt="Edit"
-                    />
-                </Link>
             </div>
         </li>
     );
