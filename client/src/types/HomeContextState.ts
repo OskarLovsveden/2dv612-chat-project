@@ -1,13 +1,17 @@
 import { Chatroom } from './Chatroom';
 import { Conversation } from './Conversation';
 
+export type ActiveChat =
+    | (Chatroom & { type: 'chatroom' })
+    | (Conversation & { type: 'conversation' });
+
 type HomeContextState = {
-    activeChat?: Chatroom | Conversation;
+    activeChat?: ActiveChat;
     conversations: Conversation[];
     rooms: Chatroom[];
-    setActiveChatView: (
-        chatroomOrConversation: Chatroom | Conversation
-    ) => void;
+    setActiveChatView: (chatroomOrConversation: ActiveChat) => void;
+    getAllConversations: () => void;
+    getAllChatrooms: () => void;
 };
 
 export default HomeContextState;

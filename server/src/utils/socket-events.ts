@@ -16,7 +16,7 @@ export default class SocketEvents {
         return this._io;
     }
 
-    get _socketServices() {
+    get _socketServices(): SocketServices {
         return this.socketServices;
     }
 

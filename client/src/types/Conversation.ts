@@ -4,8 +4,9 @@ export type Conversation = {
     id: number;
     name: string;
     users: User[];
+    isDM: boolean;
 };
 
 export type NewConversation = {
-    users_ids: number[];
+    user_ids: number[];
 };

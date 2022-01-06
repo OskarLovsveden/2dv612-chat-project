@@ -55,6 +55,11 @@ export default class ChatRoomService {
 
     public async addUser(roomID: number, userID: number): Promise<Chatroom> {
         const room = await this.get(roomID);
+
+        if (room.user_ids.includes(userID)) {
+            return room;
+        }
+
         return room.update({
             ...room,
             user_ids: sequelize.fn('array_append', sequelize.col('user_ids'), userID)

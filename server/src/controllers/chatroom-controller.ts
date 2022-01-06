@@ -9,6 +9,7 @@ import { MessageCreationAttributes } from '../models/message';
 import SocketServices from '../utils/socket-services';
 
 export default class ChatroomController {
+    
     readonly table = 'chatroom';
     // private socketServices: SocketServices = new SocketServices();
     private chatroomService = new ChatRoomService();
@@ -119,6 +120,27 @@ export default class ChatroomController {
             const id = ctx.params.id;
             ctx.status = 404;
             ctx.body = { message: 'No chatroom with id ' + id + ' found' };
+        }
+    }
+
+    public async joinRoom(ctx: Context): Promise<void> {
+        try {
+            const userID = ctx.user.id;
+            const roomID = ctx.params.id;
+
+            const room = await this.chatroomService.addUser(roomID, userID);
+
+            if (!room) {
+                ctx.throw(400, { message: 'Failed to add user to chatroom' });
+            }
+
+            await ctx.state.socketServices.populateRooms();
+
+            ctx.body = { message: 'Added user to room' };
+        } catch (error) {
+            const id = ctx.params.id;
+            ctx.status = 404;
+            ctx.body = { message: 'Failed to add user: ' + id + ' to chatroom' };
         }
     }
 

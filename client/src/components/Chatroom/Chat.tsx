@@ -3,9 +3,11 @@ import Message from './Message';
 import { HomeContext } from '../../context/HomeProvider';
 import { AuthContext } from '../../context/AuthProvider';
 import { SocketContext } from '../../context/SocketProvider';
+import { Conversation } from '../../types/Conversation';
 import ChatroomUserList from '../sidebar/ChatroomUserList';
 import MessageService from '../../utils/http/message-service';
 import type { Message as MessageType } from '../../types/Message';
+import { Chatroom } from '../../types/Chatroom';
 
 const ChatRoom: React.FC = () => {
     const [messages, setMessages] = useState<MessageType[]>([]);
@@ -26,10 +28,18 @@ const ChatRoom: React.FC = () => {
     useEffect(() => {
         (async () => {
             if (activeChat) {
+                let resMessages;
                 const messageService = new MessageService();
-                const resMessages = await messageService.getAllForRoom(
-                    activeChat.id
-                );
+                if (activeChat.type === 'chatroom') {
+                    resMessages = await messageService.getAllForRoom(
+                        activeChat.id
+                    );
+                } else {
+                    resMessages = await messageService.getAllForDM(
+                        activeChat.id
+                    );
+                }
+
                 setMessages(resMessages);
             }
         })();
@@ -39,7 +49,20 @@ const ChatRoom: React.FC = () => {
         connectUser(user?.id || '');
 
         socket?.on('room-message', (data: MessageType) => {
-            const shouldAddNewMessage = Number(data.room_id) === activeChat?.id;
+            const shouldAddNewMessage =
+                Number(data.room_id) === activeChat?.id &&
+                activeChat.type === 'chatroom';
+
+            if (shouldAddNewMessage) {
+                setMessages((msgs) => [...msgs, data]);
+                scrollToBottom();
+            }
+        });
+
+        socket?.on('direct-message', (data: MessageType) => {
+            const shouldAddNewMessage =
+                Number(data.room_id) === activeChat?.id &&
+                activeChat.type === 'conversation';
 
             if (shouldAddNewMessage) {
                 setMessages((msgs) => [...msgs, data]);
@@ -48,7 +71,22 @@ const ChatRoom: React.FC = () => {
         });
 
         socket?.on('room-message-delete', (data: MessageType) => {
-            const shouldRemoveMessage = Number(data.room_id) === activeChat?.id;
+            const shouldRemoveMessage =
+                Number(data.room_id) === activeChat?.id &&
+                activeChat.type === 'chatroom';
+
+            if (shouldRemoveMessage) {
+                setMessages((msgs) =>
+                    msgs.filter((m: MessageType) => m.id !== Number(data.id))
+                );
+                scrollToBottom();
+            }
+        });
+
+        socket?.on('direct-message-delete', (data: MessageType) => {
+            const shouldRemoveMessage =
+                Number(data.room_id) === activeChat?.id &&
+                activeChat.type === 'conversation';
 
             if (shouldRemoveMessage) {
                 setMessages((msgs) =>
@@ -60,7 +98,9 @@ const ChatRoom: React.FC = () => {
 
         return () => {
             socket?.off('room-message');
+            socket?.off('direct-message');
             socket?.off('room-message-delete');
+            socket?.off('direct-message-delete');
             setMessages([]);
         };
     }, [connectUser, socket, user, activeChat]);
@@ -75,10 +115,14 @@ const ChatRoom: React.FC = () => {
             const data = {
                 room_id: activeChat?.id,
                 user_id: user?.id,
-                username: user?.username,
                 message: messageRef.current.value,
             };
-            await messageService.create(data, activeChat?.id);
+
+            if (activeChat.type === 'chatroom') {
+                await messageService.sendRoomMessage(data, activeChat?.id);
+            } else {
+                await messageService.sendDirectMessage(data, activeChat?.id);
+            }
 
             messageRef.current.value = '';
         }
