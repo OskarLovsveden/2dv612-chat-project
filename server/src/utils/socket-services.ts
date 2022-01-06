@@ -1,4 +1,5 @@
 import { Server as SocketServer, Socket } from 'socket.io';
+import Conversation from '../services/conversation-service';
 import Message from '../models/message';
 import ChatRoom from '../services/chatroom-service';
 import UserService from '../services/user-service';
@@ -10,19 +11,28 @@ export default class SocketServices {
     private socketRooms: SocketRooms = new SocketRooms();
     private onlineUsers: SocketUsers = new SocketUsers();
     private chatRooms: ChatRoom = new ChatRoom();
+    private conversations: Conversation = new Conversation();
     private userService: UserService = new UserService();
 
     public async populateRooms() {
     // Fetch rooms with user from db
         const rooms = await this.chatRooms.getAll();
+        const dms = await this.conversations.getAll();
         const users = await this.userService.getAll();
 
         if (rooms) {
             for (const room of rooms) {
-                this.socketRooms.addRoom(room.id.toString(), new Set(room.user_ids));
+                this.socketRooms.addRoom(room.id.toString(), new Set(room.user_ids), false);
                 console.log(this.socketRooms.rooms.size, 'rumstorlek');
                 console.log(room.user_ids);
                 console.log(`Adding room: ${room.id}`);
+            }
+        }
+
+        if (dms) {
+            for (const dm of dms) {
+                this.socketRooms.addRoom(dm.id.toString(), new Set(dm.user_ids), true);
+                console.log("Adding dm for users: " + dm.user_ids.join(', '));
             }
         }
 
@@ -45,15 +55,16 @@ export default class SocketServices {
     public async handleChatMessage(
         roomId: number,
         message: Message,
-        io: SocketServer
+        io: SocketServer,
+        isDM: boolean
     ): Promise<void> {
-        for(const [key, value] of this.socketRooms.rooms) {
-            console.log(key, value);
-        }
+        const roomString = isDM ? "dm_":  "rm_";
+        const fixedRoomID = roomString + roomId; 
+       
 
-        if (this.socketRooms.hasRoom(`${roomId}`)) {
-            console.log(`Sending message: ${message.message} to room: ${roomId}`);
-            io.in(`${roomId}`).emit('room-message', {
+        if (this.socketRooms.hasRoom(fixedRoomID, isDM)) {
+            console.log(`Sending message: ${message.message} to room: ${fixedRoomID}`);
+            io.in(`${fixedRoomID}`).emit('room-message', {
                 message: message.message,
                 username: (await this.userService.get(message.user_id)).username,
                 room_id: roomId,

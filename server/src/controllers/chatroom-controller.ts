@@ -8,6 +8,7 @@ import MessageService from '../services/message-service';
 import { MessageCreationAttributes } from '../models/message';
 
 export default class ChatroomController {
+    
     readonly table = 'chatroom';
     // private socketServices: SocketServices = new SocketServices();
     private chatroomService = new ChatRoomService();
@@ -121,6 +122,27 @@ export default class ChatroomController {
         }
     }
 
+    public async joinRoom(ctx: Context): Promise<void> {
+        try {
+            const userID = ctx.user.id;
+            const roomID = ctx.params.id;
+
+            const room = await this.chatroomService.addUser(roomID, userID);
+
+            if (!room) {
+                ctx.throw(400, { message: 'Failed to add user to chatroom' });
+            }
+
+            await ctx.state.socketServices.populateRooms();
+
+            ctx.body = { message: 'Added user to room' };
+        } catch (error) {
+            const id = ctx.params.id;
+            ctx.status = 404;
+            ctx.body = { message: 'Failed to add user: ' + id + ' to chatroom' };
+        }
+    }
+
     public async getAllMessages(ctx: Context): Promise<void> {
         try {
             
@@ -205,7 +227,7 @@ export default class ChatroomController {
 
             await this.chatroomService.addMessage(id, messageCreated.id);
             // console.log(ctx.state.io)
-            await ctx.state.socketServices.handleChatMessage(id, messageCreated, ctx.state.io);
+            await ctx.state.socketServices.handleChatMessage(id, messageCreated, ctx.state.io, false);
 
             ctx.body = { message: 'Message created', msg };
         } catch (e) {

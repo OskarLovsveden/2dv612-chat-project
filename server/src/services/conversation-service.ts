@@ -25,11 +25,13 @@ export default class ConversationService {
         return this.conversation.findOne({ where: { id: conID } });
     }
 
-    public async getAll(userID: number): Promise<Conversation[]> {
+    public async getUserConversations(userID: number): Promise<Conversation[]> {
         const allConversations: Conversation[] = await this.conversation.findAll();
         return allConversations.filter((con: Conversation) => con.user_ids.includes(userID));
+    }
 
-        /* return this.conversation.findAll({ where: { user_id: userID } }); */
+    public async getAll(): Promise<Conversation[]> {
+        return await this.conversation.findAll();
     }
 
     /*  public async getConversationMessages(roomID: number): Promise<Message[]> {
