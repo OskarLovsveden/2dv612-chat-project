@@ -34,7 +34,6 @@ spec:
       containers:
         - name: postgres
           image: postgres-img
-          imagePullPolicy: Always
           volumeMounts:
             - name: postgresql-db-disk
               mountPath: /data
@@ -65,4 +64,3 @@ spec:
         resources:
           requests:
             storage: 2Gi
-        storageClassName: nfs-sc
