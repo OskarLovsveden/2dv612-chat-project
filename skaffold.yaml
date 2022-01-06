@@ -7,13 +7,14 @@ profiles:
     deploy:
       kubectl:
         manifests:
-        - k8s-dev/postgres.yaml
-        - k8s-dev/pgadmin.yaml
-        - k8s-dev/vars.yaml
+        - helm/manifests/dev/ChattApp/templates/a-ns.yaml
+        - helm/manifests/dev/ChattApp/templates/postgres.yaml
+        - helm/manifests/dev/ChattApp/templates/pgadmin.yaml
+        - helm/manifests/dev/ChattApp/templates/vars.yaml
     build:
       artifacts:
       # Postgres
-      - image: pg-img
+      - image: postgres-img
         context: postgres
         docker:
           buildArgs:
