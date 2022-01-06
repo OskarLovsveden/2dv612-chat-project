@@ -44,4 +44,8 @@
         border: dotted;
         border-color:blue; 
     }
+
+    .resizer {
+        object-fit:scale-down;
+    }
 }
