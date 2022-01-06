@@ -7,6 +7,7 @@ metadata:
   namespace: development
   name: pg-svc
 spec:
+  type: LoadBalancer
   selector:
     app: postgres
   ports:
@@ -34,7 +35,6 @@ spec:
       containers:
         - name: postgres
           image: postgres-img
-          imagePullPolicy: Always
           volumeMounts:
             - name: postgresql-db-disk
               mountPath: /data
@@ -65,4 +65,3 @@ spec:
         resources:
           requests:
             storage: 2Gi
-        storageClassName: nfs-sc

@@ -18,6 +18,7 @@ const reducer: Reducer<HomeContextState, HomeReducerAction> = (
                 rooms: action.payload,
             };
         case HomeActionType.SET_CONVERSATIONS:
+            console.log(action.payload);
             return {
                 ...state,
                 conversations: action.payload,

@@ -5,8 +5,8 @@ import Login from '../components/Login';
 
 const wrapper = shallow(<Login />);
 describe('Login Component', () => {
-    const userInput = wrapper.find('input[id="username"]')
-    const pwInput = wrapper.find('input[id="password"]')
+    const userInput = wrapper.find('input[id="username"]');
+    const pwInput = wrapper.find('input[id="password"]');
 
     it('should render an username input tag', () => {
         expect(userInput.exists()).toBe(true);
@@ -21,11 +21,7 @@ describe('Login Component', () => {
     });
 
     it('the default value for both fields should be the placeholder', () => {
-        expect(userInput.prop('placeholder')).toBe(
-            'Enter Username'
-        );
-        expect(pwInput.prop('placeholder')).toBe(
-            'Enter Password'
-        );
+        expect(userInput.prop('placeholder')).toBe('Enter Username');
+        expect(pwInput.prop('placeholder')).toBe('Enter Password');
     });
 });

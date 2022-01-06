@@ -72,9 +72,9 @@
     "build": "craco build",
     "test": "jest --coverage",
     "test:coverage": "react-scripts test --coverage --runInBand --watchAll=false",
-    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts . ",
+    "lint": "eslint --ignore-path .eslintignore --ext .tsx,.ts . ",
     "eject": "react-scripts eject",
-    "lint-fix": "eslint --fix --ignore-path .eslintignore --ext .js,.ts ."
+    "lint-fix": "eslint --fix --ignore-path .eslintignore --ext .tsx,.ts ."
   },
   "eslintConfig": {
     "extends": [

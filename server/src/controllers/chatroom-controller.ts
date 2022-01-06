@@ -1,5 +1,4 @@
 import { Context } from 'koa';
-import SocketServices from '../utils/socket-services';
 import ChatRoomService from '../services/chatroom-service';
 import UserService from '../services/user-service';
 import User from '../models/user';
@@ -7,10 +6,12 @@ import Chatroom, { ChatroomCreationAttributes } from '../models/chatroom';
 import { RespondMessage } from '../types/respond-types';
 import MessageService from '../services/message-service';
 import { MessageCreationAttributes } from '../models/message';
+import SocketServices from '../utils/socket-services';
 
 export default class ChatroomController {
+    
     readonly table = 'chatroom';
-    private socketServices: SocketServices = new SocketServices();
+    // private socketServices: SocketServices = new SocketServices();
     private chatroomService = new ChatRoomService();
     private userService = new UserService();
     private messageService = new MessageService();
@@ -42,7 +43,7 @@ export default class ChatroomController {
                 ctx.throw(400, { message: 'Failed to create room' });
             }
             
-            await this.socketServices.populateRooms();
+            await ctx.state.socketServices.populateRooms();
             
             ctx.body = { message: 'Room created', room };
         } catch (e) {
@@ -122,6 +123,27 @@ export default class ChatroomController {
         }
     }
 
+    public async joinRoom(ctx: Context): Promise<void> {
+        try {
+            const userID = ctx.user.id;
+            const roomID = ctx.params.id;
+
+            const room = await this.chatroomService.addUser(roomID, userID);
+
+            if (!room) {
+                ctx.throw(400, { message: 'Failed to add user to chatroom' });
+            }
+
+            await ctx.state.socketServices.populateRooms();
+
+            ctx.body = { message: 'Added user to room' };
+        } catch (error) {
+            const id = ctx.params.id;
+            ctx.status = 404;
+            ctx.body = { message: 'Failed to add user: ' + id + ' to chatroom' };
+        }
+    }
+
     public async getAllMessages(ctx: Context): Promise<void> {
         try {
             
@@ -172,11 +194,14 @@ export default class ChatroomController {
             const msg_id = ctx.params.msg_id;
             
             await this.chatroomService.removeMessage(id, msg_id);
-            const messageDeleted = await this.messageService.delete(id);
+            const messageDeleted = await this.messageService.delete(msg_id);
             
             if(!messageDeleted) {
                 ctx.throw(400, 'Failed to delete message');
             }
+
+            const socketServices: SocketServices = ctx.state.socketServices;
+            await socketServices.handleMessageDeleted(id, msg_id, ctx.state.io);
             
             ctx.body = { message: 'Message deleted' };
         } catch (e) {
@@ -205,6 +230,9 @@ export default class ChatroomController {
             }
 
             await this.chatroomService.addMessage(id, messageCreated.id);
+            
+            const socketServices: SocketServices = ctx.state.socketServices;
+            await socketServices.handleChatMessage(id, messageCreated, ctx.state.io);
 
             ctx.body = { message: 'Message created', msg };
         } catch (e) {
