@@ -6,7 +6,7 @@ import User from '../models/user';
 
 export default class UserController {
     private userService = new UserService();
-    private socketServices = new SocketServices();
+    // private socketServices = new SocketServices();
     private chatroom = new ChatRoomService();
 
     public async getAll(ctx: Context): Promise<void> {
@@ -28,13 +28,11 @@ export default class UserController {
 
             const rooms = await this.chatroom.getAll();
 
-            console.log(userCreated);
-
             for (const room of rooms) {
                 await this.chatroom.addUser(room.id, userCreated.id);
             }
 
-            this.socketServices.populateRooms();
+            ctx.state.socketServices.populateRooms();
 
             ctx.body = { message: 'User created' };
         } catch (e) {

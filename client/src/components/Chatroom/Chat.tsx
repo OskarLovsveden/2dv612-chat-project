@@ -45,10 +45,8 @@ const ChatRoom: React.FC = () => {
 
     useEffect(() => {
         connectUser(user?.id || '');
-
         socket?.on('room-message', (data: MessageEvent) => {
-            const shouldAddNewMessage = data.room_id === activeChat?.id;
-
+            const shouldAddNewMessage = Number(data.room_id) === activeChat?.id;
             if (shouldAddNewMessage) {
                 setMessages((msgs) => [...msgs, data]);
             }
@@ -67,12 +65,12 @@ const ChatRoom: React.FC = () => {
         e.preventDefault();
 
         if (activeChat && user) {
-            sendMessage(
-                activeChat?.id,
-                user?.id,
-                messageRef.current.value,
-                user?.username
-            );
+            // sendMessage(
+            //     activeChat?.id,
+            //     user?.id,
+            //     messageRef.current.value,
+            //     user?.username
+            // );
 
             const messageService = new MessageService();
             const data = {
@@ -81,17 +79,20 @@ const ChatRoom: React.FC = () => {
                 username: user?.username,
                 message: messageRef.current.value,
             };
-            await messageService.create(data);
+            await messageService.create(data, activeChat?.id);
 
             messageRef.current.value = '';
         }
     };
 
-    const removeMessage = async (id: number): Promise<void> => {
-        console.log('du klickade mig' + id)
+    const removeMessage = async (msg_id: number): Promise<void> => {
+        let roomID: number = 0
+        if(activeChat) {
+            roomID = activeChat?.id
+        }
         const messageService = new MessageService();
-        await messageService.delete(id);
-        setMessages(messages.filter((msg: Msg) => msg.id !== id));
+        await messageService.delete(roomID ,msg_id);
+        setMessages(messages.filter((msg: Msg) => msg.id !== msg_id));
     }
 
     const handleEnter = (e: any): void => {
