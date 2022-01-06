@@ -45,7 +45,11 @@
         border-color:blue; 
     }
 
-    .resizer {
-        object-fit:scale-down;
+    .hideScroll {
+        overflow: scroll;
+        scrollbar-color: transparent transparent;
+    }
+    ::-webkit-scrollbar {
+        display: none;
     }
 }

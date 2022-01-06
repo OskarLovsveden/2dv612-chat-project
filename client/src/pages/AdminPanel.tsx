@@ -30,8 +30,8 @@ const AdminPanel: React.FC = () => {
             <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 bg-indigo-600 h-screen">
                 <AdminRoomList />
 
-                <div className="rounded overflow-hidden shadow-lg">
-                    <div className="px-6 py-4">
+                <div className="rounded  hideScroll shadow-lg">
+                    <div className="px-6 py-4 ">
                         <img
                             className="w-1/4 h-1/4"
                             src={moderatorImg}
@@ -43,24 +43,35 @@ const AdminPanel: React.FC = () => {
                                 (user: User) =>
                                     user.role === ROLE.MOD && (
                                         <li key={user.id}>
-                                            <div className="inline-flex space-x-4 ">
-                                                <h3>{user.username} </h3>
-                                                <Link to="/create-user">
+                                            <div className="inline-flex space-x-4 p-1 pt-5">
+                                                <div className="inline-flex ">
                                                     <img
-                                                        className="w-8 h-8 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-                                                        src={editUserImg}
-                                                        alt="Edit"
+                                                        className="w-5 h-5"
+                                                        src={moderatorImg}
+                                                        alt="Moderator"
                                                     />
-                                                </Link>
-                                                <button
-                                                    type="button"
-                                                    onClick={() => {
-                                                        removeUser(user.id);
-                                                    }}
-                                                    className="btn btn-red btn-red:hover"
-                                                >
-                                                    REMOVE
-                                                </button>
+                                                    <h3 className="mr-10 ">
+                                                        {user.username}{' '}
+                                                    </h3>
+                                                </div>
+                                                <div className="inline-flex space-x-4 absolute pl-48">
+                                                    <Link to="/create-user">
+                                                        <img
+                                                            className="w-8 h-8 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+                                                            src={editUserImg}
+                                                            alt="Edit"
+                                                        />
+                                                    </Link>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            removeUser(user.id);
+                                                        }}
+                                                        className="btn btn-red btn-red:hover"
+                                                    >
+                                                        REMOVE
+                                                    </button>
+                                                </div>
                                             </div>
                                         </li>
                                     )
@@ -68,37 +79,48 @@ const AdminPanel: React.FC = () => {
                         </ul>
                     </div>
                 </div>
-                <div className="rounded overflow-hidden shadow-lg">
+                <div className="rounded hideScroll shadow-lg">
                     <div className="px-6 py-4">
                         <img
                             className="w-1/4 h-1/4"
                             src={chattareImg}
                             alt="Chattare"
                         />
-                        <div className="font-bold text-xl mb-2">Chattare</div>
+                        <div className="font-bold text-xl mb-2 ">Chattare</div>
                         <ul>
                             {userData.map(
                                 (user: User) =>
                                     user.role === ROLE.USER && (
                                         <li key={user.id}>
-                                            <div className="inline-flex space-x-4 ">
-                                                <h3>{user.username} </h3>
-                                                <Link to="/create-user">
+                                            <div className="inline-flex space-x-4 p-1 pt-5">
+                                                <div className="inline-flex ">
                                                     <img
-                                                        className="w-8 h-8 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-                                                        src={editUserImg}
-                                                        alt="Edit"
+                                                        className="w-5 h-5"
+                                                        src={chattareImg}
+                                                        alt="Moderator"
                                                     />
-                                                </Link>
-                                                <button
-                                                    type="button"
-                                                    onClick={() => {
-                                                        removeUser(user.id);
-                                                    }}
-                                                    className="btn btn-red btn-red:hover"
-                                                >
-                                                    REMOVE
-                                                </button>
+                                                    <h3 className="mr-10 ">
+                                                        {user.username}{' '}
+                                                    </h3>
+                                                </div>
+                                                <div className="inline-flex space-x-4 absolute pl-48">
+                                                    <Link to="/create-user">
+                                                        <img
+                                                            className="w-8 h-8 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110 "
+                                                            src={editUserImg}
+                                                            alt="Edit"
+                                                        />
+                                                    </Link>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            removeUser(user.id);
+                                                        }}
+                                                        className="btn btn-red btn-red:hover"
+                                                    >
+                                                        REMOVE
+                                                    </button>
+                                                </div>
                                             </div>
                                         </li>
                                     )

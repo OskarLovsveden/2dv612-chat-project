@@ -15,7 +15,7 @@ const UsersList: React.FC<UsersListProps> = ({
     removeUser,
 }) => {
     return (
-        <div className="rounded overflow-hidden shadow-lg">
+        <div className="rounded hideScroll shadow-lg">
             <div className="px-6 py-4">
                 <img className="w-1/4 h-1/4" src={listRoleImg} alt={title} />
                 <div className="font-bold text-xl mb-2">{title}</div>
