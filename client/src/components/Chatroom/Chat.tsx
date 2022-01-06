@@ -5,6 +5,7 @@ import { AuthContext } from '../../context/AuthProvider';
 import { SocketContext } from '../../context/SocketProvider';
 import ChatroomUserList from '../sidebar/ChatroomUserList';
 import MessageService from '../../utils/http/message-service';
+import type { Msg } from '../../types/Message';
 
 type MessageEvent = {
     id: number;
@@ -44,10 +45,8 @@ const ChatRoom: React.FC = () => {
 
     useEffect(() => {
         connectUser(user?.id || '');
-
         socket?.on('room-message', (data: MessageEvent) => {
-            const shouldAddNewMessage = data.room_id === activeChat?.id;
-
+            const shouldAddNewMessage = Number(data.room_id) === activeChat?.id;
             if (shouldAddNewMessage) {
                 setMessages((msgs) => [...msgs, data]);
             }
@@ -66,12 +65,12 @@ const ChatRoom: React.FC = () => {
         e.preventDefault();
 
         if (activeChat && user) {
-            sendMessage(
-                activeChat?.id,
-                user?.id,
-                messageRef.current.value,
-                user?.username
-            );
+            // sendMessage(
+            //     activeChat?.id,
+            //     user?.id,
+            //     messageRef.current.value,
+            //     user?.username
+            // );
 
             const messageService = new MessageService();
             const data = {
@@ -80,10 +79,20 @@ const ChatRoom: React.FC = () => {
                 username: user?.username,
                 message: messageRef.current.value,
             };
-            await messageService.create(data);
+            await messageService.create(data, activeChat?.id);
 
             messageRef.current.value = '';
         }
+    };
+
+    const removeMessage = async (msg_id: number): Promise<void> => {
+        let roomID = 0;
+        if (activeChat) {
+            roomID = activeChat?.id;
+        }
+        const messageService = new MessageService();
+        await messageService.delete(roomID, msg_id);
+        setMessages(messages.filter((msg: Msg) => msg.id !== msg_id));
     };
 
     const handleEnter = (e: any): void => {
@@ -102,8 +111,15 @@ const ChatRoom: React.FC = () => {
                         messages.map((msg: MessageEvent) => (
                             <li key={msg.id}>
                                 <Message
+                                    currentUser={user?.id}
+                                    currentUserRole={user?.role}
+                                    user_id={msg.user_id}
+                                    id={msg.id}
                                     name={msg.username}
                                     message={msg.message}
+                                    removeMessage={(id: number) =>
+                                        removeMessage(id)
+                                    }
                                 />
                             </li>
                         ))}

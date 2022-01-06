@@ -1,5 +1,4 @@
 import { Context } from 'koa';
-import SocketServices from '../utils/socket-services';
 import ChatRoomService from '../services/chatroom-service';
 import UserService from '../services/user-service';
 import User from '../models/user';
@@ -10,7 +9,7 @@ import { MessageCreationAttributes } from '../models/message';
 
 export default class ChatroomController {
     readonly table = 'chatroom';
-    private socketServices: SocketServices = new SocketServices();
+    // private socketServices: SocketServices = new SocketServices();
     private chatroomService = new ChatRoomService();
     private userService = new UserService();
     private messageService = new MessageService();
@@ -42,7 +41,7 @@ export default class ChatroomController {
                 ctx.throw(400, { message: 'Failed to create room' });
             }
             
-            await this.socketServices.populateRooms();
+            await ctx.state.socketServices.populateRooms();
             
             ctx.body = { message: 'Room created', room };
         } catch (e) {
@@ -172,7 +171,7 @@ export default class ChatroomController {
             const msg_id = ctx.params.msg_id;
             
             await this.chatroomService.removeMessage(id, msg_id);
-            const messageDeleted = await this.messageService.delete(id);
+            const messageDeleted = await this.messageService.delete(msg_id);
             
             if(!messageDeleted) {
                 ctx.throw(400, 'Failed to delete message');
@@ -205,6 +204,8 @@ export default class ChatroomController {
             }
 
             await this.chatroomService.addMessage(id, messageCreated.id);
+            // console.log(ctx.state.io)
+            await ctx.state.socketServices.handleChatMessage(id, messageCreated, ctx.state.io);
 
             ctx.body = { message: 'Message created', msg };
         } catch (e) {

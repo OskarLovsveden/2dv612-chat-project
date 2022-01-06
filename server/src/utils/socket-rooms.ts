@@ -4,6 +4,10 @@ export default class SocketRooms {
     
     private _rooms: Map<string, Set<number>> = new Map<string, Set<number>>();
 
+    get rooms () {
+        return this._rooms;
+    }
+
     public addRoom(socketRoom: string, users: Set<number>) {
         this._rooms.set(socketRoom, users);
     }

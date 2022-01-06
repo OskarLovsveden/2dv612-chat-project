@@ -1,4 +1,4 @@
-import Koa from 'koa';
+import Koa, { Context, Next } from 'koa';
 import cors from 'koa2-cors';
 import bodyParser from 'koa-bodyparser';
 import logger from 'koa-logger';
@@ -31,6 +31,11 @@ export default class Server {
         this.app.use(bodyParser());
         this.app.use(cors({ origin: '*' }));
         this.app.use(logger());
+        this.app.use((ctx: Context, next: Next) => {
+            ctx.state.io = this.socketEvents.io;
+            ctx.state.socketServices = this.socketEvents._socketServices;
+            return next();
+        });
     }
 
     private listen(): void {

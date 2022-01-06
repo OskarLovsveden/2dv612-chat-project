@@ -1,7 +1,8 @@
 import { Server as SocketServer, Socket } from 'socket.io';
+import Message from '../models/message';
 import ChatRoom from '../services/chatroom-service';
 import UserService from '../services/user-service';
-import { EventChatMessage, EventLogin } from '../types/event-data-types';
+import { EventLogin } from '../types/event-data-types';
 import SocketRooms from './socket-rooms';
 import SocketUsers from './socket-users';
 
@@ -19,6 +20,7 @@ export default class SocketServices {
         if (rooms) {
             for (const room of rooms) {
                 this.socketRooms.addRoom(room.id.toString(), new Set(room.user_ids));
+                console.log(this.socketRooms.rooms.size, 'rumstorlek');
                 console.log(room.user_ids);
                 console.log(`Adding room: ${room.id}`);
             }
@@ -40,20 +42,23 @@ export default class SocketServices {
         this.logOnlineUsers();
     }
 
-    public handleChatMessage(
-        data: EventChatMessage,
-        socket: Socket,
+    public async handleChatMessage(
+        roomId: number,
+        message: Message,
         io: SocketServer
-    ): void {
-        console.log('Chat message', data.room_id);
+    ): Promise<void> {
+        for(const [key, value] of this.socketRooms.rooms) {
+            console.log(key, value);
+        }
 
-        if (this.socketRooms.hasRoom(`${data.room_id}`)) {
-            console.log(`Sending message: ${data.message} to room: ${data.room_id}`);
-            io.in(`${data.room_id}`).emit('room-message', {
-                user_id: data.user_id,
-                username: data.username,
-                message: data.message,
-                room_id: data.room_id
+        if (this.socketRooms.hasRoom(`${roomId}`)) {
+            console.log(`Sending message: ${message.message} to room: ${roomId}`);
+            io.in(`${roomId}`).emit('room-message', {
+                message: message.message,
+                username: (await this.userService.get(message.user_id)).username,
+                room_id: roomId,
+                id: message.id,
+                user_id: message.user_id
             });
         }
     }
