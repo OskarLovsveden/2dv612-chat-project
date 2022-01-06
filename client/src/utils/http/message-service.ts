@@ -11,6 +11,10 @@ class MessageService {
     async getAllForRoom(id: number): Promise<Msg[]> {
         return (await this.http.get<Msg[]>(`message/room/${id}`)).data;
     }
+
+    async delete(id: number): Promise<any> {
+        return (await this.http.delete<any>(`message/${id}`)).data;
+    }
 }
 
 export default MessageService;

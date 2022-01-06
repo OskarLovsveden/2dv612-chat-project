@@ -34,5 +34,10 @@ export default class MessageRouter {
         this._router.get('/user/:id', 
             (ctx: Context) => this.controller.getAll(ctx)
         );
+        this._router.delete('/:id',
+            (ctx: Context, next: Next) =>
+                this.middleware.requestHasValidToken(ctx, next),
+            (ctx: Context) => this.controller.remove(ctx)
+        )
     }
 }

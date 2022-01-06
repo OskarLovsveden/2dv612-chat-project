@@ -5,6 +5,7 @@ import { AuthContext } from '../../context/AuthProvider';
 import { SocketContext } from '../../context/SocketProvider';
 import ChatroomUserList from '../sidebar/ChatroomUserList';
 import MessageService from '../../utils/http/message-service';
+import type { Msg } from '../../types/Message';
 
 type MessageEvent = {
     id: number;
@@ -81,6 +82,13 @@ const ChatRoom: React.FC = () => {
         };
     };
 
+    const removeMessage = async (id: number): Promise<void> => {
+        console.log('du klickade mig' + id)
+        const messageService = new MessageService();
+        await messageService.delete(id);
+        setMessages(messages.filter((msg: Msg) => msg.id !== id));
+    }
+
     const handleEnter = (e: any): void => {
         if (e.code === 'Enter' && e.shiftKey === false) {
             e.preventDefault();
@@ -101,14 +109,21 @@ const ChatRoom: React.FC = () => {
             <div className="h-3/4 overflow-y-scroll">
                 <ul>
                     {messages &&
-                        messages.map((msg: MessageEvent) => (
-                            <li key={msg.id}>
-                                <Message
-                                    name={msg.username}
-                                    message={msg.message}
-                                />
-                            </li>
-                        ))}
+                        messages.map(
+                            (msg: MessageEvent) => (
+                                <li key={msg.id}>
+                                    <Message
+                                        currentUser={user?.id}
+                                        currentUserRole={user?.role}
+                                        user_id={msg.user_id}
+                                        id={msg.id}
+                                        name={msg.username}
+                                        message={msg.message}
+                                        removeMessage={(id: number) => removeMessage(id)}
+                                    />
+                                </li>
+                            )
+                    )}
                     <li ref={messagesEndRef} key="bottomscrollreference">{/* I am here to make the chat scroll down! */}</li>
                 </ul>
             </div>
