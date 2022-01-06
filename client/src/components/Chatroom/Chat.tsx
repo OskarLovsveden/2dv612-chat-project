@@ -49,8 +49,8 @@ const ChatRoom: React.FC = () => {
             const shouldAddNewMessage = Number(data.room_id) === activeChat?.id;
             if (shouldAddNewMessage) {
                 setMessages((msgs) => [...msgs, data]);
+                scrollToBottom();
             }
-            scrollToBottom();
         });
 
         return () => {
