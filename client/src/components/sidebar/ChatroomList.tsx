@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
 import { HomeContext } from '../../context/HomeProvider';
 import { Chatroom } from '../../types/Chatroom';
-import Join from '../Chatroom/Join';
 
 type ChatroomListProps = {
     chatrooms: Chatroom[];
@@ -21,17 +20,11 @@ const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
                         'bg-black text-white'
                     }`}
                 >
-                    {join && (
-                        <Join
-                            close={() => setJoin(false)}
-                            chatroom={chatroom}
-                        />
-                    )}
                     <button
                         className="inline-flex"
                         type="button"
                         onClick={() => {
-                            setJoin(true);
+                            setActiveChatView(chatroom);
                         }}
                     >
                         <svg
