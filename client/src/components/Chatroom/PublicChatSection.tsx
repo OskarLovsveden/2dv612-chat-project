@@ -62,9 +62,9 @@ const NoChat: React.FC = () => {
                                             <div className="inline-flex space-x-2 space-y-5">
                                                 <JoinDM
                                                     user={u}
-                                                    joinDM={async (id: number) =>
-                                                        await createDM(id)
-                                                    }
+                                                    joinDM={async (
+                                                        id: number
+                                                    ) => createDM(id)}
                                                 />
                                                 <h3
                                                     className="flex cursor-pointer 

@@ -12,12 +12,11 @@ export default class SocketRooms {
         return this._dms;
     }
 
-
     public addRoom(socketRoom: string, users: Set<number>, isDM: boolean) {
         if (isDM) {
-            this._dms.set("dm_" + socketRoom, users);
+            this._dms.set('dm_' + socketRoom, users);
         } else {
-            this._rooms.set("rm_" + socketRoom, users);
+            this._rooms.set('rm_' + socketRoom, users);
         }
     }
     

@@ -20,7 +20,7 @@ export default class ConversationController {
                 console.log('Can not create message, faulty body');
             }
 
-            console.log(user_ids)
+            console.log(user_ids);
 
             const conversation: ConversationCreationAttributes = { user_ids: user_ids, message_ids: [] };
             const conversationCreated = await this.conversationService.createConversation(conversation);

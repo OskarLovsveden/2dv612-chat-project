@@ -24,7 +24,7 @@ export const HomeProvider: React.FC<HomeProviderProps> = ({ children }) => {
         const conversationService = new ConversationService();
         const conversations = await conversationService.getAll();
 
-        console.log("HELLOOOOOOO")
+        console.log('HELLOOOOOOO');
 
         dispatch({
             type: HomeActionType.SET_CONVERSATIONS,
@@ -45,7 +45,6 @@ export const HomeProvider: React.FC<HomeProviderProps> = ({ children }) => {
     useEffect(() => {
         getAllChatrooms();
         getAllConversations();
-
     }, []);
 
     const setActiveChatView = (chatroomOrConversation: ActiveChat): void => {

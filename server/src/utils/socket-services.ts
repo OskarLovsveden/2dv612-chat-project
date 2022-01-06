@@ -31,9 +31,9 @@ export default class SocketServices {
 
         if (dms) {
             for (const dm of dms) {
-                console.log(dm)
+                console.log(dm);
                 this.socketRooms.addRoom(dm.id.toString(), new Set(dm.user_ids), true);
-                console.log("Adding dm for users: " + dm.user_ids.join(', '));
+                console.log('Adding dm for users: ' + dm.user_ids.join(', '));
             }
         }
 
@@ -58,7 +58,7 @@ export default class SocketServices {
         message: Message,
         io: SocketServer
     ): Promise<void> {
-        const fixedRoomID = "rm_" + roomId; 
+        const fixedRoomID = 'rm_' + roomId; 
 
         if (this.socketRooms.hasRoom(fixedRoomID, false)) {
             console.log(`Sending message: ${message.message} to room: ${fixedRoomID}`);
@@ -76,9 +76,9 @@ export default class SocketServices {
     public async handleDirectMessage(
         dmID: number,
         message: Message,
-        io: SocketServer,
+        io: SocketServer
     ): Promise<void> {
-        const fixedID = "dm_" + dmID;
+        const fixedID = 'dm_' + dmID;
 
         if (this.socketRooms.hasRoom(fixedID, true)) {
             console.log(`Sending message: ${message.message} to room: ${fixedID}`);
@@ -97,11 +97,11 @@ export default class SocketServices {
         for(const [key, value] of this.socketRooms.rooms) {
             console.log(key, value);
         }
-        const fixedRoomID = "rm_" + roomId;
+        const fixedRoomID = 'rm_' + roomId;
 
         if (this.socketRooms.hasRoom(fixedRoomID, false)) {
             console.log(`Message with id ${msgId} deleted in room: ${roomId}`);
-            io.in(fixedRoomID).emit('room-message-delete', { id: msgId, room_id: roomId});
+            io.in(fixedRoomID).emit('room-message-delete', { id: msgId, room_id: roomId });
         }
     }
 
@@ -109,11 +109,11 @@ export default class SocketServices {
         for(const [key, value] of this.socketRooms.rooms) {
             console.log(key, value);
         }
-        const fixedDMID = "dm_" + dmID;
+        const fixedDMID = 'dm_' + dmID;
 
         if (this.socketRooms.hasRoom(fixedDMID, true)) {
             console.log(`Message with id ${msgId} deleted in room: ${fixedDMID}`);
-            io.in(fixedDMID).emit('direct-message-delete', { id: msgId, room_id: dmID});
+            io.in(fixedDMID).emit('direct-message-delete', { id: msgId, room_id: dmID });
         }
     }
 
