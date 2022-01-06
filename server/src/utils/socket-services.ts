@@ -58,8 +58,20 @@ export default class SocketServices {
                 username: (await this.userService.get(message.user_id)).username,
                 room_id: roomId,
                 id: message.id,
-                user_id: message.user_id
+                user_id: message.user_id,
+                createdAt: message.createdAt
             });
+        }
+    }
+
+    public async handleMessageDeleted(roomId: number, msgId: number, io: SocketServer) {
+        for(const [key, value] of this.socketRooms.rooms) {
+            console.log(key, value);
+        }
+
+        if (this.socketRooms.hasRoom(`${roomId}`)) {
+            console.log(`Message with id ${msgId} deleted in room: ${roomId}`);
+            io.in(`${roomId}`).emit('room-message-delete', { id: msgId, room_id: roomId });
         }
     }
 
