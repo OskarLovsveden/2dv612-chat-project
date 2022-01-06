@@ -9,6 +9,32 @@ export default class ConversationService {
     }
 
     public async createConversation(conversation: ConversationCreationAttributes): Promise<Conversation> {
+        const conversations: Conversation[] = await this.conversation.findAll();
+
+        let conversationAlreadyExists = false;
+        let foundConversation: Conversation; 
+
+        for (const conv of conversations) {
+            const currentConvCount = conv.user_ids.length;
+            let counter = 0;
+
+            for (const newConvUser of conversation.user_ids) {
+                for (const u of conv.user_ids) {
+                    if (newConvUser === u) {
+                        counter++;
+                    }
+                }
+            }
+            if (currentConvCount === counter) {
+                foundConversation = conv;
+                conversationAlreadyExists = true;
+            }
+        }
+
+        if (conversationAlreadyExists && foundConversation) {
+            return foundConversation;
+        }
+
         return this.conversation.create(conversation);
     }
 

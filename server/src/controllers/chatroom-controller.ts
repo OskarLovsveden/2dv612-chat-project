@@ -232,7 +232,7 @@ export default class ChatroomController {
             await this.chatroomService.addMessage(id, messageCreated.id);
             
             const socketServices: SocketServices = ctx.state.socketServices;
-            await socketServices.handleChatMessage(id, messageCreated, ctx.state.io, false);
+            await socketServices.handleChatMessage(id, messageCreated, ctx.state.io);
 
             ctx.body = { message: 'Message created', msg };
         } catch (e) {

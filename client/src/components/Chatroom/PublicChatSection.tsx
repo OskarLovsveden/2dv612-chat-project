@@ -26,16 +26,12 @@ const NoChat: React.FC = () => {
     const createDM = async (userID: number): Promise<void> => {
         const conversationService = new ConversationService();
         if (user?.id && userID) {
-            conversationService.create({
+            await conversationService.create({
                 user_ids: [userID, user?.id],
             });
             console.log(`Creating dm with: ${user.id} and ${userID}`);
 
-            /* await getAllConversations(); */
-            const chatroomService = new ChatroomService();
-            const resChatroom = await chatroomService.getAll();
-
-            
+            getAllConversations();
         }
     };
 
@@ -66,8 +62,8 @@ const NoChat: React.FC = () => {
                                             <div className="inline-flex space-x-2 space-y-5">
                                                 <JoinDM
                                                     user={u}
-                                                    joinDM={(id: number) =>
-                                                        createDM(id)
+                                                    joinDM={async (id: number) =>
+                                                        await createDM(id)
                                                     }
                                                 />
                                                 <h3

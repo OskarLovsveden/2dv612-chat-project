@@ -9,8 +9,8 @@ const initialState: HomeContextState = {
     conversations: [],
     rooms: [],
     setActiveChatView: (): void => {},
-    getAllChatrooms: async (): Promise<void> => {},
-    getAllConversations: async (): Promise<void> => {},
+    getAllChatrooms: (): void => {},
+    getAllConversations: (): void => {},
 };
 
 export const HomeContext = createContext<HomeContextState>(initialState);
@@ -23,6 +23,8 @@ export const HomeProvider: React.FC<HomeProviderProps> = ({ children }) => {
     const getAllConversations = async (): Promise<void> => {
         const conversationService = new ConversationService();
         const conversations = await conversationService.getAll();
+
+        console.log("HELLOOOOOOO")
 
         dispatch({
             type: HomeActionType.SET_CONVERSATIONS,
@@ -41,12 +43,9 @@ export const HomeProvider: React.FC<HomeProviderProps> = ({ children }) => {
     };
 
     useEffect(() => {
-        const test = async() =>{
-            await getAllChatrooms();
-            await getAllConversations();
-        }
+        getAllChatrooms();
+        getAllConversations();
 
-        test();
     }, []);
 
     const setActiveChatView = (chatroomOrConversation: ActiveChat): void => {

@@ -26,7 +26,8 @@ Conversation.init(
             primaryKey: true
         },
         user_ids: {
-            type: DataTypes.ARRAY(DataTypes.INTEGER)
+            type: DataTypes.ARRAY(DataTypes.INTEGER),
+            allowNull: false
         },
         message_ids: {
             type: DataTypes.ARRAY(DataTypes.INTEGER),

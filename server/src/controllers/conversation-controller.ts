@@ -20,6 +20,8 @@ export default class ConversationController {
                 console.log('Can not create message, faulty body');
             }
 
+            console.log(user_ids)
+
             const conversation: ConversationCreationAttributes = { user_ids: user_ids, message_ids: [] };
             const conversationCreated = await this.conversationService.createConversation(conversation);
 
@@ -186,7 +188,7 @@ export default class ConversationController {
 
             await this.conversationService.addMessage(id, messageCreated.id);
 
-            await ctx.state.socketServices.handleChatMessage(id, messageCreated, ctx.state.io, true);
+            await ctx.state.socketServices.handleDirectMessage(id, messageCreated, ctx.state.io);
 
             ctx.body = { message: 'Message created', msg };
         } catch (e) {

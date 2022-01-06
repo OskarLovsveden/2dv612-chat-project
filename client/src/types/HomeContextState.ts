@@ -10,8 +10,8 @@ type HomeContextState = {
     conversations: Conversation[];
     rooms: Chatroom[];
     setActiveChatView: (chatroomOrConversation: ActiveChat) => void;
-    getAllConversations: () => Promise<void>;
-    getAllChatrooms: () => Promise<void>;
+    getAllConversations: () => void;
+    getAllChatrooms: () => void;
 };
 
 export default HomeContextState;
