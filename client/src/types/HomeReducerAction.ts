@@ -1,5 +1,6 @@
 import { Chatroom } from './Chatroom';
 import { Conversation } from './Conversation';
+import { ActiveChat } from './HomeContextState';
 
 export enum HomeActionType {
     SET_ACTIVE_CHAT = 'set-active-chat',
@@ -10,7 +11,7 @@ export enum HomeActionType {
 export type HomeReducerAction =
     | {
           type: HomeActionType.SET_ACTIVE_CHAT;
-          payload: Chatroom | Conversation;
+          payload: ActiveChat;
       }
     | {
           type: HomeActionType.SET_CHATROOMS;

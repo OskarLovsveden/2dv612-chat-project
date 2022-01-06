@@ -24,7 +24,10 @@ const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
                         type="button"
                         className="flex w-full h-full justify-left"
                         onClick={() => {
-                            setActiveChatView(chatroom);
+                            setActiveChatView({
+                                ...chatroom,
+                                type: 'chatroom',
+                            });
                         }}
                     >
                         <svg

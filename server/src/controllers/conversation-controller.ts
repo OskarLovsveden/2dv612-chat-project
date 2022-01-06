@@ -20,12 +20,16 @@ export default class ConversationController {
                 console.log('Can not create message, faulty body');
             }
 
+            console.log(user_ids);
+
             const conversation: ConversationCreationAttributes = { user_ids: user_ids, message_ids: [] };
             const conversationCreated = await this.conversationService.createConversation(conversation);
 
             if (!conversationCreated) {
                 ctx.throw(400, { message: 'Failed to create message' });
             }
+
+            await ctx.state.socketServices.populateRooms();
 
             ctx.body = { message: 'Conversation created', conversationCreated };
         } catch(e) {
@@ -71,7 +75,7 @@ export default class ConversationController {
     public async getAll(ctx: Context): Promise<void> {
         try {
             const userID = ctx.user.id;
-            const conversations = await this.conversationService.getAll(userID);
+            const conversations = await this.conversationService.getUserConversations(userID);
 
             const res: RespondConversation[] = [];
 
@@ -183,6 +187,8 @@ export default class ConversationController {
             }
 
             await this.conversationService.addMessage(id, messageCreated.id);
+
+            await ctx.state.socketServices.handleDirectMessage(id, messageCreated, ctx.state.io);
 
             ctx.body = { message: 'Message created', msg };
         } catch (e) {

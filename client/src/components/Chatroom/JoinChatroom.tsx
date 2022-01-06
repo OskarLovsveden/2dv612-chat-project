@@ -15,8 +15,10 @@ const Join: React.FC<joinProps> = ({ chatroom }) => {
                     <button
                         type="button"
                         onClick={() => {
-                            setActiveChatView(chatroom);
-                            close();
+                            setActiveChatView({
+                                ...chatroom,
+                                type: 'chatroom',
+                            });
                         }}
                         className="text-white transition-colors duration-150
                     bg-indigo-700 rounded-lg focus:shadow-outline 

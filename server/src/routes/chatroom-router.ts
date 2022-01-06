@@ -58,6 +58,11 @@ export default class ChatroomRouter {
             (ctx: Context) => this.controller.update(ctx)
         );
 
+        this._router.post('/:id/join', 
+            (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
+            (ctx: Context) => this.controller.joinRoom(ctx)
+        );
+
         // Message specific
         this._router.get('/:id/message',
             (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),

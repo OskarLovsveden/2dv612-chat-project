@@ -9,6 +9,32 @@ export default class ConversationService {
     }
 
     public async createConversation(conversation: ConversationCreationAttributes): Promise<Conversation> {
+        const conversations: Conversation[] = await this.conversation.findAll();
+
+        let conversationAlreadyExists = false;
+        let foundConversation: Conversation; 
+
+        for (const conv of conversations) {
+            const currentConvCount = conv.user_ids.length;
+            let counter = 0;
+
+            for (const newConvUser of conversation.user_ids) {
+                for (const u of conv.user_ids) {
+                    if (newConvUser === u) {
+                        counter++;
+                    }
+                }
+            }
+            if (currentConvCount === counter) {
+                foundConversation = conv;
+                conversationAlreadyExists = true;
+            }
+        }
+
+        if (conversationAlreadyExists && foundConversation) {
+            return foundConversation;
+        }
+
         return this.conversation.create(conversation);
     }
 
@@ -25,11 +51,13 @@ export default class ConversationService {
         return this.conversation.findOne({ where: { id: conID } });
     }
 
-    public async getAll(userID: number): Promise<Conversation[]> {
+    public async getUserConversations(userID: number): Promise<Conversation[]> {
         const allConversations: Conversation[] = await this.conversation.findAll();
         return allConversations.filter((con: Conversation) => con.user_ids.includes(userID));
+    }
 
-        /* return this.conversation.findAll({ where: { user_id: userID } }); */
+    public async getAll(): Promise<Conversation[]> {
+        return await this.conversation.findAll();
     }
 
     /*  public async getConversationMessages(roomID: number): Promise<Message[]> {
