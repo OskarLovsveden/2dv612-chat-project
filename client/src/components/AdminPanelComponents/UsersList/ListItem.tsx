@@ -11,7 +11,7 @@ const ListItem: React.FC<ListItemProps> = ({ user, removeUser }) => {
     return (
         <li>
             <div className="inline-flex space-x-4 ">
-                <h3>{user.username} </h3>
+                <h4>{user.username} </h4>
                 <button
                     type="button"
                     onClick={() => {
