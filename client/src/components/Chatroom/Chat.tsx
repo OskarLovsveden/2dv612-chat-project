@@ -24,6 +24,13 @@ const ChatRoom: React.FC = () => {
     const messageRef = useRef<any>();
     const messagesEndRef = useRef<any>();
 
+    const scrollToBottom = (): void => {
+        messagesEndRef.current?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+        });
+    };
+
     useEffect(() => {
         (async () => {
             if (activeChat) {
@@ -48,17 +55,15 @@ const ChatRoom: React.FC = () => {
             scrollToBottom();
         });
 
-
         return () => {
             socket?.off('room-message');
             setMessages([]);
         };
     }, [connectUser, socket, user, activeChat]);
 
-
     const handleOnSubmit = async (
         e: React.FormEvent<HTMLFormElement>
-        ): Promise<void> => {
+    ): Promise<void> => {
         e.preventDefault();
 
         if (activeChat && user) {
@@ -68,7 +73,7 @@ const ChatRoom: React.FC = () => {
                 messageRef.current.value,
                 user?.username
             );
-            
+
             const messageService = new MessageService();
             const data = {
                 room_id: activeChat?.id,
@@ -77,9 +82,9 @@ const ChatRoom: React.FC = () => {
                 message: messageRef.current.value,
             };
             await messageService.create(data);
-            
+
             messageRef.current.value = '';
-        };
+        }
     };
 
     const removeMessage = async (id: number): Promise<void> => {
@@ -94,13 +99,6 @@ const ChatRoom: React.FC = () => {
             e.preventDefault();
             handleOnSubmit(e);
         }
-    };
-
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'nearest'
-        });
     };
 
     return (

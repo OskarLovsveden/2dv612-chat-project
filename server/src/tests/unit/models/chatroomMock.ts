@@ -7,8 +7,9 @@ const mockChatroom = sequelizeMock.define(
     {
         name: 'room1',
         is_public: true,
-        tag: ['nature', 'adventure'],
-        user_ids: [1, 2, 3]
+        tags: ['nature', 'öl'],
+        user_ids: [1, 2, 3],
+        message_ids: [1]
     },
     {
         tableName: 'chatroom',

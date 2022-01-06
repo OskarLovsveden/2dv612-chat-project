@@ -47,7 +47,7 @@ User.init(
         }
     },
     {
-        tableName: 'users',
+        tableName: 'user',
         createdAt: false,
         updatedAt: false,
         sequelize

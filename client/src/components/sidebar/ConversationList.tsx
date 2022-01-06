@@ -1,37 +1,29 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { HomeContext } from '../../context/HomeProvider';
-import { Chatroom } from '../../types/Chatroom';
-import Join from '../Chatroom/Join';
+import { Conversation } from '../../types/Conversation';
 
-type ChatroomListProps = {
-    chatrooms: Chatroom[];
+type ConversationListProps = {
+    messages: Conversation[];
 };
 
-const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
+const ConversationList: React.FC<ConversationListProps> = ({ messages }) => {
     const { setActiveChatView, activeChat } = useContext(HomeContext);
-    const [join, setJoin] = useState(false);
+
     return (
         <ul>
-            {chatrooms.map((chatroom: Chatroom) => (
+            {messages.map((conversation: Conversation) => (
                 <li
-                    key={chatroom.id}
-                    className={`flex cursor-pointer 
-                    hover:bg-black hover:bg-opacity-50 hover:text-white ${
-                        activeChat?.name === chatroom.name &&
+                    key={conversation.id}
+                    className={`flex cursor-pointer hover:bg-black hover:bg-opacity-50 hover:text-white ${
+                        activeChat?.name === conversation.name &&
                         'bg-black text-white'
                     }`}
                 >
-                    {join && (
-                        <Join
-                            close={() => setJoin(false)}
-                            chatroom={chatroom}
-                        />
-                    )}
                     <button
                         type="button"
                         className="flex w-full h-full justify-left"
                         onClick={() => {
-                            setJoin(true);
+                            setActiveChatView(conversation);
                         }}
                     >
                         <svg
@@ -46,7 +38,7 @@ const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
                                 clipRule="evenodd"
                             />
                         </svg>
-                        {chatroom.name}
+                        {conversation.name}
                     </button>
                 </li>
             ))}
@@ -54,4 +46,4 @@ const ChatroomList: React.FC<ChatroomListProps> = ({ chatrooms }) => {
     );
 };
 
-export default ChatroomList;
+export default ConversationList;

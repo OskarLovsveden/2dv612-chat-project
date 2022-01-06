@@ -1,2 +1,2 @@
 FROM postgres:alpine
-COPY db.sql /docker-entrypoint-initdb.d/
+# COPY db.sql /docker-entrypoint-initdb.d/

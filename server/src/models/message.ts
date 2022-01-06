@@ -1,13 +1,10 @@
-
 import { DataTypes, Optional, Model } from 'sequelize';
 import sequelize from '../db/postgres';
 
 type MessageAttributes = {
     id: number;
-    username: string;
     message: string;
     user_id: number;
-    room_id: number
 }
 
 export type MessageCreationAttributes = Optional<MessageAttributes, 'id'>;
@@ -16,10 +13,10 @@ class Message
     implements MessageAttributes
 {
     id!: number;
-    username: string;
     message: string;
     user_id: number;
-    room_id: number;
+
+    public readonly createdAt!: Date;
 }
 
 Message.init(
@@ -29,10 +26,6 @@ Message.init(
             autoIncrement: true,
             primaryKey: true
         },
-        username: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
         message: {
             type: DataTypes.STRING,
             allowNull: false
@@ -40,15 +33,10 @@ Message.init(
         user_id: {
             type: DataTypes.INTEGER,
             allowNull: true
-        },
-        room_id: {
-            type: DataTypes.STRING,
-            allowNull: false
         }
     },
     {
         tableName: 'message',
-        createdAt: false,
         updatedAt: false,
         sequelize
     }

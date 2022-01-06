@@ -25,9 +25,12 @@ const ListItems: React.FC<ListItemsProps> = ({
                             <li key={chatroom.id}>
                                 <div className="inline-flex space-x-4">
                                     <h3>{chatroom.name}</h3>
-                                    {chatroom.tag.map((item: string) => {
+                                    {chatroom.tags.map((item: string) => {
                                         return (
-                                            <div className="outerTag">
+                                            <div
+                                                key={item}
+                                                className="outerTag"
+                                            >
                                                 <div className="innerTag">
                                                     {item}
                                                 </div>

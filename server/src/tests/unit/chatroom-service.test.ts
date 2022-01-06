@@ -9,8 +9,9 @@ const roomID = 1;
 const newRoom = {
     name: 'room2',
     is_public: true,
-    tag: ['computers', 'somethingelse'],
-    user_ids: [3, 1, 4]
+    tags: ['computers', 'somethingelse'],
+    user_ids: [3, 1, 4],
+    message_ids: [1]
 };
 
 describe('Chatroom service', () => {
@@ -19,7 +20,7 @@ describe('Chatroom service', () => {
 
         expect(actual)
             .to.be.an('object')
-            .to.have.keys(['name', 'is_public', 'tag', 'user_ids', 'id'])
+            .to.have.keys(['name', 'is_public', 'tags', 'user_ids', 'id', 'message_ids'])
             .not.to.be.undefined;
     });
 
@@ -45,7 +46,7 @@ describe('Chatroom service', () => {
         
         expect(chatroom)
             .to.be.an('object')
-            .to.have.keys(['name', 'is_public', 'tag', 'user_ids', 'id'])
+            .to.have.keys(['name', 'is_public', 'tags', 'user_ids', 'id', 'message_ids'])
             .not.to.be.undefined;
     });
 });
