@@ -86,14 +86,14 @@ const ChatRoom: React.FC = () => {
     };
 
     const removeMessage = async (msg_id: number): Promise<void> => {
-        let roomID: number = 0
-        if(activeChat) {
-            roomID = activeChat?.id
+        let roomID = 0;
+        if (activeChat) {
+            roomID = activeChat?.id;
         }
         const messageService = new MessageService();
-        await messageService.delete(roomID ,msg_id);
+        await messageService.delete(roomID, msg_id);
         setMessages(messages.filter((msg: Msg) => msg.id !== msg_id));
-    }
+    };
 
     const handleEnter = (e: any): void => {
         if (e.code === 'Enter' && e.shiftKey === false) {
@@ -108,22 +108,24 @@ const ChatRoom: React.FC = () => {
             <div className="h-3/4 overflow-y-scroll">
                 <ul>
                     {messages &&
-                        messages.map(
-                            (msg: MessageEvent) => (
-                                <li key={msg.id}>
-                                    <Message
-                                        currentUser={user?.id}
-                                        currentUserRole={user?.role}
-                                        user_id={msg.user_id}
-                                        id={msg.id}
-                                        name={msg.username}
-                                        message={msg.message}
-                                        removeMessage={(id: number) => removeMessage(id)}
-                                    />
-                                </li>
-                            )
-                    )}
-                    <li ref={messagesEndRef} key="bottomscrollreference">{/* I am here to make the chat scroll down! */}</li>
+                        messages.map((msg: MessageEvent) => (
+                            <li key={msg.id}>
+                                <Message
+                                    currentUser={user?.id}
+                                    currentUserRole={user?.role}
+                                    user_id={msg.user_id}
+                                    id={msg.id}
+                                    name={msg.username}
+                                    message={msg.message}
+                                    removeMessage={(id: number) =>
+                                        removeMessage(id)
+                                    }
+                                />
+                            </li>
+                        ))}
+                    <li ref={messagesEndRef} key="bottomscrollreference">
+                        {/* I am here to make the chat scroll down! */}
+                    </li>
                 </ul>
             </div>
             <div className="mb-6 mx-4">

@@ -2,7 +2,7 @@ import { Server as SocketServer, Socket } from 'socket.io';
 import Message from '../models/message';
 import ChatRoom from '../services/chatroom-service';
 import UserService from '../services/user-service';
-import { EventChatMessage, EventLogin } from '../types/event-data-types';
+import { EventLogin } from '../types/event-data-types';
 import SocketRooms from './socket-rooms';
 import SocketUsers from './socket-users';
 
@@ -20,7 +20,7 @@ export default class SocketServices {
         if (rooms) {
             for (const room of rooms) {
                 this.socketRooms.addRoom(room.id.toString(), new Set(room.user_ids));
-                console.log(this.socketRooms.rooms.size, 'rumstorlek')
+                console.log(this.socketRooms.rooms.size, 'rumstorlek');
                 console.log(room.user_ids);
                 console.log(`Adding room: ${room.id}`);
             }
@@ -48,7 +48,7 @@ export default class SocketServices {
         io: SocketServer
     ): Promise<void> {
         for(const [key, value] of this.socketRooms.rooms) {
-            console.log(key, value)
+            console.log(key, value);
         }
 
         if (this.socketRooms.hasRoom(`${roomId}`)) {

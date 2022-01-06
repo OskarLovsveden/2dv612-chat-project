@@ -1,6 +1,5 @@
 import { Context } from 'koa';
 import UserService from '../services/user-service';
-import SocketServices from '../utils/socket-services';
 import ChatRoomService from '../services/chatroom-service';
 import User from '../models/user';
 

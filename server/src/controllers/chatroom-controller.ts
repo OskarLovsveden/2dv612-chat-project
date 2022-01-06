@@ -1,5 +1,4 @@
 import { Context } from 'koa';
-import SocketServices from '../utils/socket-services';
 import ChatRoomService from '../services/chatroom-service';
 import UserService from '../services/user-service';
 import User from '../models/user';
@@ -206,7 +205,7 @@ export default class ChatroomController {
 
             await this.chatroomService.addMessage(id, messageCreated.id);
             // console.log(ctx.state.io)
-            await ctx.state.socketServices.handleChatMessage(id, messageCreated, ctx.state.io)
+            await ctx.state.socketServices.handleChatMessage(id, messageCreated, ctx.state.io);
 
             ctx.body = { message: 'Message created', msg };
         } catch (e) {

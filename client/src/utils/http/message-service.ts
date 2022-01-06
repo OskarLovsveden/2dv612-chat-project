@@ -13,7 +13,8 @@ class MessageService {
     }
 
     async delete(id: number, msg_id: number): Promise<any> {
-        return (await this.http.delete<any>(`room/${id}/message/${msg_id}`)).data;
+        return (await this.http.delete<any>(`room/${id}/message/${msg_id}`))
+            .data;
     }
 }
 
