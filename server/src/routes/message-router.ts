@@ -38,6 +38,6 @@ export default class MessageRouter {
             (ctx: Context, next: Next) =>
                 this.middleware.requestHasValidToken(ctx, next),
             (ctx: Context) => this.controller.remove(ctx)
-        )
+        );
     }
 }
