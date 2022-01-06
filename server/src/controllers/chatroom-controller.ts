@@ -6,6 +6,7 @@ import Chatroom, { ChatroomCreationAttributes } from '../models/chatroom';
 import { RespondMessage } from '../types/respond-types';
 import MessageService from '../services/message-service';
 import { MessageCreationAttributes } from '../models/message';
+import SocketServices from '../utils/socket-services';
 
 export default class ChatroomController {
     
@@ -198,6 +199,9 @@ export default class ChatroomController {
             if(!messageDeleted) {
                 ctx.throw(400, 'Failed to delete message');
             }
+
+            const socketServices: SocketServices = ctx.state.socketServices;
+            await socketServices.handleMessageDeleted(id, msg_id, ctx.state.io);
             
             ctx.body = { message: 'Message deleted' };
         } catch (e) {
@@ -226,8 +230,9 @@ export default class ChatroomController {
             }
 
             await this.chatroomService.addMessage(id, messageCreated.id);
-            // console.log(ctx.state.io)
-            await ctx.state.socketServices.handleChatMessage(id, messageCreated, ctx.state.io, false);
+            
+            const socketServices: SocketServices = ctx.state.socketServices;
+            await socketServices.handleChatMessage(id, messageCreated, ctx.state.io, false);
 
             ctx.body = { message: 'Message created', msg };
         } catch (e) {

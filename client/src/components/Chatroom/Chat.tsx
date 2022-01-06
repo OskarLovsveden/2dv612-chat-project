@@ -5,19 +5,11 @@ import { AuthContext } from '../../context/AuthProvider';
 import { SocketContext } from '../../context/SocketProvider';
 import ChatroomUserList from '../sidebar/ChatroomUserList';
 import MessageService from '../../utils/http/message-service';
-import type { Msg } from '../../types/Message';
-
-type MessageEvent = {
-    id: number;
-    user_id: number;
-    username: string;
-    message: string;
-    room_id: number;
-};
+import type { Message as MessageType } from '../../types/Message';
 
 const ChatRoom: React.FC = () => {
-    const [messages, setMessages] = useState<MessageEvent[]>([]);
-    const { connectUser, sendMessage, socket } = useContext(SocketContext);
+    const [messages, setMessages] = useState<MessageType[]>([]);
+    const { connectUser, socket } = useContext(SocketContext);
     const { activeChat } = useContext(HomeContext);
     const { user } = useContext(AuthContext);
     const enterPressRef = useRef<any>();
@@ -45,16 +37,30 @@ const ChatRoom: React.FC = () => {
 
     useEffect(() => {
         connectUser(user?.id || '');
-        socket?.on('room-message', (data: MessageEvent) => {
+
+        socket?.on('room-message', (data: MessageType) => {
             const shouldAddNewMessage = Number(data.room_id) === activeChat?.id;
+
             if (shouldAddNewMessage) {
                 setMessages((msgs) => [...msgs, data]);
                 scrollToBottom();
             }
         });
 
+        socket?.on('room-message-delete', (data: MessageType) => {
+            const shouldRemoveMessage = Number(data.room_id) === activeChat?.id;
+
+            if (shouldRemoveMessage) {
+                setMessages((msgs) =>
+                    msgs.filter((m: MessageType) => m.id !== Number(data.id))
+                );
+                scrollToBottom();
+            }
+        });
+
         return () => {
             socket?.off('room-message');
+            socket?.off('room-message-delete');
             setMessages([]);
         };
     }, [connectUser, socket, user, activeChat]);
@@ -65,13 +71,6 @@ const ChatRoom: React.FC = () => {
         e.preventDefault();
 
         if (activeChat && user) {
-            // sendMessage(
-            //     activeChat?.id,
-            //     user?.id,
-            //     messageRef.current.value,
-            //     user?.username
-            // );
-
             const messageService = new MessageService();
             const data = {
                 room_id: activeChat?.id,
@@ -92,7 +91,7 @@ const ChatRoom: React.FC = () => {
         }
         const messageService = new MessageService();
         await messageService.delete(roomID, msg_id);
-        setMessages(messages.filter((msg: Msg) => msg.id !== msg_id));
+        setMessages(messages.filter((msg: MessageType) => msg.id !== msg_id));
     };
 
     const handleEnter = (e: any): void => {
@@ -108,7 +107,7 @@ const ChatRoom: React.FC = () => {
             <div className="h-3/4 overflow-y-scroll">
                 <ul>
                     {messages &&
-                        messages.map((msg: MessageEvent) => (
+                        messages.map((msg: MessageType) => (
                             <li key={msg.id}>
                                 <Message
                                     currentUser={user?.id}
