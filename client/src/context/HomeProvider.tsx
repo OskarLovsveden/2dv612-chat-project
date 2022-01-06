@@ -1,9 +1,7 @@
 import { createContext, useEffect, useReducer } from 'react';
-import HomeContextState from '../types/HomeContextState';
+import HomeContextState, { ActiveChat } from '../types/HomeContextState';
 import reducer from './HomeReducer';
 import { HomeActionType } from '../types/HomeReducerAction';
-import { Chatroom } from '../types/Chatroom';
-import { Conversation } from '../types/Conversation';
 import ChatroomService from '../utils/http/chatroom-service';
 import ConversationService from '../utils/http/conversation-service';
 
@@ -11,6 +9,8 @@ const initialState: HomeContextState = {
     conversations: [],
     rooms: [],
     setActiveChatView: (): void => {},
+    getAllChatrooms: async (): Promise<void> => {},
+    getAllConversations: async (): Promise<void> => {},
 };
 
 export const HomeContext = createContext<HomeContextState>(initialState);
@@ -20,33 +20,36 @@ type HomeProviderProps = { children: React.ReactChild[] | React.ReactChild };
 export const HomeProvider: React.FC<HomeProviderProps> = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
+    const getAllConversations = async (): Promise<void> => {
+        const conversationService = new ConversationService();
+        const conversations = await conversationService.getAll();
+
+        dispatch({
+            type: HomeActionType.SET_CONVERSATIONS,
+            payload: [...conversations],
+        });
+    };
+
+    const getAllChatrooms = async (): Promise<void> => {
+        const chatroomService = new ChatroomService();
+        const chatrooms = await chatroomService.getAll();
+
+        dispatch({
+            type: HomeActionType.SET_CHATROOMS,
+            payload: [...chatrooms],
+        });
+    };
+
     useEffect(() => {
-        const getAllChatrooms = async (): Promise<void> => {
-            const chatroomService = new ChatroomService();
-            const chatrooms = await chatroomService.getAll();
+        const test = async() =>{
+            await getAllChatrooms();
+            await getAllConversations();
+        }
 
-            dispatch({
-                type: HomeActionType.SET_CHATROOMS,
-                payload: [...chatrooms],
-            });
-        };
-        getAllChatrooms();
-
-        const getAllConversations = async (): Promise<void> => {
-            const conversationService = new ConversationService();
-            const conversations = await conversationService.getAll();
-
-            dispatch({
-                type: HomeActionType.SET_CONVERSATIONS,
-                payload: [...conversations],
-            });
-        };
-        getAllConversations();
+        test();
     }, []);
 
-    const setActiveChatView = (
-        chatroomOrConversation: Chatroom | Conversation
-    ): void => {
+    const setActiveChatView = (chatroomOrConversation: ActiveChat): void => {
         dispatch({
             type: HomeActionType.SET_ACTIVE_CHAT,
             payload: chatroomOrConversation,
@@ -60,6 +63,8 @@ export const HomeProvider: React.FC<HomeProviderProps> = ({ children }) => {
                 conversations: state.conversations,
                 rooms: state.rooms,
                 setActiveChatView,
+                getAllChatrooms,
+                getAllConversations,
             }}
         >
             {children}

@@ -62,64 +62,64 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom, updateModal }) => {
 
     return (
         <div className="bg-indigo-600 h-screen">
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 m-auto bg-indigo-100 rounded p-5 w-96">
-            <header>
-                <img
-                    className="w-20 mx-auto mb-5"
-                    alt={chatImg}
-                    src={chatImg}
-                />
-            </header>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 m-auto bg-indigo-100 rounded p-5 w-96">
+                <header>
+                    <img
+                        className="w-20 mx-auto mb-5"
+                        alt={chatImg}
+                        src={chatImg}
+                    />
+                </header>
 
-            <form onSubmit={handleOnSubmit}>
-                <label
-                    className="block mb-2 text-indigo-500"
-                    htmlFor="ChatroomName"
-                >
-                    Chatroom Name
-                    <input
-                        onChange={handleChatroomName}
-                        className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
-                        type="text"
-                        id="ChatroomName"
-                        defaultValue={chatroom?.name || ''}
-                    />
-                </label>
-                <label
-                    className="block mb-2 text-indigo-500"
-                    htmlFor="ChatroomTags"
-                >
-                    Chatroom Tags
-                    <input
-                        onChange={handleChatroomTag}
-                        className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
-                        type="text"
-                        id="ChatroomTag"
-                        defaultValue={chatroom?.tags || []}
-                    />
-                </label>
-                <label
-                    className="block mb-2 text-indigo-500"
-                    htmlFor="ChatroomPublic"
-                >
-                    Chatroom Public
-                    <input
-                        ref={publicRef}
-                        className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
-                        type="checkbox"
-                        defaultChecked={chatroom?.is_public || true}
-                        id="ChatroomPublic"
-                    />
-                </label>
-                <button
-                    type="submit"
-                    className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded"
-                >
-                    Submit
-                </button>
-            </form>
+                <form onSubmit={handleOnSubmit}>
+                    <label
+                        className="block mb-2 text-indigo-500"
+                        htmlFor="ChatroomName"
+                    >
+                        Chatroom Name
+                        <input
+                            onChange={handleChatroomName}
+                            className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+                            type="text"
+                            id="ChatroomName"
+                            defaultValue={chatroom?.name || ''}
+                        />
+                    </label>
+                    <label
+                        className="block mb-2 text-indigo-500"
+                        htmlFor="ChatroomTags"
+                    >
+                        Chatroom Tags
+                        <input
+                            onChange={handleChatroomTag}
+                            className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+                            type="text"
+                            id="ChatroomTag"
+                            defaultValue={chatroom?.tags || []}
+                        />
+                    </label>
+                    <label
+                        className="block mb-2 text-indigo-500"
+                        htmlFor="ChatroomPublic"
+                    >
+                        Chatroom Public
+                        <input
+                            ref={publicRef}
+                            className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+                            type="checkbox"
+                            defaultChecked={chatroom?.is_public || true}
+                            id="ChatroomPublic"
+                        />
+                    </label>
+                    <button
+                        type="submit"
+                        className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded"
+                    >
+                        Submit
+                    </button>
+                </form>
+            </div>
         </div>
-    </div>
     );
 };
 

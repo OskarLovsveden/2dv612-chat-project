@@ -23,7 +23,10 @@ const ConversationList: React.FC<ConversationListProps> = ({ messages }) => {
                         type="button"
                         className="flex w-full h-full justify-left"
                         onClick={() => {
-                            setActiveChatView(conversation);
+                            setActiveChatView({
+                                ...conversation,
+                                type: 'conversation',
+                            });
                         }}
                     >
                         <svg
