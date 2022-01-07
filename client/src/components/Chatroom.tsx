@@ -61,16 +61,26 @@ const Chatroom: React.FC<ChatroomProps> = ({ chatroom, updateModal }) => {
     };
 
     return (
-        <div className="bg-indigo-600 h-screen">
+        <div className="bg-indigo-600 h-screen absolute bottom-20 left-60 ml-96 z-50">
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 m-auto bg-indigo-100 rounded p-5 w-96">
                 <header>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            if (updateModal() === undefined) {
+                                navigate('/admin');
+                            }
+                        }}
+                        className="btn btn-red float-right"
+                    >
+                        X
+                    </button>
                     <img
                         className="w-20 mx-auto mb-5"
                         alt={chatImg}
                         src={chatImg}
                     />
                 </header>
-
                 <form onSubmit={handleOnSubmit}>
                     <label
                         className="block mb-2 text-indigo-500"

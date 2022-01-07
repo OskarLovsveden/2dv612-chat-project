@@ -98,13 +98,19 @@ export default class ChatroomController {
     
     public async update(ctx: Context): Promise<void> {
         try {
-            const id = ctx.params.id;
-            const { newTag, userID } = ctx.request.body;
+            const id = Number(ctx.params.id);
+            const { tags, userID } = ctx.request.body;
             
             let updatedRoom: Chatroom;
             
-            if (newTag) {
-                updatedRoom = await this.chatroomService.addTag(id, newTag);
+            console.log(userID);
+            console.log(typeof id);
+            if (tags) {
+                console.log(tags);
+                for (const tag of tags) {
+                    await this.chatroomService.addTag(id, tag);
+                }
+                updatedRoom = await this.chatroomService.get(id);
             }
             
             if (userID) {
@@ -117,6 +123,7 @@ export default class ChatroomController {
             
             ctx.body = { message: 'Room updated' };
         } catch (e) {
+            console.log(e);
             const id = ctx.params.id;
             ctx.status = 404;
             ctx.body = { message: 'No chatroom with id ' + id + ' found' };

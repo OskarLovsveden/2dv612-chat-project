@@ -47,9 +47,9 @@ export default class ChatRoomService {
 
     public async addTag(roomID: number, newTag: string): Promise<Chatroom> {
         const room = await this.get(roomID);
-        return room.update({
+        return await room.update({
             ...room,
-            user_ids: sequelize.fn('array_append', sequelize.col('tag'), newTag)
+            user_ids: sequelize.fn('array_append', sequelize.col('tags'), newTag)
         });
     }
 
