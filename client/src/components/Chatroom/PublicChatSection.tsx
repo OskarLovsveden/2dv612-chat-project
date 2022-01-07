@@ -57,7 +57,8 @@ const NoChat: React.FC = () => {
                         <ul>
                             {userData.map(
                                 (u: User) =>
-                                    u.role === ROLE.USER && (
+                                    u.role === ROLE.USER &&
+                                    u.id !== user?.id && (
                                         <li key={u.id}>
                                             <div className="inline-flex space-x-2 space-y-5">
                                                 <JoinDM

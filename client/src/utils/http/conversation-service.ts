@@ -23,6 +23,10 @@ class ConversationService {
     async delete(id: number): Promise<any> {
         return (await this.http.delete<any>(`/conversation/${id}`)).data;
     }
+
+    async getConvoUsers(id: number): Promise<any> {
+        return (await this.http.get<any>(`/conversation/${id}/user`)).data;
+    }
 }
 
 export default ConversationService;
