@@ -1,8 +1,13 @@
 import sequelize from '../db/postgres';
 import Conversation, { ConversationCreationAttributes } from '../models/conversation';
+import User from '../models/user';
+import { RespondUser } from '../types/respond-types';
+import UserService from './user-service';
 
 export default class ConversationService {
     private conversation;
+
+    private userService = new UserService();
 
     constructor(C?: Conversation) {
         this.conversation = C ? C : Conversation;
@@ -48,7 +53,7 @@ export default class ConversationService {
     }
 
     public async get(conID: number): Promise<Conversation> {
-        return this.conversation.findOne({ where: { id: conID } });
+        return this.conversation.findOne({ where: { id: conID } }); 
     }
 
     public async getUserConversations(userID: number): Promise<Conversation[]> {
@@ -59,7 +64,6 @@ export default class ConversationService {
     public async getAll(): Promise<Conversation[]> {
         return await this.conversation.findAll();
     }
-
     /*  public async getConversationMessages(roomID: number): Promise<Message[]> {
         return this.conversation.findAll({ where: { room_id: roomID } });
     }
@@ -80,5 +84,12 @@ export default class ConversationService {
             ...conversation,
             message_ids: sequelize.fn('array_remove', sequelize.col('message_ids'), messageID)
         });
+    }
+    
+    public async getConvoUsers(conId: number): Promise<RespondUser[]> {
+        const convo = await this.conversation.findOne({ where: { id: conId } });
+        const users = await this.userService.getAll();
+        const user = users.filter((user: User) => convo.user_ids.includes(user.id));
+        return user;
     }
 }
