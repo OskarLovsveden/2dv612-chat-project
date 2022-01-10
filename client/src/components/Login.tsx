@@ -63,12 +63,12 @@ const Login: React.FC = () => {
                             id="password"
                         />
                     </label>
-                    {/* <button
+                    <button
                         type="submit"
                         className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded"
                     >
                         Submit
-                    </button> */}
+                    </button>
                 </form>
             </div>
         </div>
