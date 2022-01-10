@@ -23,6 +23,5 @@
       - helm/manifests
   tags:
     - $CI_RUNNER_TAG
-  when: manual
 
 
