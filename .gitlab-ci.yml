@@ -148,4 +148,3 @@ cleanup-staging-env:
 
 deploy-production:
   extends: .deploy
-  when: manual
