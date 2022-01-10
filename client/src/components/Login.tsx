@@ -34,7 +34,7 @@ const Login: React.FC = () => {
                         alt={chatImg}
                         src={chatImg}
                     />
-                    <h3 className="block mb-2 text-indigo-800">Login Hej</h3>
+                    <h3 className="block mb-2 text-indigo-800">Login</h3>
                 </header>
                 <form onSubmit={handleOnSubmit}>
                     <label
@@ -63,12 +63,12 @@ const Login: React.FC = () => {
                             id="password"
                         />
                     </label>
-                    <button
+                    {/* <button
                         type="submit"
                         className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded"
                     >
                         Submit
-                    </button>
+                    </button> */}
                 </form>
             </div>
         </div>
