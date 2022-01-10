@@ -37,7 +37,7 @@ metadata:
 spec:
   ports:
     - protocol: TCP
-      port: 80
+      port: {{.Values.pgadmin_port}}
       targetPort: {{.Values.pgadmin_port}}
   selector:
     app: {{.Values.pgadmin_name}}

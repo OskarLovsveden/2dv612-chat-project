@@ -71,7 +71,7 @@ data:
         }
 
         location /pgadmin {
-            proxy_pass http://pgadmin;
+            proxy_pass http://pgadmin/;
         }
 
         
