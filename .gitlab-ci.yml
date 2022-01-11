@@ -142,7 +142,7 @@ run-load-test:
   extends: .load-test
 
 cleanup-staging-env:
-  needs: ["run-load-test"]
+  needs: ["run-load-test", "run-staging-tests"]
   extends: .cleanup
 # Deploy to production
 
