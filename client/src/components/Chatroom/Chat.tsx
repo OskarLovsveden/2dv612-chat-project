@@ -146,9 +146,9 @@ const ChatRoom: React.FC = () => {
     };
 
     return (
-        <div className="max-w-auto h-screen w-full m-auto bg-indigo-300 rounded p-5">
+        <div className="max-w-auto relative h-full m-auto bg-indigo-300 rounded p-5">
             {activeChat && <ChatroomUserList />}
-            <div className="h-3/4 overflow-y-scroll">
+            <div className="h-4/8 overflow-y-scroll">
                 <ul>
                     {messages &&
                         messages.map((msg: MessageType) => (

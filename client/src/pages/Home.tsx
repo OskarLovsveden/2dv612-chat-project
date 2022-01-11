@@ -13,7 +13,7 @@ const Home: React.FC = () => {
     return (
         <HomeProvider>
             <SocketProvider>
-                <div className="w-screen h-screen bg-indigo-600">
+                <div className="bg-indigo-600 flex-grow">
                     <div className="flex">
                         <SideBar />
                         <div className="main-body container m-auto w-11/12 h-full flex flex-col shadow-lg">
