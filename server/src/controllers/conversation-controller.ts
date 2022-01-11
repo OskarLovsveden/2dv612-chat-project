@@ -50,6 +50,17 @@ export default class ConversationController {
         }
     }
 
+    public async getConvoUsers(ctx: Context): Promise<void> {
+        try {
+            const id = ctx.params.id;
+            const usersInConvo = await this.conversationService.getConvoUsers(id);
+            console.log(usersInConvo);
+            ctx.body = usersInConvo;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     // update one conversation
     // public async update(ctx: Context): Promise<void> {
     //     try {

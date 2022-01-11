@@ -1,5 +1,5 @@
 import '../App.css';
-import React, { FormEvent, useContext, useRef } from 'react';
+import React, { FormEvent, useContext, useRef, useState } from 'react';
 import chatImg from '../images/chat.png';
 import { AuthContext } from '../context/AuthProvider';
 import { LoginUser } from '../types/User';
@@ -11,10 +11,13 @@ import { LoginUser } from '../types/User';
 const Login: React.FC = () => {
     const username = useRef() as React.MutableRefObject<HTMLInputElement>;
     const password = useRef() as React.MutableRefObject<HTMLInputElement>;
+    const [invalidLoginMessage, setInvalidLoginMessage] = useState('');
 
     const { login } = useContext(AuthContext);
 
-    const handleOnSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    const handleOnSubmit = async (
+        e: FormEvent<HTMLFormElement>
+    ): Promise<void> => {
         e.preventDefault();
 
         const loginUser: LoginUser = {
@@ -22,7 +25,10 @@ const Login: React.FC = () => {
             username: username.current.value,
         };
 
-        login(loginUser);
+        const loginAttempt = await login(loginUser);
+        if (loginAttempt === false) {
+            setInvalidLoginMessage('Invalid username or password!');
+        }
     };
 
     return (
@@ -70,6 +76,7 @@ const Login: React.FC = () => {
                         Submit
                     </button>
                 </form>
+                <h3 className="text-indigo-800">{invalidLoginMessage}</h3>
             </div>
         </div>
     );

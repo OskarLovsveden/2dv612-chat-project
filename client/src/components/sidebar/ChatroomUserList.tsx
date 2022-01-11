@@ -3,6 +3,7 @@ import chattare from '../../images/chattare.png';
 import moderator from '../../images/moderator.png';
 import type { User } from '../../types/User';
 import ChatroomService from '../../utils/http/chatroom-service';
+import ConversationService from '../../utils/http/conversation-service';
 import { HomeContext } from '../../context/HomeProvider';
 import ROLE from '../../types/Role';
 import LeaveChat from '../Chatroom/LeaveChat';
@@ -15,14 +16,22 @@ const ChatroomUserList: React.FC = () => {
     useEffect(() => {
         (async () => {
             if (activeChat) {
-                const chatroomService = new ChatroomService();
-                const resChatroomUsers = await chatroomService.getChatroomUsers(
-                    activeChat.id
-                );
+                let resChatroomUsers;
+                if (activeChat.type === 'chatroom') {
+                    const chatroomService = new ChatroomService();
+                    resChatroomUsers = await chatroomService.getChatroomUsers(
+                        activeChat.id
+                    );
+                } else {
+                    const conversationService = new ConversationService();
+                    resChatroomUsers = await conversationService.getConvoUsers(
+                        activeChat.id
+                    );
+                }
                 setChatroomUsers(resChatroomUsers);
             }
         })();
-    }, []);
+    }, [activeChat]);
 
     return (
         <div className="hidden absolute right-5 xl:block sm:flex-2 w-32 h-96 bg-indigo-500 border-solid border-2 border-indigo-800 overflow-y-auto h-96 ">
