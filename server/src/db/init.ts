@@ -7,10 +7,10 @@ import UserService from '../services/user-service';
 const adminPW = process.env.ADMIN_PASS || 'password';
 
 export const dbInit = async () => {
-    await Chatroom.sync({ alter: true });
-    await Conversation.sync({ alter: true });
-    await Message.sync({ alter: true });
-    await User.sync({ alter: true });
+    await Chatroom.sync({ alter: false });
+    await Conversation.sync({ alter: false });
+    await Message.sync({ alter: false });
+    await User.sync({ alter: false });
     
     const userService = new UserService();
     const admin = await User.findOne({ where: { username: 'admin' } });
