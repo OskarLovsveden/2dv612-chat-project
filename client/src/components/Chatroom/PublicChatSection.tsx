@@ -48,10 +48,10 @@ const NoChat: React.FC = () => {
 
     return (
         <>
-            <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5 bg-indigo-600 h-screen">
-                <div className="rounded overflow-x-hidden overflow-y-auto shadow-lg">
-                    <div className="px-6 py-4">
-                        <div className="font-bold text-xl mb-2">
+            <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5 bg-indigo-600 h-screen ">
+                <div className="rounded overflow-x-hidden overflow-y-auto">
+                    <div className="px-6 py-4 float-left">
+                        <div className="font-bold text-3xl mb-2 ">
                             Direct message
                         </div>
                         <ul>
@@ -60,7 +60,7 @@ const NoChat: React.FC = () => {
                                     u.role === ROLE.USER &&
                                     u.id !== user?.id && (
                                         <li key={u.id}>
-                                            <div className="inline-flex space-x-2 space-y-5">
+                                            <div className="inline-flex space-x-2 space-y-5 float-left items-end">
                                                 <JoinDM
                                                     user={u}
                                                     joinDM={async (
@@ -70,7 +70,7 @@ const NoChat: React.FC = () => {
                                                 <h3
                                                     className="flex cursor-pointer 
                                             hover:bg-black hover:bg-opacity-50 
-                                            hover:text-white"
+                                            hover:text-white text-2xl"
                                                 >
                                                     {u.username}{' '}
                                                 </h3>
@@ -87,9 +87,9 @@ const NoChat: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="rounded overflow-scroll overflow-x-hidden overflow-y-auto shadow-lg">
-                    <div className="px-6 py-4">
-                        <div className="font-bold text-xl mb-2">
+                <div className="rounded overflow-scroll overflow-x-hidden overflow-y-auto justify-center">
+                    <div className="px-6 py-4 float-left">
+                        <div className="font-bold text-3xl mb-2 float-left">
                             Public Chats
                         </div>
                         <ul>
@@ -97,14 +97,14 @@ const NoChat: React.FC = () => {
                                 (chatroom: Chatroom) =>
                                     chatroom.is_public === true && (
                                         <li key={chatroom.id}>
-                                            <div className="inline-flex space-x-2 space-y-5">
+                                            <div className="inline-flex space-x-2 space-y-5 float-left items-end">
                                                 <JoinChatroom
                                                     chatroom={chatroom}
                                                 />
                                                 <button
                                                     className="inline-flex flex cursor-pointer 
                         hover:bg-black hover:bg-opacity-50 
-                        hover:text-white"
+                        hover:text-white text-2xl"
                                                     type="button"
                                                     value={chatroom.name}
                                                 >

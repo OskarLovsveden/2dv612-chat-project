@@ -13,10 +13,10 @@ const Home: React.FC = () => {
     return (
         <HomeProvider>
             <SocketProvider>
-                <div className="w-screen h-screen">
+                <div className="w-screen h-screen bg-indigo-600">
                     <div className="flex">
                         <SideBar />
-                        <div className="main-body container m-auto w-11/12 h-full flex flex-col">
+                        <div className="main-body container m-auto w-11/12 h-full flex flex-col shadow-lg">
                             <div>
                                 <div className="flex-1">
                                     <span className="xl:hidden inline-block text-gray-700 hover:text-gray-900 align-bottom" />
