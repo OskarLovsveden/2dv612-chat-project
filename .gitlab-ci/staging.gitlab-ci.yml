@@ -36,6 +36,8 @@
   tags:
     - $CI_RUNNER_TAG
   allow_failure: true
+  when: delayed
+  start_in: 15 seconds
 
 .load-test:
   image: 
