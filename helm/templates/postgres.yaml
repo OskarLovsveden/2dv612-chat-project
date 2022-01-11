@@ -5,7 +5,7 @@ metadata:
   namespace: {{.Values.env_name}}
   name: {{.Values.postgres_name}}
 spec:
-  serviceName: {{.Values.postgres_svc}}
+  # serviceName: {{.Values.postgres_svc}}
   selector:
     matchLabels:
       app: {{.Values.postgres_name}}
