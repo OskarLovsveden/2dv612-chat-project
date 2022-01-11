@@ -86,6 +86,7 @@
       --set server_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_SERVER_PATH}:latest
       --set client_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_CLIENT_PATH}:latest
       --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_POSTGRES_PATH}:latest
+      --set postgres_password=${PG_PROD_PASSWORD}
   artifacts:
     paths:
       - helm/manifests
