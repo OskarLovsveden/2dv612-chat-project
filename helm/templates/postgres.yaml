@@ -5,6 +5,10 @@ metadata:
   namespace: {{.Values.env_name}}
   name: {{.Values.postgres_name}}
 spec:
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: postgresql-db-disk
   serviceName: {{.Values.postgres_svc}}
   selector:
     matchLabels:
@@ -20,7 +24,7 @@ spec:
           image: {{.Values.postgres_img}}
           imagePullPolicy: Always
           volumeMounts:
-            - name: postgresql-db-disk
+            - name: data
               mountPath: {{.Values.postgres_vol}}
           env:
             - name: POSTGRES_DB
