@@ -30,7 +30,7 @@ const AdminPanel: React.FC = () => {
             <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 bg-indigo-600 h-screen">
                 <AdminRoomList />
 
-                <div className="rounded  hideScroll shadow-lg">
+                <div className="rounded  hideScroll shadow-lg relative ">
                     <div className="px-6 py-4 ">
                         <img
                             className="w-1/4 h-1/4"
