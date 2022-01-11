@@ -63,3 +63,4 @@ spec:
   ports:
     - port: {{.Values.postgres_port}}
       targetPort: {{.Values.postgres_port}}
+
