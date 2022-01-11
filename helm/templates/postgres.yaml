@@ -1,6 +1,6 @@
 # PostgreSQL StatefulSet - ConfigMap
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   namespace: {{.Values.env_name}}
   name: {{.Values.postgres_name}}
