@@ -4,7 +4,7 @@ import Message from '../models/message';
 import User from '../models/user';
 import UserService from '../services/user-service';
 
-const adminPW = process.env.NODE_ENV && process.env.NODE_ENV === 'production' ? process.env.ADMIN_PASS : 'password';
+const adminPW = process.env.ADMIN_PASS || 'password';
 
 export const dbInit = async () => {
     await Chatroom.sync({ alter: true });
