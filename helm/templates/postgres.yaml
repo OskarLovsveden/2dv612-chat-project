@@ -15,10 +15,10 @@ spec:
       labels:
         app: {{.Values.postgres_name}}
     spec:
-      volumes: #
+      volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: postgresql-db-disk #
+          claimName: postgresql-db-disk
       containers:
         - name: {{.Values.postgres_name}}
           image: {{.Values.postgres_img}}
