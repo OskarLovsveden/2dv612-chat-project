@@ -8,7 +8,6 @@
   script:
     - echo $CI_APP_PATH
     - cd $CI_APP_PATH
-    - ls -la
     - npm run build
   cache:
     key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
@@ -39,7 +38,6 @@
     - cd $CI_APP_PATH
     - openssl genrsa -out private.pem 2048
     - openssl rsa -in private.pem -pubout -out public.pem
-    - ls -la
     - >
       docker build
       --pull
@@ -52,7 +50,6 @@
       --tag $IMAGE_REG_NAME:latest
       --tag $IMAGE_REG_NAME:$CI_COMMIT_SHORT_SHA
       .
-    - ls -la
     - docker push $IMAGE_REG_NAME:$CI_COMMIT_SHORT_SHA
     - docker push $IMAGE_REG_NAME:latest
   cache:

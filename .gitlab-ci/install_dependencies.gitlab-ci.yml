@@ -6,10 +6,8 @@
   script:
     - cd $CI_APP_PATH
     - echo $CI_APP_PATH
-    - ls -la
     - npm set cache .npm
     - npm ci
-    - ls -la
   cache:
     key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
     paths:

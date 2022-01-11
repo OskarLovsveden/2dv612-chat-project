@@ -28,7 +28,6 @@
   stage: staging
   script:
     - cd $CI_APP_PATH
-    - ls -la
     - NODE_ENV=ci POSTGRES_PASSWORD=${pg_pass} npm run test:acc
   cache:
     key: "$CI_APP_PATH-$CI_COMMIT_REF_SLUG"
@@ -66,7 +65,6 @@
     - cat /.kube/config
   script:
     - cd helm/manifests/dev/ChattApp/templates
-    - ls -la
     - kubectl delete -f ./ --ignore-not-found
   tags:
     - $CI_RUNNER_TAG
