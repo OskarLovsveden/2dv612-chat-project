@@ -90,6 +90,7 @@
       --set postgres_img=${CI_REGISTRY_IMAGE}/${CI_COMMIT_BRANCH}/${CI_POSTGRES_PATH}:latest
       --set postgres_password=${PG_PROD_PASSWORD}
       --set adminPassword=${ADMIN_PASSWORD}
+      --set postgres_vol=/var/lib/postgresql/data
   artifacts:
     paths:
       - helm/manifests

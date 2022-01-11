@@ -9,6 +9,7 @@ postgres_db_name: chatapp
 postgres_user: postgres
 postgres_password: test # Is overwritten in deployment
 db_env_name: data
+postgres_vol: /data
 
 # PGadmin vars
 pgadmin_port: 4000
