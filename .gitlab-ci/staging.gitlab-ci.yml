@@ -35,6 +35,7 @@
       - $CI_APP_PATH/node_modules
   tags:
     - $CI_RUNNER_TAG
+  allow_failure: true
 
 .load-test:
   image: 
@@ -51,6 +52,7 @@
       - testresults  
   tags:
     - $CI_RUNNER_TAG
+  allow_failure: true
 
 .cleanup:
   stage: staging
