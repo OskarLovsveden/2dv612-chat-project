@@ -37,7 +37,7 @@ spec:
           imagePullPolicy: Always
           volumeMounts:
             - name: postgresql-db-disk
-              mountPath: /data
+              mountPath: /var/lib/postgresql/data
           env:
             - name: POSTGRES_DB
               valueFrom:
