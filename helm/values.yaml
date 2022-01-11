@@ -39,3 +39,4 @@ proxy_port: 32162 # Is overwritten in deployment
 storageclass_name: nfs-sc
 lb_port: 80 # Is overwritten in deployment
 lb_ip: http://localhost/ # Is overwritten in deployment
+adminPassword: temp

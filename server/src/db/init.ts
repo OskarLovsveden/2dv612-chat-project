@@ -4,23 +4,21 @@ import Message from '../models/message';
 import User from '../models/user';
 import UserService from '../services/user-service';
 
-const isDev = process.env.NODE_ENV === 'development';
+const adminPW = process.env.NODE_ENV && process.env.NODE_ENV === 'production' ? process.env.ADMIN_PASS : 'password';
 
 export const dbInit = async () => {
-    await Chatroom.sync({ alter: isDev });
-    await Conversation.sync({ alter: isDev });
-    await Message.sync({ alter: isDev });
-    await User.sync({ alter: isDev });
+    await Chatroom.sync({ alter: true });
+    await Conversation.sync({ alter: true });
+    await Message.sync({ alter: true });
+    await User.sync({ alter: true });
     
-    /* const user = User.findOrCreate({ where: { username: 'admin' } }, ); */
-
     const userService = new UserService();
     const admin = await User.findOne({ where: { username: 'admin' } });
     const user = await User.findOne({ where: { username: 'user' } });
 
     if(!admin) {
         await userService.create({ username: 'admin',
-            password: 'password',
+            password: adminPW,
             role: 'admin',
             active: true
         });
