@@ -31,7 +31,7 @@ const Channel: React.FC<ChannelProps> = ({ name, message }) => {
                             <small className="text-gray-500">2 dec</small>
                         </div>
                         <div>
-                            <small className="text-xs bg-red-500 text-white rounded-full h-6 w-6 leading-6 text-center inline-block">
+                            <small className="text-xs bg-gray-500 text-white rounded-full h-6 w-6 leading-6 text-center inline-block">
                                 1
                             </small>
                         </div>

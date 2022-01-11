@@ -15,10 +15,10 @@ function App(): JSX.Element {
     const { user } = useContext(AuthContext);
 
     return (
-        <div className="App">
+        <div className="App bg-gray-800">
             {user?.role === ROLE.ADMIN && (
-                <header className="App-header">
-                    <nav className="pb-4 border-b-2 border-fuchsia-600 space-x-2 text-center">
+                <header className="white">
+                    <nav className="pb-4 border-b-2 border-fuchsia-600 space-x-2 text-center bg-white">
                         <Link className="no-underline hover:underline" to="/">
                             Home
                         </Link>
@@ -46,7 +46,7 @@ function App(): JSX.Element {
                 </header>
             )}
 
-            <main>
+            <main className="container mx-auto">
                 <Routes>
                     <Route
                         path="login"

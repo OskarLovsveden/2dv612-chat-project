@@ -32,51 +32,51 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="bg-indigo-600 h-screen">
-            <div className="max-w-xs w-full m-auto bg-indigo-100 rounded p-5">
+        <div className="red-600 ">
+            <div className="max-w-xs w-full m-auto red-100 rounded p-5">
                 <header>
                     <img
                         className="w-20 mx-auto mb-5"
                         alt={chatImg}
                         src={chatImg}
                     />
-                    <h3 className="block mb-2 text-indigo-800">Login</h3>
+                    <h3 className="block mb-2 text-pink-800">Login</h3>
                 </header>
                 <form onSubmit={handleOnSubmit}>
                     <label
-                        className="block mb-2 text-indigo-500"
+                        className="block mb-2 text-pink-500"
                         htmlFor="username"
                     >
                         Username
                         <input
                             ref={username}
                             placeholder="Enter Username"
-                            className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+                            className="w-full p-2 mb-6 text-pink-700 border-b-2 border-pink-500 outline-none focus:bg-gray-300"
                             type="text"
                             id="username"
                         />
                     </label>
                     <label
-                        className="block mb-2 text-indigo-500"
+                        className="block mb-2 text-pink-500"
                         htmlFor="password"
                     >
                         Password
                         <input
                             ref={password}
                             placeholder="Enter Password"
-                            className="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+                            className="w-full p-2 mb-6 text-pink-700 border-b-2 border-pink-500 outline-none focus:bg-gray-300"
                             type="password"
                             id="password"
                         />
                     </label>
                     <button
                         type="submit"
-                        className="w-full bg-indigo-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded"
+                        className="w-full red-700 hover:bg-purple-700 text-white font-bold py-2 px-4 mb-6 rounded"
                     >
                         Submit
                     </button>
                 </form>
-                <h3 className="text-indigo-800">{invalidLoginMessage}</h3>
+                <h3 className="text-pink-800">{invalidLoginMessage}</h3>
             </div>
         </div>
     );

@@ -146,31 +146,30 @@ const ChatRoom: React.FC = () => {
     };
 
     return (
-        <div className="max-w-auto h-screen w-full m-auto bg-indigo-300 rounded p-5">
+        <div className="relative dynamic-height-chat bg-gray-300 rounded p-5">
             {activeChat && <ChatroomUserList />}
-            <div className="h-3/4 overflow-y-scroll">
-                <ul>
-                    {messages &&
-                        messages.map((msg: MessageType) => (
-                            <li key={msg.id}>
-                                <Message
-                                    currentUser={user?.id}
-                                    currentUserRole={user?.role}
-                                    user_id={msg.user_id}
-                                    id={msg.id}
-                                    name={msg.username}
-                                    message={msg.message}
-                                    removeMessage={(id: number) =>
-                                        removeMessage(id)
-                                    }
-                                />
-                            </li>
-                        ))}
-                    <li ref={messagesEndRef} key="bottomscrollreference">
-                        {/* I am here to make the chat scroll down! */}
-                    </li>
-                </ul>
-            </div>
+            <ul className="h-4/5 overflow-y-scroll">
+                {messages &&
+                    messages.map((msg: MessageType) => (
+                        <li key={msg.id}>
+                            <Message
+                                currentUser={user?.id}
+                                currentUserRole={user?.role}
+                                user_id={msg.user_id}
+                                id={msg.id}
+                                name={msg.username}
+                                message={msg.message}
+                                removeMessage={(id: number) =>
+                                    removeMessage(id)
+                                }
+                            />
+                        </li>
+                    ))}
+                <li ref={messagesEndRef} key="bottomscrollreference">
+                    {/* I am here to make the chat scroll down! */}
+                </li>
+            </ul>
+            <hr className="my-10" />
             <div className="mb-6 mx-4">
                 <form
                     onSubmit={handleOnSubmit}
@@ -178,7 +177,7 @@ const ChatRoom: React.FC = () => {
                         enterPressRef.current = el;
                     }}
                 >
-                    <div className="pt-4 absolute pb-0 w-3/4 bottom-0">
+                    <div className="absolute w-3/4 bottom-0 pb-6">
                         <div className="write bg-white shadow flex rounded-lg">
                             <div className="flex-3 flex content-center items-center text-center p-4 pr-0">
                                 <span className="block text-center text-gray-400 hover:text-gray-800">
@@ -202,7 +201,7 @@ const ChatRoom: React.FC = () => {
                                     }
                                     ref={messageRef}
                                     name="message"
-                                    className="w-full block outline-none py-4 px-4 bg-transparent"
+                                    className="block outline-none py-4 px-4 bg-transparent"
                                     placeholder="Type a message..."
                                 />
                             </div>

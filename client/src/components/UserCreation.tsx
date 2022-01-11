@@ -64,8 +64,8 @@ const UserCreation: React.FC = () => {
     };
 
     return (
-        <div className="bg-indigo-600 h-screen">
-            <div className="max-w-xs w-full m-auto bg-indigo-100 rounded p-5">
+        <div className="bg-gray-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="max-w-xs w-full m-auto bg-gray-100 rounded p-5">
                 <header>
                     <img
                         className="w-20 mx-auto mb-5"
