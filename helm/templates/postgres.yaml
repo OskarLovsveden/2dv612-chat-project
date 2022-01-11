@@ -40,16 +40,6 @@ spec:
                   key: POSTGRES_PASSWORD
       imagePullSecrets:
         - name: regcred
-  # Volume Claim
-  volumeClaimTemplates:
-    - metadata:
-        name: postgresql-db-disk
-      spec:
-        accessModes: ["ReadWriteMany"]
-        resources:
-          requests:
-            storage: 2Gi
-        storageClassName: {{.Values.storageclass_name}}
 ---
 # PostgreSQL StatefulSet Service
 apiVersion: v1
@@ -63,4 +53,15 @@ spec:
   ports:
     - port: {{.Values.postgres_port}}
       targetPort: {{.Values.postgres_port}}
-
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgresql-db-disk
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: {{.Values.storageclass_name}}
