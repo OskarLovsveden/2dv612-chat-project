@@ -12,8 +12,9 @@
   script:
     - cd helm/manifests/dev/ChattApp/templates
     - kubectl create secret docker-registry regcred --namespace="$dev_env" --docker-server="$CI_REGISTRY" --docker-username="$GIT_USERNAME" --docker-password="$GIT_TOKEN" --dry-run=client -o yaml > regcred.yaml
-    - kubectl delete -f ./ --ignore-not-found
-    - kubectl apply -f ./
+    - kubectl apply -f ./pvc
+    - kubectl delete -f ./dep --ignore-not-found
+    - kubectl apply -f ./dep
     - kubectl wait --for=condition=Ready pods --all -n "$dev_env" --timeout=60s # Wait for all pods to be ready
   artifacts:
     paths:
