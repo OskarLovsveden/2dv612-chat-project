@@ -98,5 +98,6 @@ kind: StorageClass
 metadata:
   name: {{storageclass_name}} # IMPORTANT pvc needs to mention this name
 provisioner: {{nfs_provision_name}} # name can be anything
+reclaimPolicy: Retain
 parameters:
   archiveOnDelete: "false"
