@@ -57,16 +57,3 @@ spec:
   ports:
     - port: {{.Values.postgres_port}}
       targetPort: {{.Values.postgres_port}}
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  namespace: {{.Values.env_name}}
-  name: postgresql-db-disk
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
-  storageClassName: {{.Values.storageclass_name}}
