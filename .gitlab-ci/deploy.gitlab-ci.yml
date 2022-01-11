@@ -22,5 +22,3 @@
       - helm/manifests
   tags:
     - $CI_RUNNER_TAG
-
-
