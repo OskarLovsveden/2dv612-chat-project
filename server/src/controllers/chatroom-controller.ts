@@ -99,17 +99,21 @@ export default class ChatroomController {
     public async update(ctx: Context): Promise<void> {
         try {
             const id = Number(ctx.params.id);
-            const { tags, userID } = ctx.request.body;
-            
+            const { tags, userID, name, is_public } = ctx.request.body;
+
             let updatedRoom: Chatroom;
-            
-            console.log(userID);
-            console.log(typeof id);
+
+            if (is_public !== undefined) {
+                await this.chatroomService.updateIsPublic(id, is_public);
+                updatedRoom = await this.chatroomService.get(id);
+            }
+            if (name) {
+                await this.chatroomService.updateName(id, name);
+                updatedRoom = await this.chatroomService.get(id);
+            }
+
             if (tags) {
-                console.log(tags);
-                for (const tag of tags) {
-                    await this.chatroomService.addTag(id, tag);
-                }
+                await this.chatroomService.updateTags(id, tags);
                 updatedRoom = await this.chatroomService.get(id);
             }
             

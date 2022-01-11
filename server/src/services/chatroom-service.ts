@@ -45,11 +45,27 @@ export default class ChatRoomService {
         });
     }
 
-    public async addTag(roomID: number, newTag: string): Promise<Chatroom> {
+    public async updateName(roomID: number, name: string): Promise<Chatroom> {
         const room = await this.get(roomID);
         return await room.update({
             ...room,
-            user_ids: sequelize.fn('array_append', sequelize.col('tags'), newTag)
+            name: name
+        });
+    }
+
+    public async updateIsPublic(roomID: number, is_public: boolean): Promise<Chatroom> {
+        const room = await this.get(roomID);
+        return await room.update({
+            ...room,
+            is_public: is_public
+        });
+    }
+
+    public async updateTags(roomID: number, newTags: string[]): Promise<Chatroom> {
+        const room = await this.get(roomID);
+        return await room.update({
+            ...room,
+            tags: newTags
         });
     }
 
