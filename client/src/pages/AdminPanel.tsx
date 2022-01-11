@@ -27,7 +27,7 @@ const AdminPanel: React.FC = () => {
 
     return (
         <>
-            <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 bg-indigo-600 h-screen">
+            <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5 bg-gray-600 ">
                 <AdminRoomList />
 
                 <div className="rounded  hideScroll shadow-lg relative ">

@@ -47,8 +47,8 @@ const NoChat: React.FC = () => {
     }, []);
 
     return (
-        <>
-            <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5 bg-indigo-600 h-screen">
+        <div className="dynamic-height-chat bg-gray-600">
+            <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5 bg-gray-600 ">
                 <div className="rounded overflow-x-hidden overflow-y-auto shadow-lg">
                     <div className="px-6 py-4">
                         <div className="font-bold text-xl mb-2">
@@ -136,7 +136,7 @@ const NoChat: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

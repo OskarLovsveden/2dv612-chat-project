@@ -34,7 +34,7 @@ const ChatroomUserList: React.FC = () => {
     }, [activeChat]);
 
     return (
-        <div className="hidden absolute right-5 xl:block sm:flex-2 w-32 h-96 bg-indigo-500 border-solid border-2 border-indigo-800 overflow-y-auto h-96 ">
+        <div className="hidden absolute right-10 xl:block sm:flex-2 w-32 h-96 bg-gray-500 border-solid border-2 border-gray-800 overflow-y-auto h-96 ">
             <h2 className="mx-8">Chatroom members</h2>
             <div className="menu mt-8">
                 <div className="inline-flex w-full">
