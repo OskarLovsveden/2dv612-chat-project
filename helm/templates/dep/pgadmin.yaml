@@ -4,8 +4,8 @@ type: Opaque
 metadata:
   namespace: {{.Values.env_name}}
   name: {{.Values.pgadmin_name}}
-data:
-  pgadmin-password: U3VwZXJTZWNyZXQ=
+stringData:
+  pgadmin-password: {{.Values.pgadmin_pass}}
 ---
 apiVersion: v1
 kind: ConfigMap
