@@ -18,7 +18,7 @@ const Home: React.FC = () => {
                     <div className="w-full sm:w-2/3 md:w-3/4 pt-1 px-2">
                         <div className="flex-1 bg-gray-500">
                             <div className="text-right">
-                                <span className="inline-block text-gray-700">
+                                <span className="inline-block">
                                     <Logout />
                                     <span className="inline-block align-text-bottom" />
                                 </span>

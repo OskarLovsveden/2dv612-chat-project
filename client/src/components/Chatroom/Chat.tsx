@@ -39,8 +39,9 @@ const ChatRoom: React.FC = () => {
                         activeChat.id
                     );
                 }
-
+                
                 setMessages(resMessages);
+                scrollToBottom();
             }
         })();
     }, [activeChat]);
@@ -201,7 +202,7 @@ const ChatRoom: React.FC = () => {
                                     }
                                     ref={messageRef}
                                     name="message"
-                                    className="block outline-none py-4 px-4 bg-transparent"
+                                    className="block outline-none py-4 px-4 bg-transparent w-full"
                                     placeholder="Type a message..."
                                 />
                             </div>
