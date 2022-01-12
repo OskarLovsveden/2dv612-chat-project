@@ -29,8 +29,6 @@
   image: node:16-alpine
   rules:
     - !reference [.rules-build-stage, rules]
-    - when: delayed
-      start_in: 5 seconds
   stage: staging
   script:
     - cd $CI_APP_PATH
