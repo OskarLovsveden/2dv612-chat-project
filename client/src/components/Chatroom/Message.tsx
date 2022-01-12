@@ -20,23 +20,24 @@ const Message: React.FC<MessageProps> = ({
     removeMessage,
 }) => {
     return (
-        <div className="relative px-4 py-4 w-3/4 rounded-md hover:bg-gray-50 dark:hover:bg-coolDark-600 overflow-hidden flex items-start">
-            <div className=" items-center mb-1 text-left">
-                <h3>{name}</h3>
-                <p>{message}</p>
-                {currentUser === user_id || currentUserRole === ROLE.ADMIN ? (
-                    <button
-                        type="button"
-                        className="text-white 
-                        transition-colors duration-150 
-                        bg-red-700 rounded-lg focus:shadow-outline 
-                        hover:bg-red-800 mx-auto w-4 h-6 absolute top-0 right-0
-                        bottom-0"
-                        onClick={() => removeMessage(id)}
-                    >
-                        X
-                    </button>
-                ) : null}
+        <div className="relative px-4 py-4 w-3/4 rounded-md hover:bg-gray-50 dark:hover:bg-coolDark-600 overflow-hidden">
+            <div className="flex w-full">
+                <div className="flex-1 text-left">
+                    <h3>{name}</h3>
+                    <p>{message}</p>
+                </div>
+                <div className="text-right">
+                    {currentUser === user_id ||
+                    currentUserRole === ROLE.ADMIN ? (
+                        <button
+                            type="button"
+                            className="btn btn-red btn-red:hover"
+                            onClick={() => removeMessage(id)}
+                        >
+                            X
+                        </button>
+                    ) : null}
+                </div>
             </div>
         </div>
     );

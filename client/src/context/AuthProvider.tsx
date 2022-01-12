@@ -8,7 +8,9 @@ import AuthService from '../utils/http/auth-service';
 
 const initialState: AuthContextState = {
     isAuthenticated: false,
-    login: (): void => {},
+    login: async (): Promise<boolean> => {
+        return false;
+    },
 };
 
 export const AuthContext = createContext<AuthContextState>(initialState);
@@ -48,17 +50,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         checkUserAuthenticated();
     }, []);
 
-    const login = async (user: LoginUser): Promise<void> => {
+    const login = async (user: LoginUser): Promise<boolean> => {
         const authService = new AuthService();
-        const res = await authService.login(user);
+        const loginUser = await authService.login(user);
 
-        const { username, id, role, token } = res;
-        localStorage.setItem('token', token);
+        if (loginUser) {
+            const { username, id, role, token } = loginUser;
+            localStorage.setItem('token', token);
 
-        dispatch({
-            type: AuthActionType.USER_LOGIN,
-            payload: { username, id, role },
-        });
+            dispatch({
+                type: AuthActionType.USER_LOGIN,
+                payload: { username, id, role },
+            });
+            return true;
+        }
+        return false;
     };
 
     return (

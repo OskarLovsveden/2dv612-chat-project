@@ -47,19 +47,20 @@ const NoChat: React.FC = () => {
     }, []);
 
     return (
-        <>
-            <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5 bg-indigo-600 h-screen">
+        <div className="dynamic-height-chat bg-gray-600">
+            <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-5 bg-gray-600 ">
                 <div className="rounded overflow-x-hidden overflow-y-auto shadow-lg">
-                    <div className="px-6 py-4">
+                    <div className="px-6 py-4 float-left">
                         <div className="font-bold text-xl mb-2">
                             Direct message
                         </div>
                         <ul>
                             {userData.map(
                                 (u: User) =>
-                                    u.role === ROLE.USER && (
+                                    u.role === ROLE.USER &&
+                                    u.id !== user?.id && (
                                         <li key={u.id}>
-                                            <div className="inline-flex space-x-2 space-y-5">
+                                            <div className="inline-flex space-x-2 space-y-5 float-left items-end">
                                                 <JoinDM
                                                     user={u}
                                                     joinDM={async (
@@ -87,7 +88,7 @@ const NoChat: React.FC = () => {
                 </div>
 
                 <div className="rounded overflow-scroll overflow-x-hidden overflow-y-auto shadow-lg">
-                    <div className="px-6 py-4">
+                    <div className="px-6 py-4 float-left">
                         <div className="font-bold text-xl mb-2">
                             Public Chats
                         </div>
@@ -96,7 +97,7 @@ const NoChat: React.FC = () => {
                                 (chatroom: Chatroom) =>
                                     chatroom.is_public === true && (
                                         <li key={chatroom.id}>
-                                            <div className="inline-flex space-x-2 space-y-5">
+                                            <div className="inline-flex space-x-2 space-y-5 float-left items-end">
                                                 <JoinChatroom
                                                     chatroom={chatroom}
                                                 />
@@ -135,7 +136,7 @@ const NoChat: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

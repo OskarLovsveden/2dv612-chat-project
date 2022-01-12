@@ -1,7 +1,20 @@
-/* .App {
-  text-align: center;
+.App {
+    height: 100vh;
 }
 
+.dynamic-height-sidebar {
+    height: calc(100vh - 5em);
+}
+
+.dynamic-height-chat {
+    height: calc(100vh - 10em);
+}
+
+html {
+    font-size: 1.275rem;
+}
+
+/* 
 .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -53,5 +53,9 @@ export default class ConversationRouter {
             (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
             (ctx: Context) => this.controller.updateMessage(ctx)
         );
+        this._router.get('/:id/user',
+            (ctx: Context, next: Next) => this.middleware.requestHasValidToken(ctx, next),
+            (ctx: Context) => this.controller.getConvoUsers(ctx)
+        );
     }
 }
