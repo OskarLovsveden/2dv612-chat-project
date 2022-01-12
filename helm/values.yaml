@@ -12,7 +12,7 @@ db_env_name: data
 postgres_vol: /data
 
 # PGadmin vars
-pgadmin_port: 4000
+pgadmin_port: 80
 pgadmin_name: pgadmin
 pgadmin_svc: pgadmin-svc
 pgadmin_default_user: test@test.com
