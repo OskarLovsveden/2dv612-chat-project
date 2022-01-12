@@ -34,7 +34,7 @@ const Login: React.FC = () => {
                         alt={chatImg}
                         src={chatImg}
                     />
-                    <h3 className="block mb-2 text-indigo-800">Login Demo</h3>
+                    <h3 className="block mb-2 text-indigo-800">Login</h3>
                 </header>
                 <form onSubmit={handleOnSubmit}>
                     <label
