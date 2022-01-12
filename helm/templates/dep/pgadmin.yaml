@@ -21,7 +21,7 @@ data:
             "Group": "Servers",
             "Port": {{.Values.postgres_port}},
             "Username": {{.Values.postgres_user}},
-            "Host": {{.Values.postgres_svc}},
+            "Host": {{.Values.postgres_svc}}.{{.Values.env_name}}.svc.cluster.local,
             "Password": {{.Values.postgres_password}},
             "MaintenanceDB": {{.Values.postgres_db_name}},
             "SSLMode": "prefer"

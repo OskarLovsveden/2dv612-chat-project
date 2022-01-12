@@ -91,7 +91,7 @@
       --set postgres_password=${PG_PROD_PASSWORD}
       --set adminPassword=${ADMIN_PASSWORD}
       --set postgres_vol=/var/lib/postgresql/data
-      --set pgadmin_pas=${PGADMIN_PASS}
+      --set pgadmin_pass=${PGADMIN_PASS}
   artifacts:
     paths:
       - helm/manifests
