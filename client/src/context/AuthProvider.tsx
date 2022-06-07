@@ -8,7 +8,6 @@ import authService from "../utils/http/auth-service";
 
 const initialState: AuthContextState = {
   isAuthenticated: false,
-  login: (): void => {},
 };
 
 export const AuthContext = createContext<AuthContextState>(initialState);
